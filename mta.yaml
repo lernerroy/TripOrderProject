@@ -1,0 +1,205 @@
+_schema-version: "3.1"
+ID: triporderproject
+description: A simple CAP project.
+version: 1.0.0
+modules:
+
+
+
+
+
+- name: triporder-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: triporder-db
+  - name: uaa_triporder
+  - name: triporder-smc
+  - name: triporder-reg
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+
+
+
+- name: triporder_ui_deployer
+  type: com.sap.application.content
+  path: ui.deployer
+  requires:
+  - name: triporder_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    requires:
+    - artifacts:
+      - triporderprojecttriprecord.zip
+      name: tripordertriprecord
+      target-path: resources/
+    - artifacts:
+      - triporderprojectcargo.zip
+      name: tripordercargo
+      target-path: resources/
+    - artifacts:
+      - comlegstatetriprecord.zip
+      name: comlegstatetriprecord
+      target-path: resources/
+    - artifacts:
+      - comlegstatecargo.zip
+      name: comlegstatecargo
+      target-path: resources/
+
+
+
+- name: tripordertriprecord
+  type: html5
+  path: app/triprecord
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+
+
+- name: tripordercargo
+  type: html5
+  path: app/cargo
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+
+
+- name: triporder-approuter
+  type: approuter.nodejs
+  path: triporder-approuter
+  requires:
+  - name: triporder_html_repo_runtime
+  - name: uaa_triporder
+  - name: srv-api
+    group: destinations
+    properties:
+      name: srv
+      url: ~{srv-url}
+      forwardAuthToken: true
+  properties:
+      TENANT_HOST_PATTERN: '^(.*)-${space}-${app-name}.${default-domain}'
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+
+
+
+
+
+
+
+- name: comlegstatetriprecord
+  type: html5
+  path: app/triprecord
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: comlegstatecargo
+  type: html5
+  path: app/cargo
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+
+
+
+resources:
+
+- name: triporder-smc
+  type: org.cloudfoundry.managed-service
+  requires:
+    - name: uaa_triporder
+  parameters:
+    service: service-manager
+    service-plan: container
+    polling_timeout_seconds: 240
+    config:
+        acquireTimeoutMillis: 9000
+        polling_timeout_seconds: 480
+        #database_id: 9e54746d-8734-4889-a18b-7f16c3a29517
+#  properties:
+#    hdi-service-name: ${service-name}
+
+- name: triporder-reg
+  type: org.cloudfoundry.managed-service
+  requires:
+  - name: uaa_triporder
+  parameters:
+    service: saas-registry
+    service-plan: application
+    config:
+        xsappname: triporder-${space}
+        displayName: 'Trip Record App'
+        description: 'Trip Record services and apps'
+        category: 'LegState Category'
+        appUrls:
+          onSubscription: https://${org}-${space}-triporder-srv.${default-domain}/mtx/v1/provisioning/tenant/{tenantId}
+          onSubscriptionAsync: false
+          onUnSubscriptionAsync: false
+          callbackTimeoutMillis: 300000    
+
+- name: triporder-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+
+
+- name: triporder_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+
+
+- name: uaa_triporder
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: shared
+      xsappname: triporder-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+
+
+
+- name: triporder_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production

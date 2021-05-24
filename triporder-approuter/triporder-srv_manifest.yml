@@ -1,0 +1,28 @@
+---
+applications:
+- name: triporder-srv
+  env:
+    DEPLOY_ATTRIBUTES: |-
+      {
+        "app-content-digest" : "2E9B842C4799748D88CA48C7249C2BB9"
+      }
+  stack: cflinuxfs3
+  services:
+  - triporder-db
+  routes:
+  - route: triprecord-triprecordspace-triporder-srv.cfapps.eu10.hana.ondemand.com
+  metadata:
+    labels:
+      mta_id: e746a27fe6508e5e41e82a7768f18335
+    annotations:
+      mta_id: triporderproject
+      mta_version: 1.0.0
+      mta_module: '{"name":"triporder-srv"}'
+      mta_module_provided_dependencies: "[]"
+      mta_bound_services: '["triporder-db"]'
+  processes:
+  - type: web
+    instances: 1
+    memory: 1024M
+    disk_quota: 1024M
+    health-check-type: port

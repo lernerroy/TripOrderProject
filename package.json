@@ -1,0 +1,80 @@
+{
+  "engines": {
+    "node": "12.x"
+  },
+  "name": "triprecord",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/audit-logging": "^5.0.0",
+    "@sap/cds": "^5.0.4",
+    "@sap/cds-mtx": "^2.0.1",
+    "@sap/hana-client": "^2.6.61",
+    "@sap/hdi-deploy": "^4.0.5",
+    "@sap/instance-manager": "^3.0.0",
+    "@sap/xsenv": "^3.1.0",
+    "@sap/xssec": "^3.2.0",
+    "express": "^4.17.1",
+    "passport": "^0.4.1"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.84.11",
+    "sqlite3": "^5.0.2"
+  },
+  "scripts": {
+    "start": "cds run"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
+    },
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
+    },
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "hana",
+        "model": [
+          "db",
+          "srv"
+        ],
+        "vcap": {
+          "label": "service-manager"
+        }
+      },
+      "uaa": {
+        "kind": "xsuaa"
+      },
+      "multitenancy": true
+    },
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+  },
+  "sapux": [
+    "app/triprecord",
+    "app/cargo"
+  ]
+}

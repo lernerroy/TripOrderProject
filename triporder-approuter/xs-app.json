@@ -1,0 +1,26 @@
+{
+"welcomeFile": "index.html",
+"authenticationMethod": "route",
+"routes": [
+    {
+      "source": "^/index.html",
+      "localDir": "resources"
+    },
+    {
+      "source": "^/favicon.ico",
+      "localDir": "resources"
+    },    
+{
+"source": "^/srv/(.*)$",
+"authenticationType": "xsuaa",
+"scope": "$XSAPPNAME.User",
+"target": "$1",
+"destination": "srv"
+},
+{
+"source": "(.*)",
+"target": "$1",
+"service": "html5-apps-repo-rt"
+}
+]
+}
