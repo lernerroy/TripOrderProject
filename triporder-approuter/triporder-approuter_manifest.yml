@@ -11,7 +11,7 @@ applications:
       } ]
     DEPLOY_ATTRIBUTES: |-
       {
-        "app-content-digest" : "ECFDCFE3D00DA6E14335439ED91123D5"
+        "app-content-digest" : "3C33FF6D6F945F1362062967D16843F1"
       }
   stack: cflinuxfs3
   services:

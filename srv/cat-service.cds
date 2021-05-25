@@ -1,5 +1,29 @@
-using my.bookshop as my from '../db/data-model';
+using { com.legstate.triporder as trips } from '../db/data-model';
 
-service CatalogService {
-    @readonly entity Books as projection on my.Books;
-}
+annotate trips with @(requires: ['system-user','Admin','User']);
+
+annotate trips.triprecord with @(restrict: [
+  { grant: ['READ','WRITE'], to: 'Admin' }, 
+  { grant: ['READ'], to: 'User' }
+]);
+
+
+@path:'/browse'
+//@impl: './trip-service.js'
+@requires: 'authenticated-user'
+service TripService 
+{
+    entity triprecord // @(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
+    as projection on trips.triprecord;
+    entity cargorecord  //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
+    as projection on trips.cargorecord;
+    entity catering //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
+    as projection on trips.catering;
+    entity pax //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
+    as projection on trips.passenger;
+    entity routeplan //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
+    as projection on trips.routeplan;  
+    entity accommodation //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
+    as projection on trips.accommodation;
+};
+

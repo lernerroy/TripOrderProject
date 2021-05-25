@@ -75,6 +75,12 @@
   },
   "sapux": [
     "app/triprecord",
-    "app/cargo"
+    "app/cargo",
+    "app/accommodation",
+    "app/catering",
+    "app/passengers",
+    "app/route_plan",
+    "app/triprecordnew",
+    "app/tripdetails"
   ]
 }

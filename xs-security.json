@@ -12,6 +12,10 @@
         "description": "With this scope, USER can read products."
     },
     {
+        "name": "$XSAPPNAME.Administrator",
+        "description": "With this scope, USER can read & Write products."
+    },
+    {
         "name": "$XSAPPNAME.mtcallback",
         "description": "With this scope set, the callbacks for tenant onboarding, offboarding and getDependencies can be called.",
         "grant-as-authority-to-apps": [
@@ -20,19 +24,37 @@
     }
   ],
   "role-templates": [
-    {
-      "name": "Token_Exchange",
-      "description": "UAA",
-      "scope-references": [
-        "uaa.user"
-      ]
-    },
-    {
-      "name": "user",
-      "description": "App User",
-      "scope-references": [
-        "$XSAPPNAME.User"
-      ]
-    }
-  ]
+        {
+            "name": "Administrator",
+            "description": "Administrator",
+            "scope-references": [
+                "$XSAPPNAME.Administrator"
+            ]
+        },
+        {
+            "name": "User",
+            "description": "User",
+            "scope-references": [
+                "$XSAPPNAME.User"
+            ]
+        }
+    ],
+    "role-collections": [
+        {
+            "name": "TripRecord_Administrator",
+            "description": "Trip Record App Administrator",
+            "role-template-references": [
+                "$XSAPPNAME.Administrator",
+                "$XSAPPNAME.User"
+            ]
+        },
+        {
+            "name": "TripRecord_User",
+            "description": "Trip Record App User",
+            "role-template-references": [
+                "$XSAPPNAME.User"
+            ]
+        }
+    ]
 }
+

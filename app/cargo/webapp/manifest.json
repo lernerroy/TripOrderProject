@@ -1,7 +1,7 @@
 {
-    "_version": "1.29.0",
+    "_version": "1.28.0",
     "sap.app": {
-        "id": "com.legstate.cargo",
+        "id": "cargo.cargo",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -9,38 +9,37 @@
         },
         "title": "{{appTitle}}",
         "description": "{{appDescription}}",
-        "resources": "resources.json",
-        "ach": "ach",
         "dataSources": {
             "mainService": {
-                "uri": "/catalog/",
+                "uri": "/browse/",
                 "type": "OData",
                 "settings": {
-                    "odataVersion": "2.0",
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
                     "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
                 }
             }
         },
-        "crossNavigation": {
-            "inbounds": {
-                "com-legstate-cargo-inbound": {
-                    "signature": {
-                        "parameters": {},
-                        "additionalParameters": "allowed"
-                    },
-                    "semanticObject": "Cargo",
-                    "action": "browse",
-                    "title": "Cargo Details",
-                    "subTitle": "View Cargo information",
-                    "icon": ""
-                }
-            }
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
         }
     },
     "sap.ui": {
         "technology": "UI5",
         "icons": {
-            "icon": "sap-icon://task",
+            "icon": "",
             "favIcon": "",
             "phone": "",
             "phone@2": "",
@@ -54,72 +53,93 @@
         }
     },
     "sap.ui5": {
-        "flexEnabled": false,
-        "rootView": {
-            "viewName": "com.legstate.cargo.view.Cargo",
-            "type": "XML",
-            "async": true,
-            "id": "Cargo"
+        "resources": {
+            "js": [],
+            "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.66.0",
+            "minUI5Version": "1.76.0",
             "libs": {
                 "sap.ui.core": {},
-                "sap.m": {},
-                "sap.ui.layout": {}
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "cargorecordList",
+                    "target": "cargorecordList"
+                },
+                {
+                    "pattern": "cargorecord({key}):?query:",
+                    "name": "cargorecordObjectPage",
+                    "target": "cargorecordObjectPage"
+                }
+            ],
+            "targets": {
+                "cargorecordList": {
+                    "type": "Component",
+                    "id": "cargorecordList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "cargorecord",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "cargorecord": {
+                                    "detail": {
+                                        "route": "cargorecordObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "cargorecordObjectPage": {
+                    "type": "Component",
+                    "id": "cargorecordObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "cargorecord"
+                        }
+                    }
+                }
             }
         },
         "contentDensities": {
             "compact": true,
             "cozy": true
-        },
-        "models": {
-            "i18n": {
-                "type": "sap.ui.model.resource.ResourceModel",
-                "settings": {
-                    "bundleName": "com.legstate.cargo.i18n.i18n"
-                }
-            },
-            "": {
-                "dataSource": "mainService",
-                "preload": true
-            }
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
-        },
-        "routing": {
-            "config": {
-                "routerClass": "sap.m.routing.Router",
-                "viewType": "XML",
-                "async": true,
-                "viewPath": "com.legstate.cargo.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false
-            },
-            "routes": [
-                {
-                    "name": "RouteCargo",
-                    "pattern": "RouteCargo",
-                    "target": [
-                        "TargetCargo"
-                    ]
-                }
-            ],
-            "targets": {
-                "TargetCargo": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "Cargo",
-                    "viewName": "Cargo"
-                }
-            }
         }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": [],
+        "archeType": "transactional"
     }
 }
