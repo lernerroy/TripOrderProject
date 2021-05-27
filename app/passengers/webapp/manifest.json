@@ -1,36 +1,45 @@
 {
-    "_version": "1.32.0",
+    "_version": "1.28.0",
     "sap.app": {
-        "id": "com.legstate.passengers",
+        "id": "passengers",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
             "version": "1.0.0"
         },
-        "title": "{{appTitle}}",
-        "description": "{{appDescription}}",
-        "resources": "resources.json",
-        "ach": "ach",
-        "crossNavigation": {
-            "inbounds": {
-                "com-legstate-passengers-inbound": {
-                    "signature": {
-                        "parameters": {},
-                        "additionalParameters": "allowed"
-                    },
-                    "semanticObject": "PassengersOverview",
-                    "action": "Display",
-                    "title": "Passengers Overview",
-                    "subTitle": "",
-                    "icon": ""
+        "title": "passengers",
+        "description": "passengers details",
+        "dataSources": {
+            "mainService": {
+                "uri": "/browse/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
                 }
             }
+        },
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
         }
     },
     "sap.ui": {
         "technology": "UI5",
         "icons": {
-            "icon": "sap-icon://task",
+            "icon": "",
             "favIcon": "",
             "phone": "",
             "phone@2": "",
@@ -44,68 +53,93 @@
         }
     },
     "sap.ui5": {
-        "flexEnabled": false,
-        "rootView": {
-            "viewName": "com.legstate.passengers.view.passengers",
-            "type": "XML",
-            "async": true,
-            "id": "passengers"
+        "resources": {
+            "js": [],
+            "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.66.0",
+            "minUI5Version": "1.76.0",
             "libs": {
                 "sap.ui.core": {},
-                "sap.m": {},
-                "sap.ui.layout": {}
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "paxList",
+                    "target": "paxList"
+                },
+                {
+                    "pattern": "pax({key}):?query:",
+                    "name": "paxObjectPage",
+                    "target": "paxObjectPage"
+                }
+            ],
+            "targets": {
+                "paxList": {
+                    "type": "Component",
+                    "id": "paxList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "pax",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "pax": {
+                                    "detail": {
+                                        "route": "paxObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "paxObjectPage": {
+                    "type": "Component",
+                    "id": "paxObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "pax"
+                        }
+                    }
+                }
             }
         },
         "contentDensities": {
             "compact": true,
             "cozy": true
-        },
-        "models": {
-            "i18n": {
-                "type": "sap.ui.model.resource.ResourceModel",
-                "settings": {
-                    "bundleName": "com.legstate.passengers.i18n.i18n"
-                }
-            }
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
-        },
-        "routing": {
-            "config": {
-                "routerClass": "sap.m.routing.Router",
-                "viewType": "XML",
-                "async": true,
-                "viewPath": "com.legstate.passengers.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false
-            },
-            "routes": [
-                {
-                    "name": "Routepassengers",
-                    "pattern": "Routepassengers",
-                    "target": [
-                        "Targetpassengers"
-                    ]
-                }
-            ],
-            "targets": {
-                "Targetpassengers": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "passengers",
-                    "viewName": "passengers"
-                }
-            }
         }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": [],
+        "archeType": "transactional"
     }
 }

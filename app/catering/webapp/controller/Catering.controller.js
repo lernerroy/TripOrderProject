@@ -7,7 +7,7 @@ sap.ui.define([
 	function (Controller) {
 		"use strict";
 
-		return Controller.extend("com.legstate.catering.controller.Catering", {
+		return Controller.extend("catering.controller.catering", {
 			onInit: function () {
 
 			}

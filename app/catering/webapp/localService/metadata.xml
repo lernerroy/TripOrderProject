@@ -1,0 +1,345 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+    <edmx:DataServices>
+        <Schema Namespace="TripService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+            <EntityContainer Name="EntityContainer">
+                <EntitySet Name="cargorecord" EntityType="TripService.cargorecord"/>
+                <EntitySet Name="catering" EntityType="TripService.catering"/>
+                <EntitySet Name="pax" EntityType="TripService.pax"/>
+                <EntitySet Name="triprecord" EntityType="TripService.triprecord">
+                    <NavigationPropertyBinding Path="cargo" Target="cargorecord"/>
+                </EntitySet>
+            </EntityContainer>
+            <EntityType Name="cargorecord">
+                <Key>
+                    <PropertyRef Name="insupcarriercode2"/>
+                    <PropertyRef Name="inflightno"/>
+                    <PropertyRef Name="inorigin"/>
+                    <PropertyRef Name="indestination"/>
+                    <PropertyRef Name="inscheddeptdate"/>
+                    <PropertyRef Name="surrogatenum"/>
+                </Key>
+                <Property Name="insupcarriercode2" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="inflightno" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="inorigin" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="indestination" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="inscheddeptdate" Type="Edm.Date" Nullable="false"/>
+                <Property Name="fosuffix" Type="Edm.String" MaxLength="2"/>
+                <Property Name="surrogatenum" Type="Edm.String" MaxLength="23" Nullable="false"/>
+                <Property Name="version" Type="Edm.String" MaxLength="3"/>
+                <Property Name="user_ind" Type="Edm.String" MaxLength="1"/>
+                <Property Name="chgtottonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="acttottonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="tottranstonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgtotimptonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="acttotimptonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgtotexptonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="acttotexptonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgimploose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actimploose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgimpprepck" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actimpprepck" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgexploose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actexploose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgexpprepack" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actexpprepack" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgmailimport" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actmailimport" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgmailexport" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actmailexport" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="avichgtkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="aviactkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="avinoawb" Type="Edm.Decimal" Scale="0" Precision="8"/>
+                <Property Name="dgrchgtkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="dgractkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="dgrnoawb" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="humchgkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="humactkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="humnoawb" Type="Edm.Decimal" Scale="0" Precision="8"/>
+                <Property Name="perchgkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="peractkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="pernoawb" Type="Edm.Decimal" Scale="0" Precision="8"/>
+                <Property Name="valchgkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="valactkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="valnoawb" Type="Edm.Decimal" Scale="0" Precision="8"/>
+                <Property Name="pilchgkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="pilactkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="pilnoawb" Type="Edm.Decimal" Scale="0" Precision="8"/>
+                <Property Name="pefchgkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="pefactkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="pefnoawb" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="temchgkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="temactkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="temnoawb" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="vunchgkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="vunactkg" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="vunnoawb" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="totawb" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgtransloose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="acttransloose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgtransprepack" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="acttransprepack" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgephloose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actephloose" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgephprepack" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actephprepack" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgepdcgo" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="actepdcgo" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="creation_timestamp" Type="Edm.Decimal" Scale="0" Precision="15"/>
+                <Property Name="chgimptonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgexptonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="chgtottranstonn" Type="Edm.Decimal" Scale="2" Precision="8"/>
+            </EntityType>
+            <EntityType Name="catering">
+                <Key>
+                    <PropertyRef Name="insupcarriercode2"/>
+                    <PropertyRef Name="inflightno"/>
+                    <PropertyRef Name="inorigin"/>
+                    <PropertyRef Name="indestination"/>
+                    <PropertyRef Name="inscheddeptdate"/>
+                    <PropertyRef Name="surrogatenum"/>
+                </Key>
+                <Property Name="insupcarriercode2" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="inflightno" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="inorigin" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="indestination" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="inscheddeptdate" Type="Edm.Date" Nullable="false"/>
+                <Property Name="fosuffix" Type="Edm.String" MaxLength="2"/>
+                <Property Name="surrogatenum" Type="Edm.String" MaxLength="23" Nullable="false"/>
+                <Property Name="carriercode" Type="Edm.String" MaxLength="2"/>
+                <Property Name="origin" Type="Edm.String" MaxLength="3"/>
+                <Property Name="destination" Type="Edm.String" MaxLength="3"/>
+                <Property Name="classtype" Type="Edm.String" MaxLength="10"/>
+                <Property Name="sapmeal" Type="Edm.String" MaxLength="18"/>
+                <Property Name="exdescription" Type="Edm.String" MaxLength="100"/>
+                <Property Name="paxqun" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="unitofmesur" Type="Edm.String" MaxLength="3"/>
+                <Property Name="exmenucode" Type="Edm.String" MaxLength="100"/>
+                <Property Name="exmenudesc" Type="Edm.String" MaxLength="200"/>
+                <Property Name="salescat" Type="Edm.String" MaxLength="50"/>
+                <Property Name="pricerel" Type="Edm.String" MaxLength="1"/>
+                <Property Name="mealfact" Type="Edm.String" MaxLength="1"/>
+                <Property Name="quant" Type="Edm.Decimal" Scale="3" Precision="13"/>
+                <Property Name="netprice" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="grossgross" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="custdiscount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="netamont" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="airportfee" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="airportfeevat" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="gstvat" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="consumptiontax" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="surchargeamount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="vatp" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="gipba" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="totalamount" Type="Edm.Decimal" Scale="2" Precision="11"/>
+                <Property Name="currency" Type="Edm.String" MaxLength="5"/>
+                <Property Name="invoicetype" Type="Edm.String" MaxLength="2"/>
+                <Property Name="custdiscount_perc" Type="Edm.String" MaxLength="3"/>
+                <Property Name="airportfee_perc" Type="Edm.String" MaxLength="3"/>
+                <Property Name="gstvat_perc" Type="Edm.String" MaxLength="3"/>
+                <Property Name="surcharge_perc" Type="Edm.String" MaxLength="3"/>
+                <Property Name="consumptiontax_perc" Type="Edm.String" MaxLength="3"/>
+            </EntityType>
+            <EntityType Name="pax">
+                <Key>
+                    <PropertyRef Name="insupcarriercode2"/>
+                    <PropertyRef Name="inflightno"/>
+                    <PropertyRef Name="inorigin"/>
+                    <PropertyRef Name="indestination"/>
+                    <PropertyRef Name="inscheddeptdate"/>
+                    <PropertyRef Name="surrogatenum"/>
+                </Key>
+                <Property Name="insupcarriercode2" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="inflightno" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="inorigin" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="indestination" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="inscheddeptdate" Type="Edm.Date" Nullable="false"/>
+                <Property Name="fosuffix" Type="Edm.String" MaxLength="2"/>
+                <Property Name="surrogatenum" Type="Edm.String" MaxLength="23" Nullable="false"/>
+                <Property Name="carriercode" Type="Edm.String" MaxLength="4"/>
+                <Property Name="version" Type="Edm.Int32"/>
+                <Property Name="user_ind" Type="Edm.String" MaxLength="1"/>
+                <Property Name="firstclasspax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="busclasspax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="premecopax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="ecopax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="totalpax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="revpaxfirst" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="revpaxbus" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="revpaxpreco" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="revpaxeco" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="revpaxtot" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="nrevpaxfirst" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="nrevpaxbus" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="nrevpaxpreco" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="nrevpaxeco" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="nrevpaxtot" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="chdpax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="infpax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wchpax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wchc" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wchs" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wchr" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wcbd" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wcbw" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wcmp" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wcob" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="wclb" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="boardpax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="transitpax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="transferpax" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="bagquan" Type="Edm.Decimal" Scale="0" Precision="8"/>
+                <Property Name="bagweight" Type="Edm.Decimal" Scale="2" Precision="8"/>
+                <Property Name="traint" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="tradom" Type="Edm.Decimal" Scale="0" Precision="3"/>
+                <Property Name="creation_timestamp" Type="Edm.Decimal" Scale="0" Precision="15"/>
+                <Property Name="tecnum" Type="Edm.Int32"/>
+                <Property Name="cabnum" Type="Edm.Int32"/>
+                <Property Name="capnum" Type="Edm.Int32"/>
+                <Property Name="cocnum" Type="Edm.Int32"/>
+                <Property Name="ecavml" Type="Edm.Int32"/>
+                <Property Name="ecbbml" Type="Edm.Int32"/>
+                <Property Name="ecblml" Type="Edm.Int32"/>
+                <Property Name="ecchml" Type="Edm.Int32"/>
+                <Property Name="ecdbml" Type="Edm.Int32"/>
+                <Property Name="ecfpml" Type="Edm.Int32"/>
+                <Property Name="ecgfml" Type="Edm.Int32"/>
+                <Property Name="echnml" Type="Edm.Int32"/>
+                <Property Name="ecksml" Type="Edm.Int32"/>
+                <Property Name="eclcml" Type="Edm.Int32"/>
+                <Property Name="eclfml" Type="Edm.Int32"/>
+                <Property Name="eclsml" Type="Edm.Int32"/>
+                <Property Name="ecmoml" Type="Edm.Int32"/>
+                <Property Name="ecnlml" Type="Edm.Int32"/>
+                <Property Name="ecorml" Type="Edm.Int32"/>
+                <Property Name="ecrvml" Type="Edm.Int32"/>
+                <Property Name="ecsfml" Type="Edm.Int32"/>
+                <Property Name="ecvgml" Type="Edm.Int32"/>
+                <Property Name="ecvjml" Type="Edm.Int32"/>
+                <Property Name="ecvlml" Type="Edm.Int32"/>
+                <Property Name="ecvoml" Type="Edm.Int32"/>
+                <Property Name="bcavml" Type="Edm.Int32"/>
+                <Property Name="bcbbml" Type="Edm.Int32"/>
+                <Property Name="bcblml" Type="Edm.Int32"/>
+                <Property Name="bcchml" Type="Edm.Int32"/>
+                <Property Name="bcdbml" Type="Edm.Int32"/>
+                <Property Name="bcfpml" Type="Edm.Int32"/>
+                <Property Name="bcgfml" Type="Edm.Int32"/>
+                <Property Name="bchnml" Type="Edm.Int32"/>
+                <Property Name="bcksml" Type="Edm.Int32"/>
+                <Property Name="bclcml" Type="Edm.Int32"/>
+                <Property Name="bclfml" Type="Edm.Int32"/>
+                <Property Name="bclsml" Type="Edm.Int32"/>
+                <Property Name="bcmoml" Type="Edm.Int32"/>
+                <Property Name="bcnlml" Type="Edm.Int32"/>
+                <Property Name="bcorml" Type="Edm.Int32"/>
+                <Property Name="bcrvml" Type="Edm.Int32"/>
+                <Property Name="bcsfml" Type="Edm.Int32"/>
+                <Property Name="bcvgml" Type="Edm.Int32"/>
+                <Property Name="bcvjml" Type="Edm.Int32"/>
+                <Property Name="bcvlml" Type="Edm.Int32"/>
+                <Property Name="bcvoml" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="triprecord">
+                <Key>
+                    <PropertyRef Name="insupcarriercode2"/>
+                    <PropertyRef Name="inflightno"/>
+                    <PropertyRef Name="inorigin"/>
+                    <PropertyRef Name="indestination"/>
+                    <PropertyRef Name="inscheddeptdate"/>
+                    <PropertyRef Name="surrogatenum"/>
+                </Key>
+                <Property Name="insupcarriercode2" Type="Edm.String" MaxLength="2" Nullable="false"/>
+                <Property Name="inflightno" Type="Edm.String" MaxLength="4" Nullable="false"/>
+                <Property Name="inorigin" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="indestination" Type="Edm.String" MaxLength="3" Nullable="false"/>
+                <Property Name="inscheddeptdate" Type="Edm.Date" Nullable="false"/>
+                <Property Name="fosuffix" Type="Edm.String" MaxLength="2"/>
+                <Property Name="surrogatenum" Type="Edm.String" MaxLength="23" Nullable="false"/>
+                <Property Name="supcarriercode2" Type="Edm.String" MaxLength="2"/>
+                <Property Name="scheddeptdate" Type="Edm.Date"/>
+                <Property Name="flightno" Type="Edm.String" MaxLength="4"/>
+                <Property Name="supcarriercode" Type="Edm.String" MaxLength="2"/>
+                <Property Name="carriercode" Type="Edm.String" MaxLength="2"/>
+                <Property Name="origin" Type="Edm.String" MaxLength="3"/>
+                <Property Name="destination" Type="Edm.String" MaxLength="3"/>
+                <Property Name="repeatno" Type="Edm.String" MaxLength="3"/>
+                <Property Name="idooutc" Type="Edm.Date"/>
+                <Property Name="idoo" Type="Edm.Date"/>
+                <Property Name="doo" Type="Edm.Date"/>
+                <Property Name="dooutc" Type="Edm.Date"/>
+                <Property Name="actarrapt" Type="Edm.String" MaxLength="3"/>
+                <Property Name="actarrapticao" Type="Edm.String" MaxLength="4"/>
+                <Property Name="actdeptapt" Type="Edm.String" MaxLength="3"/>
+                <Property Name="actdeptapticao" Type="Edm.String" MaxLength="4"/>
+                <Property Name="legstate" Type="Edm.String" MaxLength="3"/>
+                <Property Name="aircrafttype" Type="Edm.String" MaxLength="3"/>
+                <Property Name="aircrafttypecpa" Type="Edm.String" MaxLength="3"/>
+                <Property Name="tailno" Type="Edm.String" MaxLength="8"/>
+                <Property Name="flighttype" Type="Edm.String" MaxLength="1"/>
+                <Property Name="deptparkposn" Type="Edm.String" MaxLength="10"/>
+                <Property Name="actgatetime" Type="Edm.Int32"/>
+                <Property Name="servicetype" Type="Edm.String" MaxLength="1"/>
+                <Property Name="delayreason1" Type="Edm.String" MaxLength="3"/>
+                <Property Name="delayreason2" Type="Edm.String" MaxLength="3"/>
+                <Property Name="delayreason3" Type="Edm.String" MaxLength="3"/>
+                <Property Name="delayreason4" Type="Edm.String" MaxLength="3"/>
+                <Property Name="delayreason5" Type="Edm.String" MaxLength="3"/>
+                <Property Name="actualflyingdur" Type="Edm.Int32"/>
+                <Property Name="scheddepttime" Type="Edm.TimeOfDay"/>
+                <Property Name="scheddeptts" Type="Edm.Decimal" Scale="0" Precision="15"/>
+                <Property Name="actdeptts" Type="Edm.Decimal" Scale="0" Precision="15"/>
+                <Property Name="takeoffdate" Type="Edm.Date"/>
+                <Property Name="takeofftime" Type="Edm.TimeOfDay"/>
+                <Property Name="touchdndate" Type="Edm.Date"/>
+                <Property Name="touchdntime" Type="Edm.TimeOfDay"/>
+                <Property Name="actdeptdate" Type="Edm.Date"/>
+                <Property Name="actdepttime" Type="Edm.TimeOfDay"/>
+                <Property Name="actarrdate" Type="Edm.Date"/>
+                <Property Name="actarrtime" Type="Edm.TimeOfDay"/>
+                <Property Name="takeoffdateutc" Type="Edm.Date"/>
+                <Property Name="takeofftimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="touchdndateutc" Type="Edm.Date"/>
+                <Property Name="touchdntimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="actdeptdateutc" Type="Edm.Date"/>
+                <Property Name="actdepttimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="actarrdateutc" Type="Edm.Date"/>
+                <Property Name="actarrtimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="scheddeptdateutc" Type="Edm.Date"/>
+                <Property Name="scheddepttimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="schedarrdateutc" Type="Edm.Date"/>
+                <Property Name="schedarrtimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="schedarrdate" Type="Edm.Date"/>
+                <Property Name="schedarrtime" Type="Edm.TimeOfDay"/>
+                <Property Name="schedarrts" Type="Edm.Decimal" Scale="0" Precision="15"/>
+                <Property Name="actarrts" Type="Edm.Decimal" Scale="0" Precision="15"/>
+                <Property Name="estdeptdate" Type="Edm.Date"/>
+                <Property Name="estdepttime" Type="Edm.TimeOfDay"/>
+                <Property Name="estdeptdateutc" Type="Edm.Date"/>
+                <Property Name="estdepttimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="estarrdateutc" Type="Edm.Date"/>
+                <Property Name="estarrtimeutc" Type="Edm.TimeOfDay"/>
+                <Property Name="estarrdate" Type="Edm.Date"/>
+                <Property Name="estarrtime" Type="Edm.TimeOfDay"/>
+                <Property Name="planblocktime" Type="Edm.Int32"/>
+                <Property Name="schedarrapticao" Type="Edm.String" MaxLength="4"/>
+                <Property Name="schedarrapt" Type="Edm.String" MaxLength="3"/>
+                <Property Name="scheddeptapticao" Type="Edm.String" MaxLength="4"/>
+                <Property Name="scheddeptapt" Type="Edm.String" MaxLength="3"/>
+                <Property Name="flight_tm" Type="Edm.Int32"/>
+                <Property Name="arr_stand" Type="Edm.String" MaxLength="10"/>
+                <Property Name="dep_terminal" Type="Edm.String" MaxLength="4"/>
+                <Property Name="arr_terminal" Type="Edm.String" MaxLength="4"/>
+                <Property Name="onblockdate" Type="Edm.Date"/>
+                <Property Name="onblocktime" Type="Edm.TimeOfDay"/>
+                <Property Name="offblockdate" Type="Edm.Date"/>
+                <Property Name="offblocktime" Type="Edm.TimeOfDay"/>
+                <Property Name="taxi_out_time" Type="Edm.Int32"/>
+                <Property Name="route" Type="Edm.String" MaxLength="10"/>
+                <Property Name="cfpno1" Type="Edm.String" MaxLength="10"/>
+                <Property Name="cfpno2" Type="Edm.String" MaxLength="10"/>
+                <NavigationProperty Name="cargo" Type="Collection(TripService.cargorecord)"/>
+            </EntityType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

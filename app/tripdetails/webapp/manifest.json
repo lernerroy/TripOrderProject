@@ -1,5 +1,5 @@
 {
-    "_version": "1.32.0",
+    "_version": "1.29.0",
     "sap.app": {
         "id": "tripdetails",
         "type": "application",
@@ -7,14 +7,25 @@
         "applicationVersion": {
             "version": "1.0.0"
         },
-        "title": "{{appTitle}}",
-        "description": "{{appDescription}}",
+        "title": "Trips",
+        "description": "Expose Trip Records",
         "dataSources": {
             "mainService": {
                 "uri": "/browse/",
                 "type": "OData",
                 "settings": {
-                    "odataVersion": "4.0"
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
                 }
             }
         },
@@ -80,7 +91,12 @@
                     "pattern": "triprecord({key}):?query:",
                     "name": "triprecordObjectPage",
                     "target": "triprecordObjectPage"
-                }
+                },
+                    {
+                        "pattern": "triprecord({key})/cargo({key2}):?query:",
+                        "name": "cargorecordObjectPage",
+                        "target": "cargorecordObjectPage"
+                    }
             ],
             "targets": {
                 "triprecordList": {
@@ -107,10 +123,27 @@
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
-                            "entitySet": "triprecord"
+                            "entitySet": "triprecord",
+                                "navigation": {
+                                    "cargo": {
+                                        "detail": {
+                                            "route": "cargorecordObjectPage"
+                                        }
+                                    }
+                                }
                         }
                     }
-                }
+                },
+                    "cargorecordObjectPage": {
+                        "type": "Component",
+                        "id": "cargorecordObjectPage",
+                        "name": "sap.fe.templates.ObjectPage",
+                        "options": {
+                            "settings": {
+                                "entitySet": "cargorecord"
+                            }
+                        }
+                    }
             }
         },
         "contentDensities": {

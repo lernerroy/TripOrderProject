@@ -7,7 +7,7 @@ sap.ui.define([
 
 	Opa5.extendConfig({
 		arrangements: new Startup(),
-		viewNamespace: "com.legstate.accommodation.view.",
+		viewNamespace: "accommodation.view.",
 		autoWait: true
 	});
 });

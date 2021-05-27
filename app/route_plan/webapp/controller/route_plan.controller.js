@@ -7,7 +7,7 @@ sap.ui.define([
 	function (Controller) {
 		"use strict";
 
-		return Controller.extend("com.legstate.routeplan.controller.route_plan", {
+		return Controller.extend("route_plan.controller.route_plan", {
 			onInit: function () {
 
 			}

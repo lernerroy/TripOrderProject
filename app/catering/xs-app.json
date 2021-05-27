@@ -3,6 +3,12 @@
   "authenticationMethod": "route",
   "routes": [
     {
+      "source": "^/browse/(.*)$",
+      "target": "browse/$1",
+      "authenticationType": "xsuaa",
+      "destination": "srv"
+    },
+    {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",

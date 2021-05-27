@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="com.legstate.routeplan.controller.route_plan"
+    controllerName="routeplan.controller.route_plan"
     xmlns:mvc="sap.ui.core.mvc"
     displayBlock="true"
     xmlns="sap.m"

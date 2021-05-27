@@ -1,36 +1,45 @@
 {
-    "_version": "1.32.0",
+    "_version": "1.28.0",
     "sap.app": {
-        "id": "com.legstate.routeplan",
+        "id": "route_plan",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
             "version": "1.0.0"
         },
-        "title": "{{appTitle}}",
-        "description": "{{appDescription}}",
-        "resources": "resources.json",
-        "ach": "ach",
-        "crossNavigation": {
-            "inbounds": {
-                "com-legstate-routeplan-inbound": {
-                    "signature": {
-                        "parameters": {},
-                        "additionalParameters": "allowed"
-                    },
-                    "semanticObject": "RoutePlan",
-                    "action": "Display",
-                    "title": "Route Plan Overview",
-                    "subTitle": "",
-                    "icon": ""
+        "title": "Route Plan",
+        "description": "Route Plan Details",
+        "dataSources": {
+            "mainService": {
+                "uri": "/browse/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [
+                        "annotation"
+                    ],
+                    "odataVersion": "4.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            },
+            "annotation": {
+                "type": "ODataAnnotation",
+                "uri": "annotations/annotation.xml",
+                "settings": {
+                    "localUri": "annotations/annotation.xml"
                 }
             }
+        },
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
         }
     },
     "sap.ui": {
         "technology": "UI5",
         "icons": {
-            "icon": "sap-icon://task",
+            "icon": "",
             "favIcon": "",
             "phone": "",
             "phone@2": "",
@@ -44,68 +53,115 @@
         }
     },
     "sap.ui5": {
-        "flexEnabled": false,
-        "rootView": {
-            "viewName": "com.legstate.routeplan.view.route_plan",
-            "type": "XML",
-            "async": true,
-            "id": "route_plan"
+        "resources": {
+            "js": [],
+            "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.66.0",
+            "minUI5Version": "1.76.0",
             "libs": {
                 "sap.ui.core": {},
-                "sap.m": {},
-                "sap.ui.layout": {}
+                "sap.fe.templates": {}
+            }
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "routing": {
+            "routes": [
+                {
+                    "pattern": ":?query:",
+                    "name": "routeplanList",
+                    "target": "routeplanList"
+                },
+                {
+                    "pattern": "routeplan({key}):?query:",
+                    "name": "routeplanObjectPage",
+                    "target": "routeplanObjectPage"
+                },
+                    {
+                        "pattern": "routeplan({key})/cargo({key2}):?query:",
+                        "name": "cargorecordObjectPage",
+                        "target": "cargorecordObjectPage"
+                    }
+            ],
+            "targets": {
+                "routeplanList": {
+                    "type": "Component",
+                    "id": "routeplanList",
+                    "name": "sap.fe.templates.ListReport",
+                    "options": {
+                        "settings": {
+                            "entitySet": "routeplan",
+                            "variantManagement": "Page",
+                            "navigation": {
+                                "routeplan": {
+                                    "detail": {
+                                        "route": "routeplanObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "routeplanObjectPage": {
+                    "type": "Component",
+                    "id": "routeplanObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "routeplan",
+                                "navigation": {
+                                    "cargo": {
+                                        "detail": {
+                                            "route": "cargorecordObjectPage"
+                                        }
+                                    }
+                                }
+                        }
+                    }
+                },
+                    "cargorecordObjectPage": {
+                        "type": "Component",
+                        "id": "cargorecordObjectPage",
+                        "name": "sap.fe.templates.ObjectPage",
+                        "options": {
+                            "settings": {
+                                "entitySet": "cargorecord"
+                            }
+                        }
+                    }
             }
         },
         "contentDensities": {
             "compact": true,
             "cozy": true
-        },
-        "models": {
-            "i18n": {
-                "type": "sap.ui.model.resource.ResourceModel",
-                "settings": {
-                    "bundleName": "com.legstate.routeplan.i18n.i18n"
-                }
-            }
-        },
-        "resources": {
-            "css": [
-                {
-                    "uri": "css/style.css"
-                }
-            ]
-        },
-        "routing": {
-            "config": {
-                "routerClass": "sap.m.routing.Router",
-                "viewType": "XML",
-                "async": true,
-                "viewPath": "com.legstate.routeplan.view",
-                "controlAggregation": "pages",
-                "controlId": "app",
-                "clearControlAggregation": false
-            },
-            "routes": [
-                {
-                    "name": "Routeroute_plan",
-                    "pattern": "Routeroute_plan",
-                    "target": [
-                        "Targetroute_plan"
-                    ]
-                }
-            ],
-            "targets": {
-                "Targetroute_plan": {
-                    "viewType": "XML",
-                    "transition": "slide",
-                    "clearControlAggregation": false,
-                    "viewId": "route_plan",
-                    "viewName": "route_plan"
-                }
-            }
         }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": [],
+        "archeType": "transactional"
     }
 }

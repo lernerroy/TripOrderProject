@@ -3,6 +3,7 @@ ID: triporderproject
 description: A simple CAP project.
 version: 1.0.0
 modules:
+
 - name: triporder-srv
   type: nodejs
   path: gen/srv
@@ -15,6 +16,8 @@ modules:
   - name: srv-api
     properties:
       srv-url: ${default-url}
+
+
 - name: triporder_ui_deployer
   type: com.sap.application.content
   path: ui.deployer
@@ -22,39 +25,41 @@ modules:
   - name: triporder_html_repo_host
     parameters:
       content-target: true
+
   build-parameters:
     build-result: resources
     requires:
     - artifacts:
-      - comlegstateaccommodation.zip
-      name: comlegstateaccommodation
+      - accommodation.zip
+      name: accommodation
       target-path: resources/
     - artifacts:
-      - comlegstatecatering.zip
-      name: comlegstatecatering
+      - catering.zip
+      name: catering
       target-path: resources/
     - artifacts:
-      - comlegstatepassengers.zip
-      name: comlegstatepassengers
+      - passengers.zip
+      name: passengers
       target-path: resources/
     - artifacts:
-      - comlegstaterouteplan.zip
-      name: comlegstaterouteplan
-      target-path: resources/
-    - artifacts:
-      - tripdetails.zip
-      name: tripdetails
+      - route_plan.zip
+      name: route_plan
       target-path: resources/
     - artifacts:
       - cargocargo.zip
       name: cargocargo
       target-path: resources/
-
+    - artifacts:
+      - tripdetails.zip
+      name: tripdetails
+      target-path: resources/
+      
 - name: triporder-approuter
   type: approuter.nodejs
   path: triporder-approuter
   properties:
     TENANT_HOST_PATTERN: ^(.*)-${space}-${app-name}.${default-domain}
+    SEND_XFRAMEOPTIONS: false
   requires:
   - name: triporder_html_repo_runtime
   - name: uaa_triporder
@@ -68,12 +73,7 @@ modules:
     disk-quota: 256M
     memory: 256M
 
-
-
-
-
-
-- name: comlegstateaccommodation
+- name: accommodation
   type: html5
   path: app/accommodation
   build-parameters:
@@ -83,7 +83,8 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comlegstatecatering
+
+- name: catering
   type: html5
   path: app/catering
   build-parameters:
@@ -93,7 +94,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comlegstatepassengers
+- name: passengers
   type: html5
   path: app/passengers
   build-parameters:
@@ -103,9 +104,20 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: comlegstaterouteplan
+    
+- name: route_plan
   type: html5
   path: app/route_plan
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: cargocargo
+  type: html5
+  path: app/cargo
   build-parameters:
     build-result: dist
     builder: custom
@@ -123,21 +135,6 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-
-    
-- name: cargocargo
-  type: html5
-  path: app/cargo
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
-
-
-
 resources:
 - name: triporder-smc
   type: org.cloudfoundry.managed-service
