@@ -6,7 +6,8 @@
       "source": "^/browse/(.*)$",
       "target": "browse/$1",
       "authenticationType": "xsuaa",
-      "destination": "srv"
+      "service": "triporder-ui",
+      "endpoint": "root"
     },
     {
       "source": "^(.*)$",

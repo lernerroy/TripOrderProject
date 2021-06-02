@@ -64,11 +64,7 @@ modules:
   - name: triporder_html_repo_runtime
   - name: uaa_triporder
   - name: srv-api
-    group: destinations
-    properties:
-      forwardAuthToken: true
-      name: srv
-      url: ~{srv-url}
+  - name: triporder-destination
   parameters:
     disk-quota: 256M
     memory: 256M
@@ -135,7 +131,20 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+
+
 resources:
+- name: triporder-broker-credentials 
+  properties:
+    user: "tiger-sbf-user"
+    #password: "LVZi715Vah0gmKqmtji+2dnCFIcHnyVJ"
+    hash: "sha256:AhyT4wEhD1DjSrOkV/ZmoIyY8sKn806XN1n2t9Zekn8=:U+UTeEGUGTz5Of66ytma3Bi9gB3GAFJXk9FuITaLcFU="
+
+- name: triporder-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination 
+    service-plan: lite
 - name: triporder-smc
   type: org.cloudfoundry.managed-service
   parameters:
@@ -184,7 +193,7 @@ resources:
       xsappname: triporder-${space}
     path: ./xs-security.json
     service: xsuaa
-    service-plan: application
+    service-plan: broker
 - name: triporder_html_repo_host
   type: org.cloudfoundry.managed-service
   parameters:

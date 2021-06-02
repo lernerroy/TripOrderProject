@@ -1,0 +1,60 @@
+---
+applications:
+#https://blogs.sap.com/2020/09/28/a-solution-for-external-systems-using-oauth2-password-grant-to-call-apps-deployed-in-cloud-foundry-environment/
+- name: triprecord-broker
+  memory: 128M
+  path: .
+  buildpack: nodejs_buildpack
+  services:
+#     https://www.npmjs.com/package/@sap/sbf#xsuaa
+    - uaa_triporder
+    - triporder_html_repo_host
+#   audit log service is not availale
+#    - flights-audit
+  health-check-type: http
+  health-check-http-endpoint: /health
+  env:
+      SBF_CATALOG_SUFFIX: dev
+#     audit log service is not availale
+      SBF_ENABLE_AUDITLOG: false
+#     https://www.npmjs.com/package/@sap/sbf#automatic-credentials-generation      
+      SBF_CREDENTIALS_PROVIDER_SERVICE: uaa_triporder
+#     https://www.npmjs.com/package/@sap/sbf#providing-the-tenant-id      
+#     not required with xsuaa
+#     SBF_TENANT_ID: 65ca0b3f-5fa6-4e1c-a50b-947ca4754f1f
+      #https://www.npmjs.com/package/@sap/sbf#service-broker-hashed-credentials
+      #https://www.npmjs.com/package/@sap/sbf#generate-a-secure-broker-password 
+      #LVZi715Vah0gmKqmtji+2dnCFIcHnyVJ
+      # dot set this when updating after deployment from mta
+      SBF_BROKER_CREDENTIALS_HASH: >
+        {
+          "triporder-sbf-user": "sha256:5mR4kbvPF6C+1FBmhyCU6laKgIvvIjmDfsgZSsayo5k=:m6i1Cg8GxgK9gGhpVg1tsljudSvGRJJ06HOfGJqj928="
+        }
+
+      #https://www.npmjs.com/package/@sap/sbf#create-the-service-catalog
+      #Run npx gen-catalog-ids and check-in with the ids
+      #extend_xssecurity
+      #https://www.npmjs.com/package/@sap/sbf#additional-service-configuration
+      SBF_SERVICE_CONFIG: >
+        {
+          "triporder-srv": {
+            "extend_credentials": {
+              "shared": {
+                "vendor": "LegState Engineering",
+                "endpoints": {
+                    "root":    "https://triprecord-triprecordspace-triporder-srv.cfapps.eu10.hana.ondemand.com"               
+                }                
+              },
+              "per_plan": {
+                "default": {
+                  "url": "https://triprecord-triprecordspace-triporder-srv.cfapps.eu10.hana.ondemand.com",
+                  "grant_type" : "user_token"
+                },
+                "api": {
+                  "url": "https://triprecord-triprecordspace-triporder-srv.cfapps.eu10.hana.ondemand.com",
+                  "grant_type" : "client_credentials"
+                }
+              }
+            }
+          }
+        }

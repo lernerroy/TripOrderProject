@@ -1,0 +1,59 @@
+{
+  "services": [
+    {
+      "name": "triporder-srv",
+      "category": "LegState engineering",
+      "description": "Trip Record",
+      "bindable": true,
+      "metadata": {
+        "displayName": "Trip Record",
+        "category": "LegState engineering",
+        "sapservice": {
+          "sap.cloud.service": "triporder-ui",
+          "saasregistryenabled": true,
+          "grant_type": "user_token"
+        }
+      },
+      "plans": [
+        {
+          "name": "default",
+          "description": "Basic plan",
+          "metadata": {
+            "sapservice": {
+              "sap.cloud.service": "triporder-ui",
+              "saasregistryenabled": true,
+              "grant_type": "user_token"
+            },
+            "supportedPlatforms": [
+              "cloudfoundry"
+            ],
+            "auto-subscription": {
+              "saasregistryenabled": true,
+              "app_name": "triporder-triprecordspace"
+            }
+          },
+          "id": "d4fbb8e0-56de-4937-93b6-53058df06b94"
+        },
+        {
+          "name": "api",
+          "description": "API service plan (after subscription)",
+          "metadata": {
+            "supportedPlatforms": [
+              "cloudfoundry"
+            ],
+            "sapservice": {
+              "grant_type": "client_credentials",
+              "saasregistryenabled": true
+            },
+            "auto-subscription": {
+              "saasregistryenabled": true,
+              "app_name": "triporder-triprecordspace"
+            }
+          },
+          "id": "74add6ed-7808-4a7c-a899-4544c4e66b60"
+        }
+      ],
+      "id": "535e31a0-7d37-4142-987a-494c6ac2cb7c"
+    }
+  ]
+}

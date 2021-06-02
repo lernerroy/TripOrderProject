@@ -1,5 +1,9 @@
 {
     "_version": "1.28.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui" 
+    },
     "sap.app": {
         "id": "accommodation",
         "type": "application",
