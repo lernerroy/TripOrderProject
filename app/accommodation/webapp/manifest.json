@@ -2,7 +2,7 @@
     "_version": "1.28.0",
     "sap.cloud": {
         "public": true,
-        "service": "triporder-ui" 
+        "service": "triporder-ui"
     },
     "sap.app": {
         "id": "accommodation",
@@ -38,6 +38,21 @@
         "sourceTemplate": {
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "accommodation-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Accommodation",
+                    "action": "browse",
+                    "title": "Accommodation",
+                    "subTitle": "View Accomodation information",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {
@@ -96,11 +111,11 @@
                     "name": "accommodationObjectPage",
                     "target": "accommodationObjectPage"
                 },
-                    {
-                        "pattern": "accommodation({key})/cargo({key2}):?query:",
-                        "name": "cargorecordObjectPage",
-                        "target": "cargorecordObjectPage"
-                    }
+                {
+                    "pattern": "accommodation({key})/cargo({key2}):?query:",
+                    "name": "cargorecordObjectPage",
+                    "target": "cargorecordObjectPage"
+                }
             ],
             "targets": {
                 "accommodationList": {
@@ -128,26 +143,26 @@
                     "options": {
                         "settings": {
                             "entitySet": "accommodation",
-                                "navigation": {
-                                    "cargo": {
-                                        "detail": {
-                                            "route": "cargorecordObjectPage"
-                                        }
+                            "navigation": {
+                                "cargo": {
+                                    "detail": {
+                                        "route": "cargorecordObjectPage"
                                     }
                                 }
-                        }
-                    }
-                },
-                    "cargorecordObjectPage": {
-                        "type": "Component",
-                        "id": "cargorecordObjectPage",
-                        "name": "sap.fe.templates.ObjectPage",
-                        "options": {
-                            "settings": {
-                                "entitySet": "cargorecord"
                             }
                         }
                     }
+                },
+                "cargorecordObjectPage": {
+                    "type": "Component",
+                    "id": "cargorecordObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "entitySet": "cargorecord"
+                        }
+                    }
+                }
             }
         },
         "contentDensities": {

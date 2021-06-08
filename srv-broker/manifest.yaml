@@ -14,7 +14,7 @@ applications:
   health-check-type: http
   health-check-http-endpoint: /health
   env:
-      SBF_CATALOG_SUFFIX: dev
+      # SBF_CATALOG_SUFFIX: dev
 #     audit log service is not availale
       SBF_ENABLE_AUDITLOG: false
 #     https://www.npmjs.com/package/@sap/sbf#automatic-credentials-generation      

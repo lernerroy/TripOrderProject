@@ -38,6 +38,21 @@
         "sourceTemplate": {
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
+        },
+         "crossNavigation": {
+            "inbounds": {
+                "tripdetails-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "TripDetails",
+                    "action": "browse",
+                    "title": "Trip Details",
+                    "subTitle": "View Trip Detail information",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {

@@ -1,19 +1,15 @@
 {
-  "xsappname": "triporder-triprecordspace",
+  "xsappname": "triporder-xsapp",
   "tenant-mode": "shared",
   "description": "Security profile of called application",
   "scopes": [
     {
-        "name": "uaa.user",
-        "description": "UAA"
-    },
-    {
         "name": "$XSAPPNAME.User",
-        "description": "With this scope, USER can read products."
+        "description": "With this scope, USER can read trip details."
     },
     {
-        "name": "$XSAPPNAME.Administrator",
-        "description": "With this scope, USER can read & Write products."
+        "name": "$XSAPPNAME.API_user",
+        "description": "With this scope, USER can read & Write trip details."
     },
     {
         "name": "$XSAPPNAME.mtcallback",
@@ -25,10 +21,10 @@
   ],
   "role-templates": [
         {
-            "name": "Administrator",
-            "description": "Administrator",
+            "name": "API_user",
+            "description": "API Granted user",
             "scope-references": [
-                "$XSAPPNAME.Administrator"
+                "$XSAPPNAME.API_user"
             ]
         },
         {
@@ -41,12 +37,12 @@
     ],
     "role-collections": [
         {
-            "name": "TripRecord_Administrator",
+            "name": "TripRecord_API_user",
             "description": "Trip Record App Administrator",
             "role-template-references": [
-                "$XSAPPNAME.Administrator",
+                "$XSAPPNAME.API_user",
                 "$XSAPPNAME.User"
-            ]
+            ]            
         },
         {
             "name": "TripRecord_User",
@@ -55,6 +51,7 @@
                 "$XSAPPNAME.User"
             ]
         }
-    ]
+    ],
+    "oauth2-configuration": { "credential-types" : ["binding-secret"] }
 }
 

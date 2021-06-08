@@ -38,6 +38,21 @@
         "sourceTemplate": {
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
+        },
+         "crossNavigation": {
+            "inbounds": {
+                "route_plan-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "Route_Plan",
+                    "action": "browse",
+                    "title": "Route Plan",
+                    "subTitle": "View Route Plan information",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {

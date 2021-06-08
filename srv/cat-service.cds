@@ -1,16 +1,17 @@
 using { com.legstate.triporder as trips } from '../db/data-model';
 
-annotate trips with @(requires: ['system-user','Admin','User']);
+annotate trips with @(requires: ['system-user','API_user','User']);
 
 annotate trips.triprecord with @(restrict: [
-  { grant: ['READ','WRITE'], to: 'Admin' }, 
-  { grant: ['READ'], to: 'User' }
+  { grant: ['READ','WRITE'], to: 'API_user' }, 
+  { grant: ['READ'], to: 'User' },
+  { grant: ['WRITE'], to: 'system-user' }
 ]);
 
 
 @path:'/browse'
-//@impl: './trip-service.js'
-@requires: 'authenticated-user'
+//@impl: './trip-service.js'    
+//@requires: 'authenticated-user'
 service TripService 
 {
     entity triprecord // @(restrict: [ { grant: ['*'], to: 'trip_order'}]) 

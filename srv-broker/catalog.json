@@ -2,12 +2,12 @@
   "services": [
     {
       "name": "triporder-srv",
-      "category": "LegState engineering",
+      "category": "LegState Engineering",
       "description": "Trip Record",
       "bindable": true,
       "metadata": {
         "displayName": "Trip Record",
-        "category": "LegState engineering",
+        "category": "LegState Engineering",
         "sapservice": {
           "sap.cloud.service": "triporder-ui",
           "saasregistryenabled": true,
@@ -29,7 +29,7 @@
             ],
             "auto-subscription": {
               "saasregistryenabled": true,
-              "app_name": "triporder-triprecordspace"
+              "app_name": "triporder-xsapp"
             }
           },
           "id": "d4fbb8e0-56de-4937-93b6-53058df06b94"
@@ -47,7 +47,7 @@
             },
             "auto-subscription": {
               "saasregistryenabled": true,
-              "app_name": "triporder-triprecordspace"
+              "app_name": "triporder-xsapp"
             }
           },
           "id": "74add6ed-7808-4a7c-a899-4544c4e66b60"

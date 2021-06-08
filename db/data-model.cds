@@ -5,7 +5,7 @@ aspect surrogatenum {
     key surrogatenum      : String(23);
 }
 
-aspect recordsKey { // key ID to be reused in other entities 
+aspect recordsKey :  { // key ID to be reused in other entities 
     Key insupcaarriercode2 : String(2);
     Key inflightno        : String(4);
     key inorigin          : String(3);

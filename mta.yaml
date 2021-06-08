@@ -4,6 +4,49 @@ description: A simple CAP project.
 version: 1.0.0
 modules:
 
+- name: triporder-broker
+  type: nodejs
+  path: srv-broker
+  parameters:
+      memory: 128M
+  properties:
+      SBF_ENABLE_AUDITLOG: false
+      SBF_CREDENTIALS_PROVIDER_SERVICE: uaa_triporder
+      SBF_BROKER_CREDENTIALS_HASH: "{ \"~{triporder-broker-credentials/user}\": \"~{triporder-broker-credentials/hash}\" }"
+  build-parameters:
+      ignore: [".gitignore", manifest.yml, "*.mtaext", "mta.*", "*.mtar", ".mta/"]
+  requires:
+    - name: triporder-broker-credentials
+    - name: uaa_triporder
+    - name: triporder_html_repo_host
+    # - name: flights-audit
+    - name: srv-api
+      properties:
+         SBF_SERVICE_CONFIG:
+            triporder-srv:
+              extend_credentials:
+                shared:
+                  vendor: LegState Engineering
+                  endpoints:
+                    root: ~{srv-url}
+                per_plan:
+                  default:
+                    url: ~{srv-url}
+                    grant_type: user_token
+                  api:
+                    url: ~{srv-url}
+                    grant_type: client_credentials
+              extend_xssecurity:
+                shared:
+                  oauth2-configuration:
+                    credential-types: [binding-secret]
+                per_plan:
+                  default:
+                    authorities: [$XSMASTERAPPNAME.User,$XSMASTERAPPNAME.API_User]
+                  api:
+                    authorities: []
+
+
 - name: triporder-srv
   type: nodejs
   path: gen/srv
@@ -136,9 +179,8 @@ modules:
 resources:
 - name: triporder-broker-credentials 
   properties:
-    user: "tiger-sbf-user"
-    #password: "LVZi715Vah0gmKqmtji+2dnCFIcHnyVJ"
-    hash: "sha256:AhyT4wEhD1DjSrOkV/ZmoIyY8sKn806XN1n2t9Zekn8=:U+UTeEGUGTz5Of66ytma3Bi9gB3GAFJXk9FuITaLcFU="
+    user: "triporder-sbf-user"
+    hash: "sha256:5mR4kbvPF6C+1FBmhyCU6laKgIvvIjmDfsgZSsayo5k=:m6i1Cg8GxgK9gGhpVg1tsljudSvGRJJ06HOfGJqj928="
 
 - name: triporder-destination
   type: org.cloudfoundry.managed-service
@@ -156,23 +198,27 @@ resources:
     service-plan: container
   requires:
   - name: uaa_triporder
+
 - name: triporder-reg
   type: org.cloudfoundry.managed-service
   parameters:
     config:
       appUrls:
         callbackTimeoutMillis: 300000
-        onSubscription: https://${org}-${space}-triporder-srv.${default-domain}/mtx/v1/provisioning/tenant/{tenantId}
+        onSubscription: ~{srv-api/srv-url}/mtx/v1/provisioning/tenant/{tenantId}
         onSubscriptionAsync: false
         onUnSubscriptionAsync: false
-      category: LegState Category
+      category: LegState Engineering
       description: Trip Record services and apps
-      displayName: Trip Record App
-      xsappname: triporder-${space}
+      displayName: Trip Record
+      xsappname: triporder-xsapp
     service: saas-registry
     service-plan: application
   requires:
   - name: uaa_triporder
+  - name: srv-api
+
+
 - name: triporder-db
   type: com.sap.xs.hdi-container
   parameters:
@@ -190,7 +236,7 @@ resources:
   parameters:
     config:
       tenant-mode: shared
-      xsappname: triporder-${space}
+      xsappname: triporder-xsapp
     path: ./xs-security.json
     service: xsuaa
     service-plan: broker
