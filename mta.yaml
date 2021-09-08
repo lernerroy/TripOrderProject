@@ -50,6 +50,8 @@ modules:
 - name: triporder-srv
   type: nodejs
   path: gen/srv
+  parameters:
+    memory: 512M
   requires:
   - name: triporder-db
   - name: uaa_triporder
