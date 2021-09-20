@@ -1,0 +1,46 @@
+{
+    "name": "tripcollated",
+    "dependencies": {
+        "@sap/approuter": "8.6.0"
+    },
+    "engines": {
+        "node": "^10"
+    },
+    "version": "0.0.1",
+    "private": true,
+    "sapux": true,
+    "description": "Trip Details",
+    "keywords": [
+        "ui5",
+        "openui5",
+        "sapui5"
+    ],
+    "main": "webapp/index.html",
+    "scripts": {
+        "start": "node node_modules/@sap/approuter/approuter.js",
+        "start-local": "fiori run --config ./ui5-local.yaml --open index.html",
+        "build": "ui5 build -a --clean-dest --include-task=generateManifestBundle generateCachebusterInfo",
+        "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf",
+        "deploy": "fiori add deploy-config",
+        "build:cf": "ui5 build preload --clean-dest --config ui5-deploy.yaml --include-task=generateManifestBundle generateCachebusterInfo"
+    },
+    "devDependencies": {
+        "@ui5/cli": "^2.10.1",
+        "@ui5/fs": "^2.0.6",
+        "@ui5/logger": "^2.0.1",
+        "@sap/ux-ui5-tooling": "1",
+        "rimraf": "3.0.2",
+        "@sap/ux-specification": "UI5-1.89",
+        "@sap/ui5-builder-webide-extension": "1.0.x",
+        "ui5-task-zipper": "^0.3.1",
+        "mbt": "^1.0.15"
+    },
+    "ui5": {
+        "dependencies": [
+            "@sap/ux-ui5-tooling",
+            "@sap/ui5-builder-webide-extension",
+            "ui5-task-zipper",
+            "mbt"
+        ]
+    }
+}

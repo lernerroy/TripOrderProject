@@ -29,3 +29,6 @@ mta_archives/
 # IDEs
 # .vscode
 # .idea
+
+# auto generated wildcard
+triprecord/.env1

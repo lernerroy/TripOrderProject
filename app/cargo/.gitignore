@@ -2,3 +2,6 @@ node_modules/
 dist/
 .scp/
 .env
+
+# auto generated wildcard
+triprecord/.env1

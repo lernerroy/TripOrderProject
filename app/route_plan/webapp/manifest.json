@@ -48,9 +48,10 @@
                     },
                     "semanticObject": "Route_Plan",
                     "action": "browse",
-                    "title": "Route Plan",
-                    "subTitle": "View Route Plan information",
-                    "icon": ""
+                    "title": "Route Plan Details",
+                    "info": "Present Route Plan Information",
+                    "subTitle": "Route Plan information",
+                    "icon": "sap-icon://process"
                 }
             }
         }

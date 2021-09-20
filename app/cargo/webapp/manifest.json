@@ -48,9 +48,11 @@
                     },
                     "semanticObject": "Cargo",
                     "action": "browse",
-                    "title": "Cargo",
-                    "subTitle": "View Cargo information",
-                    "icon": ""
+                    "title": "Cargo Details",
+                    "info": "Present Cargo Information",
+                    "subTitle": "Cargo information",
+                    "icon": "sap-icon://cargo-train"
+                    
                 }
             }
         }

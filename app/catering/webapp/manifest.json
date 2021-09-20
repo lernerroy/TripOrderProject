@@ -48,9 +48,10 @@
                     },
                     "semanticObject": "Catering",
                     "action": "browse",
-                    "title": "Catering",
-                    "subTitle": "View Catering information",
-                    "icon": ""
+                    "title": "Catering Details",
+                    "info": "Present Catering Information",
+                    "subTitle": "Catering information",
+                    "icon": "sap-icon://cart"
                 }
             }
         }

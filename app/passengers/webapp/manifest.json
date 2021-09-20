@@ -48,9 +48,10 @@
                     },
                     "semanticObject": "Passengers",
                     "action": "browse",
-                    "title": "Passengers",
-                    "subTitle": "View Passengers information",
-                    "icon": ""
+                    "title": "Passengers Details",
+                    "info": "Present Passengers Information",
+                    "subTitle": "Passengers information",
+                    "icon": "sap-icon://activity-individual"
                 }
             }
         }

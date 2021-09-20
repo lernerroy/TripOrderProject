@@ -1,0 +1,372 @@
+<mvc:View controllerName="tripcollated.controller.TripDetails" xmlns:mvc="sap.ui.core.mvc" xmlns:fb="sap.ui.comp.filterbar" displayBlock="true" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<Shell id="shell" appWidthLimited="false">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+                        <HBox width="auto" alignContent="Center" alignItems="Center" justifyContent="Center">
+							<Label text="Carrier Code" labelFor="iCarrierCode" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+							<Input id="iCarrierCode" value="Dummy Code" editable="false" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+							<Label text="Flight Number" labelFor="iFlightNo" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+							<Input id="iFlightNo" value="Dummy Flight No" editable="false" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+							<Label text="Origin" labelFor="iOrigin" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+							<Input id="iOrigin" value="Dummy Origin" editable="false" class="sapUiMediumMarginTop"/>
+                            <Label text="Destination" labelFor="iDestination" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+							<Input id="iDestination" value="Dummy Destination" editable="false" class="sapUiMediumMarginTop"/>
+                            <Label text="Sched. Departure Date" labelFor="iSchdDepDate" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+							<Input id="iSchdDepDate" value="Dummy Date" editable="false" class="sapUiMediumMarginTop"/>
+						</HBox>
+                        <IconTabBar id="idIconTabBarStretchContent" select=".onTabSelect" fieldGroupIds="idParentIconTabBar" stretchContentHeight="true" backgroundDesign="Transparent" applyContentPadding="false" class="sapUiResponsiveContentPadding">
+                            <items>
+                                <IconTabFilter key="acc" iconColor="Contrast" icon="sap-icon://retail-store" text="{i18n>accommodation}">
+                                    <content>
+                                        <fb:FilterBar>
+		                                    <fb:filterGroupItems>
+			                                    <fb:FilterGroupItem groupName="Accommodation" name="Carrier Code" label="Carrier Code" partOfCurrentVariant="true" visibleInFilterBar="true">
+				                                    <fb:control>
+					                                    <Input type="Text"/>
+				                                    </fb:control>
+			                                    </fb:FilterGroupItem>
+		                                    </fb:filterGroupItems>
+	                                    </fb:FilterBar>
+                                        <Table id="accTable" items="{                                             path: '/accommodation',                                             parameters:{ $count : true }                                         }" noDataText="No Accommodation" growing="true" growingThreshold="10" contextualWidth="Auto" popinLayout="GridSmall" width="auto">
+                                            <headerToolbar>
+                                                <OverflowToolbar>
+                                                    <Title id="accTableTitle" text="Accommodation ({$count})">
+                                                        <layoutData>
+                                                            <ToolbarLayoutData shrinkable="false"/>
+                                                        </layoutData>
+                                                    </Title>
+                                                    <ToolbarSpacer/>
+                                                </OverflowToolbar>
+                                            </headerToolbar>
+                                            <columns>
+                                                <Column hAlign="Left" width="15%">
+                                                    <Text text="Carrier Code"/>
+                                                </Column>
+                                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left" width="35%">
+                                                    <Text text="Flight Number"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Text text="Origin"/>
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem type="Navigation" press="onSelectionChange">
+                                                    <cells>
+                                                        <Text text="{carriercode}"/>
+                                                        <Text text="{flightno}"/>
+                                                        <Text text="{origin}"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </content>
+                                </IconTabFilter>
+                                <IconTabFilter key="car" iconColor="Contrast" icon="sap-icon://cargo-train" text="{i18n>cargo}">
+                                    <content>
+                                        
+                                    </content>
+                                </IconTabFilter>
+                                <IconTabFilter key="cat" iconColor="Contrast" icon="sap-icon://cart" text="{i18n>catering}">
+                                    <content>
+                                        
+                                    </content>
+                                </IconTabFilter>
+                                <IconTabFilter key="pas" iconColor="Contrast" icon="sap-icon://activity-individual" text="{i18n>passengers}">
+                                    <content>
+                                        
+                                    </content>
+                                </IconTabFilter>
+                                <IconTabFilter key="rou" iconColor="Contrast" icon="sap-icon://step" text="{i18n>routePlan}">
+                                   <content>
+                                        
+                                    </content>
+                                </IconTabFilter>
+                                <IconTabFilter key="tri" iconColor="Contrast" icon="sap-icon://travel-itinerary" text="{i18n>tripDetails}">
+                                    <content>
+                                        <VBox class="sapUiSmallMargin">
+                                            <f:Form editable="true">
+                                                <f:title>
+                                                    <core:Title text="Flight Identification" />
+                                                </f:title>
+                                                <f:layout>
+                                                    <f:ResponsiveGridLayout
+                                                        labelSpanXL="4"
+                                                        labelSpanL="4"
+                                                        labelSpanM="12"
+                                                        labelSpanS="12"
+                                                        adjustLabelSpan="false"
+                                                        emptySpanXL="0"
+                                                        emptySpanL="0"
+                                                        emptySpanM="0"
+                                                        emptySpanS="0"
+                                                        columnsXL="2"
+                                                        columnsL="2"
+                                                        columnsM="1"
+                                                        singleContainerFullSize="false" />
+                                                </f:layout>
+                                                <f:formContainers>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                            <f:FormElement label="Comm. Carrier Code">
+                                                                <f:fields>
+                                                                    <Input value="{triprecord>supcarriercode2}" id="CommCarrierCode"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Operator Carrier Code">
+                                                                <f:fields>
+                                                                    <Input value="{triprecord>supcarriercode}" id="OppCarrierCode"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Route Owner">
+                                                                <f:fields>
+                                                                    <Input value="{tripRecord>route}" id="RouteOwner"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Flight Number">
+                                                                <f:fields>
+                                                                    <Input value="{triprecord>flightno}" id="FlightNumber"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Leg Number">
+                                                                <f:fields>
+                                                                    <Input value="{triprecord>legstate}" id="LegNumber"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                            <f:FormElement label="Orig.Init Dr UTC">
+                                                                <f:fields>
+                                                                    <Input value="{triporder>scheddeptdateutc}" id="OrigInitDrUTC"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Orig.Init Dr LMT">
+                                                                <f:fields>
+                                                                    <Input value="{scheddepttimeutc}" id="OrigInitDrLMT"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Day Of Origin LMT">
+                                                                <f:fields>
+                                                                    <Input value="{DayOriginLMT}" id="DayOriginLMT"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Day Or Origin UTC">
+                                                                <f:fields>
+                                                                    <Input value="{DayOriginUTC}" id="DayOriginUTC"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                </f:formContainers>
+                                            </f:Form>
+                                            <f:Form editable="true">
+                                                <f:title>
+                                                    <core:Title text="Flight Airports Details" />
+                                                </f:title>
+                                                <f:layout>
+                                                    <f:ResponsiveGridLayout
+                                                        labelSpanXL="4"
+                                                        labelSpanL="4"
+                                                        labelSpanM="12"
+                                                        labelSpanS="12"
+                                                        adjustLabelSpan="false"
+                                                        emptySpanXL="0"
+                                                        emptySpanL="0"
+                                                        emptySpanM="0"
+                                                        emptySpanS="0"
+                                                        columnsXL="2"
+                                                        columnsL="2"
+                                                        columnsM="1"
+                                                        singleContainerFullSize="false" />
+                                                </f:layout>
+                                                <f:formContainers>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                            <f:FormElement label="Initial Origin">
+                                                                <f:fields>
+                                                                    <Input value="{InitialOrigin}" id="InitialOrigin"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Origin">
+                                                                <f:fields>
+                                                                    <Input value="{Origin}" id="Origin"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Initial Destination">
+                                                                <f:fields>
+                                                                    <Input value="{InitialDestination}" id="InitialDestination"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Destination">
+                                                                <f:fields>
+                                                                    <Input value="{Destination}" id="Destination"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Sched.Dep.AP(IATA)">
+                                                                <f:fields>
+                                                                    <Input value="{SchDepAPIATA}" id="SchDepAPIATA"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Sched.Arr.AP(IATA)">
+                                                                <f:fields>
+                                                                    <Input value="{SchArrAPIATA}" id="SchArrAPIATA"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                            <f:FormElement label="Act.Dep.AP(IATA)">
+                                                                <f:fields>
+                                                                    <Input value="{ActDepAPIATA}" id="ActDepAPIATA"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Act.Dep.AP(ICAO)">
+                                                                <f:fields>
+                                                                    <Input value="{ActDepAPICAO}" id="ActDepAPICAO"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Act.Arr.AP(IATA)">
+                                                                <f:fields>
+                                                                    <Input value="{ActArrAPIATA}" id="ActArrAPIATA"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Act.Arr.AP(ICAO)">
+                                                                <f:fields>
+                                                                    <Input value="{ActArrAPICAO}" id="ActArrAPICAO"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Sch.Dep.AP(ICAO)">
+                                                                <f:fields>
+                                                                    <Input value="{SchDepAPICAO}" id="SchDepAPICAO"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Sch.Arr.AP(ICAO)">
+                                                                <f:fields>
+                                                                    <Input value="{SchArrAPICAO}" id="SchArrAPICAO"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                </f:formContainers>
+                                            </f:Form>
+                                            <f:Form editable="true">
+                                                <f:title>
+                                                    <core:Title text="Flight Extra Details" />
+                                                </f:title>
+                                                <f:layout>
+                                                    <f:ResponsiveGridLayout
+                                                        labelSpanXL="4"
+                                                        labelSpanL="4"
+                                                        labelSpanM="12"
+                                                        labelSpanS="12"
+                                                        adjustLabelSpan="false"
+                                                        emptySpanXL="0"
+                                                        emptySpanL="0"
+                                                        emptySpanM="0"
+                                                        emptySpanS="0"
+                                                        columnsXL="2"
+                                                        columnsL="2"
+                                                        columnsM="1"
+                                                        singleContainerFullSize="false" />
+                                                </f:layout>
+                                                <f:formContainers>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                            <f:FormElement label="Repeat No.">
+                                                                <f:fields>
+                                                                    <Input value="{RepeatNo}" id="RepeatNo"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Initial Flight No">
+                                                                <f:fields>
+                                                                    <Input value="{InitialFlightNo}" id="InitialFlightNo"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Flight Type">
+                                                                <f:fields>
+                                                                    <Input value="{FlightType}" id="FlightType"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Service Type (Op. Cd)">
+                                                                <f:fields>
+                                                                    <Input value="{ServiceType}" id="ServiceType"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Delay Reason Code I">
+                                                                <f:fields>
+                                                                    <Input value="{DelayReasonCode1}" id="DelayReasonCode1"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Departure Park Pos">
+                                                                <f:fields>
+                                                                    <Input value="{DepParkPos}" id="DepParkPos"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Actual Gate Time(m)">
+                                                                <f:fields>
+                                                                    <Input value="{ActualGateTimem}" id="ActualGateTimem"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                            <f:FormElement label="Current Leg State">
+                                                                <f:fields>
+                                                                    <Input value="{CurrentLegState}" id="Current"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Aircraft Type (IATA)">
+                                                                <f:fields>
+                                                                    <Input value="{AircraftTypeIATA}" id="AircraftTypeIATA"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Aircraft Type (CPA)">
+                                                                <f:fields>
+                                                                    <Input value="{AircraftTypeCPA}" id="AircraftTypeCPA"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Tail No.">
+                                                                <f:fields>
+                                                                    <Input value="{TailNo}" id="TailNo"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Act Fly Dur. (Min)">
+                                                                <f:fields>
+                                                                    <Input value="{ActFlyDur}" id="ActFlyDur"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="CFP No. 1">
+                                                                <f:fields>
+                                                                    <Input value="{CFPNo1}" id="CFPNo1"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="CFP No. 2">
+                                                                <f:fields>
+                                                                    <Input value="{CFPNo2}" id="CFPNo2"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                            <f:FormElement label="Plan. Block Time (Min.)">
+                                                                <f:fields>
+                                                                    <Input value="{PlanBlockTime}" id="PlanBlockTime"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                </f:formContainers>
+                                            </f:Form>
+                                        </VBox>
+                                    </content>
+                                </IconTabFilter>
+                            </items>
+                        </IconTabBar>
+                    </content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

@@ -98,7 +98,11 @@ modules:
       - tripdetails.zip
       name: tripdetails
       target-path: resources/
-      
+    - artifacts:
+      - tripcollated.zip
+      name: tripcollated
+      target-path: resources/
+
 - name: triporder-approuter
   type: approuter.nodejs
   path: triporder-approuter
@@ -176,7 +180,17 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-
+    
+- name: tripcollated
+  type: html5
+  path: app/tripcollated
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 
 resources:
 - name: triporder-broker-credentials 

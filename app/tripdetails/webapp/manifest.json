@@ -49,8 +49,9 @@
                     "semanticObject": "TripDetails",
                     "action": "browse",
                     "title": "Trip Details",
-                    "subTitle": "View Trip Detail information",
-                    "icon": ""
+                    "info": "Review Trip Information",
+                    "subTitle": "Trip information",
+                    "icon": "sap-icon://travel-itinerary"
                 }
             }
         }

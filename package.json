@@ -18,10 +18,11 @@
     "@sap/xsenv": "^3.1.0",
     "@sap/xssec": "^3.2.0",
     "express": "^4.17.1",
+    "hdb": "^0.18.3",
     "passport": "^0.4.1"
   },
   "devDependencies": {
-    "@sap/ux-specification": "^1.84.11",
+    "@sap/ux-specification": "^1.90.8",
     "sqlite3": "^5.0.2"
   },
   "scripts": {
@@ -81,6 +82,7 @@
     "app/passengers",
     "app/route_plan",
     "app/triprecordnew",
-    "app/tripdetails"
+    "app/tripdetails",
+    "app/tripcollated"
   ]
 }

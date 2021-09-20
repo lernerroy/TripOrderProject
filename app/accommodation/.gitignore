@@ -7,3 +7,5 @@ mta_archives
 mta-*
 resources
 archive.zip
+# auto generated wildcard
+triprecord/.env1

@@ -8,7 +8,6 @@ annotate trips.triprecord with @(restrict: [
   { grant: ['WRITE'], to: 'system-user' }
 ]);
 
-
 @path:'/browse'
 //@impl: './trip-service.js'    
 //@requires: 'authenticated-user'
@@ -28,3 +27,20 @@ service TripService
     as projection on trips.accommodation;
 };
 
+annotate TripService.accommodation with {
+    carriercode         @title: 'Carrier Code';
+    flightno            @title: 'Flight Number';
+    origin              @title: 'Origin';
+    destination         @title: 'Destination';
+    scheddeptdateutc    @title: 'Scheduled Detaprture Date(UTC)';
+    ccsmsgref           @title: 'ccsmsgref';
+    scheddeptdate       @title: 'Scheduled Detaprture Date';
+    vendor              @title: 'Vendor';
+    actarrdateutc       @title: 'Actual Arrival Date(UTC)';
+    actarrdate          @title: 'Actual Arrival Date';
+}
+
+annotate TripService.triprecord with {
+    carriercode         @title: 'Carrier Code';
+    flightno            @title: 'Flight Number';
+}
