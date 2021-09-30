@@ -17,7 +17,7 @@
     ],
     "main": "webapp/index.html",
     "scripts": {
-        "start": "node node_modules/@sap/approuter/approuter.js",
+        "start": "fiori run --open 'index.html'",
         "start-local": "fiori run --config ./ui5-local.yaml --open index.html",
         "build": "ui5 build -a --clean-dest --include-task=generateManifestBundle generateCachebusterInfo",
         "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf",

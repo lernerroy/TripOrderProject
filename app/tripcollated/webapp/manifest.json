@@ -36,6 +36,7 @@
                     "action": "manage",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
+                    "info": "Review Trip Data",
                     "icon": "sap-icon://trip-report"
                 }
             }
@@ -87,6 +88,12 @@
             },
             "": {
                 "dataSource": "mainService",
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                },
                 "preload": true
             }
         },

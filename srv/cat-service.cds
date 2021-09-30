@@ -9,38 +9,350 @@ annotate trips.triprecord with @(restrict: [
 ]);
 
 @path:'/browse'
-//@impl: './trip-service.js'    
+//@impl: './trip-service.js'   
 //@requires: 'authenticated-user'
 service TripService 
 {
     entity triprecord // @(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
     as projection on trips.triprecord;
-    entity cargorecord  //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
-    as projection on trips.cargorecord;
-    entity catering //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
-    as projection on trips.catering;
     entity pax //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
     as projection on trips.passenger;
+    entity cargorecord  //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
+    as projection on trips.cargorecord;
     entity routeplan //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
     as projection on trips.routeplan;  
     entity accommodation //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
     as projection on trips.accommodation;
+    entity catering //@(restrict: [ { grant: ['*'], to: 'trip_order'}]) 
+    as projection on trips.catering;
 };
 
-annotate TripService.accommodation with {
-    carriercode         @title: 'Carrier Code';
-    flightno            @title: 'Flight Number';
-    origin              @title: 'Origin';
-    destination         @title: 'Destination';
-    scheddeptdateutc    @title: 'Scheduled Detaprture Date(UTC)';
-    ccsmsgref           @title: 'ccsmsgref';
-    scheddeptdate       @title: 'Scheduled Detaprture Date';
-    vendor              @title: 'Vendor';
-    actarrdateutc       @title: 'Actual Arrival Date(UTC)';
-    actarrdate          @title: 'Actual Arrival Date';
-}
 
 annotate TripService.triprecord with {
-    carriercode         @title: 'Carrier Code';
-    flightno            @title: 'Flight Number';
+supcarriercode2   @title: '{i18n>supcarriercode2}';
+scheddeptdate   @title: '{i18n>scheddeptdate}';
+flightno   @title: '{i18n>flightno}';
+supcarriercode   @title: '{i18n>supcarriercode}';
+carriercode   @title: '{i18n>carriercode}';
+origin   @title: '{i18n>origin}';
+destination   @title: '{i18n>destination}';
+repeatno   @title: '{i18n>repeatno}';
+idooutc   @title: '{i18n>idooutc}';
+idoo   @title: '{i18n>idoo}'; 
+doo   @title: '{i18n>doo}';
+dooutc   @title: '{i18n>dooutc}';
+actarrapt   @title: '{i18n>actarrapt}';
+actarrapticao   @title: '{i18n>actarrapticao}';
+actdeptapt   @title: '{i18n>actdeptapt}';
+actdeptapticao   @title: '{i18n>actdeptapticao}';
+legstate   @title: '{i18n>legstate}';
+aircrafttype   @title: '{i18n>aircrafttype}';
+aircrafttypecpa   @title: '{i18n>aircrafttypecpa}';
+tailno   @title: '{i18n>tailno}';
+flighttype   @title: '{i18n>flighttype}';
+deptparkposn   @title: '{i18n>deptparkposn}';
+actgatetime   @title: '{i18n>actgatetime}';
+servicetype   @title: '{i18n>servicetype}';
+delayreason1   @title: '{i18n>delayreason1}';
+delayreason2   @title: '{i18n>delayreason2}';
+delayreason3   @title: '{i18n>delayreason3}';
+delayreason4   @title: '{i18n>delayreason4}';
+delayreason5   @title: '{i18n>delayreason5}';
+actualflyingdur   @title: '{i18n>actualflyingdur}';
+scheddepttime   @title: '{i18n>scheddepttime}';
+scheddeptts   @title: '{i18n>scheddeptts}';
+actdeptts   @title: '{i18n>actdeptts}';
+takeoffdate   @title: '{i18n>takeoffdate}';
+takeofftime   @title: '{i18n>takeofftime}';
+touchdndate   @title: '{i18n>touchdndate}';
+touchdntime   @title: '{i18n>touchdntime}';
+actdeptdate   @title: '{i18n>actdeptdate}';
+actdepttime   @title: '{i18n>actdepttime}';
+actarrdate   @title: '{i18n>actarrdate}';
+actarrtime   @title: '{i18n>actarrtime}';
+takeoffdateutc   @title: '{i18n>takeoffdateutc}';
+takeofftimeutc   @title: '{i18n>takeofftimeutc}';
+touchdndateutc   @title: '{i18n>touchdndateutc}';
+touchdntimeutc   @title: '{i18n>touchdntimeutc}';
+actdeptdateutc   @title: '{i18n>actdeptdateutc}';
+actdepttimeutc   @title: '{i18n>actdepttimeutc}';
+actarrdateutc   @title: '{i18n>actarrdateutc}';
+actarrtimeutc   @title: '{i18n>actarrtimeutc}';
+scheddeptdateutc   @title: '{i18n>scheddeptdateutc}';
+scheddepttimeutc   @title: '{i18n>scheddepttimeutc}';
+schedarrdateutc   @title: '{i18n>schedarrdateutc}';
+schedarrtimeutc   @title: '{i18n>schedarrtimeutc}';
+schedarrdate   @title: '{i18n>schedarrdate}';
+schedarrtime   @title: '{i18n>schedarrtime}';
+schedarrts   @title: '{i18n>schedarrts}';
+actarrts   @title: '{i18n>actarrts}';
+estdeptdate   @title: '{i18n>estdeptdate}';
+estdepttime   @title: '{i18n>estdepttime}';
+estdeptdateutc   @title: '{i18n>estdeptdateutc}';
+estdepttimeutc   @title: '{i18n>estdepttimeutc}';
+estarrdateutc   @title: '{i18n>estarrdateutc}';
+estarrtimeutc   @title: '{i18n>estarrtimeutc}';
+estarrdate   @title: '{i18n>estarrdate}';
+estarrtime   @title: '{i18n>estarrtime}';
+planblocktime   @title: '{i18n>planblocktime}';
+schedarrapticao   @title: '{i18n>schedarrapticao}';
+schedarrapt   @title: '{i18n>schedarrapt}';
+scheddeptapticao   @title: '{i18n>scheddeptapticao}';
+scheddeptapt   @title: '{i18n>scheddeptapt}';
+flight_tm   @title: '{i18n>flight_tm}';
+arr_stand   @title: '{i18n>arr_stand}';
+dep_terminal   @title: '{i18n>dep_terminal}';
+arr_terminal   @title: '{i18n>arr_terminal}';
+onblockdate   @title: '{i18n>onblockdate}';
+onblocktime   @title: '{i18n>onblocktime}';
+offblockdate   @title: '{i18n>offblockdate}';
+offblocktime   @title: '{i18n>offblocktime}';
+taxi_out_time   @title: '{i18n>taxi_out_time}';
+route   @title: '{i18n>Route}';
+cfpno1   @title: '{i18n>cfpno1}';
+cfpno2   @title: '{i18n>cfpno2}';
+}
+
+annotate TripService.passenger with {
+carriercode   @title: '{i18n>carriercode}';
+version   @title: '{i18n>version}';
+user_ind   @title: '{i18n>user_ind}';
+firstclasspax   @title: '{i18n>firstclasspax}';
+busclasspax   @title: '{i18n>busclasspax}';
+premecopax   @title: '{i18n>premecopax}';
+ecopax   @title: '{i18n>ecopax}';
+totalpax   @title: '{i18n>totalpax}';
+revpaxfirst   @title: '{i18n>revpaxfirst}';
+revpaxbus   @title: '{i18n>revpaxbus}';
+revpaxpreco   @title: '{i18n>revpaxpreco}';
+revpaxeco   @title: '{i18n>revpaxeco}';
+revpaxtot   @title: '{i18n>revpaxtot}';
+nrevpaxfirst   @title: '{i18n>nrevpaxfirst}';
+nrevpaxbus   @title: '{i18n>nrevpaxbus}';
+nrevpaxpreco   @title: '{i18n>nrevpaxpreco}';
+nrevpaxeco   @title: '{i18n>nrevpaxeco}';
+nrevpaxtot   @title: '{i18n>nrevpaxtot}';
+chdpax   @title: '{i18n>chdpax}';
+infpax   @title: '{i18n>infpax}';
+wchpax   @title: '{i18n>wchpax}';
+wchc   @title: '{i18n>wchc}';
+wchs   @title: '{i18n>wchs}';
+wchr   @title: '{i18n>wchr}';
+wcbd   @title: '{i18n>wcbd}';
+wcbw   @title: '{i18n>wcbw}';
+wcmp   @title: '{i18n>wcmp}';
+wcob   @title: '{i18n>wcob}';
+wclb   @title: '{i18n>wclb}';
+boardpax   @title: '{i18n>boardpax}';
+transitpax   @title: '{i18n>transitpax}';
+transferpax   @title: '{i18n>transferpax}';
+bagquan   @title: '{i18n>bagquan}';
+bagweight   @title: '{i18n>bagweight}';
+traint   @title: '{i18n>traint}';
+tradom   @title: '{i18n>tradom}';
+creation_timestamp   @title: '{i18n>creation_timestamp}';
+tecnum   @title: '{i18n>tecnum}';
+cabnum   @title: '{i18n>cabnum}';
+capnum   @title: '{i18n>capnum}';
+cocnum   @title: '{i18n>cocnum}';
+ecavml   @title: '{i18n>ecavml}';
+ecbbml   @title: '{i18n>ecbbml}';
+ecblml   @title: '{i18n>ecblml}';
+ecchml   @title: '{i18n>ecchml}';
+ecdbml   @title: '{i18n>ecdbml}';
+ecfpml   @title: '{i18n>ecfpml}';
+ecgfml   @title: '{i18n>ecgfml}';
+echnml   @title: '{i18n>echnml}';
+ecksml   @title: '{i18n>ecksml}';
+eclcml   @title: '{i18n>eclcml}';
+eclfml   @title: '{i18n>eclfml}';
+eclsml   @title: '{i18n>eclsml}';
+ecmoml   @title: '{i18n>ecmoml}';
+ecnlml   @title: '{i18n>ecnlml}';
+ecorml   @title: '{i18n>ecorml}';
+ecrvml   @title: '{i18n>ecrvml}';
+ecsfml   @title: '{i18n>ecsfml}';
+ecvgml   @title: '{i18n>ecvgml}';
+ecvjml   @title: '{i18n>ecvjml}';
+ecvlml   @title: '{i18n>ecvlml}';
+ecvoml   @title: '{i18n>ecvoml}';
+bcavml   @title: '{i18n>bcavml}';
+bcbbml   @title: '{i18n>bcbbml}';
+bcblml   @title: '{i18n>bcblml}';
+bcchml   @title: '{i18n>bcchml}';
+bcdbml   @title: '{i18n>bcdbml}';
+bcfpml   @title: '{i18n>bcfpml}';
+bcgfml   @title: '{i18n>bcgfml}';
+bchnml   @title: '{i18n>bchnml}';
+bcksml   @title: '{i18n>bcksml}';
+bclcml   @title: '{i18n>bclcml}';
+bclfml   @title: '{i18n>bclfml}';
+bclsml   @title: '{i18n>bclsml}';
+bcmoml   @title: '{i18n>bcmoml}';
+bcnlml   @title: '{i18n>bcnlml}';
+bcorml   @title: '{i18n>bcorml}';
+bcrvml   @title: '{i18n>bcrvml}';
+bcsfml   @title: '{i18n>bcsfml}';
+bcvgml   @title: '{i18n>bcvgml}';
+bcvjml   @title: '{i18n>bcvjml}';
+bcvlml   @title: '{i18n>bcvlml}';
+bcvoml   @title: '{i18n>bcvoml}';
+umnr     @title: '{i18n>umnr}';
+}
+
+annotate TripService.cargorecord with {
+version   @title: '{i18n>version}';
+user_ind   @title: '{i18n>user_ind}';
+chgtottonn   @title: '{i18n>chgtottonn}';
+acttottonn   @title: '{i18n>acttottonn}';
+tottranstonn   @title: '{i18n>tottranstonn}';
+chgtotimptonn   @title: '{i18n>chgtotimptonn}';
+acttotimptonn   @title: '{i18n>acttotimptonn}';
+chgtotexptonn   @title: '{i18n>chgtotexptonn}';
+acttotexptonn   @title: '{i18n>acttotexptonn}';
+chgimploose   @title: '{i18n>chgimploose}';
+actimploose   @title: '{i18n>actimploose}';
+chgimpprepck   @title: '{i18n>chgimpprepck}';
+actimpprepck   @title: '{i18n>actimpprepck}';
+chgexploose   @title: '{i18n>chgexploose}';
+actexploose   @title: '{i18n>actexploose}';
+chgexpprepack   @title: '{i18n>chgexpprepack}';
+actexpprepack   @title: '{i18n>actexpprepack}';
+chgmailimport   @title: '{i18n>chgmailimport}';
+actmailimport   @title: '{i18n>actmailimport}';
+chgmailexport   @title: '{i18n>chgmailexport}';
+actmailexport   @title: '{i18n>actmailexport}';
+avichgtkg   @title: '{i18n>avichgtkg}';
+aviactkg   @title: '{i18n>aviactkg}';
+avinoawb   @title: '{i18n>avinoawb}';
+dgrchgtkg   @title: '{i18n>dgrchgtkg}';
+dgractkg   @title: '{i18n>dgractkg}';
+dgrnoawb   @title: '{i18n>dgrnoawb}';
+humchgkg   @title: '{i18n>humchgkg}';
+humactkg   @title: '{i18n>humactkg}';
+humnoawb   @title: '{i18n>humnoawb}';
+perchgkg   @title: '{i18n>perchgkg}';
+peractkg   @title: '{i18n>peractkg}';
+pernoawb   @title: '{i18n>pernoawb}';
+valchgkg   @title: '{i18n>valchgkg}';
+valactkg   @title: '{i18n>valactkg}';
+valnoawb   @title: '{i18n>valnoawb}';
+pilchgkg   @title: '{i18n>pilchgkg}';
+pilactkg   @title: '{i18n>pilactkg}';
+pilnoawb   @title: '{i18n>pilnoawb}';
+pefchgkg   @title: '{i18n>pefchgkg}';
+pefactkg   @title: '{i18n>pefactkg}';
+pefnoawb   @title: '{i18n>pefnoawb}';
+temchgkg   @title: '{i18n>temchgkg}';
+temactkg   @title: '{i18n>temactkg}';
+temnoawb   @title: '{i18n>temnoawb}';
+vunchgkg   @title: '{i18n>vunchgkg}';
+vunactkg   @title: '{i18n>vunactkg}';
+vunnoawb   @title: '{i18n>vunnoawb}';
+totawb   @title: '{i18n>totawb}';
+chgtransloose   @title: '{i18n>chgtransloose}';
+acttransloose   @title: '{i18n>acttransloose}';
+chgtransprepack   @title: '{i18n>chgtransprepack}';
+acttransprepack   @title: '{i18n>acttransprepack}';
+chgephloose   @title: '{i18n>chgephloose}';
+actephloose   @title: '{i18n>actephloose}';
+chgephprepack   @title: '{i18n>chgephprepack}';
+actephprepack   @title: '{i18n>actephprepack}';
+chgepdcgo   @title: '{i18n>chgepdcgo}';
+actepdcgo   @title: '{i18n>actepdcgo}';
+creation_timestamp   @title: '{i18n>creation_timestamp}';
+chgimptonn   @title: '{i18n>chgimptonn}';
+chgexptonn   @title: '{i18n>chgexptonn}';
+chgtottranstonn   @title: '{i18n>chgtottranstonn}';
+}
+
+annotate TripService.routeplan with {
+lineno          @title: '{i18n>lineno}';
+cfpno           @title: '{i18n>cfpno}';
+carriercode     @title: '{i18n>carriercode}';
+flightno        @title: '{i18n>flightno}';
+origin          @title: '{i18n>origin}';
+destination     @title: '{i18n>destination}';
+scheddeptdate   @title: '{i18n>scheddeptdate}';
+routeno         @title: '{i18n>routeno}';
+countrycode     @title: '{i18n>countrycode}';
+airspdistnm     @title: '{i18n>airspdistnm}'; 
+airspdistm      @title: '{i18n>airspdistm}';
+airspdistkm     @title: '{i18n>airspdistkm}';
+deptapticao     @title: '{i18n>deptapticao}';
+arrapticao      @title: '{i18n>arrapticao}';
+tailno          @title: '{i18n>tailno}';
+entrydatelmt    @title: '{i18n>entrydatelmt}';
+entrytimelmt    @title: '{i18n>entrytimelmt}';
+entrydateutc    @title: '{i18n>entrydateutc}';
+entrytimeutc    @title: '{i18n>entrytimeutc}';
+exitdatelmt     @title: '{i18n>exitdatelmt}';
+exittimelmt     @title: '{i18n>exittimelmt}';
+exitdateutc     @title: '{i18n>exitdateutc}';
+exittimeutc     @title: '{i18n>exittimeutc}';
+amount          @title: '{i18n>amount}';
+rate            @title: '{i18n>rate}';
+currency        @title: '{i18n>currency}';
+entrypoint      @title: '{i18n>entrypoint}';
+exitpoint       @title: '{i18n>exitpoint}';
+entryawy        @title: '{i18n>entryawy}';
+exitawy         @title: '{i18n>exitawy}';
+chargetype      @title: '{i18n>chargetype}';
+provid          @title: '{i18n>provid}';
+gcd             @title: '{i18n>gcd}';
+}
+
+annotate TripService.accommodation with {
+carriercode         @title: '{i18n>carriercode}';
+flightno            @title: '{i18n>flightno}';
+origin              @title: '{i18n>origin}';
+destination         @title: '{i18n>destination}';
+scheddeptdateutc    @title: '{i18n>scheddeptdateutc}';
+ccsmsgref           @title: '{i18n>ccsmsgref}';
+scheddeptdate       @title: '{i18n>scheddeptdate}';
+vendor              @title: '{i18n>vendor}';
+actarrdateutc       @title: '{i18n>actarrdateutc}';
+actarrdate          @title: '{i18n>actarrdate}';
+servcode            @title: '{i18n>servcode}';
+reservedate         @title: '{i18n>reservedate}';
+rmntsqty            @title: '{i18n>rmntsqty}';
+allowamt            @title: '{i18n>allowamt}';
+currency            @title: '{i18n>currency}';
+}
+
+
+annotate TripService.catering with {
+carriercode   @title: 'Carrier Code';
+origin   @title: 'Origin';
+destination   @title: 'Destination';
+classtype   @title: 'Class Type';
+sapmeal   @title: 'SAP Meal';
+exdescription   @title: 'Ex Description';
+paxqun   @title: 'Pax Qty';
+unitofmesur   @title: 'UOM';
+exmenucode   @title: 'Ex Menu Code';
+exmenudesc   @title: 'Ex Menu Desc';
+salescat   @title: 'Sales Cat';
+pricerel   @title: 'Price Rel';
+mealfact   @title: 'Meal Fact';
+quant   @title: 'Qty';
+netprice   @title: 'net Price';
+grossgross   @title: 'Gross';
+custdiscount   @title: 'Cust Discount';
+netamont   @title: 'Net Amount';
+airportfee   @title: 'Airport Fee';
+airportfeevat   @title: 'Airport Fee Vat';
+gstvat   @title: 'GST VAT';
+consumptiontax   @title: 'Consumption Tax';
+surchargeamount   @title: 'Surcharge Amount';
+vatp   @title: 'Vat p';
+gipba   @title: 'GIPBA';
+totalamount   @title: 'Total Amount';
+currency   @title: 'Currency';
+invoicetype   @title: 'Invoice Type';
+custdiscount_perc   @title: 'Cust Disount %';
+airportfee_perc   @title: 'Airport Fee %';
+gstvat_perc   @title: 'GST VaT %';
+surcharge_perc   @title: 'Surcharge %';
+consumptiontax_perc   @title: 'Consumption Tax %';
 }

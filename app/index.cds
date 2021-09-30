@@ -6,3 +6,4 @@ using from './route_plan/annotations';
 using from './passengers/annotations';
 using from './tripdetails/annotations';
 using from './tripcollated/annotations';
+using from './tripinput/annotations';

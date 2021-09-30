@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns:m="sap.m" xmlns:mvc="sap.ui.core.mvc" xmlns:semantic="sap.m.semantic"
+	xmlns:footerbar="sap.ushell.ui.footerbar" xmlns="sap.uxap" xmlns:layout="sap.ui.layout" xmlns:core="sap.ui.core"
+	xmlns:f="sap.ui.layout.form">
+	<m:Table class="sapUiSmallMarginTop" headerDesign="Plain" showSeparators="Inner" noDataText="No Services" sticky="HeaderToolbar"
+		backgroundDesign="Transparent" items="{flightServices>/currentServices}">
+		<m:headerToolbar>
+			<m:OverflowToolbar>
+				<m:Title text="{i18n>CM_SERVICES}" level="H4"/>
+				<m:ToolbarSpacer/>
+				<m:Button text="{i18n>BTN_ADDITIONAL_SERVICES}" iconFirst="true" icon="{= ${lobView>/editMode} === true ? 'sap-icon://add' : 'sap-icon://display'}" press=".onMoreServicesButtonPressed"/>
+			</m:OverflowToolbar>
+		</m:headerToolbar>
+		<m:columns>
+			<m:Column><m:Text text="{i18n>LBL_EXCE_TXT}"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true"><m:Text text="Service Code"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true"><m:Text text="{i18n>LBL_VENDOR_NAME_TXT}"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true"><m:Text text="{i18n>LBL_VENDOR_DESC_TXT}"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true" hAlign="Center"><m:Text text="{i18n>LBL_PRICE_TXT}"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true"><m:Text text="{i18n>LBL_QTY_TXT}"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true"><m:Text text="{i18n>LBL_TOTAL_TXT}"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true"><m:Text text="{i18n>LBL_USEAGE_TYPE_TXT}"/></m:Column>
+			<m:Column minScreenWidth="Tablet" demandPopin="true"><m:Text text=""/></m:Column>
+		</m:columns>
+		<m:items>
+			<m:ColumnListItem type="Inactive" selected="true">
+				<m:cells>
+					<core:Icon src="sap-icon://status-positive" color="{= ${flightServices>Direction} === 1 ? '#64E4CE': '#FF4B4B'}"/>
+					<m:Text text="{flightServices>SrvcCode}"/>
+					<m:Text text="{flightServices>CtrVendorDesc}"/>
+					<m:Text text="{flightServices>SrvcDesc}"/>
+					<m:Text
+						text="{ parts: [ {path: 'flightServices>Price'}, {path: 'flightServices>CtrWaers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: true, decimals: 1, style: 'short' } }"/>
+					<m:Input type="Number" value="{flightServices>Quantity}" editable="{lobView>/editMode}" change=".onServiceQuantityChanged"/>
+					<m:Text
+						text="{ parts: [ {path: 'flightServices>TotalPrice'}, {path: 'flightServices>CtrWaers'} ], type: 'sap.ui.model.type.Currency', formatOptions: { showMeasure: true, decimals: 1, style: 'short' } }"/>
+					<m:ComboBox editable="{lobView>/editMode}" items="{ path: 'flightServices>usageTypes', sorter: { path: 'text' } }">
+						<core:Item key="{flightServices>name}" text="{flightServices>name}"/>
+					</m:ComboBox>
+					<m:Button enabled="{lobView>/editMode}" icon="sap-icon://delete" type="Transparent" visible="true" press="onRemoveService"/>
+				</m:cells>
+			</m:ColumnListItem>
+		</m:items>
+	</m:Table>
+</core:FragmentDefinition>

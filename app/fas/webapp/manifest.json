@@ -1,0 +1,287 @@
+{
+    "_version": "1.32.0",
+    "sap.app": {
+        "id": "fas",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "1.0.0"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "ach": "ach",
+        "dataSources": {
+            "mainService": {
+                "uri": "/sap/opu/odata/sap/ZGW_LS_FO_SERVICES_SRV",
+                "type": "OData",
+                "settings": {
+                    "odataVersion": "2.0",
+                    "localUri": "localService/metadata.xml"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "fas-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "FlightAcceptanceCockpit",
+                    "action": "manage",
+                    "title": "Flight Acceptance Cockpit",
+                    "info": "Flight Acceptance Cockpit",
+                    "icon": "sap-icon://flight"
+                }
+            }
+        },
+        "sourceTemplate": {
+            "id": "sap.ui.ui5-template-plugin.2masterdetail",
+            "version": "1.67.0"
+        }
+    },
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "sap-icon://detail-view",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
+        }
+    },
+    "sap.ui5": {
+        "flexEnabled": false,
+        "rootView": {
+            "viewName": "fas.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "App"
+        },
+        "dependencies": {
+            "minUI5Version": "1.66.0",
+            "libs": {
+                "sap.ui.core": {},
+                "sap.m": {},
+                "sap.ui.layout": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "fas.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true
+            },
+            "sharedState": {
+                "type": "sap.ui.model.json.JSONModel",
+                "settings": {},
+                "uri": "model/sharedState.json"
+            },
+            "lobs": {
+                "type": "sap.ui.model.json.JSONModel",
+                "settings": {},
+                "uri": "model/lobs.json"
+            },
+            "airportCharges": {
+                "type": "sap.ui.model.json.JSONModel",
+                "settings": {},
+                "uri": "model/airportCharges.json",
+                "preload": true
+            }
+        },
+        "resources": {
+            "css": [
+                {
+                    "uri": "css/style.css"
+                }
+            ]
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.f.routing.Router",
+                "viewType": "XML",
+                "async": true,
+                "viewPath": "fas.view",
+                "controlId": "layout",
+                "controlAggregation": "midColumnPages",
+                "bypassed": {
+                    "target": [
+                        "notFound"
+                    ]
+                }
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "master",
+                    "target": [
+                        "master"
+                    ]
+                },
+                {
+                    "pattern": "Flight/:arrFlightNo:/:depFlightNo:",
+                    "name": "object",
+                    "target": [
+                        "master",
+                        "object"
+                    ]
+                },
+                {
+                    "pattern": "Flight/:objectId:/:flightNo:/Lob/{lobType}",
+                    "name": "Lob",
+                    "target": [
+                        "master",
+                        "object",
+                        "lob"
+                    ]
+                },
+                {
+                    "pattern": "Trips/:FlightNo:",
+                    "name": "Trip",
+                    "target": [
+                        "trip"
+                    ]
+                },
+                {
+                    "pattern": "Flight/:arrFlightNo:/:depFlightNo:/AirportCharges",
+                    "name": "AirportCharges",
+                    "target": [
+                        "master",
+                        "object",
+                        "airportCharges"
+                    ]
+                },
+                {
+                    "pattern": "Flight/:arrFlightNo:/:depFlightNo:/CargoCharges",
+                    "name": "CargoCharges",
+                    "target": [
+                        "master",
+                        "object",
+                        "cargoCharges"
+                    ]
+                },
+                {
+                    "pattern": "Flight/:arrFlightNo:/:depFlightNo:/EngServices",
+                    "name": "EngServices",
+                    "target": [
+                        "master",
+                        "object",
+                        "engServices"
+                    ]
+                },
+                {
+                    "pattern": "Flight/:arrFlightNo:/:depFlightNo:/OverflightServices",
+                    "name": "OverflightServices",
+                    "target": [
+                        "master",
+                        "object",
+                        "overflightServices"
+                    ]
+                },
+                {
+                    "pattern": "Flight/:arrFlightNo:/:depFlightNo:/Catering",
+                    "name": "Catering",
+                    "target": [
+                        "master",
+                        "object",
+                        "catering"
+                    ]
+                }
+                
+
+            ],
+            "targets": {
+                "master": {
+                    "viewName": "Master",
+                    "viewLevel": 1,
+                    "viewId": "masterView",
+                    "controlAggregation": "beginColumnPages",
+                    "title": "Home"
+                },
+                "object": {
+                    "viewName": "Detail",
+                    "viewId": "detail",
+                    "viewLevel": 2,
+                    "controlAggregation": "midColumnPages"
+                },
+                "lob": {
+                    "viewType": "XML",
+                    "viewName": "lob",
+                    "viewId": "lob",
+                    "viewLevel": 3,
+                    "controlAggregation": "midColumnPages"
+                },
+                "airportCharges": {
+                    "viewType": "XML",
+                    "viewName": "AirportCharges",
+                    "viewId": "airportCharges",
+                    "viewLevel": 3,
+                    "controlAggregation": "midColumnPages"
+                },
+                "cargoCharges": {
+                    "viewType": "XML",
+                    "viewName": "CargoCharges",
+                    "viewId": "cargoCharges",
+                    "viewLevel": 3,
+                    "controlAggregation": "midColumnPages"
+                },
+                "engServices": {
+                    "viewType": "XML",
+                    "viewName": "EngServices",
+                    "viewId": "engServices",
+                    "viewLevel": 3,
+                    "controlAggregation": "midColumnPages"
+                },
+                "overflightServices": {
+                    "viewType": "XML",
+                    "viewName": "OverflightServices",
+                    "viewId": "overflightServices",
+                    "viewLevel": 3,
+                    "controlAggregation": "midColumnPages"
+                },
+                "detailObjectNotFound": {
+                    "viewName": "DetailObjectNotFound",
+                    "viewId": "detailObjectNotFound",
+                    "controlAggregation": "midColumnPages"
+                },
+                "catering": {
+                    "viewType": "XML",
+                    "viewId": "catering",
+                    "viewName": "Catering",
+                    "controlAggregation": "midColumnPages"
+                },
+                "notFound": {
+                    "viewName": "NotFound",
+                    "viewId": "notFound"
+                },
+                "trip": {
+                    "viewType": "XML",
+                    "viewName": "Trip",
+                    "viewId": "trip",
+                    "viewLevel": 3,
+                    "controlAggregation": "endColumnPages"
+                }
+            }
+        }
+    },
+    "sap.cloud": {
+        "public": true,
+        "service": "fas"
+    }
+}

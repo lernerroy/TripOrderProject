@@ -1,0 +1,127 @@
+<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:uxap="sap.uxap" xmlns:semantic="sap.f.semantic" xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid"
+	controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.Detail">
+	<semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<semantic:content>
+			<uxap:ObjectPageLayout id="objectPageLayout" enableLazyLoading="false" subSectionLayout="TitleOnLeft" showTitleInHeaderContent="false"
+				showHeaderContent="true">
+				<uxap:headerTitle>
+					<uxap:ObjectPageHeader objectImageURI="sap-icon://fa/airplane" objectImageShape="Circle" objectTitle="{i18n>TIT_FLIGHT_ORDER_TXT}"
+						id="ObjectPageLayoutHeaderTitle" isObjectIconAlwaysVisible="true" isObjectTitleAlwaysVisible="true" isObjectSubtitleAlwaysVisible="true"
+						isActionAreaAlwaysVisible="true" showPlaceholder="true">
+						<uxap:actions/>
+					</uxap:ObjectPageHeader>
+				</uxap:headerTitle>
+				<uxap:headerContent>
+					<VBox width="100%">
+						<l:Grid visible="{= !${detailView>/busy}}" width="auto" vSpacing="0" defaultSpan="XL6 L6 M6 S12" class="sapUiSmallMarginTop">
+							<!--Arrival flight details -->
+							<VBox backgroundDesign="Transparent" class="sapUiSmallMarginBottom">
+								<HBox class="sapUiTinyMarginBottom" alignItems="Center">
+									<core:Icon src="sap-icon://fa/arrival" class="sapUiTinyMarginEnd"/>
+									<Title text="{ parts: [{path: 'Preaufnr'}, {path: 'detailView>arrivals'}], formatter: '.SegmentTitleFormatter' }" level="H4" titleStyle="H4"/>
+									<ObjectStatus active="true" press=".onOverallStatusPressed" visible="{= ${Preaufnr} !== ''}"
+										text="{path: 'PreOverallLight', formatter: '.formatter.overallStatusTextFormatter'}"
+										state="{path: 'PreOverallLight', formatter: '.formatter.overallStatusStateFormatter'}" inverted="true" class="sapUiTinyMarginBegin">
+										<customData>
+											<core:CustomData key="direction" value="ARR"/>
+										</customData>
+									</ObjectStatus>
+									<core:Icon press=".onOverallStatusPressed" src="sap-icon://show" class="sapUiSmallMarginBegin"></core:Icon>
+								</HBox>
+								<HBox visible="{= ${Preaufnr} !== ''}">
+									<Label text="{i18n>trip_number}" design="Bold" class="sapUiTinyMarginEnd"/>
+									<!-- <Text text="{Preaufnr}"/> -->
+                                    <Link text="{Preaufnr}" emphasized="true" press=".onNavigateToTrip" />
+								</HBox>
+								<HBox visible="{= ${Preaufnr} !== ''}">
+									<Label text="Scheduled Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
+									<Text text="{ path: 'Prearrdate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { GMT: true,pattern : 'dd MMM yyyy' } } "
+										class="sapUiTinyMarginEnd"/>
+									<Text text="{ path : 'Prearrtime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm:ss' }} "/>
+								</HBox>
+								<HBox visible="{= ${Preaufnr} !== ''}">
+									<Label text="Actual Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
+									<Text text="{ path: 'Prea rrdate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { GMT: true,pattern : 'dd MMM yyyy' } } "
+										class="sapUiTinyMarginEnd"/>
+									<Text text="{ path : 'Prearrtime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm:ss' }} "/>
+								</HBox>
+								<HBox visible="{= ${Preaufnr} !== ''}">
+									<Label text="Touchdown Time" design="Bold" class="sapUiTinyMarginEnd"/>
+									<Text text="{ path : 'TouchdnTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm:ss' }} "/>
+								</HBox>
+								<HBox visible="{= ${Preaufnr} !== ''}">
+									<Label text="Leg State" design="Bold" class="sapUiTinyMarginEnd"/>
+									<ObjectStatus text="{path: 'PreLegState', formatter: '.formatter.legstateTypeText'}"
+										state="{path: 'PreLegState', formatter: '.formatter.legstateTypeState'}" inverted="true"/>
+								</HBox>
+							</VBox>
+							<!--Departure flight details  -->
+							<VBox backgroundDesign="Transparent">
+								<HBox class="sapUiTinyMarginBottom" alignItems="Center">
+									<core:Icon src="sap-icon://fa/departure" class="sapUiTinyMarginEnd"/>
+									<Title text="{ parts: [{path: 'Aufnr'}, {path: 'detailView>departure'}], formatter: '.SegmentTitleFormatter' }" level="H4" titleStyle="H4"/>
+									<ObjectStatus active="true" press=".onOverallStatusPressed"
+										text="{path: 'OverallLight', formatter: '.formatter.overallStatusTextFormatter'}" visible="{= ${Aufnr} !== ''}"
+										state="{path: 'OverallLight', formatter: '.formatter.overallStatusStateFormatter'}" inverted="true" class="sapUiTinyMarginBegin">
+										<customData>
+											<core:CustomData key="direction" value="DEP"/>
+										</customData>
+									</ObjectStatus>
+									<core:Icon press=".onOverallStatusPressed" src="sap-icon://show" class="sapUiSmallMarginBegin"></core:Icon>
+								</HBox>
+								<HBox visible="{= ${Aufnr} !== ''}">
+									<Label text="{i18n>trip_number}" design="Bold" class="sapUiTinyMarginEnd"/>
+									<!-- <Text text="{Aufnr}"/> -->
+                                    <Link text="{Aufnr}" emphasized="true" press=".onNavigateToTrip" />
+								</HBox>
+								<HBox visible="{= ${Aufnr} !== ''}">
+									<Label text="Scheduled Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
+									<Text text="{ path: 'Depdate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { GMT: true,pattern : 'dd MMM yyyy' } } "
+										class="sapUiTinyMarginEnd"/>
+									<Text text=" { path : 'Deptime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm:ss' }} "/>
+								</HBox>
+								<HBox visible="{= ${Aufnr} !== ''}">
+									<Label text="Actual Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
+									<Text text="{ path: 'Depdate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { GMT: true,pattern : 'dd MMM yyyy' } } "
+										class="sapUiTinyMarginEnd"/>
+									<Text text=" { path : 'Deptime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm:ss' }} "/>
+								</HBox>
+								<HBox visible="{= ${Aufnr} !== ''}">
+									<Label text="Takeoff Time" design="Bold" class="sapUiTinyMarginEnd"/>
+									<Text text=" { path : 'TakeoffTime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm:ss' }} "/>
+								</HBox>
+								<HBox visible="{= ${Aufnr} !== ''}">
+									<Label text="Leg State" design="Bold" class="sapUiTinyMarginEnd"/>
+									<ObjectStatus text="{path: 'LegState', formatter: '.formatter.legstateTypeText'}"
+										state="{path: 'LegState', formatter: '.formatter.legstateTypeState'}" inverted="true"/>
+								</HBox>
+							</VBox>
+						</l:Grid>
+					</VBox>
+				</uxap:headerContent>
+				<uxap:sections>
+					<uxap:ObjectPageSection showTitle="false">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection>
+								<uxap:blocks>
+									<l:Grid vSpacing="0" visible="{= !${detailView>/busy}}" width="100%" content="{ path: 'lobs>/' }">
+										<CustomListItem press=".onLobSelected" visible="{lobs>active}" type="Navigation" class="sapUiTinyMargin lob-card" highlight="None">
+											<HBox justifyContent="Start" fitContainer="true" alignItems="Center" class="sapUiSmallMargin" alignContent="Center">
+												<Image height="3rem" width="3rem" src="{lobs>imageSrc}" visible="{= ${device>/system/phone} ? false : true}" class="sapUiSmallMarginEnd"/>
+												<Title text="{lobs>title}" level="H5" titleStyle="H5" class="sapUiSmallMarginEnd"/>
+											</HBox>
+										</CustomListItem>
+									</l:Grid>
+								</uxap:blocks>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection>
+				</uxap:sections>
+			</uxap:ObjectPageLayout>
+		</semantic:content>
+		<semantic:closeAction>
+			<semantic:CloseAction id="closeColumn" press=".onCloseDetailPress"/>
+		</semantic:closeAction>
+	</semantic:SemanticPage>
+</mvc:View>

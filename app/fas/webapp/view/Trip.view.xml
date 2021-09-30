@@ -1,0 +1,41 @@
+<mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:uxap="sap.uxap" xmlns:semantic="sap.f.semantic" xmlns:l="sap.ui.layout"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid"
+	controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.Trip">
+	<semantic:SemanticPage id="tripPage" busy="{tripView>/busy}" busyIndicatorDelay="{tripView>/delay}">
+		<semantic:content>
+			<uxap:ObjectPageLayout id="objectPageLayoutTrip" enableLazyLoading="false" subSectionLayout="TitleOnLeft" showTitleInHeaderContent="false"
+				showHeaderContent="true">
+				<uxap:headerTitle>
+					<uxap:ObjectPageHeader objectImageURI="sap-icon://accept" objectImageShape="Circle" objectTitle="{tripView>/TripNo}"
+						id="ObjectPageLayoutHeaderTitleTrip" isObjectIconAlwaysVisible="true" isObjectTitleAlwaysVisible="true" isObjectSubtitleAlwaysVisible="true"
+						isActionAreaAlwaysVisible="true" showPlaceholder="true">
+						<uxap:actions/>
+					</uxap:ObjectPageHeader>
+				</uxap:headerTitle>
+				<uxap:headerContent>	
+				</uxap:headerContent>
+				<uxap:sections>
+					 <!-- <uxap:ObjectPageSection showTitle="false">
+						<uxap:subSections>
+							<uxap:ObjectPageSubSection>
+								<uxap:blocks>
+									<l:Grid vSpacing="0" visible="{= !${detailView>/busy}}" width="100%" content="{ path: 'lobs>/' }">
+										<CustomListItem press=".onLobSelected" visible="{lobs>active}" type="Navigation" class="sapUiTinyMargin lob-card" highlight="None">
+											<HBox justifyContent="Start" fitContainer="true" alignItems="Center" class="sapUiSmallMargin" alignContent="Center">
+												<Image height="3rem" width="3rem" src="{lobs>imageSrc}" visible="{= ${device>/system/phone} ? false : true}" class="sapUiSmallMarginEnd"/>
+												<Title text="{lobs>title}" level="H5" titleStyle="H5" class="sapUiSmallMarginEnd"/>
+											</HBox>
+										</CustomListItem>
+									</l:Grid>
+								</uxap:blocks>
+							</uxap:ObjectPageSubSection>
+						</uxap:subSections>
+					</uxap:ObjectPageSection> -->
+				</uxap:sections>
+			</uxap:ObjectPageLayout>
+		</semantic:content>
+		<semantic:closeAction>
+			<semantic:CloseAction id="closeColumn" press=".onCloseDetailPress"/>
+		</semantic:closeAction>
+	</semantic:SemanticPage>
+</mvc:View>

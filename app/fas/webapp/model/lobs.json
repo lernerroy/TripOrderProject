@@ -1,0 +1,37 @@
+[
+	{
+		"title": "Airport Charges",
+		"imageSrc": "/images/aiport_charges.jpg",
+		"type": "AC",
+		"active": true,
+		"visible": true
+	},
+	{
+		"title": "Cargo Charges",
+		"imageSrc": "/images/cargo_charges.jpg",
+		"type": "CC",
+		"active": true,
+		"visible": true
+	},
+	{
+		"title": "Engineering Services",
+		"imageSrc": "/images/eng_srv.jpg",
+		"type": "ES",
+		"active": true,
+		"visible": true
+	},
+	{
+		"title": "Overflying & Nav",
+		"imageSrc": "/images/overfly.jpg",
+		"type": "ON",
+		"active": true,
+		"visible": true
+	},
+	{
+		"title": "Catering",
+		"imageSrc": "/images/catering.jpeg",
+		"type": "CT",
+		"active": true,
+		"visible": true
+	}
+]

@@ -1,0 +1,58 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:uxap="sap.uxap"
+	xmlns:html="http://www.w3.org/1999/xhtml" controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.OverflightServices">
+	<semantic:SemanticPage showFooter="true" id="lobPage" busy="{lobView>/busy}" busyIndicatorDelay="{lobView>/delay}">
+		<semantic:titleHeading>
+			<Title text="Overflight / Navigation"/>
+		</semantic:titleHeading>
+		<semantic:footerCustomActions>
+			<Button icon="sap-icon://edit" text="Edit" visible='{= !${lobView>/editMode}}' press=".onEditPressed"/>
+			<Button icon="sap-icon://decline" text="Cancel" press=".onCancelEdit" visible='{= ${lobView>/editMode}}'/>
+			<Button icon="sap-icon://accept" text="Save" type="Emphasized" press=".onSaveFlight" visible='{= ${lobView>/editMode}}'/>
+		</semantic:footerCustomActions>
+		<semantic:content>
+			<IconTabBar id="TabBar" stretchContentHeight="true" upperCase="true" expanded="{device>/isNoPhone}" select=".onTabSelected"
+				backgroundDesign="Transparent" expandable="false" items="{flightServices>/tabs}">
+				<items>
+					<IconTabFilter key="{flightServices>key}" text="{flightServices>title}" icon="{flightServices>icon}">
+						<ScrollContainer width="100%" height="100%" horizontal="false" vertical="true">
+							<core:Fragment fragmentName="com.legstate.fts.app.FlightAcceptanceCockpit.fragments.Services" type="XML"/>
+						</ScrollContainer>
+						<!--<Panel id="overflyPanel" expandable="true" expanded="true">-->
+						<!--	<headerToolbar>-->
+						<!--		<OverflowToolbar style="Standard">-->
+						<!--			<Title text="Overflight"/>-->
+						<!--			<content>-->
+						<!--				<ToolbarSpacer/>-->
+						<!--			</content>-->
+						<!--		</OverflowToolbar>-->
+						<!--	</headerToolbar>-->
+						<!--	<content>-->
+						<!--		<ScrollContainer width="100%" height="100%" horizontal="false" vertical="true">-->
+						<!--			<core:Fragment fragmentName="com.legstate.fts.app.FlightAcceptanceCockpit.fragments.Services" type="XML"/>-->
+						<!--		</ScrollContainer>-->
+						<!--	</content>-->
+						<!--</Panel>-->
+						<!--<Panel id="navigationPanel" expandable="true" expanded="true">-->
+						<!--	<headerToolbar>-->
+						<!--		<OverflowToolbar style="Standard">-->
+						<!--			<Title text="Navigation"/>-->
+						<!--			<content>-->
+						<!--				<ToolbarSpacer/>-->
+						<!--			</content>-->
+						<!--		</OverflowToolbar>-->
+						<!--	</headerToolbar>-->
+						<!--	<content>-->
+						<!--		<ScrollContainer width="100%" height="100%" horizontal="false" vertical="true">-->
+						<!--			<core:Fragment fragmentName="com.legstate.fts.app.FlightAcceptanceCockpit.fragments.Services" type="XML"/>-->
+						<!--		</ScrollContainer>-->
+						<!--	</content>-->
+						<!--</Panel>						-->
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</semantic:content>
+		<semantic:closeAction>
+			<semantic:CloseAction id="closeColumn" press=".onClose"/>
+		</semantic:closeAction>
+	</semantic:SemanticPage>
+</mvc:View>

@@ -1,0 +1,156 @@
+_schema-version: "3.1"
+ID: triporderproject
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: triporder-broker
+  type: javascript.nodejs
+  path: triporder-broker
+  properties:
+    SBF_BROKER_CREDENTIALS_HASH: '{ "~{triporder-broker-credentials/user}": "~{triporder-broker-credentials/hash}"
+      }'
+    SBF_CREDENTIALS_PROVIDER_SERVICE: uaa_triporder
+    SBF_ENABLE_AUDITLOG: false
+  requires:
+  - name: triporder-broker-credentials
+  - name: uaa_triporder
+  - name: triporder_html_repo_host
+  - name: srv-api
+    properties:
+      SBF_SERVICE_CONFIG:
+        triporder-srv:
+          extend_credentials:
+            per_plan:
+              api:
+                grant_type: client_credentials
+                url: ~{srv-url}
+              default:
+                grant_type: user_token
+                url: ~{srv-url}
+            shared:
+              endpoints:
+                root: ~{srv-url}
+              vendor: LegState Engineering
+          extend_xssecurity:
+            per_plan:
+              api:
+                authorities: []
+              default:
+                authorities:
+                - $XSMASTERAPPNAME.User
+                - $XSMASTERAPPNAME.API_User
+            shared:
+              oauth2-configuration:
+                credential-types:
+                - binding-secret
+  parameters:
+    memory: 128M
+- name: triporder-srv
+  type: javascript.nodejs
+  path: triporder-srv
+  requires:
+  - name: triporder-db
+  - name: uaa_triporder
+  - name: triporder-smc
+  - name: triporder-reg
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    memory: 512M
+- name: triporder_ui_deployer
+  type: com.sap.application.content
+  path: .triprecord_mta_build_tmp/triporder_ui_deployer/data.zip
+  requires:
+  - name: triporder_html_repo_host
+    parameters:
+      content-target: true
+- name: triporder-approuter
+  type: javascript.nodejs
+  path: triporder-approuter
+  properties:
+    SEND_XFRAMEOPTIONS: false
+    TENANT_HOST_PATTERN: ^(.*)-${space}-${app-name}.${default-domain}
+  requires:
+  - name: triporder_html_repo_runtime
+  - name: uaa_triporder
+  - name: srv-api
+  - name: triporder-destination
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+resources:
+- name: triporder-broker-credentials
+  properties:
+    hash: sha256:5mR4kbvPF6C+1FBmhyCU6laKgIvvIjmDfsgZSsayo5k=:m6i1Cg8GxgK9gGhpVg1tsljudSvGRJJ06HOfGJqj928=
+    user: triporder-sbf-user
+- name: triporder-destination
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+- name: triporder-smc
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      acquireTimeoutMillis: 9000
+      polling_timeout_seconds: 480
+    polling_timeout_seconds: 240
+    service: service-manager
+    service-plan: container
+  requires:
+  - name: uaa_triporder
+- name: triporder-reg
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      appUrls:
+        callbackTimeoutMillis: 300000
+        onSubscription: ~{srv-api/srv-url}/mtx/v1/provisioning/tenant/{tenantId}
+        onSubscriptionAsync: false
+        onUnSubscriptionAsync: false
+      category: LegState Engineering
+      description: Trip Record services and apps
+      displayName: Trip Record
+      xsappname: triporder-xsapp
+    service: saas-registry
+    service-plan: application
+  requires:
+  - name: uaa_triporder
+  - name: srv-api
+- name: triporder-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+- name: triporder_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: uaa_triporder
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: shared
+      xsappname: triporder-xsapp
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: broker
+- name: triporder_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production

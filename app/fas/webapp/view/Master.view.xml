@@ -1,0 +1,77 @@
+<mvc:View controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.Master" xmlns="sap.m" xmlns:semantic="sap.f.semantic"
+	xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
+	<semantic:SemanticPage id="masterPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
+		<semantic:titleHeading>
+			<Title id="masterPageTitle" text="{masterView>/title}" level="H2"/>
+		</semantic:titleHeading>
+		<semantic:content>
+			<List id="list" width="auto" class="sapFDynamicPageAlignContent"
+				items="{ path: '/FlightSegmentHeaderSet', parameters: {custom: {}}, filters: [], sorter: { path: 'Direction', descending: false }, groupHeaderFactory: '.createGroupHeader' }"
+				busyIndicatorDelay="{masterView>/delay}" noDataText="{masterView>/noDataText}"
+				mode="{= ${device>/system/phone} ? 'None' : 'SingleSelectMaster'}" growing="true" growingScrollToLoad="true"
+				updateFinished=".onUpdateFinished" selectionChange='onSelectionChange'>
+				<infoToolbar>
+					<Toolbar active="true" id="filterBar" visible="{masterView>/isFilterBarVisible}" press=".onOpenViewSettings">
+						<Title id="filterBarLabel" text="{masterView>/filterBarLabel}" level="H3"/>
+					</Toolbar>
+				</infoToolbar>
+				<headerToolbar>
+					<OverflowToolbar>
+					<SearchField
+							id="searchField"
+							enabled="true"
+							showRefreshButton="true"
+							tooltip="{i18n>masterSearchTooltip}"
+							search=".onSearch">
+							<layoutData>
+								<OverflowToolbarLayoutData
+									minWidth="300px"
+									maxWidth="450px"
+									shrinkable="true"
+									priority="NeverOverflow"/>
+							</layoutData>
+						</SearchField>						
+						<ToolbarSpacer/>
+						<Button id="filterButton" press=".onOpenViewSettings" icon="sap-icon://filter" type="Transparent"/>
+					</OverflowToolbar>
+				</headerToolbar>
+				<items>
+					<CustomListItem type="Navigation" press=".onSelectionChange">
+						<HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiSmallMarginTopBottom sapUiSmallMarginBegin">
+							<VBox>
+								<HBox visible="{= ${Preaufnr} !== ''}" alignItems="Center">
+									<core:Icon size="1.5rem" src="sap-icon://fa/arrival"/>
+									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+										<Title text="{Precarriercode}{Preflightno}" level="H4"/>
+										<HBox visible="{= ${Preaufnr} !== ''}">
+											<Text text="{Predepairp}" class="sapUiTinyMarginEnd"/>
+											<core:Icon src="sap-icon://arrow-right" class="sapUiTinyMarginEnd"/>
+											<Text text="{Prearrairp}," class="sapUiTinyMarginEnd"/>
+											<Text
+												text="{ path : 'Prearrdate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy' } } { path : 'Prearrtime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm' } }"/>
+										</HBox>
+									</VBox>
+								</HBox>
+								<HBox visible="{= ${Aufnr} !== ''}" alignItems="Center">
+									<core:Icon size="1.5rem" src="sap-icon://fa/departure"/>
+									<VBox class="sapUiSmallMarginBegin sapUiSmallMarginTopBottom">
+										<Title text="{Carriercode}{Flightno}" level="H4"/>
+										<HBox visible="{= ${Aufnr} !== ''}">
+											<Text text="{Prearrairp}" class="sapUiTinyMarginEnd"/>
+											<core:Icon src="sap-icon://arrow-right" class="sapUiTinyMarginEnd"/>
+											<Text text="{Arrairp}," class="sapUiTinyMarginEnd"/>
+											<Text
+												text="{ path : 'Depdate', type: 'sap.ui.model.type.Date', formatOptions: { pattern: 'dd/MM/yyyy' } } { path : 'Deptime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm' } }"/>
+										</HBox>
+									</VBox>
+								</HBox>
+							</VBox>
+							<ObjectStatus text="{path: 'NxtOverallLight', formatter: '.formatter.overallStatusTextFormatter'}"
+								state="{path: 'NxtOverallLight', formatter: '.formatter.overallStatusStateFormatter'}" inverted="true"/>
+						</HBox>
+					</CustomListItem>
+				</items>
+			</List>
+		</semantic:content>
+	</semantic:SemanticPage>
+</mvc:View>

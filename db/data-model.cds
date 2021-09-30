@@ -5,8 +5,8 @@ aspect surrogatenum {
     key surrogatenum      : String(23);
 }
 
-aspect recordsKey :  { // key ID to be reused in other entities 
-    Key insupcaarriercode2 : String(2);
+aspect recordsKey : managed { // key ID to be reused in other entities 
+    Key insupcarriercode2 : String(2);
     Key inflightno        : String(4);
     key inorigin          : String(3);
     key indestination     : String(3);
@@ -101,111 +101,6 @@ entity triprecord : recordsKey, surrogatenum {
 };
 
 //@cds.persistence.exists
-entity cargorecord : recordsKey, surrogatenum {
-    version             : String(3);
-    user_ind            : String(1);
-    //flightinddate       : Date;
-    chgtottonn          : Decimal(8,2);
-    acttottonn          : Decimal(8,2);
-    tottranstonn        : Decimal(8,2);
-    chgtotimptonn       : Decimal(8,2);
-    acttotimptonn       : Decimal(8,2);
-    chgtotexptonn       : Decimal(8,2);
-    acttotexptonn       : Decimal(8,2);
-    chgimploose         : Decimal(8,2);
-    actimploose         : Decimal(8,2);
-    chgimpprepck        : Decimal(8,2);
-    actimpprepck        : Decimal(8,2);
-    chgexploose         : Decimal(8,2);
-    actexploose         : Decimal(8,2);
-    chgexpprepack       : Decimal(8,2);
-    actexpprepack       : Decimal(8,2);
-    chgmailimport       : Decimal(8,2);
-    actmailimport       : Decimal(8,2);
-    chgmailexport       : Decimal(8,2);
-    actmailexport       : Decimal(8,2);
-    avichgtkg           : Decimal(8,2);
-    aviactkg            : Decimal(8,2);
-    avinoawb            : Decimal(8,0);
-    dgrchgtkg           : Decimal(8,2);
-    dgractkg            : Decimal(8,2); 
-    dgrnoawb            : Decimal(8,2);
-    humchgkg            : Decimal(8,2);
-    humactkg            : Decimal(8,2);
-    humnoawb            : Decimal(8,0);
-    perchgkg            : Decimal(8,2);
-    peractkg            : Decimal(8,2);
-    pernoawb            : Decimal(8,0);
-    valchgkg            : Decimal(8,2);
-    valactkg            : Decimal(8,2);
-    valnoawb            : Decimal(8,0); // last copied
-    pilchgkg            : Decimal(8,2);
-    pilactkg            : Decimal(8,2);
-    pilnoawb            : Decimal(8,0);
-    pefchgkg            : Decimal(8,2);
-    pefactkg            : Decimal(8,2);
-    pefnoawb            : Decimal(8,2);
-    temchgkg            : Decimal(8,2);
-    temactkg            : Decimal(8,2);
-    temnoawb            : Decimal(8,2);
-    vunchgkg            : Decimal(8,2);
-    vunactkg            : Decimal(8,2);
-    vunnoawb            : Decimal(8,2);
-    totawb              : Decimal(8,2);
-    chgtransloose       : Decimal(8,2);
-    acttransloose       : Decimal(8,2);
-    chgtransprepack     : Decimal(8,2);
-    acttransprepack     : Decimal(8,2);
-    chgephloose         : Decimal(8,2);
-    actephloose         : Decimal(8,2);
-    chgephprepack       : Decimal(8,2);
-    actephprepack       : Decimal(8,2);
-    chgepdcgo           : Decimal(8,2);
-    actepdcgo           : Decimal(8,2);
-    creation_timestamp  : Decimal(15,0);
-    chgimptonn          : Decimal(8,2);
-    chgexptonn          : Decimal(8,2);
-    chgtottranstonn     : Decimal(8,2);
-};
-
-//@cds.persistence.exists
-entity catering : recordsKey, surrogatenum {
-    carriercode     : String(2);
-    origin          : String(3);
-    destination     : String(3);
-    classtype       : String(10);
-    sapmeal         : String(18);
-    exdescription   : String(100);
-    paxqun          : Decimal(3,0);
-    unitofmesur     : String(3); // unit 
-    exmenucode      : String(100); // curr 
-    exmenudesc      : String(200);// curr 
-    salescat        : String(50);// curr 
-    pricerel        : String(1);// curr 
-    mealfact        : String(1);// curr 
-    quant           : Decimal(13,3);// curr 
-    netprice        : Decimal(11,2);// curr 
-    grossgross      : Decimal(11,2);// curr 
-    custdiscount    : Decimal(11,2);// curr 
-    netamont        : Decimal(11,2);// curr 
-    airportfee      : Decimal(11,2);// curr 
-    airportfeevat   : Decimal(11,2);// curr 
-    gstvat          : Decimal(11,2);// curr 
-    consumptiontax  : Decimal(11,2);// curr 
-    surchargeamount : Decimal(11,2);// curr 
-    vatp            : Decimal(11,2);// curr 
-    gipba           : Decimal(11,2);// curr 
-    totalamount     : Decimal(11,2);// curr 
-    currency        : String(5); // currency key
-    invoicetype     : String(2);
-    custdiscount_perc : String(3);
-    airportfee_perc : String(3);
-    gstvat_perc     : String(3);
-    surcharge_perc  : String(3);
-    consumptiontax_perc : String(3);
-};
-
-//@cds.persistence.exists
 entity passenger : recordsKey, surrogatenum {
     carriercode     : String(4);
     version         : Integer;
@@ -290,24 +185,109 @@ entity passenger : recordsKey, surrogatenum {
     bcvjml          : Integer;
     bcvlml          : Integer;
     bcvoml          : Integer;
+    umnr            : Integer;
 };
+
+//@cds.persistence.exists
+entity cargorecord : recordsKey, surrogatenum {
+    version             : String(3);
+    user_ind            : String(1);
+    //flightinddate       : Date;
+    chgtottonn          : Decimal(8,2);
+    acttottonn          : Decimal(8,2);
+    tottranstonn        : Decimal(8,2);
+    chgtotimptonn       : Decimal(8,2);
+    acttotimptonn       : Decimal(8,2);
+    chgtotexptonn       : Decimal(8,2);
+    acttotexptonn       : Decimal(8,2);
+    chgimploose         : Decimal(8,2);
+    actimploose         : Decimal(8,2);
+    chgimpprepck        : Decimal(8,2);
+    actimpprepck        : Decimal(8,2);
+    chgexploose         : Decimal(8,2);
+    actexploose         : Decimal(8,2);
+    chgexpprepack       : Decimal(8,2);
+    actexpprepack       : Decimal(8,2);
+    chgmailimport       : Decimal(8,2);
+    actmailimport       : Decimal(8,2);
+    chgmailexport       : Decimal(8,2);
+    actmailexport       : Decimal(8,2);
+    avichgtkg           : Decimal(8,2);
+    aviactkg            : Decimal(8,2);
+    avinoawb            : Decimal(8,0);
+    dgrchgtkg           : Decimal(8,2);
+    dgractkg            : Decimal(8,2); 
+    dgrnoawb            : Decimal(8,2);
+    humchgkg            : Decimal(8,2);
+    humactkg            : Decimal(8,2);
+    humnoawb            : Decimal(8,0);
+    perchgkg            : Decimal(8,2);
+    peractkg            : Decimal(8,2);
+    pernoawb            : Decimal(8,0);
+    valchgkg            : Decimal(8,2);
+    valactkg            : Decimal(8,2);
+    valnoawb            : Decimal(8,0); // last copied
+    pilchgkg            : Decimal(8,2);
+    pilactkg            : Decimal(8,2);
+    pilnoawb            : Decimal(8,0);
+    pefchgkg            : Decimal(8,2);
+    pefactkg            : Decimal(8,2);
+    pefnoawb            : Decimal(8,2);
+    temchgkg            : Decimal(8,2);
+    temactkg            : Decimal(8,2);
+    temnoawb            : Decimal(8,2);
+    vunchgkg            : Decimal(8,2);
+    vunactkg            : Decimal(8,2);
+    vunnoawb            : Decimal(8,2);
+    totawb              : Decimal(8,2);
+    chgtransloose       : Decimal(8,2);
+    acttransloose       : Decimal(8,2);
+    chgtransprepack     : Decimal(8,2);
+    acttransprepack     : Decimal(8,2);
+    chgephloose         : Decimal(8,2);
+    actephloose         : Decimal(8,2);
+    chgephprepack       : Decimal(8,2);
+    actephprepack       : Decimal(8,2);
+    chgepdcgo           : Decimal(8,2);
+    actepdcgo           : Decimal(8,2);
+    creation_timestamp  : Decimal(15,0);
+    chgimptonn          : Decimal(8,2);
+    chgexptonn          : Decimal(8,2);
+    chgtottranstonn     : Decimal(8,2);
+};
+
 
 //@cds.persistence.exists
 entity routeplan : recordsKey, surrogatenum {
     key lineno              : String(3);
     key cfpno               : String(15);
-    key carriercode         : String(2); 
-    key flightno            : String(4);
-    key origin              : String(3);
-    key destination         : String(3);
-    key scheddeptdate       : Date;
     routeno                 : String(4);
     countrycode             : String(250);
     airspdistnm             : String(6);
+    airspdistm              : String(12);
+    airspdistkm             : String(6);
     elapsedtime             : String(6);
     deptapticao             : String(4);
     arrapticao              : String(4);
     tailno                  : String(8);
+    entrydatelmt            : Date;
+    entrytimelmt            : Time;
+    entrydateutc            : Date;
+    entrytimeutc            : Time;
+    exitdatelmt             : Date;
+    exittimelmt             : Time;
+    exitdateutc             : Date;
+    exittimeutc             : Time;
+    amount                  : Decimal(11,2);
+    rate                    : Decimal(11,2);
+    currency                : String(5);
+    entrypoint              : String(10);
+    exitpoint               : String(10);
+    entryawy                : String(10);
+    exitawy                 : String(10);
+    chargetype              : String(2);
+    provid                  : String(2);
+    gcd                     : Decimal(8,0);
 };
 
 //@cds.persistence.exists
@@ -322,4 +302,47 @@ entity accommodation : recordsKey, surrogatenum {
     vendor              : String(10); // data element->ZEFO_VENDOR ?
     actarrdateutc       : Date;
     actarrdate          : Date;
+    servcode            : String(18);
+    reservedate         : Date;
+    rmntsqty            : Integer;
+    allowamt            : Decimal(11,2);
+    currency            : String(5);
+};
+
+
+//@cds.persistence.exists
+entity catering : recordsKey, surrogatenum {
+    carriercode     : String(2);
+    origin          : String(3);
+    destination     : String(3);
+    classtype       : String(10);
+    sapmeal         : String(18);
+    exdescription   : String(100);
+    paxqun          : Decimal(3,0);
+    unitofmesur     : String(3); // unit 
+    exmenucode      : String(100); // curr 
+    exmenudesc      : String(200); // curr 
+    salescat        : String(50); // curr
+    pricerel        : String(1); // curr 
+    mealfact        : String(1);// curr 
+    quant           : Decimal(13,3);// curr 
+    netprice        : Decimal(11,2);// curr 
+    grossgross      : Decimal(11,2);// curr 
+    custdiscount    : Decimal(11,2);// curr 
+    netamont        : Decimal(11,2);// curr 
+    airportfee      : Decimal(11,2);// curr 
+    airportfeevat   : Decimal(11,2);// curr
+    gstvat          : Decimal(11,2);// curr 
+    consumptiontax  : Decimal(11,2);// curr 
+    surchargeamount : Decimal(11,2);// curr 
+    vatp            : Decimal(11,2);// curr 
+    gipba           : Decimal(11,2);// curr 
+    totalamount     : Decimal(11,2);// curr 
+    currency        : String(5); // currency key
+    invoicetype     : String(2);
+    custdiscount_perc : String(3);
+    airportfee_perc : String(3);
+    gstvat_perc     : String(3);
+    surcharge_perc  : String(3);
+    consumptiontax_perc : String(3);
 };

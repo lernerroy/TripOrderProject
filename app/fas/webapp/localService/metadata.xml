@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZGW_LS_FO_SERVICES_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="FlightSegmentHeader" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Aufnr"/>
+                    <PropertyRef Name="Preaufnr"/>
+                </Key>
+                <Property Name="ArrLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Arrival Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Arrairp" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Arr. AP (IATA)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Arrdate" Type="Edm.DateTime" Precision="7" sap:unicode="false" sap:label="Arrival Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Arrtime" Type="Edm.Time" Precision="0" sap:unicode="false" sap:label="Arrival Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CargoLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Cargo Interfac Stats" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Carriercode" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Route Owner" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CrewLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Crew Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CrgoLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Cargo Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Depdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Departure Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Deptime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Depart. Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Direction" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Flight Direction" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Flightno" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Flight Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NvgtLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Navigation status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OfnaLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overflight status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OverallLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overall Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreAirpLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Airport Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreArrLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Arrival Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreCargoLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Cargo Interfac Stats" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreCfpLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="CFP Int Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreCrewLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Crew Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreCrgoLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Cargo Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreNvgtLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Navigation status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreOfnaLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overflight status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreOverallLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overall Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PrePssLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Passenger Int Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Preaircrafttype" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Aircraft Type (IATA)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prearrairp" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Arr. AP (IATA)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prearrdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Arrival Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Prearrtime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Arrival Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Preaufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Precarriercode" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Route Owner" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Predepairp" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Dept. AP (IATA)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Predepdate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Departure Date" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Predeptime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Depart. Time" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Preflightno" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Flight Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Pretailno" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Tail No." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PssLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Passenger Int Status" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SelFlag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Boolean Variable (X=True, -=False, Space=Unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TakeoffDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Takeoff Date LMT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TakeoffTime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Takeoff Time LMT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TouchdnDate" Type="Edm.DateTime" Nullable="false" Precision="7" sap:unicode="false" sap:label="Touchdown Date LMT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TouchdnTime" Type="Edm.Time" Nullable="false" Precision="0" sap:unicode="false" sap:label="Touchdown Time LMT" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LegState" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Leg State" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PreLegState" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Pre Leg State" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NxtOverallLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overall Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NxtAirpLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overall Airport Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NxtCrgoLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overall Cargo Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NxtEngrLight" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Overall Engineering Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NxtLegState" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Overall LegState" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="FlightSegmentHeaderInboundPax" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentInboundPax" FromRole="FromRole_FlightSegmentInboundPax" ToRole="ToRole_FlightSegmentInboundPax"/>
+                <NavigationProperty Name="FlightSegmentHeaderOutboundPax" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentOutboundPax" FromRole="FromRole_FlightSegmentOutboundPax" ToRole="ToRole_FlightSegmentOutboundPax"/>
+                <NavigationProperty Name="FlightSegmentItemSetAC" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesAC" FromRole="FromRole_FlightSegmentServicesAC" ToRole="ToRole_FlightSegmentServicesAC"/>
+                <NavigationProperty Name="FlightSegmentItemSetCG" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesCG" FromRole="FromRole_FlightSegmentServicesCG" ToRole="ToRole_FlightSegmentServicesCG"/>
+                <NavigationProperty Name="FlightSegmentHeaderOutboundCargo" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentOutboundCargo" FromRole="FromRole_FlightSegmentOutboundCargo" ToRole="ToRole_FlightSegmentOutboundCargo"/>
+                <NavigationProperty Name="FlightSegmentHeaderInboundCargo" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentInboundCargo" FromRole="FromRole_FlightSegmentInboundCargo" ToRole="ToRole_FlightSegmentInboundCargo"/>
+                <NavigationProperty Name="FlightSegmentItemSetOV" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesOV" FromRole="FromRole_FlightSegmentServicesOV" ToRole="ToRole_FlightSegmentServicesOV"/>
+                <NavigationProperty Name="FlightSegmentItemSetEG" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesEG" FromRole="FromRole_FlightSegmentServicesEG" ToRole="ToRole_FlightSegmentServicesEG"/>
+                <NavigationProperty Name="FlightSegmentItemSet" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesOV" FromRole="FromRole_FlightSegmentServicesOV" ToRole="ToRole_FlightSegmentServicesOV"/>
+            </EntityType>
+            <EntityType Name="FlightSegmentHeaderPax" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Aufnr"/>
+                </Key>
+                <Property Name="Aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="aufnr" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BagQuan" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="Baggage Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BagWeight" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Baggage Weight" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BoardPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Joining PAX" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="BusClassPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Business Class" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ChdPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Child PAX" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EcoPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Economy Class" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="FirstClassPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="First Class" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InfantPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Infant PAX" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NrevPaxBus" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Non Rev. Business" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NrevPaxEco" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Non Rev. Economy" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NrevPaxFirst" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Non Rev. First" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NrevPaxPreco" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Non Rev. Premium Eco" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NrevPaxTotal" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Non-Revenue Total" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PremEcoPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Premium Eco Class" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RevPaxBus" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Revenue Business" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RevPaxEco" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Revenue Economy" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RevPaxFirst" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Revenue First" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RevPaxPreco" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Revenue Premium Econ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RevPaxTot" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Revenue Total" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotalPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Total Passengers" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransferPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Transfer PAX" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransitPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Transit PAX" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="WchPax" Type="Edm.Decimal" Nullable="false" Precision="3" Scale="0" sap:unicode="false" sap:label="Wheelchair PAX" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="FlightSegmentOutboundHeader" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentOutboundPax" FromRole="ToRole_FlightSegmentOutboundPax" ToRole="FromRole_FlightSegmentOutboundPax"/>
+                <NavigationProperty Name="FlightSegmentInboundHeader" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentInboundPax" FromRole="ToRole_FlightSegmentInboundPax" ToRole="FromRole_FlightSegmentInboundPax"/>
+            </EntityType>
+            <EntityType Name="FlightSegmentItem" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Aufnr"/>
+                    <PropertyRef Name="Direction"/>
+                    <PropertyRef Name="Lob"/>
+                    <PropertyRef Name="SrvcCode"/>
+                </Key>
+                <Property Name="AdditionalFlag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Additional Services" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Cfpno" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="CFP Number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Country" Type="Edm.String" Nullable="false" MaxLength="15" sap:unicode="false" sap:label="Name" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrEkgrp" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Purch. Group" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrExists" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Contract exists" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrHdr" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrItm" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrMatkl" Type="Edm.String" Nullable="false" MaxLength="9" sap:unicode="false" sap:label="Material Group" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrMeins" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Base Unit" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+                <Property Name="CtrPrice" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Contract Price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrQuantity" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Contract Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrTotalPrice" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Contract Total Price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrUsageType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Ctr. Usage Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrVendor" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrVendorDesc" Type="Edm.String" Nullable="false" MaxLength="35" sap:unicode="false" sap:label="Vendor" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrWaers" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Currency" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="currency-code"/>
+                <Property Name="CtrWerks" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Plant" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="CtrlKey" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Control Key" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Direction" Type="Edm.Byte" Nullable="false" sap:unicode="false" sap:label="Int." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ErrorHint" Type="Edm.String" Nullable="false" MaxLength="400" sap:unicode="false" sap:label="BRF+ Error Message" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EsllExtrow" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Internal line" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EsllIntrow" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Internal line" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EsllPackno" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Package number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EssrCtrDifferent" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="ESSR and Ctr Differ" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EssrExists" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="ESSR Exists" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Kzabn" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Acceptance" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lblni" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Entry Sheet" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lob" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="LOB Title" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OperationIntrow" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Activity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Price" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Unit Price" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PurchasingHdr" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Purchasing Doc." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PurchasingItm" Type="Edm.String" Nullable="false" MaxLength="5" sap:unicode="false" sap:label="Item" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Quantity" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Region" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Region" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="RoutineFlag" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Routine Services" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Selected" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="Boolean Variable (X=true, -=false, space=unknown)" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SrvcCode" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:label="Service" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SrvcDesc" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Short Text" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Airport Status Light" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="SubPackno" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Package number" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TlCounter" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Group Counter" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TlType" Type="Edm.String" Nullable="false" MaxLength="8" sap:unicode="false" sap:label="Group" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotalPrice" Type="Edm.Decimal" Nullable="false" Precision="12" Scale="3" sap:unicode="false" sap:label="Net Value" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UsageType" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Usage Type" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="UsageTypeString" Type="Edm.String" Nullable="false" MaxLength="100" sap:unicode="false" sap:label="Usage Type Collection" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="FlightSegmentHeaderAC" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesAC" FromRole="ToRole_FlightSegmentServicesAC" ToRole="FromRole_FlightSegmentServicesAC"/>
+                <NavigationProperty Name="FlightSegmentHeaderCG" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesCG" FromRole="ToRole_FlightSegmentServicesCG" ToRole="FromRole_FlightSegmentServicesCG"/>
+                <NavigationProperty Name="FlightSegmentHeaderEG" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesEG" FromRole="ToRole_FlightSegmentServicesEG" ToRole="FromRole_FlightSegmentServicesEG"/>
+                <NavigationProperty Name="FlightSegmentHeaderOV" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesOV" FromRole="ToRole_FlightSegmentServicesOV" ToRole="FromRole_FlightSegmentServicesOV"/>
+            </EntityType>
+            <EntityType Name="FlightSegmentHeaderCargo" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Aufnr"/>
+                </Key>
+                <Property Name="Aufnr" Type="Edm.String" Nullable="false" MaxLength="12" sap:unicode="false" sap:label="Order" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Total Tonnage KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="Total no. of AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotTransTonn" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Total Transit Tonnag" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotImpTon" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Total Imp Tonnage Ac" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TotExpTon" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Total Exp Tonnage Ac" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ImpLooseKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Import Loose KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ImpIntactKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Import Prepack KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ExpLooseKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Export Loose KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ExpIntactKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Export Prepack KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ImpMailKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Import Mail KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ExpMailKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Export Mail KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AviCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="AVI Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AviCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="Live Animal no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DgrCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="DGR Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DgrCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="DGR Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="HumCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="HUM Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="HumCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="HUM Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PerCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="PER Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PerCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="PER Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="VAL Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ValCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="VAL Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PilCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="PIL Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PilCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="PIL Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PefCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="PEF Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PefCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="PEF Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TemCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="TEM Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TemCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="TEM Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VunCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="VUN Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VunCgoAwb" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="0" sap:unicode="false" sap:label="VUN Cargo no. AWB" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransLooseKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Trans Loose KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TransIntactKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="Trans Prepack KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EphCgoKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="EPH Loose Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EphIntactKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="EPH Prepack Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="EpdKg" Type="Edm.Decimal" Nullable="false" Precision="8" Scale="2" sap:unicode="false" sap:label="EPD Cargo KG" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="FlightSegmentOutboundHeaderCargo" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentOutboundCargo" FromRole="ToRole_FlightSegmentOutboundCargo" ToRole="FromRole_FlightSegmentOutboundCargo"/>
+                <NavigationProperty Name="FlightSegmentInboundHeaderCargo" Relationship="ZGW_LS_FO_SERVICES_SRV.FlightSegmentInboundCargo" FromRole="ToRole_FlightSegmentInboundCargo" ToRole="FromRole_FlightSegmentInboundCargo"/>
+            </EntityType>
+            <ComplexType Name="EnqueueFlightResult">
+                <Property Name="IsLocked" Type="Edm.Boolean" Nullable="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Error" Type="Edm.String" Nullable="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </ComplexType>
+            <Association Name="FlightSegmentOutboundPax" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="1" Role="FromRole_FlightSegmentOutboundPax"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeaderPax" Multiplicity="0..1" Role="ToRole_FlightSegmentOutboundPax"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentOutboundPax">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentOutboundPax">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FlightSegmentServicesAC" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="1" Role="FromRole_FlightSegmentServicesAC"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentItem" Multiplicity="*" Role="ToRole_FlightSegmentServicesAC"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentServicesAC">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentServicesAC">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FlightSegmentServicesCG" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="1" Role="FromRole_FlightSegmentServicesCG"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentItem" Multiplicity="*" Role="ToRole_FlightSegmentServicesCG"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentServicesCG">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentServicesCG">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FlightSegmentOutboundCargo" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="1" Role="FromRole_FlightSegmentOutboundCargo"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeaderCargo" Multiplicity="0..1" Role="ToRole_FlightSegmentOutboundCargo"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentOutboundCargo">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentOutboundCargo">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FlightSegmentInboundCargo" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="0..1" Role="FromRole_FlightSegmentInboundCargo"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeaderCargo" Multiplicity="0..1" Role="ToRole_FlightSegmentInboundCargo"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentInboundCargo">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentInboundCargo">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FlightSegmentServicesEG" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="1" Role="FromRole_FlightSegmentServicesEG"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentItem" Multiplicity="*" Role="ToRole_FlightSegmentServicesEG"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentServicesEG">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentServicesEG">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FlightSegmentServicesOV" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="1" Role="FromRole_FlightSegmentServicesOV"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentItem" Multiplicity="*" Role="ToRole_FlightSegmentServicesOV"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentServicesOV">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentServicesOV">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="FlightSegmentInboundPax" sap:content-version="1">
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" Multiplicity="1" Role="FromRole_FlightSegmentInboundPax"/>
+                <End Type="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeaderPax" Multiplicity="0..1" Role="ToRole_FlightSegmentInboundPax"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_FlightSegmentInboundPax">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Preaufnr"/>
+                    </Principal>
+                    <Dependent Role="ToRole_FlightSegmentInboundPax">
+                        <PropertyRef Name="Aufnr"/>
+                        <PropertyRef Name="Aufnr"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZGW_LS_FO_SERVICES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="FlightSegmentHeaderSet" EntityType="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FlightSegmentHeaderPaxSet" EntityType="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeaderPax" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FlightSegmentItemSet" EntityType="ZGW_LS_FO_SERVICES_SRV.FlightSegmentItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="FlightSegmentHeaderCargoSet" EntityType="ZGW_LS_FO_SERVICES_SRV.FlightSegmentHeaderCargo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="FlightSegmentOutboundPaxSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentOutboundPax" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentOutboundPax"/>
+                    <End EntitySet="FlightSegmentHeaderPaxSet" Role="ToRole_FlightSegmentOutboundPax"/>
+                </AssociationSet>
+                <AssociationSet Name="FlightSegmentServicesEGSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesEG" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentServicesEG"/>
+                    <End EntitySet="FlightSegmentItemSet" Role="ToRole_FlightSegmentServicesEG"/>
+                </AssociationSet>
+                <AssociationSet Name="FlightSegmentInboundPaxSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentInboundPax" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentInboundPax"/>
+                    <End EntitySet="FlightSegmentHeaderPaxSet" Role="ToRole_FlightSegmentInboundPax"/>
+                </AssociationSet>
+                <AssociationSet Name="FlightSegmentServicesOVSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesOV" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentServicesOV"/>
+                    <End EntitySet="FlightSegmentItemSet" Role="ToRole_FlightSegmentServicesOV"/>
+                </AssociationSet>
+                <AssociationSet Name="FlightSegmentOutboundCargoSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentOutboundCargo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentOutboundCargo"/>
+                    <End EntitySet="FlightSegmentHeaderCargoSet" Role="ToRole_FlightSegmentOutboundCargo"/>
+                </AssociationSet>
+                <AssociationSet Name="FlightSegmentServicesCGSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesCG" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentServicesCG"/>
+                    <End EntitySet="FlightSegmentItemSet" Role="ToRole_FlightSegmentServicesCG"/>
+                </AssociationSet>
+                <AssociationSet Name="FlightSegmentServicesACSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentServicesAC" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentServicesAC"/>
+                    <End EntitySet="FlightSegmentItemSet" Role="ToRole_FlightSegmentServicesAC"/>
+                </AssociationSet>
+                <AssociationSet Name="FlightSegmentInboundCargoSet" Association="ZGW_LS_FO_SERVICES_SRV.FlightSegmentInboundCargo" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="FlightSegmentHeaderSet" Role="FromRole_FlightSegmentInboundCargo"/>
+                    <End EntitySet="FlightSegmentHeaderCargoSet" Role="ToRole_FlightSegmentInboundCargo"/>
+                </AssociationSet>
+                <FunctionImport Name="DequeueSegment" ReturnType="ZGW_LS_FO_SERVICES_SRV.EnqueueFlightResult" m:HttpMethod="POST">
+                    <Parameter Name="FlightNumber" Type="Edm.String" Mode="In"/>
+                </FunctionImport>
+                <FunctionImport Name="EnqueueSegment" ReturnType="ZGW_LS_FO_SERVICES_SRV.EnqueueFlightResult" m:HttpMethod="POST">
+                    <Parameter Name="FlightNumber" Type="Edm.String" Mode="In"/>
+                </FunctionImport>
+            </EntityContainer>
+            <atom:link rel="self" href="http://l-s.ddns.net:5000/sap/opu/odata/sap/ZGW_LS_FO_SERVICES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://l-s.ddns.net:5000/sap/opu/odata/sap/ZGW_LS_FO_SERVICES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

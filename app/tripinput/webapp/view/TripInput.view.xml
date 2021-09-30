@@ -1,0 +1,131 @@
+<mvc:View controllerName="tripinput.controller.TripInput"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:fb="sap.ui.comp.filterbar" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Shell id="shell" appWidthLimited="true">
+        <App id="app">
+            <pages>
+                <Page id="page" title="{i18n>title}">
+                    <content>
+                        <fb:FilterBar reset="onReset" search="onSearch" showRestoreButton="true" showClearButton="true">
+                            <fb:filterGroupItems>
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="Carrier Code" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="insupcarriercode2" value="{ViewModel>/filters/insupcarriercode2}" editable="true" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="Flight No" labelTooltip="Tooltip Example" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="inflightno" value="{ViewModel>/filters/inflightno}" editable="true" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A1" label="Origin" labelTooltip="Tooltip GroupItem Example" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="inorigin" value="{ViewModel>/filters/inorigin}" editable="true" class="sapUiMediumMarginTop"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+                                <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="B1" label="Destination" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <Input id="indestination" value="{ViewModel>/filters/indestination}" editable="true" class="sapUiMediumMarginTop"/>
+
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+
+
+                                <fb:FilterGroupItem groupName="G2" groupTitle="Group2" name="B2" label="Departure Date" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                    <fb:control>
+                                        <DatePicker valueFormat="YYYY-MM-dd" value="{ViewModel>/filters/inscheddeptdate}" id="inscheddeptdate" editable="true" class="sapUiMediumMarginTop"/>
+                                    </fb:control>
+                                </fb:FilterGroupItem>
+                            </fb:filterGroupItems>
+
+                        </fb:FilterBar>
+
+                        <!-- <HBox width="auto" alignContent="Center" alignItems="Center" justifyContent="Center">
+                            <HBox>
+                                <Label text="Carrier Code" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                <Input id="insupcarriercode2" value="{triprecord>insupcarriercode2}" editable="true" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                            </HBox>
+
+                            <HBox>
+                                <Label text="Flight Number" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                <Input id="inflightno" value="{triprecord>inflightno}" editable="true" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                            </HBox>
+
+                            <HBox>
+                                <Label text="Origin" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                <Input id="inorigin" value="{triprecord>inorigin}" editable="true" class="sapUiMediumMarginTop"/>
+                            </HBox>
+
+                            <HBox>
+                                <Label text="Destination" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                <Input id="indestination" value="{triprecord>indestination}" editable="true" class="sapUiMediumMarginTop"/>
+                            </HBox>
+
+                            <HBox>
+                                <Label text="Sched. Departure Date" class="sapUiMediumMarginBegin sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                <DatePicker Value="{triprecord>inscheddeptdate}" id="inscheddeptdate" editable="true" class="sapUiMediumMarginTop"/>
+                            </HBox>
+
+                            <Button class="sapUiTinyMarginBegin" text="Go" press="onPress" ariaDescribedBy="Show Trip Data">
+                                <layoutData>
+                                    <FlexItemData growFactor="1" />
+                                </layoutData>
+                            </Button>
+                        </HBox> -->
+
+                        <Table id="sTableId" selectionChange="onTableRowSelect" items="{ViewModel>/tabledata}" noDataText="No Data" width="auto">
+
+
+                            <columns>
+                                <Column>
+                                    <Text text="Carrier Code"/>
+                                </Column>
+                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left">
+                                    <Text text="Flight No"/>
+                                </Column>
+                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left">
+                                    <Text text="Origin"/>
+                                </Column>
+                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left">
+                                    <Text text="Destination"/>
+                                </Column>
+                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left">
+                                    <Text text="Scheduled Departure Date"/>
+                                </Column>
+
+                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left">
+                                    <Text text="Surrogate Number"/>
+                                </Column>
+
+                            </columns>
+                            <items>
+                                <ColumnListItem type="Navigation" press="onTableRowSelect">
+                                    <cells>
+                                        <Text text="{ViewModel>insupcarriercode2}"/>
+                                        <Text text="{ViewModel>inflightno}" />
+                                        <Text text="{ViewModel>inorigin}" />
+                                        <Text text="{ViewModel>indestination}" />
+                                        <Text text="{ViewModel>inscheddeptdate}" />
+                                        <Text text="{ViewModel>surrogatenum}" />
+
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+
+
+
+                    </content>
+                </Page>
+            </pages>
+        </App>
+    </Shell>
+</mvc:View>

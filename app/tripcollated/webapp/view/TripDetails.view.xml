@@ -18,72 +18,7 @@
 						</HBox>
                         <IconTabBar id="idIconTabBarStretchContent" select=".onTabSelect" fieldGroupIds="idParentIconTabBar" stretchContentHeight="true" backgroundDesign="Transparent" applyContentPadding="false" class="sapUiResponsiveContentPadding">
                             <items>
-                                <IconTabFilter key="acc" iconColor="Contrast" icon="sap-icon://retail-store" text="{i18n>accommodation}">
-                                    <content>
-                                        <fb:FilterBar>
-		                                    <fb:filterGroupItems>
-			                                    <fb:FilterGroupItem groupName="Accommodation" name="Carrier Code" label="Carrier Code" partOfCurrentVariant="true" visibleInFilterBar="true">
-				                                    <fb:control>
-					                                    <Input type="Text"/>
-				                                    </fb:control>
-			                                    </fb:FilterGroupItem>
-		                                    </fb:filterGroupItems>
-	                                    </fb:FilterBar>
-                                        <Table id="accTable" items="{                                             path: '/accommodation',                                             parameters:{ $count : true }                                         }" noDataText="No Accommodation" growing="true" growingThreshold="10" contextualWidth="Auto" popinLayout="GridSmall" width="auto">
-                                            <headerToolbar>
-                                                <OverflowToolbar>
-                                                    <Title id="accTableTitle" text="Accommodation ({$count})">
-                                                        <layoutData>
-                                                            <ToolbarLayoutData shrinkable="false"/>
-                                                        </layoutData>
-                                                    </Title>
-                                                    <ToolbarSpacer/>
-                                                </OverflowToolbar>
-                                            </headerToolbar>
-                                            <columns>
-                                                <Column hAlign="Left" width="15%">
-                                                    <Text text="Carrier Code"/>
-                                                </Column>
-                                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left" width="35%">
-                                                    <Text text="Flight Number"/>
-                                                </Column>
-                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
-                                                    <Text text="Origin"/>
-                                                </Column>
-                                            </columns>
-                                            <items>
-                                                <ColumnListItem type="Navigation" press="onSelectionChange">
-                                                    <cells>
-                                                        <Text text="{carriercode}"/>
-                                                        <Text text="{flightno}"/>
-                                                        <Text text="{origin}"/>
-                                                    </cells>
-                                                </ColumnListItem>
-                                            </items>
-                                        </Table>
-                                    </content>
-                                </IconTabFilter>
-                                <IconTabFilter key="car" iconColor="Contrast" icon="sap-icon://cargo-train" text="{i18n>cargo}">
-                                    <content>
-                                        
-                                    </content>
-                                </IconTabFilter>
-                                <IconTabFilter key="cat" iconColor="Contrast" icon="sap-icon://cart" text="{i18n>catering}">
-                                    <content>
-                                        
-                                    </content>
-                                </IconTabFilter>
-                                <IconTabFilter key="pas" iconColor="Contrast" icon="sap-icon://activity-individual" text="{i18n>passengers}">
-                                    <content>
-                                        
-                                    </content>
-                                </IconTabFilter>
-                                <IconTabFilter key="rou" iconColor="Contrast" icon="sap-icon://step" text="{i18n>routePlan}">
-                                   <content>
-                                        
-                                    </content>
-                                </IconTabFilter>
-                                <IconTabFilter key="tri" iconColor="Contrast" icon="sap-icon://travel-itinerary" text="{i18n>tripDetails}">
+                             <IconTabFilter key="tri" iconColor="Contrast" icon="sap-icon://travel-itinerary" text="{i18n>tripDetails}">
                                     <content>
                                         <VBox class="sapUiSmallMargin">
                                             <f:Form editable="true">
@@ -111,27 +46,27 @@
                                                         <f:formElements>
                                                             <f:FormElement label="Comm. Carrier Code">
                                                                 <f:fields>
-                                                                    <Input value="{triprecord>supcarriercode2}" id="CommCarrierCode"/>
+                                                                    <Input value="{trip1>/insupcarriercode2/}" editable="false" />
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Operator Carrier Code">
                                                                 <f:fields>
-                                                                    <Input value="{triprecord>supcarriercode}" id="OppCarrierCode"/>
+                                                                    <Input value="{trip1>/insupcarriercode2/}" editable="false" id="supcarriercode"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Route Owner">
                                                                 <f:fields>
-                                                                    <Input value="{tripRecord>route}" id="RouteOwner"/>
+                                                                    <Input value="{trip1>/carriercode/}" editable="false" id="carriercode"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Flight Number">
                                                                 <f:fields>
-                                                                    <Input value="{triprecord>flightno}" id="FlightNumber"/>
+                                                                    <Input value="{trip1>/flightno/}" editable="false" id="flightno"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Leg Number">
                                                                 <f:fields>
-                                                                    <Input value="{triprecord>legstate}" id="LegNumber"/>
+                                                                    <Input value="{trip1>/surrogatenum/}" editable="false" id="surrogatenum"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                         </f:formElements>
@@ -140,29 +75,29 @@
                                                         <f:formElements>
                                                             <f:FormElement label="Orig.Init Dr UTC">
                                                                 <f:fields>
-                                                                    <Input value="{triporder>scheddeptdateutc}" id="OrigInitDrUTC"/>
+                                                                    <Input value="{trip1>/idooutc/}" editable="false" id="idooutc"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Orig.Init Dr LMT">
                                                                 <f:fields>
-                                                                    <Input value="{scheddepttimeutc}" id="OrigInitDrLMT"/>
+                                                                    <Input value="{trip1>/idoo/}" editable="false" id="idoo"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Day Of Origin LMT">
                                                                 <f:fields>
-                                                                    <Input value="{DayOriginLMT}" id="DayOriginLMT"/>
+                                                                    <Input value="{trip1>/doo/}" editable="false" id="doo"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Day Or Origin UTC">
                                                                 <f:fields>
-                                                                    <Input value="{DayOriginUTC}" id="DayOriginUTC"/>
+                                                                    <Input value="{trip1>/dooutc/}" editable="false" id="DayOriginUTC"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                         </f:formElements>
                                                     </f:FormContainer>
                                                 </f:formContainers>
                                             </f:Form>
-                                            <f:Form editable="true">
+                                            <f:Form editable="false">
                                                 <f:title>
                                                     <core:Title text="Flight Airports Details" />
                                                 </f:title>
@@ -187,32 +122,32 @@
                                                         <f:formElements>
                                                             <f:FormElement label="Initial Origin">
                                                                 <f:fields>
-                                                                    <Input value="{InitialOrigin}" id="InitialOrigin"/>
+                                                                    <Input value="{/tripRecord>inorigin}" editable="false" id="inorigin"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Origin">
                                                                 <f:fields>
-                                                                    <Input value="{Origin}" id="Origin"/>
+                                                                    <Input value="{tripRecord>origin}" editable="false" id="Origin"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Initial Destination">
                                                                 <f:fields>
-                                                                    <Input value="{InitialDestination}" id="InitialDestination"/>
+                                                                    <Input value="{InitialDestination}" editable="false" id="InitialDestination"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Destination">
                                                                 <f:fields>
-                                                                    <Input value="{Destination}" id="Destination"/>
+                                                                    <Input value="{Destination}" editable="false" id="Destination"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Sched.Dep.AP(IATA)">
                                                                 <f:fields>
-                                                                    <Input value="{SchDepAPIATA}" id="SchDepAPIATA"/>
+                                                                    <Input value="{SchDepAPIATA}" editable="false" id="SchDepAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Sched.Arr.AP(IATA)">
                                                                 <f:fields>
-                                                                    <Input value="{SchArrAPIATA}" id="SchArrAPIATA"/>
+                                                                    <Input value="{SchArrAPIATA}" editable="false" id="SchArrAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                         </f:formElements>
@@ -221,39 +156,39 @@
                                                         <f:formElements>
                                                             <f:FormElement label="Act.Dep.AP(IATA)">
                                                                 <f:fields>
-                                                                    <Input value="{ActDepAPIATA}" id="ActDepAPIATA"/>
+                                                                    <Input value="{ActDepAPIATA}" editable="false" id="ActDepAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Act.Dep.AP(ICAO)">
                                                                 <f:fields>
-                                                                    <Input value="{ActDepAPICAO}" id="ActDepAPICAO"/>
+                                                                    <Input value="{ActDepAPICAO}" editable="false" id="ActDepAPICAO"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Act.Arr.AP(IATA)">
                                                                 <f:fields>
-                                                                    <Input value="{ActArrAPIATA}" id="ActArrAPIATA"/>
+                                                                    <Input value="{ActArrAPIATA}" editable="false" id="ActArrAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Act.Arr.AP(ICAO)">
                                                                 <f:fields>
-                                                                    <Input value="{ActArrAPICAO}" id="ActArrAPICAO"/>
+                                                                    <Input value="{ActArrAPICAO}" editable="false" id="ActArrAPICAO"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Sch.Dep.AP(ICAO)">
                                                                 <f:fields>
-                                                                    <Input value="{SchDepAPICAO}" id="SchDepAPICAO"/>
+                                                                    <Input value="{SchDepAPICAO}" editable="false" id="SchDepAPICAO"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="Sch.Arr.AP(ICAO)">
                                                                 <f:fields>
-                                                                    <Input value="{SchArrAPICAO}" id="SchArrAPICAO"/>
+                                                                    <Input value="{SchArrAPICAO}" editable="false" id="SchArrAPICAO"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                         </f:formElements>
                                                     </f:FormContainer>
                                                 </f:formContainers>
                                             </f:Form>
-                                            <f:Form editable="true">
+                                            <f:Form editable="false">
                                                 <f:title>
                                                     <core:Title text="Flight Extra Details" />
                                                 </f:title>
@@ -362,6 +297,444 @@
                                         </VBox>
                                     </content>
                                 </IconTabFilter>
+
+                               <!--Accommodation Screen Designing-->       
+                                <IconTabFilter key="acc" iconColor="Contrast" icon="sap-icon://retail-store" text="{i18n>accommodation}">
+                                    <content>
+                                        <Table id="accTable" items="{ 
+                                            path: '/accommodation', 
+                                            parameters:{ $count : true }                                        
+                                             }"
+                                              noDataText="No Accommodation" growing="true" growingThreshold="10" contextualWidth="Auto" popinLayout="GridSmall" width="auto">
+                                            <headerToolbar>
+                                                <OverflowToolbar>
+                                                    <Title id="accTableTitle" text="Accommodation ({$count})">
+                                                        <layoutData>
+                                                            <ToolbarLayoutData shrinkable="false"/>
+                                                        </layoutData>
+                                                    </Title>
+                                                    <ToolbarSpacer/>
+                                                </OverflowToolbar>
+                                            </headerToolbar>
+                                            <columns>
+                                                <Column hAlign="Left" width="15%">
+                                                    <Input value="Carrier Code"/>
+                                                </Column>
+                                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left" width="35%">
+                                                    <Input value="Flight Number"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Origin"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Destination"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Sch Departure Date UTC"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="CCSMSGREF"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Schedule Departure Date"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Vendor"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Actual Departure Date UTC"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Actual Departure Date"/>
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem type="Navigation" press="onSelectionChange">
+                                                    <cells>
+                                                        <Input value="{carriercode}"/>
+                                                        <Input value="{flightno}"/>
+                                                        <Input value="{origin}"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </content>
+                                </IconTabFilter>
+
+<!--Cargo Screen Designing-->                                
+                                <IconTabFilter key="car" iconColor="Contrast" icon="sap-icon://cargo-train" text="{i18n>cargo}">
+                                    <content>
+                                      <VBox class="sapUiSmallMargin">
+                                            <f:Form editable="false">
+                                                <f:title>
+                                                    <core:Title text="Cargo Details" />
+                                                </f:title>
+                                                  <f:layout>
+                                                    <f:ResponsiveGridLayout
+                                                        labelSpanXL="4"
+                                                        labelSpanL="4"
+                                                        labelSpanM="12"
+                                                        labelSpanS="12"
+                                                        adjustLabelSpan="false"
+                                                        emptySpanXL="0"
+                                                        emptySpanL="0"
+                                                        emptySpanM="0"
+                                                        emptySpanS="0"
+                                                        columnsXL="2"
+                                                        columnsL="2"
+                                                        columnsM="1"
+                                                        singleContainerFullSize="false" />
+                                                </f:layout>
+                                                <f:formContainers>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                           <f:FormElement label="Total Tonnage KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>acttottonn}" id="acttottonn"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                  </f:formContainers>  
+                                                <f:FormContainer title=" ">
+                                                    <f:formElements>
+                                                           <f:FormElement label="Import Lose Kg">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actimploose}" id="actimploose"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Import Prepack">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actimpprepck}" id="actimpprepck"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Export Loose">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actexploose}" id="actexploose"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Export Prepack">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actexpprepack}" id="actexpprepack"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Import Mail KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actmailimport}" id="actmailimport"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Export Mail KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actmailexport}" id="actmailexport"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Trans Loose KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>acttransloose}" id="acttransloose"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Trans Prepack KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>acttransprepack}" id="acttransprepack"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="EPH Loose Car">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actephloose}" id="actephloose"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="EPH Prepack Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actephprepack}" id="actephprepack"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="EPD Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>actepdcgo}" id="actepdcgo"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="AVI Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>aviactkg}" id="aviactkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="DGR Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>dgractkg}" id="dgractkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="HUM Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>humactkg}" id="humactkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="PER Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>peractkg}" id="peractkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="VAL Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>valactkg}" id="valactkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="PIL Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>pilactkg}" id="pilactkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="PEF Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>pefactkg}" id="pefactkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="TEM Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>temactkg}" id="temactkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="VUN Cargo KG">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>vunactkg}" id="vunactkg"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                    </f:formElements>
+                                               </f:FormContainer>  
+                                        </f:Form>        
+                                      </VBox>          
+                                    </content>
+                                </IconTabFilter>
+
+<!--Passanger Screen Designing-->                                
+                                <IconTabFilter key="pas" iconColor="Contrast" icon="sap-icon://activity-individual" text="{i18n>passengers}">
+                                    <content> <VBox class="sapUiSmallMargin">
+                                            <f:Form editable="false">
+                                                <f:title>
+                                                    <core:Title text="Passenger Details" />
+                                                </f:title>
+                                                  <f:layout>
+                                                    <f:ResponsiveGridLayout
+                                                        labelSpanXL="4"
+                                                        labelSpanL="4"
+                                                        labelSpanM="12"
+                                                        labelSpanS="12"
+                                                        adjustLabelSpan="false"
+                                                        emptySpanXL="0"
+                                                        emptySpanL="0"
+                                                        emptySpanM="0"
+                                                        emptySpanS="0"
+                                                        columnsXL="2"
+                                                        columnsL="2"
+                                                        columnsM="1"
+                                                        singleContainerFullSize="false" />
+                                                </f:layout>
+                                                <f:formContainers>
+                                                    <f:FormContainer title=" ">
+                                                        <f:formElements>
+                                                           <f:FormElement label="First Class">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>firstclasspax}" id="firstclasspax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Business Class">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>busclasspax}" id="busclasspax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Premium Eco Class">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>premecopax}" id="premecopax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Economy Class">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>ecopax}" id="ecopax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Revenue First">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>revpaxfirst}" id="revpaxfirst"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Revenue Business">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>revpaxbus}" id="revpaxbus"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Revenue Premium">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>revpaxpreco}" id="revpaxpreco"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Revenue Economy">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>revpaxeco}" id="revpaxeco"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Non Rev First">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>nrevpaxfirst}" id="nrevpaxfirst"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Non Rev Business">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>nrevpaxbus}" id="nrevpaxbus"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Non Rev Premium Eco">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>nrevpaxpreco}" id="nrevpaxpreco"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Non Rev Economy">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>nrevpaxeco}" id="nrevpaxeco"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                        </f:formElements>
+                                                    </f:FormContainer>
+                                                  </f:formContainers>  
+                                                <f:FormContainer title=" ">
+                                                    <f:formElements>
+                                                           <f:FormElement label="Total Passenger">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>totalpax}" id="totalpax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Revenue Total">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>revpaxtot}" id="revpaxtot"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Non-Revenue Total">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>nrevpaxtot}" id="nrevpaxtot"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Joining Pax">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>boardpax}" id="boardpax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Transit Pax">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>transitpax}" id="transitpax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Transfer Pax">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>transferpax}" id="transferpax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Baggage Quantity">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>bagquan}" id="bagquan"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Baggage Weight">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>bagweight}" id="bagweight"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Child Pax">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>chdpax}" id="chdpax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="Infant Pax">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>infpax}" id="infpax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="WheelChair Pax">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>wchpax}" id="wchpax"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                           <f:FormElement label="WheelChair Seat Pax">
+                                                                <f:fields>
+                                                                    <Input value="{TripRecord>wchc}" id="wchc"/>
+                                                                </f:fields>
+                                                            </f:FormElement>
+                                                    </f:formElements>
+                                               </f:FormContainer>  
+                                        </f:Form>        
+                                      </VBox>  
+                                    </content>
+                                </IconTabFilter>
+
+                               <!--Route Screen Designing-->                                
+                                <IconTabFilter key="rou" iconColor="Contrast" icon="sap-icon://step" text="{i18n>routePlan}">
+                                   <content>
+                                        <Table id="RouteTable" items="{ 
+                                            path: '/route_plan', 
+                                            parameters:{ $count : true }                                        
+                                             }"
+                                              noDataText="No Route" growing="true" growingThreshold="10" contextualWidth="Auto" popinLayout="GridSmall" width="auto">
+                                            <headerToolbar>
+                                                <OverflowToolbar>
+                                                    <Title id="routeTableTitle" text="Route PLan ({$count})">
+                                                        <layoutData>
+                                                            <ToolbarLayoutData shrinkable="false"/>
+                                                        </layoutData>
+                                                    </Title>
+                                                    <ToolbarSpacer/>
+                                                </OverflowToolbar>
+                                            </headerToolbar>
+                                            <columns>
+                                                <Column hAlign="Left" width="15%">
+                                                    <Input value="Line No."/>
+                                                </Column>
+                                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left" width="35%">
+                                                    <Input value="CFP No"/>
+                                                </Column>
+                                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left" width="35%">
+                                                    <Input value="Carrier Code"/>
+                                                </Column>
+                                                <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left" width="35%">
+                                                    <Input value="Flight No"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Origin"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Destination"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Sch Departure Date UTC"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Route No"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Country Code"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Airspdistnm"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Departure APT ICAO"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Arrival APT ICAO"/>
+                                                </Column>
+                                                <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
+                                                    <Input value="Tail No"/>
+                                                </Column>
+                                            </columns>
+                                            <items>
+                                                <ColumnListItem type="Navigation" press="onSelectionChange">
+                                                    <cells>
+                                                        <Input value="{carriercode}"/>
+                                                        <Input value="{flightno}"/>
+                                                        <Input value="{origin}"/>
+                                                    </cells>
+                                                </ColumnListItem>
+                                            </items>
+                                        </Table>
+                                    </content>
+                                </IconTabFilter>
+                               
                             </items>
                         </IconTabBar>
                     </content>

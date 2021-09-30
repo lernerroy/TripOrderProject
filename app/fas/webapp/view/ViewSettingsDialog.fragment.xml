@@ -1,0 +1,33 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<ViewSettingsDialog title="Filter" id="viewSettingsDialog" confirm=".onConfirmViewSettingsDialog">
+		<filterItems>
+			<ViewSettingsFilterItem key="legstate" text="Leg State" multiSelect="true">
+				<items>
+					<ViewSettingsItem text="Not Ready" key="PEND"/>
+					<ViewSettingsItem text="Ready" key="REDY"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem key="airportcharges" text="Airport Charges Status" multiSelect="true">
+				<items>
+					<ViewSettingsItem text="Not Ready" key="PEND"/>
+					<ViewSettingsItem text="Ready" key="REDY"/>
+					<ViewSettingsItem text="Confirmed" key="CONF"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem key="cargo" text="Cargo Status" multiSelect="true">
+				<items>
+					<ViewSettingsItem text="Not Ready" key="PEND"/>
+					<ViewSettingsItem text="Ready" key="REDY"/>
+					<ViewSettingsItem text="Confirmed" key="CONF"/>
+				</items>
+			</ViewSettingsFilterItem>
+			<ViewSettingsFilterItem key="engservices" text="Engineering Services Status" multiSelect="true">
+				<items>
+					<ViewSettingsItem text="Not Ready" key="PEND"/>
+					<ViewSettingsItem text="Ready" key="REDY"/>
+					<ViewSettingsItem text="Confirmed" key="CONF"/>
+				</items>
+			</ViewSettingsFilterItem>
+		</filterItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

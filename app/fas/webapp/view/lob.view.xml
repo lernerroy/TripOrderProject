@@ -1,0 +1,63 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:semantic="sap.f.semantic" xmlns:uxap="sap.uxap"
+	controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.lob" xmlns:html="http://www.w3.org/1999/xhtml">
+	<semantic:SemanticPage id="lobPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
+		<!-- Title Heading-->
+		<semantic:titleHeading>
+			<Title text="{lobView>/title}"/>
+		</semantic:titleHeading>
+		<semantic:content>
+			<uxap:ObjectPageLayout id="objectPageLayout" enableLazyLoading="false" subSectionLayout="TitleOnLeft" showTitleInHeaderContent="false"
+				showHeaderContent="true"></uxap:ObjectPageLayout>
+			<IconTabBar id="TabBar" stretchContentHeight="true" upperCase="false" expanded="{device>/isNoPhone}" select=".onTabSelected" backgroundDesign="Translucent"
+				class="sapUiResponsiveContentPadding">
+				<items>
+					
+					<IconTabFilter key="ARR" id="arrivalTab" design="Horizontal" text="Arrival" icon="sap-icon://fa/arrival">
+						<ScrollContainer id="scrollContArrival" width="100%" height="100%" horizontal="false" vertical="true">
+							<!--<Panel id="passangerPanelArr" expandable="true" expanded="true" class="sapUiResponsiveMargin">-->
+							<!--	<headerToolbar>-->
+							<!--		<Toolbar style="Standard">-->
+							<!--			<Title text="Passanger Details"/>-->
+							<!--		</Toolbar>-->
+							<!--	</headerToolbar>-->
+							<!--	<content>-->
+									<!--<core:Fragment id="depPassangerInfoFragment" fragmentName="com.legstate.fts.app.FlightAcceptanceCockpit.fragments.PassangerDetails"-->
+									<!--	type="XML"/>-->
+							<!--	</content>-->
+							<!--</Panel>							-->
+						</ScrollContainer>
+						
+					</IconTabFilter>
+					
+					<IconTabSeparator icon=""/>
+					<IconTabFilter key="DEP" id="depatureTab" design="Horizontal" text="Departure" icon="sap-icon://fa/departure">
+						<ScrollContainer width="100%" height="100%" horizontal="false" vertical="true">
+							<Panel id="passangerPanelDep" expandable="true" expanded="true" class="sapUiResponsiveMargin">
+								<headerToolbar>
+									<Toolbar style="Standard">
+										<Title text="Passanger Details"/>
+									</Toolbar>
+								</headerToolbar>
+								<content>
+									<!--<core:Fragment id="depPassangerInfoFragment" fragmentName="com.legstate.fts.app.FlightAcceptanceCockpit.fragments.PassangerDetails"-->
+									<!--	type="XML"/>-->
+								</content>
+							</Panel>
+							<Panel expandable="true" expanded="true" class="sapUiResponsiveMargin">
+								<headerToolbar>
+									<Toolbar style="Clear">
+										<Title text="Services"/>
+									</Toolbar>
+								</headerToolbar>
+								<content></content>
+							</Panel>
+						</ScrollContainer>
+					</IconTabFilter>
+				</items>
+			</IconTabBar>
+		</semantic:content>
+		<semantic:closeAction>
+			<semantic:CloseAction id="closeColumn" press=".onCloseLobPress"/>
+		</semantic:closeAction>
+	</semantic:SemanticPage>
+</mvc:View>

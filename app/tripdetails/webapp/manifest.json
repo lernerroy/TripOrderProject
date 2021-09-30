@@ -11,8 +11,8 @@
         "applicationVersion": {
             "version": "1.0.0"
         },
-        "title": "Trips",
-        "description": "Expose Trip Records",
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
         "dataSources": {
             "mainService": {
                 "uri": "/browse/",

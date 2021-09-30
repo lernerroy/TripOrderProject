@@ -102,6 +102,14 @@ modules:
       - tripcollated.zip
       name: tripcollated
       target-path: resources/
+    - artifacts:
+      - fas.zip
+      name: fas
+      target-path: resources/
+    - artifacts:
+      - tripinput.zip
+      name: tripinput
+      target-path: resources/
 
 - name: triporder-approuter
   type: approuter.nodejs
@@ -184,6 +192,28 @@ modules:
 - name: tripcollated
   type: html5
   path: app/tripcollated
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+- name: fas
+  type: html5
+  path: app/fas
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+
+- name: tripinput
+  type: html5
+  path: app/tripinput
   build-parameters:
     build-result: dist
     builder: custom

@@ -37,7 +37,7 @@
     ],
     "role-collections": [
         {
-            "name": "TripRecord_API_user1",
+            "name": "TripRecord_API_user",
             "description": "Trip Record App Administrator",
             "role-template-references": [
                 "$XSAPPNAME.API_user",
@@ -45,7 +45,7 @@
             ]            
         },
         {
-            "name": "TripRecord_User1",
+            "name": "TripRecord_User",
             "description": "Trip Record App User",
             "role-template-references": [
                 "$XSAPPNAME.User"
