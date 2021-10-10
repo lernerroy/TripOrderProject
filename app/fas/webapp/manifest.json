@@ -19,6 +19,10 @@
                     "odataVersion": "2.0",
                     "localUri": "localService/metadata.xml"
                 }
+            },
+            "lobs_data": {
+                "uri": "./model/lobs.json",
+                "type": "JSON"
             }
         },
         "crossNavigation": {
@@ -95,8 +99,9 @@
             },
             "lobs": {
                 "type": "sap.ui.model.json.JSONModel",
-                "settings": {},
-                "uri": "model/lobs.json"
+                "dataSource": "lobs_data",
+                "preload": true,
+                "settings": {}
             },
             "airportCharges": {
                 "type": "sap.ui.model.json.JSONModel",

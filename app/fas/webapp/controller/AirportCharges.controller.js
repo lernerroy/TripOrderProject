@@ -5,9 +5,8 @@ sap.ui.define([
 	"sap/ui/model/Filter",
 	"sap/ui/core/Fragment",
 	"../constants/Constants",
-	"com/legstate/fts/app/FlightAcceptanceCockpit/flightacceptancecockpit/vendor/lodash.min",
 	"sap/m/MessageBox"
-], function (Controller, LobBase, JSONModel, Filter, Fragment, Constants, lodash, MessageBox) {
+], function (Controller, LobBase, JSONModel, Filter, Fragment, Constants, MessageBox) {
 	"use strict";
 
 	return LobBase.extend("fas.controller.AirportCharges", {

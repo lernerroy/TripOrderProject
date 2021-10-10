@@ -65,7 +65,6 @@ sap.ui.define(
              var oModel = new sap.ui.model.json.JSONModel();
              oModel.setData(data);
              that.getView().setModel(oModel, "trip1");
-             debugger;
            },
            error: function (error) {
              console.log(error);
@@ -82,7 +81,7 @@ sap.ui.define(
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.setData(data);
             that.getView().setModel(oModel, "accommodation");
-            debugger;
+            
           },
           error: function (error) {
             console.log(error);
@@ -98,7 +97,7 @@ sap.ui.define(
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.setData(data);
             that.getView().setModel(oModel, "pax");
-            debugger;
+            
           },
           error: function (error) {
             console.log(error);
@@ -115,7 +114,7 @@ sap.ui.define(
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.setData(data);
             that.getView().setModel(oModel, "cargorecord");
-            debugger;
+            
           },
           error: function (error) {
             console.log(error);
@@ -131,7 +130,7 @@ sap.ui.define(
             var oModel = new sap.ui.model.json.JSONModel();
             oModel.setData(data);
             that.getView().setModel(oModel, "routeplan");
-            debugger;
+            
           },
           error: function (error) {
             console.log(error);

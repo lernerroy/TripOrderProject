@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.App"
+	controllerName="fas.controller.App"
 	displayBlock="true"
 	height="100%"
 	xmlns="sap.m"

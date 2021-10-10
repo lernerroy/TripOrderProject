@@ -3,9 +3,10 @@
   "welcomeFile": "/index.html",
   "authenticationMethod": "route",
   "routes": [
-    {
+  {
       "source": "^/sap/(.*)$",
       "target": "/sap/$1",
+      "destination": "DAK_1",
       "authenticationType": "xsuaa",
       "csrfProtection": false
     },

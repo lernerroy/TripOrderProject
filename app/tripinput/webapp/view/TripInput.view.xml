@@ -13,35 +13,36 @@
                     <content>
                         <fb:FilterBar reset="onReset" search="onSearch" showRestoreButton="true" showClearButton="true">
                             <fb:filterGroupItems>
-                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="Carrier Code" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="A" label="{i18n>carriercode}" partOfCurrentVariant="true" visibleInFilterBar="true">
                                     <fb:control>
-                                        <Input id="insupcarriercode2" value="{ViewModel>/filters/insupcarriercode2}" editable="true" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                        <Input change="onTableFilter" id="insupcarriercode2" value="{ViewModel>/filters/insupcarriercode2}" editable="true" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
-                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="Flight No" labelTooltip="Tooltip Example" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                <fb:FilterGroupItem groupName="__$INTERNAL$" name="B" label="{i18n>flightno}" labelTooltip="Tooltip Example" partOfCurrentVariant="true" visibleInFilterBar="true">
                                     <fb:control>
-                                        <Input id="inflightno" value="{ViewModel>/filters/inflightno}" editable="true" class="sapUiMediumMarginTop sapUiSmallMarginEnd"/>
+                                        <Input change="onTableFilter" id="inflightno" value="{ViewModel>/filters/inflightno}" editable="true" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
-                                <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A1" label="Origin" labelTooltip="Tooltip GroupItem Example" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="A1" label="{i18n>origin}" labelTooltip="Tooltip GroupItem Example" partOfCurrentVariant="true" visibleInFilterBar="true">
                                     <fb:control>
-                                        <Input id="inorigin" value="{ViewModel>/filters/inorigin}" editable="true" class="sapUiMediumMarginTop"/>
+                                        <Input change="onTableFilter" id="inorigin" value="{ViewModel>/filters/inorigin}" editable="true" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
-                                <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="B1" label="Destination" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                <fb:FilterGroupItem groupName="G1" groupTitle="Group1" name="B1" label="{i18n>destination}" partOfCurrentVariant="true" visibleInFilterBar="true">
                                     <fb:control>
-                                        <Input id="indestination" value="{ViewModel>/filters/indestination}" editable="true" class="sapUiMediumMarginTop"/>
+                                        <Input change="onTableFilter" id="indestination" value="{ViewModel>/filters/indestination}" editable="true" />
 
                                     </fb:control>
                                 </fb:FilterGroupItem>
 
 
-                                <fb:FilterGroupItem groupName="G2" groupTitle="Group2" name="B2" label="Departure Date" partOfCurrentVariant="true" visibleInFilterBar="true">
+                                <fb:FilterGroupItem groupName="G2" groupTitle="Group2" name="B2" label="{i18n>depdate}" partOfCurrentVariant="true" visibleInFilterBar="true">
                                     <fb:control>
-                                        <DatePicker valueFormat="YYYY-MM-dd" value="{ViewModel>/filters/inscheddeptdate}" id="inscheddeptdate" editable="true" class="sapUiMediumMarginTop"/>
+                                        <!-- <DatePicker valueFormat="YYYY-MM-dd" value="{ViewModel>/filters/inscheddeptdate}" id="inscheddeptdate" editable="true" class="sapUiMediumMarginTop"/> -->
+                                        <DateRangeSelection change="onTableFilter" valueFormat="YYYY-MM-dd" dateValue="{ViewModel>/filters/inscheddeptdate1}" secondDateValue="{ViewModel>/filters/inscheddeptdate2}" />
                                     </fb:control>
                                 </fb:FilterGroupItem>
                             </fb:filterGroupItems>
@@ -81,28 +82,28 @@
                             </Button>
                         </HBox> -->
 
-                        <Table id="sTableId" selectionChange="onTableRowSelect" items="{ViewModel>/tabledata}" noDataText="No Data" width="auto">
+                        <Table id="sTableId" selectionChange="onTableRowSelect" items="{ViewModel>/tabledata}" noDataText="{i18n>nodata}" width="auto">
 
 
                             <columns>
                                 <Column>
-                                    <Text text="Carrier Code"/>
+                                    <Text text="{i18n>carriercode}"/>
                                 </Column>
                                 <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left">
-                                    <Text text="Flight No"/>
+                                    <Text text="{i18n>flightno}"/>
                                 </Column>
                                 <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left">
-                                    <Text text="Origin"/>
+                                    <Text text="{i18n>origin}"/>
                                 </Column>
                                 <Column minScreenWidth="tablet" demandPopin="true" hAlign="Left">
-                                    <Text text="Destination"/>
+                                    <Text text="{i18n>destination}"/>
                                 </Column>
                                 <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left">
-                                    <Text text="Scheduled Departure Date"/>
+                                    <Text text="{i18n>depdate}"/>
                                 </Column>
 
                                 <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left">
-                                    <Text text="Surrogate Number"/>
+                                    <Text text="{i18n>surogateno}"/>
                                 </Column>
 
                             </columns>

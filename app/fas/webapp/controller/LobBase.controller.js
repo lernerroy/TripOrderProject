@@ -2,12 +2,11 @@ sap.ui.define([
 	"sap/ui/core/mvc/Controller",
 	"./BaseController",
 	"sap/ui/model/json/JSONModel",
-	"com/legstate/fts/app/FlightAcceptanceCockpit/flightacceptancecockpit/vendor/lodash.min",
 	"../constants/Constants",
-	"com/legstate/fts/app/FlightAcceptanceCockpit/flightacceptancecockpit/dialog/BusyDialogController",
+	"fas/dialog/BusyDialogController",
 	"sap/m/MessageBox",
 	"sap/m/MessageToast"
-], function (Controller, BaseController, JSONModel, lodash, Constants, BusyDialog, MessageBox, MessageToast) {
+], function (Controller, BaseController, JSONModel, Constants, BusyDialog, MessageBox, MessageToast) {
 	"use strict";
 
 	return BaseController.extend("fas.controller.LobBase", {

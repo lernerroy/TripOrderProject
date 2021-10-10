@@ -20,34 +20,106 @@ sap.ui.define(
           inflightno: "",
           inorigin: "",
           indestination: "",
-          inscheddeptdate: "",
+          inscheddeptdate1: null,
+          inscheddeptdate2: null,
         });
-        this.getTripDetails();
+        // this.getTripDetails();
         var oDataModel = this.getOwnerComponent().getModel();
         this.getView().setModel(oDataModel);
       },
-      onSearch: function () {
-          var oFilters = this.getView().getModel("ViewModel").getProperty("/filters");
-          //if(!(oFilters.inscheddeptdate === "")) {
-          //var aDate = oFilters.inscheddeptdate.split("/");
-          //oFilters.inscheddeptdate = "20" + aDate[2] + "-" + aDate[1] + "-" + aDate[0]; 
-       // }
-        this._oGlobalFilter = new Filter(
-          [
-            new Filter("insupcarriercode2", FilterOperator.Contains, oFilters.insupcarriercode2),
-            new Filter("inflightno", FilterOperator.Contains, oFilters.inflightno),
-            new Filter("inorigin", FilterOperator.Contains, oFilters.inorigin),
-            new Filter("indestination", FilterOperator.Contains, oFilters.indestination),
-            new Filter("inscheddeptdate", FilterOperator.EQ, oFilters.inscheddeptdate),
-          ],
-          false
-        );
-        var oFilter = new Filter([this._oGlobalFilter], true);
+      getFilterDateFormat: function (oDate) {
+        var sFullYear = new Date(oDate).getFullYear();
+        var sMonth =
+          parseInt(new Date(oDate).getMonth()) + 1 < 10
+            ? "0" + (parseInt(new Date(oDate).getMonth()) + 1)
+            : parseInt(new Date(oDate).getMonth()) + 1;
+        var sDate =
+          new Date(oDate).getDate() < 10
+            ? "0" + new Date(oDate).getDate()
+            : new Date(oDate).getDate();
+        var sFinalDate = sFullYear + "-" + sMonth + "-" + sDate;
+        return sFinalDate;
+      },
+      onTableFilter: function () {
+        var oFilters = jQuery.extend(true, {},this.getView()
+          .getModel("ViewModel")
+          .getProperty("/filters"));
+        //if(!(oFilters.inscheddeptdate === "")) {
+        //var aDate = oFilters.inscheddeptdate.split("/");
+        //oFilters.inscheddeptdate = "20" + aDate[2] + "-" + aDate[1] + "-" + aDate[0];
+        // }
+        if (oFilters.inscheddeptdate1 && oFilters.inscheddeptdate2) {
+          oFilters.inscheddeptdate1 = this.getFilterDateFormat(
+            oFilters.inscheddeptdate1
+          );
+          oFilters.inscheddeptdate2 = this.getFilterDateFormat(
+            oFilters.inscheddeptdate2
+          );
+        } else {
+          oFilters.inscheddeptdate1 = null;
+          oFilters.inscheddeptdate2 = null;
+        }
+        this._oGlobalFilter = [];
+        if (oFilters.insupcarriercode2 !== "") {
+          this._oGlobalFilter.push(
+            new Filter(
+              "insupcarriercode2",
+              FilterOperator.Contains,
+              oFilters.insupcarriercode2
+            )
+          );
+        }
+        if (oFilters.indestination !== "") {
+          this._oGlobalFilter.push(
+            new Filter(
+              "indestination",
+              FilterOperator.Contains,
+              oFilters.indestination
+            )
+          );
+        }
+        if (oFilters.inflightno !== "") {
+          this._oGlobalFilter.push(
+            new Filter(
+              "inflightno",
+              FilterOperator.Contains,
+              oFilters.inflightno
+            )
+          );
+        }
+        if (oFilters.inorigin !== "") {
+          this._oGlobalFilter.push(
+            new Filter(
+              "inorigin",
+              FilterOperator.Contains,
+              oFilters.inorigin
+            )
+          );
+        }
+        if (
+          oFilters.inscheddeptdate1 !== null &&
+          oFilters.inscheddeptdate2 !== null
+        ) {
+          this._oGlobalFilter.push(
+            new Filter(
+              "inscheddeptdate",
+              FilterOperator.BT,
+              oFilters.inscheddeptdate1,
+              oFilters.inscheddeptdate2
+            )
+          );
+        }
+
+        this._oGlobalFilter = new Filter(this._oGlobalFilter, false);
+        // var oFilter = new Filter(this._oGlobalFilter, true);
         this.getView()
           .byId("sTableId")
           .getBinding("items")
           .filter(this._oGlobalFilter.aFilters, "Application");
       },
+       onSearch: function () {
+           this.getTripDetails();
+       },
       getTripDetails: function () {
         var that = this;
         var urlTripRecord =
@@ -65,6 +137,7 @@ sap.ui.define(
               .getModel("ViewModel")
               .setProperty("/tabledata", data.value);
             that.getView().getModel("ViewModel").refresh(true);
+            that.onTableFilter();
           },
           error: function (error) {
             console.log(error);

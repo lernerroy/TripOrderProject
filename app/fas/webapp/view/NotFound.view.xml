@@ -1,5 +1,5 @@
 <mvc:View
-	controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.NotFound"
+	controllerName="fas.controller.NotFound"
 	xmlns="sap.m"
 	xmlns:mvc="sap.ui.core.mvc">
 

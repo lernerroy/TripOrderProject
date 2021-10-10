@@ -11,14 +11,13 @@ server:
       backend:
       - path: /sap
         url: http://l-s.ddns.net:5000
-        client: '800'
         destination: DAK_1
       ui5:
         path: 
         - /resources
         - /test-resources
         url: https://ui5.sap.com
-        version:  # The UI5 version, for instance, 1.78.1. Empty means latest version
+        version: '1.89.0' # The UI5 version, for instance, 1.78.1. Empty means latest version
   - name: fiori-tools-appreload
     afterMiddleware: compression
     configuration:

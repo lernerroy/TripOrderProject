@@ -1,4 +1,4 @@
-<mvc:View controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.Master" xmlns="sap.m" xmlns:semantic="sap.f.semantic"
+<mvc:View controllerName="fas.controller.Master" xmlns="sap.m" xmlns:semantic="sap.f.semantic"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core">
 	<semantic:SemanticPage id="masterPage" preserveHeaderStateOnScroll="true" toggleHeaderOnTitleClick="false">
 		<semantic:titleHeading>

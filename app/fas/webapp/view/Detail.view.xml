@@ -1,12 +1,12 @@
 <mvc:View xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:uxap="sap.uxap" xmlns:semantic="sap.f.semantic" xmlns:l="sap.ui.layout"
 	xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.f" xmlns:grid="sap.ui.layout.cssgrid"
-	controllerName="com.legstate.fts.app.FlightAcceptanceCockpit.flightacceptancecockpit.controller.Detail">
+	controllerName="fas.controller.Detail">
 	<semantic:SemanticPage id="detailPage" busy="{detailView>/busy}" busyIndicatorDelay="{detailView>/delay}">
 		<semantic:content>
 			<uxap:ObjectPageLayout id="objectPageLayout" enableLazyLoading="false" subSectionLayout="TitleOnLeft" showTitleInHeaderContent="false"
 				showHeaderContent="true">
 				<uxap:headerTitle>
-					<uxap:ObjectPageHeader objectImageURI="sap-icon://fa/airplane" objectImageShape="Circle" objectTitle="{i18n>TIT_FLIGHT_ORDER_TXT}"
+					<uxap:ObjectPageHeader objectImageURI="sap-icon://fa/airplane" objectImageShape="Circle" objectTitle"{i18n>TIT_FLIGHT_ORDER_TXT}"
 						id="ObjectPageLayoutHeaderTitle" isObjectIconAlwaysVisible="true" isObjectTitleAlwaysVisible="true" isObjectSubtitleAlwaysVisible="true"
 						isActionAreaAlwaysVisible="true" showPlaceholder="true">
 						<uxap:actions/>
@@ -32,7 +32,7 @@
 								<HBox visible="{= ${Preaufnr} !== ''}">
 									<Label text="{i18n>trip_number}" design="Bold" class="sapUiTinyMarginEnd"/>
 									<!-- <Text text="{Preaufnr}"/> -->
-                                    <Link text="{Preaufnr}" emphasized="true" press=".onNavigateToTrip" />
+                                    <Link text="{Predepairp}->{Prearrairp}" emphasized="true" press=".onNavigateToTrip" />
 								</HBox>
 								<HBox visible="{= ${Preaufnr} !== ''}">
 									<Label text="Scheduled Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
@@ -42,7 +42,7 @@
 								</HBox>
 								<HBox visible="{= ${Preaufnr} !== ''}">
 									<Label text="Actual Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
-									<Text text="{ path: 'Prea rrdate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { GMT: true,pattern : 'dd MMM yyyy' } } "
+									<Text text="{ path: 'Prearrdate', type: 'sap.ui.model.odata.type.DateTime', formatOptions: { GMT: true,pattern : 'dd MMM yyyy' } } "
 										class="sapUiTinyMarginEnd"/>
 									<Text text="{ path : 'Prearrtime', type: 'sap.ui.model.odata.type.Time', formatOptions: { pattern: 'h:mm:ss' }} "/>
 								</HBox>
@@ -73,7 +73,7 @@
 								<HBox visible="{= ${Aufnr} !== ''}">
 									<Label text="{i18n>trip_number}" design="Bold" class="sapUiTinyMarginEnd"/>
 									<!-- <Text text="{Aufnr}"/> -->
-                                    <Link text="{Aufnr}" emphasized="true" press=".onNavigateToTrip" />
+                                    <Link text="{Prearrairp}->{Arrairp}" emphasized="true" press=".onNavigateToTrip" />
 								</HBox>
 								<HBox visible="{= ${Aufnr} !== ''}">
 									<Label text="Scheduled Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
