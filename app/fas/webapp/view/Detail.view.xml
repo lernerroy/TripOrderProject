@@ -6,7 +6,7 @@
 			<uxap:ObjectPageLayout id="objectPageLayout" enableLazyLoading="false" subSectionLayout="TitleOnLeft" showTitleInHeaderContent="false"
 				showHeaderContent="true">
 				<uxap:headerTitle>
-					<uxap:ObjectPageHeader objectImageURI="sap-icon://fa/airplane" objectImageShape="Circle" objectTitle"{i18n>TIT_FLIGHT_ORDER_TXT}"
+				<uxap:ObjectPageHeader objectImageURI="sap-icon://fa/airplane" objectImageShape="Circle" objectTitle="{i18n>TIT_FLIGHT_ORDER_TXT}"
 						id="ObjectPageLayoutHeaderTitle" isObjectIconAlwaysVisible="true" isObjectTitleAlwaysVisible="true" isObjectSubtitleAlwaysVisible="true"
 						isActionAreaAlwaysVisible="true" showPlaceholder="true">
 						<uxap:actions/>
@@ -32,7 +32,7 @@
 								<HBox visible="{= ${Preaufnr} !== ''}">
 									<Label text="{i18n>trip_number}" design="Bold" class="sapUiTinyMarginEnd"/>
 									<!-- <Text text="{Preaufnr}"/> -->
-                                    <Link text="{Predepairp}->{Prearrairp}" emphasized="true" press=".onNavigateToTrip" />
+                                    <Link text="{Predepairp}->{Prearrairp}" emphasized="true" press=".onNavigateToArrivalTrip" />
 								</HBox>
 								<HBox visible="{= ${Preaufnr} !== ''}">
 									<Label text="Scheduled Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
@@ -73,7 +73,7 @@
 								<HBox visible="{= ${Aufnr} !== ''}">
 									<Label text="{i18n>trip_number}" design="Bold" class="sapUiTinyMarginEnd"/>
 									<!-- <Text text="{Aufnr}"/> -->
-                                    <Link text="{Prearrairp}->{Arrairp}" emphasized="true" press=".onNavigateToTrip" />
+                                    <Link text="{Prearrairp}->{Arrairp}" emphasized="true" press=".onNavigateToDepartureTrip" />
 								</HBox>
 								<HBox visible="{= ${Aufnr} !== ''}">
 									<Label text="Scheduled Date / Time" design="Bold" class="sapUiTinyMarginEnd"/>
