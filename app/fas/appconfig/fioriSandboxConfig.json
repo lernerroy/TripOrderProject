@@ -1,0 +1,9 @@
+{
+    "applications": {
+        "TripCollated-manage": {
+            "additionalInformation": "SAPUI5.Component=tripcollated",
+            "applicationType": "URL",
+            "url": "../resources/tripcollated"
+        }
+    }
+}

@@ -1,10 +1,70 @@
 namespace com.legstate.triporder;
 using { managed } from '@sap/cds/common';
+using { Currency } from '@sap/cds/common';
+using { Country } from '@sap/cds/common';
+using { sap.common.CodeList } from '@sap/cds/common';
+using { sap.common.Countries } from '@sap/cds/common';
+using { sap.common.Languages } from '@sap/cds/common';
+using { sap.common.Currencies } from '@sap/cds/common';
+
+
+
+// Domains
+entity loadingStationCodes : CodeList{
+    key code : String(2)      @(title : '{i18n>catloadstatcode}');
+};
+
+entity coord_signs : CodeList{
+    key code : String(1)         @(title : '{i18n>coord_sign_code}');
+};
+
+
+// Tables
+entity carriers : CodeList, managed{
+    key code : String(2)             @title : '{i18n>supcarriercode}';
+};
+
+entity airportsCodes : CodeList, managed{
+    key code     : String(3)               @title : '{i18n>aptcd}';
+};
+
+entity legStates : CodeList, managed{
+    key code        : String(3)             @title : '{i18n>legstate}';
+    stonr           : String(2)             @title : '{i18n>stonr}';
+    finalLegstate   : Boolean               @title : '{i18n>finalLegstate}';
+};
+
+// Types
+type airportsCode : Association to airportsCodes;
+type loadingStationCode : Association to loadingStationCodes;
+type coord_sign : Association to coord_signs;
+type legstate : Association to legStates;
+
+
+// Entities
+entity airports : managed{
+    aptcd           : airportsCode          @title : '{i18n>aptcd}';
+    aptcd_icao      : String(4)             @title : '{i18n>aptcd_icao}';
+    online_ind      : Boolean               @title : '{i18n>online_ind}';
+    company_ind     : Boolean               @title : '{i18n>company_ind}';
+    fo_po_days      : Integer               @title : '{i18n>fo_po_days}';
+    country_code    : Country               @title : '{i18n>country_code}';
+    ekgrp           : String(3)             @title : '{i18n>ekgrp}';
+    catloadstat     : loadingStationCode    @title : '{i18n>catloadstatcode}';
+    catgroundime    : String(4)             @title : '{i18n>catgroundime}';
+    lat_coord       : Decimal(16,14)        @title : '{i18n>lat_coord}';
+    lon_coord       : Decimal(16,14)        @title : '{i18n>lon_coord}';
+    lat_coord_sign  : coord_sign            @title : '{i18n>lat_coord_sign}';
+    lon_coord_sign  : coord_sign            @title : '{i18n>lon_coord_sign}';
+};
+
+
+
+
 
 aspect surrogatenum {
     key surrogatenum      : String(23);
-}
-
+};
 aspect recordsKey : managed { // key ID to be reused in other entities 
     Key insupcarriercode2 : String(2);
     Key inflightno        : String(4);
@@ -12,10 +72,15 @@ aspect recordsKey : managed { // key ID to be reused in other entities
     key indestination     : String(3);
     key inscheddeptdate   : Date;
     fosuffix              : String(2);
-}
+};
+aspect aufnr {
+    aufnr      : String(12);
+};
+
+
 
 //@cds.persistence.exists
-entity triprecord : recordsKey, surrogatenum {
+entity triprecord : recordsKey, surrogatenum, aufnr {
     supcarriercode2     : String(2);
     scheddeptdate       : Date;
     flightno            : String(4);
@@ -32,7 +97,7 @@ entity triprecord : recordsKey, surrogatenum {
     actarrapticao       : String(4);
     actdeptapt          : String(3);
     actdeptapticao      : String(4);
-    legstate            : String(3);
+    legstate            : String(3); //legstate;
     aircrafttype        : String(3);
     aircrafttypecpa     : String(3);
     tailno              : String(8);
@@ -280,7 +345,7 @@ entity routeplan : recordsKey, surrogatenum {
     exittimeutc             : Time;
     amount                  : Decimal(11,2);
     rate                    : Decimal(11,2);
-    currency                : String(5);
+    currency                : Currency; //String(5);;
     entrypoint              : String(10);
     exitpoint               : String(10);
     entryawy                : String(10);
@@ -306,7 +371,7 @@ entity accommodation : recordsKey, surrogatenum {
     reservedate         : Date;
     rmntsqty            : Integer;
     allowamt            : Decimal(11,2);
-    currency            : String(5);
+    currency            : Currency; //String(5);
 };
 
 
@@ -338,7 +403,7 @@ entity catering : recordsKey, surrogatenum {
     vatp            : Decimal(11,2);// curr 
     gipba           : Decimal(11,2);// curr 
     totalamount     : Decimal(11,2);// curr 
-    currency        : String(5); // currency key
+    currency        : Currency; // String(5); // currency key
     invoicetype     : String(2);
     custdiscount_perc : String(3);
     airportfee_perc : String(3);

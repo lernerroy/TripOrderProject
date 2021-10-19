@@ -1,10 +1,14 @@
 using {com.legstate.triporder as trips} from '../db/data-model';
+using { sap.common.Countries } from '@sap/cds/common';
+using { sap.common.Languages } from '@sap/cds/common';
+using { sap.common.Currencies } from '@sap/cds/common';
 
-annotate trips with @(requires : [
+
+/*annotate trips with @(requires : [
     'system-user',
     'API_user',
     'User'
-]);
+]);*/
 
 annotate trips.triprecord with @(restrict : [
     {
@@ -40,11 +44,68 @@ service TripService {
     as projection on trips.accommodation;
     entity catering //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
     as projection on trips.catering;
+    entity findTRbyBusKeys(  p_insupcarriercode2: String(2), p_inflightno: String(4), p_inorigin: String(3), p_indestination: String(3), p_inscheddeptdate: Date, p_fosuffix: String(2) )
+    as projection on TRbyBusKeys( p_insupcarriercode2: :p_insupcarriercode2, p_inflightno: :p_inflightno, p_inorigin: :p_inorigin, p_indestination: :p_indestination, p_inscheddeptdate: :p_inscheddeptdate, p_fosuffix: fosuffix );
+    
+    entity findTRbyLegno( p_surrogatenum: String(23) ) as projection on TRbyLegno( p_legno: :p_surrogatenum );
+    entity findTRbyAufnr( p_aufnr: String(12) ) as projection on TRbyAufnr( p_aufnr: :p_aufnr );
+    entity findPreviousTR( p_actarrapt:String(3), p_tailno:String(8), p_pre_actdeptts:Decimal(15,0), p_actarrts:Decimal(15,0) ) 
+    as projection on PreviousTR( p_actarrapt: :p_actarrapt, p_tailno: :p_tailno, p_pre_actdeptts: :p_pre_actdeptts , p_actarrts: :p_actarrts);
+    
+    entity carriers as projection on trips.carriers;
+    entity airports as projection on trips.airports;
+    entity legstates as projection on trips.legStates;
+    
+    //entity currencies as projection on Currencies;
+    entity languages as projection on Languages;
+    //entity countries as projection on Countries;
 };
 
 
+define view PreviousTR with parameters 
+    p_pre_actdeptts: Decimal(15,0), 
+    p_actarrapt: String(3),
+    p_tailno: String(8),
+    p_actarrts: Decimal(15,0)
+    AS SELECT * FROM TripService.triprecord 
+        WHERE 
+            actarrapt = :p_actarrapt and
+            tailno    = :p_tailno and
+            actarrts >= :p_pre_actdeptts and
+            actarrts <= :p_actarrts
+        order by actarrts desc;
+
+define view TRbyAufnr with parameters p_aufnr: String(12)
+    AS SELECT * FROM TripService.triprecord
+        WHERE 
+            aufnr = :p_aufnr;
+            
+define view TRbyLegno with parameters p_legno:String(23)
+    AS SELECT * FROM TripService.triprecord
+        WHERE 
+            surrogatenum = :p_legno;
+
+define view TRbyBusKeys with parameters 
+    p_insupcarriercode2: String(2), 
+    p_inflightno: String(4),
+    p_inorigin: String(3),
+    p_indestination: String(3),
+    p_inscheddeptdate: Date,
+    p_fosuffix: String(2)
+    AS SELECT * FROM TripService.triprecord
+        WHERE 
+            insupcarriercode2 = :p_insupcarriercode2 and
+            inflightno = :p_inflightno and
+            inorigin = :p_inorigin and
+            indestination = :p_indestination and
+            inscheddeptdate = :p_inscheddeptdate and
+            fosuffix = :p_fosuffix;
+
+
+ 
 annotate TripService.triprecord with {
     surrogatenum      @title : '{i18n>surrogatenum}';
+    aufnr             @title : '{i18n>aufnr}';
     inflightno        @title : '{i18n>inflightno}';
     inorigin          @title : '{i18n>inorigin}';
     indestination     @title : '{i18n>indestination}';
@@ -312,11 +373,6 @@ annotate TripService.routeplan with {
     insupcarriercode2 @title : '{i18n>insupcarriercode2}';
     lineno            @title : '{i18n>lineno}';
     cfpno             @title : '{i18n>cfpno}';
-    carriercode       @title : '{i18n>carriercode}';
-    flightno          @title : '{i18n>flightno}';
-    origin            @title : '{i18n>origin}';
-    destination       @title : '{i18n>destination}';
-    scheddeptdate     @title : '{i18n>scheddeptdate}';
     routeno           @title : '{i18n>routeno}';
     countrycode       @title : '{i18n>countrycode}';
     airspdistnm       @title : '{i18n>airspdistnm}';

@@ -1,11 +1,11 @@
-specVersion: '2.4'
+specVersion: "2.4"
 metadata:
-  name: 'fas'
+  name: fas
 type: application
 framework:
   name: SAPUI5
-  version: '1.89.0'
-  libraries: 
+  version: 1.89.0
+  libraries:
     - name: sap.f
     - name: sap.m
     - name: sap.suite.ui.generic.template
@@ -17,17 +17,27 @@ framework:
     - name: themelib_sap_fiori_3
 server:
   customMiddleware:
-  - name: fiori-tools-proxy
-    afterMiddleware: compression
-    configuration:
-      ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
-      backend:
-      - path: /sap
-        url: http://l-s.ddns.net:5000
-        client: '800'
-        destination: DAK_1
-  - name: fiori-tools-appreload
-    afterMiddleware: compression
-    configuration:
-     port: 35729
-     path: webapp
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false
+        backend:
+          - path: /sap
+            url: http://l-s.ddns.net:5000
+            client: "800"
+            destination: DAK_1
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+    - name: fiori-tools-servestatic
+      afterMiddleware: compression
+      configuration:
+        paths:
+          - path: /resources/tripcollated
+            src: ../tripcollated/webapp
+          - path: /appconfig
+            src: appconfig
+          - path: /resources/passengers
+            src: ../passengers/webapp

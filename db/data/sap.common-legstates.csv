@@ -1,0 +1,13 @@
+code;name;stonr;finalLegstate
+ARR;Arrived;70;true
+CNL;Canceled;70;true
+RTR;Returned;70;true
+ON;Onblock;60;false
+DIV;Diverted;50;false
+DEP;Departed;40;true
+OUT;Offblock;30;false
+EQT;Colombia;20;false
+ETD;Colombia;20;false
+RRT;Returned;20;false
+TIM;Time;20;false
+SKD;Scheduled;10;false

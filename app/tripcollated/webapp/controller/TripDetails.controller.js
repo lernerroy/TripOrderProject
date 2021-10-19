@@ -60,14 +60,19 @@ sap.ui.define(
 
          $.get({
            url: urlTripRecord,
-           success: function (data) {
+           success: function (data) { 
+             if (data===undefined)
+              { sap.m.MessageBox.error("No Flight Data found for the given Record") 
+             } else {
              console.log(data);
              var oModel = new sap.ui.model.json.JSONModel();
              oModel.setData(data);
              that.getView().setModel(oModel, "trip1");
-           },
+            }
+           } ,
            error: function (error) {
              console.log(error);
+             sap.m.MessageBox.error("No Flight Data found for the given Record")
              // your error logic
            },
          });

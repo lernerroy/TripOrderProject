@@ -9,20 +9,20 @@
     "license": "UNLICENSED",
     "private": true,
     "dependencies": {
-        "@sap/audit-logging": "^5.0.0",
-        "@sap/cds": "^5.0.4",
-        "@sap/cds-mtx": "^2.0.1",
-        "@sap/hana-client": "^2.6.61",
-        "@sap/hdi-deploy": "^4.0.5",
+        "@sap/audit-logging": "^5.1.0",
+        "@sap/cds": "^5.5.4",
+        "@sap/cds-mtx": "^2.3.3",
+        "@sap/hana-client": "^2.10.15",
+        "@sap/hdi-deploy": "^4.2.0",
         "@sap/instance-manager": "^3.0.0",
-        "@sap/xsenv": "^3.1.0",
-        "@sap/xssec": "^3.2.0",
+        "@sap/xsenv": "^3.1.1",
+        "@sap/xssec": "^3.2.7",
         "express": "^4.17.1",
         "hdb": "^0.18.3",
         "passport": "^0.4.1"
     },
     "devDependencies": {
-        "@sap/ux-specification": "^1.90.8",
+        "@sap/ux-specification": "^1.90.11",
         "sqlite3": "^5.0.2"
     },
     "scripts": {
@@ -79,7 +79,7 @@
             "[development]": {
                 "multitenancy": false,
                 "db": {
-                    "kind": "sql"
+                    "kind": "hana"
                 },
                 "auth": {
                     "strategy": "mock",
@@ -94,12 +94,9 @@
                 }
             }
         },
-        "[production]": {
-            "hana": {
-                "deploy-format": "hdbtable"
-            }
-        },
-        "[development]": {}
+        "hana": {
+            "deploy-format": "hdbtable"
+        }
     },
     "sapux": [
         "app/tripdetails",

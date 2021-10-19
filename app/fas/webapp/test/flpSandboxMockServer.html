@@ -57,19 +57,22 @@
 	<script src="/test-resources/sap/ushell/bootstrap/sandbox.js" id="sap-ushell-bootstrap"></script>
 	<!-- Bootstrap the UI5 core library -->
 	<script id="sap-ui-bootstrap"
-		src="/resources/sap-ui-core.js"
-		data-sap-ui-libs="sap.m, sap.ushell, sap.ui.core, sap.f, sap.ui.comp, sap.ui.table, sap.suite.ui.generic.template, sap.ui.generic.app"
-		data-sap-ui-async="true"
-		data-sap-ui-preload="async"
-		data-sap-ui-theme="sap_fiori_3"
-		data-sap-ui-compatVersion="edge"
-		data-sap-ui-flexibilityServices='[{"applyConnector":"fas/test/changes_loader", "custom":true}]'
-		data-sap-ui-language="en"
-		data-sap-ui-resourceroots='{"fas": "../"}'
-		data-sap-ui-frameOptions="allow"> // NON-SECURE setting for testing environment
-		</script>
-		<script src="../utils/locate-reuse-libs.js" data-sap-ui-manifest-uri="../manifest.json">
-		</script>
+			src="/resources/sap-ui-core.js"
+			data-sap-ui-libs="sap.m, sap.ushell, sap.ui.core, sap.f, sap.ui.comp, sap.ui.table, sap.suite.ui.generic.template, sap.ui.generic.app"
+			data-sap-ui-async="true"
+			data-sap-ui-preload="async"
+			data-sap-ui-theme="sap_fiori_3"
+			data-sap-ui-compatVersion="edge"
+			data-sap-ui-flexibilityServices='[{"applyConnector":"fas/test/changes_loader", "custom":true}]'
+			data-sap-ui-language="en"
+			data-sap-ui-resourceroots='{"fas": "../"}'
+			data-sap-ui-frameOptions="allow"> // NON-SECURE setting for testing environment
+	</script>
+    <script src="../utils/locate-reuse-libs.js"
+            data-sap-ui-manifest-uri="../manifest.json"
+            data-sap-ui-componentName="fas"
+            data-sap-ui-use-mockserver="true">
+    </script>
 	<!-- relevant for version < 1.78.0 only -->
 	<script src="changes_preview.js"></script>
 </head>
