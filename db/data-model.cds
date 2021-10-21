@@ -28,7 +28,7 @@ entity airportsCodes : CodeList, managed{
     key code     : String(3)               @title : '{i18n>aptcd}';
 };
 
-entity legStates : CodeList, managed{
+entity legstates2 : CodeList, managed{
     key code        : String(3)             @title : '{i18n>legstate}';
     stonr           : String(2)             @title : '{i18n>stonr}';
     finalLegstate   : Boolean               @title : '{i18n>finalLegstate}';
@@ -38,8 +38,8 @@ entity legStates : CodeList, managed{
 type airportsCode : Association to airportsCodes;
 type loadingStationCode : Association to loadingStationCodes;
 type coord_sign : Association to coord_signs;
-type legstate : Association to legStates;
-
+type legstate : Association to legstates2;
+type carriercode : Association to carriers;
 
 // Entities
 entity airports : managed{
@@ -81,23 +81,23 @@ aspect aufnr {
 
 //@cds.persistence.exists
 entity triprecord : recordsKey, surrogatenum, aufnr {
-    supcarriercode2     : String(2);
+    supcarriercode2     : carriercode; //String(2);
     scheddeptdate       : Date;
     flightno            : String(4);
-    supcarriercode      : String(2);
-    carriercode         : String(2);
-    origin              : String(3);
-    destination         : String(3);
+    supcarriercode      : carriercode; //String(2);
+    carriercode         : carriercode; //String(2);
+    origin              : airportsCode; //String(3); //airportsCode;
+    destination         : airportsCode; //String(3);
     repeatno            : String(3);
     idooutc             : Date;
     idoo                : Date;
     doo                 : Date;
     dooutc              : Date;
-    actarrapt           : String(3);
+    actarrapt           : airportsCode; //String(3);
     actarrapticao       : String(4);
-    actdeptapt          : String(3);
+    actdeptapt          : airportsCode; //String(3);
     actdeptapticao      : String(4);
-    legstate            : String(3); //legstate;
+    legstate            : legstate; // String(3); // / 
     aircrafttype        : String(3);
     aircrafttypecpa     : String(3);
     tailno              : String(8);
@@ -148,9 +148,9 @@ entity triprecord : recordsKey, surrogatenum, aufnr {
     estarrtime          : Time;
     planblocktime       : Integer;
     schedarrapticao     : String(4);
-    schedarrapt         : String(3);
+    schedarrapt         : airportsCode; //String(3);String(3);
     scheddeptapticao    : String(4);
-    scheddeptapt        : String(3);
+    scheddeptapt        : airportsCode; //String(3);String(3);
     flight_tm           : Integer;
     arr_stand           : String(10);
     dep_terminal        : String(4);
@@ -167,7 +167,7 @@ entity triprecord : recordsKey, surrogatenum, aufnr {
 
 //@cds.persistence.exists
 entity passenger : recordsKey, surrogatenum {
-    carriercode     : String(4);
+    carriercode     : carriercode; //String(4);
     version         : Integer;
     user_ind        : String(1);
     firstclasspax   : Decimal(3,0);
@@ -357,10 +357,10 @@ entity routeplan : recordsKey, surrogatenum {
 
 //@cds.persistence.exists
 entity accommodation : recordsKey, surrogatenum {
-    carriercode         : String(2);
+    carriercode         : carriercode; //String(2);
     flightno            : String(4);
-    origin              : String(3);
-    destination         : String(3);
+    origin              : airportsCode; //String(3);
+    destination         : airportsCode; //String(3);
     scheddeptdateutc    : Date;
     ccsmsgref           : String(23);
     scheddeptdate       : Date;           
@@ -377,9 +377,9 @@ entity accommodation : recordsKey, surrogatenum {
 
 //@cds.persistence.exists
 entity catering : recordsKey, surrogatenum {
-    carriercode     : String(2);
-    origin          : String(3);
-    destination     : String(3);
+    carriercode     : carriercode; //String(2);
+    origin          : airportsCode; //String(3);
+    destination     : airportsCode; //String(3);
     classtype       : String(10);
     sapmeal         : String(18);
     exdescription   : String(100);

@@ -1,0 +1,13 @@
+code;locale;name;descr
+ARR;en;Arrived;Arrived
+CNL;en;Canceled;Canceled
+RTR;en;Returned;Returned
+ON;en;Onblock;Onblock
+DIV;en;Diverted;Diverted
+DEP;en;Departed;Departed
+OUT;en;Offblock;Offblock
+EQT;en;Colombia;Colombia
+ETD;en;Colombia;Colombia
+RRT;en;Returned;Returned
+TIM;en;Time;Time
+SKD;en;Scheduled;Scheduled

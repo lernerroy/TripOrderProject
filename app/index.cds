@@ -7,3 +7,4 @@ using from './passengers/annotations';
 using from './tripdetails/annotations';
 using from './tripcollated/annotations';
 using from './tripinput/annotations';
+using from './carriers_report/annotations';

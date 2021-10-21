@@ -53,7 +53,7 @@ modules:
   parameters:
     memory: 512M
   requires:
-  - name: triporder-db
+  #- name: triporder-db
   - name: uaa_triporder
   - name: triporder-smc
   - name: triporder-reg

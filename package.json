@@ -1,112 +1,113 @@
 {
-    "engines": {
-        "node": "12.x"
+  "engines": {
+    "node": "12.x"
+  },
+  "name": "triprecord",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/audit-logging": "^5.1.0",
+    "@sap/cds": "^5.5.4",
+    "@sap/cds-mtx": "^2.3.3",
+    "@sap/hana-client": "^2.10.15",
+    "@sap/hdi-deploy": "^4.2.0",
+    "@sap/instance-manager": "^3.0.0",
+    "@sap/xsenv": "^3.1.1",
+    "@sap/xssec": "^3.2.7",
+    "express": "^4.17.1",
+    "hdb": "^0.18.3",
+    "passport": "^0.4.1"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.90.12",
+    "sqlite3": "^5.0.2"
+  },
+  "scripts": {
+    "start": "cds run"
+  },
+  "eslintConfig": {
+    "extends": "eslint:recommended",
+    "env": {
+      "es2020": true,
+      "node": true,
+      "jest": true,
+      "mocha": true
     },
-    "name": "triprecord",
-    "version": "1.0.0",
-    "description": "A simple CAP project.",
-    "repository": "<Add your repository here>",
-    "license": "UNLICENSED",
-    "private": true,
-    "dependencies": {
-        "@sap/audit-logging": "^5.1.0",
-        "@sap/cds": "^5.5.4",
-        "@sap/cds-mtx": "^2.3.3",
-        "@sap/hana-client": "^2.10.15",
-        "@sap/hdi-deploy": "^4.2.0",
-        "@sap/instance-manager": "^3.0.0",
-        "@sap/xsenv": "^3.1.1",
-        "@sap/xssec": "^3.2.7",
-        "express": "^4.17.1",
-        "hdb": "^0.18.3",
-        "passport": "^0.4.1"
+    "globals": {
+      "SELECT": true,
+      "INSERT": true,
+      "UPDATE": true,
+      "DELETE": true,
+      "CREATE": true,
+      "DROP": true,
+      "CDL": true,
+      "CQL": true,
+      "CXL": true,
+      "cds": true
     },
-    "devDependencies": {
-        "@sap/ux-specification": "^1.90.11",
-        "sqlite3": "^5.0.2"
+    "rules": {
+      "no-console": "off",
+      "require-atomic-updates": "off"
+    }
+  },
+  "cds": {
+    "i18n": {
+      "folders": [
+        "_i18n"
+      ]
     },
-    "scripts": {
-        "start": "cds run"
-    },
-    "eslintConfig": {
-        "extends": "eslint:recommended",
-        "env": {
-            "es2020": true,
-            "node": true,
-            "jest": true,
-            "mocha": true
+    "requires": {
+      "[production]": {
+        "db": {
+          "kind": "hana",
+          "model": [
+            "db",
+            "srv"
+          ],
+          "vcap": {
+            "label": "service-manager"
+          }
         },
-        "globals": {
-            "SELECT": true,
-            "INSERT": true,
-            "UPDATE": true,
-            "DELETE": true,
-            "CREATE": true,
-            "DROP": true,
-            "CDL": true,
-            "CQL": true,
-            "CXL": true,
-            "cds": true
+        "uaa": {
+          "kind": "xsuaa"
         },
-        "rules": {
-            "no-console": "off",
-            "require-atomic-updates": "off"
-        }
-    },
-    "cds": {
-        "i18n": {
-            "folders": [
-                "_i18n"
-            ]
+        "multitenancy": true
+      },
+      "[development]": {
+        "multitenancy": false,
+        "db": {
+          "kind": "hana"
         },
-        "requires": {
-            "[production]": {
-                "db": {
-                    "kind": "hana",
-                    "model": [
-                        "db",
-                        "srv"
-                    ],
-                    "vcap": {
-                        "label": "service-manager"
-                    }
-                },
-                "uaa": {
-                    "kind": "xsuaa"
-                },
-                "multitenancy": true
-            },
-            "[development]": {
-                "multitenancy": false,
-                "db": {
-                    "kind": "hana"
-                },
-                "auth": {
-                    "strategy": "mock",
-                    "users": {
-                        "roy.lerner@legstate.com": {
-                            "password": "123",
-                            "roles": [
-                                "API_user"
-                            ]
-                        }
-                    }
-                }
+        "auth": {
+          "strategy": "mock",
+          "users": {
+            "roy.lerner@legstate.com": {
+              "password": "123",
+              "roles": [
+                "API_user"
+              ]
             }
-        },
-        "hana": {
-            "deploy-format": "hdbtable"
+          }
         }
+      }
     },
-    "sapux": [
-        "app/tripdetails",
-        "app/passengers",
-        "app/cargo",
-        "app/route_plan",
-        "app/accommodation",
-        "app/catering",
-        "app/tripcollated",
-        "app/tripinput",
-        "app/fas"
-    ]
+    "hana": {
+      "deploy-format": "hdbtable"
+    }
+  },
+  "sapux": [
+    "app/tripdetails",
+    "app/passengers",
+    "app/cargo",
+    "app/route_plan",
+    "app/accommodation",
+    "app/catering",
+    "app/tripcollated",
+    "app/tripinput",
+    "app/fas",
+    "app/carriers_report"
+  ]
 }
