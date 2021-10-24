@@ -26,7 +26,8 @@
     "sqlite3": "^5.0.2"
   },
   "scripts": {
-    "start": "cds run"
+    "start": "cds run",
+    "undeploy": "cf undeploy triporderproject --delete-services --delete-service-keys"
   },
   "eslintConfig": {
     "extends": "eslint:recommended",
@@ -108,6 +109,6 @@
     "app/tripcollated",
     "app/tripinput",
     "app/fas",
-    "app/carriers_report"
+    "app/carriers"
   ]
 }

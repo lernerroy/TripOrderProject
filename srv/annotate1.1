@@ -1,0 +1,52 @@
+using TripService from './cat-service';
+
+annotate TripService.routeplan with @odata.draft.enabled;
+
+annotate TripService.routeplan with @(UI : {
+    SelectionFields  : [
+        lineno,
+        cfpno,
+        countrycode
+    ],
+    LineItem         : [
+        {
+            Value : lineno,
+            Label : 'Line No'
+        },
+        {
+            Value : cfpno,
+            Label : 'Cfp No'
+        },
+        {
+            Value : countrycode,
+            Label : 'OrderDate'
+        },
+        {
+            Value : OrderPlace,
+            Label : 'Place'
+        }
+    ],
+    Facets           : [{
+        $Type  : 'UI.ReferenceFacet',
+        Label  : 'Orcer Details',
+        Target : '@UI.FieldGroup#Main'
+    }],
+    FieldGroup#Main : {Data : [
+        {
+            Value : ID,
+            Label : 'ID'
+        },
+        {
+            Value : PARTNER,
+            Label : 'Partner'
+        },
+        {
+            Value : OrderDate,
+            Label : 'OrderDate'
+        },
+        {
+            Value : OrderPlace,
+            Label : 'OrderPlace'
+        }
+    ]},
+});

@@ -127,7 +127,7 @@
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>origin}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/origin/}" editable="false" id="Origin"/>
+                                                                    <Input value="{trip1>/origin_code/}" editable="false" id="Origin"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>initdestination}">
@@ -137,7 +137,7 @@
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>destination}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/destination/}" editable="false" id="Destination"/>
+                                                                    <Input value="{trip1>/destination_code/}" editable="false" id="Destination"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>schdepiata}">
@@ -252,7 +252,7 @@
                                                         <f:formElements>
                                                             <f:FormElement label="{i18n>currentlegstate}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/legstate/}" editable="false"  id="Current"/>
+                                                                    <Input value="{trip1>/legstate_code/}" editable="false"  id="Current"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>aircrafttypeiata}">

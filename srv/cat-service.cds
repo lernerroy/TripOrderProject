@@ -30,7 +30,6 @@ annotate trips with @(restrict : [
 
 @path : '/browse'
 //@impl: './trip-service.js'
-//@requires: 'authenticated-user'
 service TripService {
     entity triprecord // @(restrict: [ { grant: ['*'], to: 'trip_order'}])
     as projection on trips.triprecord;
@@ -45,16 +44,91 @@ service TripService {
     entity catering //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
     as projection on trips.catering;
 
+    // Views
+    entity cockpitTripsActuals as projection on TripService.cockpitTrips;
+
+
+    // TripRecord
+    @odata.draft.enabled
     entity carriers as projection on trips.carriers;
+    @odata.draft.enabled
     entity airports as projection on trips.airports;
+    @odata.draft.enabled
     entity legstates as projection on trips.legstates2;
     
-    //entity currencies as projection on Currencies;
-    entity languages as projection on Languages;
-    //entity countries as projection on Countries;
+    // Common
+    @odata.draft.enabled
+    entity languages_spec as projection on Languages;
+    @odata.draft.enabled
+    entity countries_spec as projection on Countries;
+    @odata.draft.enabled
+    entity currencies_spec as projection on Currencies;
+
+    
 };
 
+annotate TripService.languages_spec;
+annotate TripService.currencies_spec;
+annotate TripService.countries_spec;
 
+
+define view TripService.cockpitTrips as (
+    select flo.surrogatenum as aufnr, flo.tailno as zztailno, flo.flightno as zzflightno, flo.aircrafttype as zzaircrafttype, flo.carriercode as zzcarriercode, flo.supcarriercode as zzsupcarriercode, flo.supcarriercode2 as zzsupcarriercode2,
+        flo.actdeptdate AS zzscheddeptdate,
+        flo.actdepttime AS zzscheddepttime,
+        flo.actarrdate  AS zzschedarrdate,
+        flo.actarrtime  AS zzschedarrtime,
+        flo.actdeptapt  AS zzscheddeptapt,
+        flo.actarrapt   AS zzschedarrapt,
+        flo.actarrts    AS zzschedarrts,
+        flo.actdeptts   AS zzscheddeptts,
+        flo.cfpno1 as zzcfpno1, flo.legstate as zzlegstate , flo.origin as zzorigin, flo.destination as zzdestination, flo.scheddeptdate AS zzrealscheddept,
+        max(user_cargo.creation_timestamp) AS user_creation_timestamp :Timestamp,
+        max(intf_cargo.creation_timestamp) AS intf_creation_timestamp :Timestamp,
+        max(user_pax.creation_timestamp) AS pax_user_creation_ts :Timestamp,
+        max(intf_pax.creation_timestamp) AS pax_intf_creation_ts :Timestamp
+        from TripService.triprecord AS flo
+        LEFT JOIN TripService.pax AS intf_pax ON
+            flo.surrogatenum            = intf_pax.surrogatenum     OR
+            ( flo.supcarriercode2.code  = intf_pax.carriercode.code AND
+            flo.flightno                = intf_pax.inflightno       AND
+            flo.origin.code             = intf_pax.inorigin         AND
+            flo.destination.code        = intf_pax.indestination    AND
+            flo.scheddeptdate           = intf_pax.inscheddeptdate  )
+            AND
+            intf_pax.user_ind           = false
+        LEFT JOIN TripService.pax AS user_pax ON
+            flo.surrogatenum            = user_pax.surrogatenum     OR
+            ( flo.supcarriercode2.code  = user_pax.carriercode.code AND
+            flo.flightno                = user_pax.inflightno       AND
+            flo.origin.code             = user_pax.inorigin         AND
+            flo.destination.code        = user_pax.indestination    AND
+            flo.scheddeptdate           = user_pax.inscheddeptdate  )
+            AND
+            user_pax.user_ind           = true
+        LEFT join TripService.cargorecord AS user_cargo on 
+            flo.surrogatenum            = user_cargo.surrogatenum       OR
+            ( flo.supcarriercode2.code  = user_cargo.insupcarriercode2  AND
+            flo.flightno                = user_cargo.inflightno         AND
+            flo.origin.code             = user_cargo.inorigin           AND
+            flo.destination.code        = user_cargo.indestination      AND
+            flo.scheddeptdate           = user_cargo.inscheddeptdate  )
+            AND
+            user_cargo.user_ind         = true
+        LEFT join TripService.cargorecord AS intf_cargo on 
+            flo.surrogatenum            = intf_cargo.surrogatenum       OR
+            ( flo.supcarriercode2.code  = intf_cargo.insupcarriercode2  AND
+            flo.flightno                = intf_cargo.inflightno         AND
+           flo.origin.code              = intf_cargo.inorigin           AND
+           flo.destination.code         = intf_cargo.indestination      AND
+            flo.scheddeptdate           = intf_cargo.inscheddeptdate  )
+            AND
+            user_cargo.user_ind         = false
+        GROUP BY flo.surrogatenum, flo.tailno, flo.flightno, flo.aircrafttype, flo.carriercode, flo.supcarriercode, flo.supcarriercode2,
+               flo.actdeptdate, flo.actdepttime, flo.actarrdate, flo.actarrtime, flo.actdeptapt, flo.actarrapt, flo.actarrts, flo.actdeptts,
+               flo.cfpno1, flo.legstate, flo.origin, flo.destination, flo.scheddeptdate 
+        ORDER BY zzschedarrdate, zzschedarrtime, zzschedarrapt
+        );
 
 
 annotate TripService.triprecord with {

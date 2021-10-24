@@ -110,7 +110,7 @@ modules:
       - tripinput.zip
       name: tripinput
       target-path: resources/
-
+      
 - name: triporder-approuter
   type: approuter.nodejs
   path: triporder-approuter
@@ -221,6 +221,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
+
 
 resources:
 - name: triporder-broker-credentials 
