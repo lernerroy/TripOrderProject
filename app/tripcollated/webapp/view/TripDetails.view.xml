@@ -46,17 +46,17 @@
                                                         <f:formElements>
                                                             <f:FormElement label="{i18n>commcarriercode}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/insupcarriercode2/}" editable="false" />
+                                                                    <Input value="{trip1>/supcarriercode2_code/}" editable="false" />
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>oppcarriercode}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/insupcarriercode/}" editable="false" id="supcarriercode"/>
+                                                                    <Input value="{trip1>/supcarriercode_code/}" editable="false" id="supcarriercode"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>routeowner}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/carriercode/}" editable="false" id="carriercode"/>
+                                                                    <Input value="{trip1>/carriercode_code/}" editable="false" id="carriercode"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>flightno}">
@@ -142,12 +142,12 @@
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>schdepiata}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/scheddeptapt/}" editable="false" id="SchDepAPIATA"/>
+                                                                    <Input value="{trip1>/scheddeptapt_code/}" editable="false" id="SchDepAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>scharriata}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/schedarrapt/}" editable="false" id="SchArrAPIATA"/>
+                                                                    <Input value="{trip1>/schedarrapt_code/}" editable="false" id="SchArrAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                         </f:formElements>
@@ -156,7 +156,7 @@
                                                         <f:formElements>
                                                             <f:FormElement label="{i18n>actdepiata}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/actdeptapt/}" editable="false" id="ActDepAPIATA"/>
+                                                                    <Input value="{trip1>/actdeptapt_code/}" editable="false" id="ActDepAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>actdepiaco}">
@@ -166,7 +166,7 @@
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>actarriata}">
                                                                 <f:fields>
-                                                                    <Input value="{trip1>/actarrapt/}" editable="false" id="ActArrAPIATA"/>
+                                                                    <Input value="{trip1>/actarrapt_code/}" editable="false" id="ActArrAPIATA"/>
                                                                 </f:fields>
                                                             </f:FormElement>
                                                             <f:FormElement label="{i18n>actarriaco}">
@@ -517,7 +517,7 @@
                                     </content>
                                 </IconTabFilter>
 
-<!--Passanger Screen Designing-->                                
+<!--Passenger Screen Designing-->                                
                                 <IconTabFilter key="pas" iconColor="Contrast" icon="sap-icon://activity-individual" text="{i18n>passengers}">
                                     <content> <VBox class="sapUiSmallMargin">
                                             <f:Form editable="false">

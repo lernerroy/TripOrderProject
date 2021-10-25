@@ -1,0 +1,1 @@
+using TripService as service from '../../srv/cat-service';

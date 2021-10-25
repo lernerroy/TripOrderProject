@@ -4,6 +4,7 @@ annotate TripService.routeplan with @odata.draft.enabled;
 
 annotate TripService.routeplan with @(UI : {
     SelectionFields  : [
+
         lineno,
         cfpno,
         countrycode

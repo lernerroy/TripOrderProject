@@ -1,0 +1,46 @@
+using TripService from './cat-service';
+
+annotate TripService.legstates with @odata.draft.enabled;
+
+annotate TripService.legstates with @(UI : {
+    SelectionFields  : [
+  
+        code,
+        stonr,
+        finalLegstate
+    ],
+    LineItem         : [
+       
+        {
+            Value : code,
+            Label : 'Code'
+        },
+        {
+            Value : stonr,
+            Label : 'Stonr'
+        },
+        {
+            Value : finalLegstate,
+            Label : 'Final Legstate'
+        }
+    ],
+    Facets           : [{
+        $Type  : 'UI.ReferenceFacet',
+        Label  : 'Orcer Details',
+        Target : '@UI.FieldGroup#Main'
+    }],
+    FieldGroup#Main : {Data : [
+        {
+            Value : code,
+            Label : 'Code'
+        },
+        {
+            Value : stonr,
+            Label : 'Stonr'
+        },
+        {
+            Value : finalLegstate,
+            Label : 'Final Legstate'
+        }
+    ]},
+});

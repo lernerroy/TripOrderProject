@@ -29,6 +29,7 @@ entity airportsCodes : CodeList, managed{
 };
 
 entity legstates2 : CodeList, managed{
+   // key guid        : UUID                  @title : 'Guid';
     key code        : String(3)             @title : '{i18n>legstate}';
     stonr           : String(2)             @title : '{i18n>stonr}';
     finalLegstate   : Boolean               @title : '{i18n>finalLegstate}';

@@ -72,21 +72,33 @@ annotate TripService.currencies_spec;
 annotate TripService.countries_spec;
 
 
+
 define view TripService.cockpitTrips as (
-    select flo.surrogatenum as aufnr, flo.tailno as zztailno, flo.flightno as zzflightno, flo.aircrafttype as zzaircrafttype, flo.carriercode as zzcarriercode, flo.supcarriercode as zzsupcarriercode, flo.supcarriercode2 as zzsupcarriercode2,
-        flo.actdeptdate AS zzscheddeptdate,
-        flo.actdepttime AS zzscheddepttime,
-        flo.actarrdate  AS zzschedarrdate,
-        flo.actarrtime  AS zzschedarrtime,
-        flo.actdeptapt  AS zzscheddeptapt,
-        flo.actarrapt   AS zzschedarrapt,
-        flo.actarrts    AS zzschedarrts,
-        flo.actdeptts   AS zzscheddeptts,
-        flo.cfpno1 as zzcfpno1, flo.legstate as zzlegstate , flo.origin as zzorigin, flo.destination as zzdestination, flo.scheddeptdate AS zzrealscheddept,
-        max(user_cargo.creation_timestamp) AS user_creation_timestamp :Timestamp,
-        max(intf_cargo.creation_timestamp) AS intf_creation_timestamp :Timestamp,
-        max(user_pax.creation_timestamp) AS pax_user_creation_ts :Timestamp,
-        max(intf_pax.creation_timestamp) AS pax_intf_creation_ts :Timestamp
+    select 
+        flo.surrogatenum    as aufnr, 
+        flo.tailno          as zztailno, 
+        flo.flightno        as zzflightno, 
+        flo.aircrafttype    as zzaircrafttype, 
+        flo.carriercode     as zzcarriercode, 
+        flo.supcarriercode  as zzsupcarriercode, 
+        flo.supcarriercode2 as zzsupcarriercode2,
+        flo.actdeptdate     AS zzscheddeptdate,
+        flo.actdepttime     AS zzscheddepttime,
+        flo.actarrdate      AS zzschedarrdate,
+        flo.actarrtime      AS zzschedarrtime,
+        flo.actdeptapt      AS zzscheddeptapt,
+        flo.actarrapt       AS zzschedarrapt,
+        flo.actarrts        AS zzschedarrts,
+        flo.actdeptts       AS zzscheddeptts,
+        flo.cfpno1          as zzcfpno1, 
+        flo.legstate        as zzlegstate, 
+        flo.origin          as zzorigin, 
+        flo.destination     as zzdestination, 
+        flo.scheddeptdate   AS zzrealscheddept,
+        max(user_cargo.creation_timestamp) AS user_creation_timestamp :Decimal(15,0),
+        max(intf_cargo.creation_timestamp) AS intf_creation_timestamp :Decimal(15,0),
+        max(user_pax.creation_timestamp) AS pax_user_creation_ts :Decimal(15,0),
+        max(intf_pax.creation_timestamp) AS pax_intf_creation_ts :Decimal(15,0)
         from TripService.triprecord AS flo
         LEFT JOIN TripService.pax AS intf_pax ON
             flo.surrogatenum            = intf_pax.surrogatenum     OR
