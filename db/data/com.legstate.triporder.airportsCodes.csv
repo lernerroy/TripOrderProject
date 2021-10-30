@@ -1,4 +1,4 @@
-code;name;descr
-FRA;FRANKFURT INT'L;Frankfurt International
-BOG;BOGOTA ELDORADO;Bogota El-Dorado
-MIA;MIAMI INT'L;Miami International
+ID;code;name;descr
+34d4d2fd-0a0f-4142-814f-1a73dec6d455;FRA;FRANKFURT INT'L;Frankfurt International
+e02d77ea-397e-4bd2-b1de-7573b75ebba7;BOG;BOGOTA ELDORADO;Bogota El-Dorado
+f9f2ca30-4984-4edc-820b-447c456ee629;MIA;MIAMI INT'L;Miami International

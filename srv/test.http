@@ -1,0 +1,5 @@
+POST localhost:4004/legstates(code='hhh',IsActiveEntity=false)/texts
+Content-Type: application/json
+
+
+  {"name": "Ein Name", "descr": "Eine Beschreibung", "locale": "en"}

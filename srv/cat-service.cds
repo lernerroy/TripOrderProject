@@ -1,11 +1,11 @@
-using {com.legstate.triporder as trips} from '../db/data-model';
+using { com.legstate.triporder as trips } from '../db/data-model';
 using { sap.common.Countries } from '@sap/cds/common';
 using { sap.common.Languages } from '@sap/cds/common';
 using { sap.common.Currencies } from '@sap/cds/common';
 
 
 annotate trips with @(requires : [
-    'system-user',
+    'Admin',
     'API_user',
     'User'
 ]);
@@ -19,57 +19,64 @@ annotate trips with @(restrict : [
         to    : 'API_user'
     },
     {
-        grant : ['READ'],
+        grant : ['*'],
         to    : 'User'
     },
     {
-        grant : ['WRITE'],
-        to    : 'system-user'
+        grant : ['*'],
+        to    : 'Admin'
     }
 ]);
 
 @path : '/browse'
 //@impl: './trip-service.js'
 service TripService {
-    entity triprecord // @(restrict: [ { grant: ['*'], to: 'trip_order'}])
-    as projection on trips.triprecord;
-    entity pax //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
-    as projection on trips.passenger;
-    entity cargorecord //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
-    as projection on trips.cargorecord;
-    entity routeplan //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
-    as projection on trips.routeplan;
-    entity accommodation //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
-    as projection on trips.accommodation;
-    entity catering //@(restrict: [ { grant: ['*'], to: 'trip_order'}])
-    as projection on trips.catering;
+    entity triprecord as projection on trips.triprecord;
+    entity pax as projection on trips.passenger;
+    entity cargorecord as projection on trips.cargorecord;
+    entity routeplan as projection on trips.routeplan;
+    entity accommodation as projection on trips.accommodation;
+    entity catering as projection on trips.catering;
 
     // Views
     entity cockpitTripsActuals as projection on TripService.cockpitTrips;
 
 
     // TripRecord
-    @odata.draft.enabled
-    entity carriers as projection on trips.carriers;
-    @odata.draft.enabled
-    entity airports as projection on trips.airports;
-    @odata.draft.enabled
-    entity legstates as projection on trips.legstates2;
+    entity carriers 
+    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
+    as projection on trips.carriers;
+    //@odata.draft.enabled
+    entity airports 
+    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
+    as projection on trips.airports;
+    //@odata.draft.enabled
+    entity legstates 
+    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ]) as projection on trips.legstates;
     
-    // Common
-    @odata.draft.enabled
-    entity languages_spec as projection on Languages;
-    @odata.draft.enabled
-    entity countries_spec as projection on Countries;
-    @odata.draft.enabled
-    entity currencies_spec as projection on Currencies;
 
-    
+    // Common
+    //@odata.draft.enabled
+    //@(restrict: [ { grant: ['*'], to: 'Admin'}])
+    entity languages_spec 
+    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
+    as projection on Languages;
+
+    //@odata.draft.enabled
+    entity countries_spec 
+    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ]) 
+    as projection on Countries;
+
+    //@odata.draft.enabled
+    entity currencies_spec 
+    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
+    as projection on Currencies;
+
 };
 
-annotate TripService.languages_spec;
-annotate TripService.currencies_spec;
-annotate TripService.countries_spec;
+//annotate TripService.languages_spec;
+//annotate TripService.currencies_spec;
+//annotate TripService.countries_spec;
 
 
 

@@ -42,9 +42,9 @@ modules:
                     credential-types: [binding-secret]
                 per_plan:
                   default:
-                    authorities: [$XSMASTERAPPNAME.User,$XSMASTERAPPNAME.API_User]
+                    authorities: [$XSMASTERAPPNAME.User,$XSMASTERAPPNAME.API_User,$XSMASTERAPPNAME.Admin]
                   api:
-                    authorities: []
+                    authorities: [$XSMASTERAPPNAME.API_User]
 
 
 - name: triporder-srv

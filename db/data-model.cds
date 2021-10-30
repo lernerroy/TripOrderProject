@@ -2,6 +2,7 @@ namespace com.legstate.triporder;
 using { managed } from '@sap/cds/common';
 using { Currency } from '@sap/cds/common';
 using { Country } from '@sap/cds/common';
+using { cuid } from '@sap/cds/common';
 using { sap.common.CodeList } from '@sap/cds/common';
 using { sap.common.Countries } from '@sap/cds/common';
 using { sap.common.Languages } from '@sap/cds/common';
@@ -10,37 +11,34 @@ using { sap.common.Currencies } from '@sap/cds/common';
 
 
 // Domains
-entity loadingStationCodes : CodeList{
+entity loadingStationCodes : CodeList, managed{
     key code : String(2)      @(title : '{i18n>catloadstatcode}');
 };
-
-entity coord_signs : CodeList{
+entity coord_signs : CodeList, managed{
     key code : String(1)         @(title : '{i18n>coord_sign_code}');
 };
 
-
 // Tables
-entity carriers : CodeList, managed{
+entity carriers : CodeList, managed, cuid{
     key code : String(2)             @title : '{i18n>supcarriercode}';
 };
-
-entity airportsCodes : CodeList, managed{
-    key code     : String(3)               @title : '{i18n>aptcd}';
+entity airportsCodes : CodeList, managed, cuid{
+    key code : String(3)               @title : '{i18n>aptcd}';
+};
+entity legstates : CodeList, managed, cuid {
+    key code        : String(3)               @title : '{i18n>legstate}';
+    stonr           : String(2)               @title : '{i18n>stonr}';
+    finalLegstate   : Boolean  default false  @title : '{i18n>finalLegstate}';
 };
 
-entity legstates2 : CodeList, managed{
-   // key guid        : UUID                  @title : 'Guid';
-    key code        : String(3)             @title : '{i18n>legstate}';
-    stonr           : String(2)             @title : '{i18n>stonr}';
-    finalLegstate   : Boolean               @title : '{i18n>finalLegstate}';
-};
 
 // Types
 type airportsCode : Association to airportsCodes;
 type loadingStationCode : Association to loadingStationCodes;
 type coord_sign : Association to coord_signs;
-type legstate : Association to legstates2;
+type legstate : Association to legstates;
 type carriercode : Association to carriers;
+
 
 // Entities
 entity airports : managed{
@@ -87,7 +85,7 @@ entity triprecord : recordsKey, surrogatenum, aufnr {
     flightno            : String(4);
     supcarriercode      : carriercode; //String(2);
     carriercode         : carriercode; //String(2);
-    origin              : airportsCode; //String(3); //airportsCode;
+    origin              : airportsCode; //String(3);
     destination         : airportsCode; //String(3);
     repeatno            : String(3);
     idooutc             : Date;

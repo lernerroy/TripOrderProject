@@ -1,0 +1,13 @@
+ID;code;name;descr;stonr;finalLegstate
+14f532e9-3874-4eb0-85c6-d38b0f98312c;ARR;Arrived;Arrived;70;true
+5eb442bb-f8b0-4bd3-970c-99f6076d4301;CNL;Canceled;Canceled;70;true
+d6b607dc-2066-4669-93d1-47dbb3733089;RTR;Returned;Returned;70;true
+35f527b2-477f-4965-a9c7-76c6c99f7b39;ON;Onblock;Onblock;60;false
+eabe90c2-455d-4832-8e38-675a7f25d99e;DIV;Diverted;Diverted;50;false
+8e735de0-4252-4830-9c7f-70145345225c;DEP;Departed;Departed;40;true
+576b6ce0-9cf2-4775-86d1-3389bbec0423;OUT;Offblock;Offblock;30;false
+be1b3ce4-93cd-4092-9b71-1a030a37da64;EQT;Colombia;Colombia;20;false
+be1b3ce4-93cd-4092-9b71-1a030a37da64;ETD;Colombia;Colombia;20;false
+eb112923-143d-453d-9fd5-62b3f3803fb9;RRT;Returned;Returned;20;false
+3b465153-2690-4963-92cb-4bdfe4c45e9e;TIM;Time;Time;20;false
+4487a72f-602f-41df-b82f-2a887b493181;SKD;Scheduled;Scheduled;10;false

@@ -12,6 +12,10 @@
         "description": "With this scope, USER can read & Write trip details."
     },
     {
+        "name": "$XSAPPNAME.Admin",
+        "description": "With this scope, USER can administrate trip details."
+    },
+    {
         "name": "$XSAPPNAME.mtcallback",
         "description": "With this scope set, the callbacks for tenant onboarding, offboarding and getDependencies can be called.",
         "grant-as-authority-to-apps": [
@@ -33,6 +37,13 @@
             "scope-references": [
                 "$XSAPPNAME.User"
             ]
+        },
+        {
+            "name": "Admin",
+            "description": "Administrator users",
+            "scope-references": [
+                "$XSAPPNAME.Admin"
+            ]
         }
     ],
     "role-collections": [
@@ -49,6 +60,15 @@
             "description": "Trip Record App User",
             "role-template-references": [
                 "$XSAPPNAME.User"
+            ]
+        },
+        {
+            "name": "TripRecord_Administrator",
+            "description": "Trip Record App Administrator",
+            "role-template-references": [
+                "$XSAPPNAME.API_user",
+                "$XSAPPNAME.User",
+                "$XSAPPNAME.Admin"
             ]
         }
     ],

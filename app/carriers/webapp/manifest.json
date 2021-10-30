@@ -1,7 +1,7 @@
 {
     "_version": "1.32.0",
     "sap.app": {
-        "id": "legstates",
+        "id": "carriers",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -77,45 +77,68 @@
             "routes": [
                 {
                     "pattern": ":?query:",
-                    "name": "legstatesList",
-                    "target": "legstatesList"
+                    "name": "carriersList",
+                    "target": "carriersList"
                 },
                 {
-                    "pattern": "legstates({key}):?query:",
-                    "name": "legstatesObjectPage",
-                    "target": "legstatesObjectPage"
-                }
+                    "pattern": "carriers({key}):?query:",
+                    "name": "carriersObjectPage",
+                    "target": "carriersObjectPage"
+                },
+                    {
+                        "pattern": "carriers({key})/texts({key2}):?query:",
+                        "name": "carriers_textsObjectPage",
+                        "target": "carriers_textsObjectPage"
+                    }
             ],
             "targets": {
-                "legstatesList": {
+                "carriersList": {
                     "type": "Component",
-                    "id": "legstatesList",
+                    "id": "carriersList",
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
-                            "entitySet": "legstates",
+                            "entitySet": "carriers",
                             "variantManagement": "Page",
                             "navigation": {
-                                "legstates": {
+                                "carriers": {
                                     "detail": {
-                                        "route": "legstatesObjectPage"
+                                        "route": "carriersObjectPage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "legstatesObjectPage": {
+                "carriersObjectPage": {
                     "type": "Component",
-                    "id": "legstatesObjectPage",
+                    "id": "carriersObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "legstates"
+                            "entitySet": "carriers",
+                                "navigation": {
+                                    "texts": {
+                                        "detail": {
+                                            "route": "carriers_textsObjectPage"
+                                        }
+                                    }
+                                }
                         }
                     }
-                }
+                },
+                    "carriers_textsObjectPage": {
+                        "type": "Component",
+                        "id": "carriers_textsObjectPage",
+                        "name": "sap.fe.templates.ObjectPage",
+                        "options": {
+                            "settings": {
+                                "editableHeaderContent": false,
+                                "entitySet": "carriers_texts"
+                            }
+                        }
+                    }
             }
         },
         "contentDensities": {

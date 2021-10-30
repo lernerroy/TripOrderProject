@@ -1,3 +1,3 @@
-code;locale;name;descr
-AV;sp;Avianca S.A;AEROVIAS DEL CONTINENTE AMERICANO S.A. A
-TA;sp;Avianca El Salvador;TACA INTERNATIONAL AIRLINES S.A. - El Salvador
+ID;code;locale;name;descr
+cde75d41-4ab3-43e8-b3f6-1ac730c1c425;AV;de;deAvianca S.A;deAEROVIAS DEL CONTINENTE AMERICANO S.A. A
+4b047a2a-492c-4de3-afb7-70eb3aa69c9f;TA;de;deAvianca El Salvador;deTACA INTERNATIONAL AIRLINES S.A. - El Salvador

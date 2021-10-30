@@ -22,7 +22,7 @@
     "passport": "^0.4.1"
   },
   "devDependencies": {
-    "@sap/ux-specification": "^1.90.12",
+    "@sap/ux-specification": "^1.90.13",
     "sqlite3": "^5.0.2"
   },
   "scripts": {
@@ -88,7 +88,9 @@
             "roy.lerner@legstate.com": {
               "password": "123",
               "roles": [
-                "API_user"
+                "API_user",
+                "Admin",
+                "User"
               ]
             }
           }
@@ -109,7 +111,7 @@
     "app/tripcollated",
     "app/tripinput",
     "app/fas",
-    "app/carriers",
-    "app/legstates"
+    "app/legstates",
+    "app/carriers"
   ]
 }
