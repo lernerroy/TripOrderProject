@@ -19,42 +19,50 @@ entity coord_signs : CodeList, managed{
 };
 
 // Tables
-entity carriers : CodeList, managed, cuid{
-    key code : String(2)             @title : '{i18n>supcarriercode}';
+entity carriers : CodeList, managed {// , cuid{
+    @readonly key ID : UUID;
+    code : String(2)             @title : '{i18n>supcarriercode}';
 };
-entity airportsCodes : CodeList, managed, cuid{
+/*entity airportCodes : CodeList, managed {//, cuid{
+    @readonly key ID : UUID;
     key code : String(3)               @title : '{i18n>aptcd}';
-};
-entity legstates : CodeList, managed, cuid {
-    key code        : String(3)               @title : '{i18n>legstate}';
+};*/
+entity legstates : CodeList, managed {//, cuid {
+    @readonly key ID : UUID;
+    code            : String(3)               @title : '{i18n>legstate}';
     stonr           : String(2)               @title : '{i18n>stonr}';
     finalLegstate   : Boolean  default false  @title : '{i18n>finalLegstate}';
 };
 
+extend Languages with { @readonly key ID : UUID; };
+extend Countries with { @readonly key ID : UUID; };
+extend Currencies with { @readonly key ID : UUID; };
+
 
 // Types
-type airportsCode : Association to airportsCodes;
+type airportCode : Association to airports { code }; //airportCodes;
 type loadingStationCode : Association to loadingStationCodes;
 type coord_sign : Association to coord_signs;
-type legstate : Association to legstates;
-type carriercode : Association to carriers;
+type legstate : Association to legstates { code };
+type carriercode : Association to carriers { code };
 
 
 // Entities
-entity airports : managed{
-    aptcd           : airportsCode          @title : '{i18n>aptcd}';
-    aptcd_icao      : String(4)             @title : '{i18n>aptcd_icao}';
-    online_ind      : Boolean               @title : '{i18n>online_ind}';
-    company_ind     : Boolean               @title : '{i18n>company_ind}';
-    fo_po_days      : Integer               @title : '{i18n>fo_po_days}';
-    country_code    : Country               @title : '{i18n>country_code}';
-    ekgrp           : String(3)             @title : '{i18n>ekgrp}';
-    catloadstat     : loadingStationCode    @title : '{i18n>catloadstatcode}';
-    catgroundime    : String(4)             @title : '{i18n>catgroundime}';
-    lat_coord       : Decimal(16,14)        @title : '{i18n>lat_coord}';
-    lon_coord       : Decimal(16,14)        @title : '{i18n>lon_coord}';
-    lat_coord_sign  : coord_sign            @title : '{i18n>lat_coord_sign}';
-    lon_coord_sign  : coord_sign            @title : '{i18n>lon_coord_sign}';
+entity airports : CodeList, managed{
+    @readonly key ID : UUID;
+    code             : String(3)             @title : '{i18n>aptcd}';
+    aptcd_icao       : String(4)             @title : '{i18n>aptcd_icao}';
+    online_ind       : Boolean               @title : '{i18n>online_ind}';
+    company_ind      : Boolean               @title : '{i18n>company_ind}';
+    fo_po_days       : Integer               @title : '{i18n>fo_po_days}';
+    country_code     : Country               @title : '{i18n>country_code}';
+    ekgrp            : String(3)             @title : '{i18n>ekgrp}';
+    catloadstat      : loadingStationCode    @title : '{i18n>catloadstatcode}';
+    catgroundime     : String(4)             @title : '{i18n>catgroundime}';
+    lat_coord        : Decimal(16,14)        @title : '{i18n>lat_coord}';
+    lon_coord        : Decimal(16,14)        @title : '{i18n>lon_coord}';
+    lat_coord_sign   : coord_sign            @title : '{i18n>lat_coord_sign}';
+    lon_coord_sign   : coord_sign            @title : '{i18n>lon_coord_sign}';
 };
 
 
@@ -85,16 +93,16 @@ entity triprecord : recordsKey, surrogatenum, aufnr {
     flightno            : String(4);
     supcarriercode      : carriercode; //String(2);
     carriercode         : carriercode; //String(2);
-    origin              : airportsCode; //String(3);
-    destination         : airportsCode; //String(3);
+    origin              : airportCode; //String(3);
+    destination         : airportCode; //String(3);
     repeatno            : String(3);
     idooutc             : Date;
     idoo                : Date;
     doo                 : Date;
     dooutc              : Date;
-    actarrapt           : airportsCode; //String(3);
+    actarrapt           : airportCode; //String(3);
     actarrapticao       : String(4);
-    actdeptapt          : airportsCode; //String(3);
+    actdeptapt          : airportCode; //String(3);
     actdeptapticao      : String(4);
     legstate            : legstate; // String(3); // / 
     aircrafttype        : String(3);
@@ -147,9 +155,9 @@ entity triprecord : recordsKey, surrogatenum, aufnr {
     estarrtime          : Time;
     planblocktime       : Integer;
     schedarrapticao     : String(4);
-    schedarrapt         : airportsCode; //String(3);String(3);
+    schedarrapt         : airportCode; //String(3);String(3);
     scheddeptapticao    : String(4);
-    scheddeptapt        : airportsCode; //String(3);String(3);
+    scheddeptapt        : airportCode; //String(3);String(3);
     flight_tm           : Integer;
     arr_stand           : String(10);
     dep_terminal        : String(4);
@@ -358,8 +366,8 @@ entity routeplan : recordsKey, surrogatenum {
 entity accommodation : recordsKey, surrogatenum {
     carriercode         : carriercode; //String(2);
     flightno            : String(4);
-    origin              : airportsCode; //String(3);
-    destination         : airportsCode; //String(3);
+    origin              : airportCode; //String(3);
+    destination         : airportCode; //String(3);
     scheddeptdateutc    : Date;
     ccsmsgref           : String(23);
     scheddeptdate       : Date;           
@@ -377,8 +385,8 @@ entity accommodation : recordsKey, surrogatenum {
 //@cds.persistence.exists
 entity catering : recordsKey, surrogatenum {
     carriercode     : carriercode; //String(2);
-    origin          : airportsCode; //String(3);
-    destination     : airportsCode; //String(3);
+    origin          : airportCode; //String(3);
+    destination     : airportCode; //String(3);
     classtype       : String(10);
     sapmeal         : String(18);
     exdescription   : String(100);

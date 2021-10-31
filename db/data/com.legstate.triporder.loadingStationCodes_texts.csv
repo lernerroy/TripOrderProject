@@ -1,4 +1,7 @@
 code;locale;name;descr
-01;de;Cargador de catering;Cargador de catering
-02;de;Sin catering;Sin catering
-03;de;Ambos;Ambos
+01;de;deCargador de catering;deCargador de catering
+02;de;deSin catering;deSin catering
+03;de;deAmbos;deAmbos
+01;sp;Cargador de catering;Cargador de catering
+02;sp;Sin catering;Sin catering
+03;sp;Ambos;Ambos

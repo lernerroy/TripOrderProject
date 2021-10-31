@@ -1,0 +1,152 @@
+using { com.legstate.triporder as trips } from '../db/data-model';
+//using { TripService as TripService } from '../srv/cat-service';
+using { sap.common.Countries as commonCountries } from '@sap/cds/common';
+using { sap.common.Languages as commonLanguages } from '@sap/cds/common';
+using { sap.common.Currencies as commonCurrencies } from '@sap/cds/common';
+
+
+@path : '/browse'
+//@impl: './trip-service.js'
+service TripDraft {
+
+
+    // TripRecord
+    //////////////////////////////////////////////////////////////////////
+    entity carriers 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on trips.carriers;
+
+    entity airports 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on trips.airports;
+    
+    entity legstates 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on trips.legstates;
+
+    // entity airportsCodes 
+    // @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    // as projection on trips.airportsCodes;
+    //////////////////////////////////////////////////////////////////////
+
+
+
+    // Common
+    //////////////////////////////////////////////////////////////////////
+    entity Languages 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on commonLanguages;
+
+    entity Countries 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on commonCountries;
+
+    entity Currencies 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on commonCurrencies;
+    //////////////////////////////////////////////////////////////////////
+
+};
+
+annotate trips.legstates with @fiori.draft.enabled;
+annotate TripDraft.legstates with @odata.draft.enabled;
+
+annotate trips.carriers with @fiori.draft.enabled;
+annotate TripDraft.carriers with @odata.draft.enabled;
+
+annotate trips.airports with @fiori.draft.enabled;
+annotate TripDraft.airports with @odata.draft.enabled;
+
+
+
+annotate commonLanguages with @fiori.draft.enabled;
+annotate TripDraft.Languages with @odata.draft.enabled;
+
+annotate commonCountries with @fiori.draft.enabled;
+annotate TripDraft.Countries with @odata.draft.enabled;
+
+annotate commonCurrencies with @fiori.draft.enabled;
+annotate TripDraft.Currencies with @odata.draft.enabled;
+
+
+// Start of Legstate Draft UI
+annotate TripDraft.legstates with @(UI : {
+    SelectionFields  :  [
+  
+        code,
+        stonr,
+        finalLegstate
+    ],
+
+    LineItem         : [
+       
+        {
+            Value : code,
+            Label : 'Code'
+        },
+        {
+            Value : stonr,
+            Label : 'Stonr'
+        },
+        {
+            Value : name,
+            Label : 'Name'
+        }
+    ],
+    Facets           : [{
+        $Type  : 'UI.ReferenceFacet',
+        Label  : 'Legstate Details',
+        Target : '@UI.FieldGroup#Main'
+    },
+
+     {$Type: 'UI.ReferenceFacet', Label: '{i18n>Translations}', Target:  'texts/@UI.LineItem'}
+    ],
+  FieldGroup#Main : {Data : [
+        {
+            Value : code,
+            Label : 'Code'
+        },
+        {
+            Value : stonr,
+            Label : 'Stonr'
+        },
+        {
+            Value : finalLegstate,
+            Label : 'Final Legstate'
+        },
+        {
+            Value : name,
+            Label : 'Name'
+        },
+        {
+            Value : descr,
+            Label : 'Description'
+        }
+    ]},
+
+
+});
+
+//  Draft for Localized Data
+annotate TripDraft.legstates.texts @(
+	UI: {
+		Identification: [{Value:name}],
+		SelectionFields: [ locale, name ],
+		LineItem: [
+			{Value: locale, Label: 'Locale'},
+			{Value: name, Label: 'Name'},
+			{Value: descr, Label: 'Description'}
+		]
+    });
+
+// Add Value Help for Locales
+annotate TripDraft.legstates.texts {
+	locale @ValueList:{entity:'languages_vh',type:#fixed,title:'{i18n>Languages}' }
+}
+// In addition we need to expose Languages through AdminService as a target for ValueList
+ extend service TripDraft{
+ 	@readonly entity languages_vh as projection on commonLanguages;
+ }
+
+// End of Legstate Draft UI
+

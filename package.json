@@ -95,6 +95,10 @@
             }
           }
         }
+      },
+      "cat-service": {
+        "kind": "odata",
+        "model": "srv/external/cat-service"
       }
     },
     "hana": {
@@ -112,6 +116,7 @@
     "app/tripinput",
     "app/fas",
     "app/legstates",
-    "app/carriers"
+    "app/carriers",
+    "app/project1"
   ]
 }

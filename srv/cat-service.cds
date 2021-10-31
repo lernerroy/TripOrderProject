@@ -1,8 +1,7 @@
 using { com.legstate.triporder as trips } from '../db/data-model';
-using { sap.common.Countries } from '@sap/cds/common';
-using { sap.common.Languages } from '@sap/cds/common';
-using { sap.common.Currencies } from '@sap/cds/common';
-
+using { sap.common.Countries as commonCountries } from '@sap/cds/common';
+using { sap.common.Languages as commonLanguages } from '@sap/cds/common';
+using { sap.common.Currencies as commonCurrencies } from '@sap/cds/common';
 
 annotate trips with @(requires : [
     'Admin',
@@ -39,44 +38,46 @@ service TripService {
     entity catering as projection on trips.catering;
 
     // Views
+    //////////////////////////////////////////////////////////////////////
     entity cockpitTripsActuals as projection on TripService.cockpitTrips;
-
+    //////////////////////////////////////////////////////////////////////
 
     // TripRecord
+    //////////////////////////////////////////////////////////////////////
     entity carriers 
-    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
     as projection on trips.carriers;
-    //@odata.draft.enabled
+
     entity airports 
-    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
     as projection on trips.airports;
-    //@odata.draft.enabled
-    entity legstates 
-    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ]) as projection on trips.legstates;
     
+    entity legstates 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on trips.legstates;
+    
+    // entity airportsCodes 
+    // @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    // as projection on trips.airportsCodes;
+    //////////////////////////////////////////////////////////////////////
+
 
     // Common
-    //@odata.draft.enabled
-    //@(restrict: [ { grant: ['*'], to: 'Admin'}])
-    entity languages_spec 
-    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
-    as projection on Languages;
+    //////////////////////////////////////////////////////////////////////
+    entity Languages 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on commonLanguages;
 
-    //@odata.draft.enabled
-    entity countries_spec 
-    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ]) 
-    as projection on Countries;
+    entity Countries 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on commonCountries;
 
-    //@odata.draft.enabled
-    entity currencies_spec 
-    @(restrict: [ { grant: ['READ'], to: ['User','API_user']} ])
-    as projection on Currencies;
+    entity Currencies 
+    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    as projection on commonCurrencies;
+    //////////////////////////////////////////////////////////////////////
 
 };
-
-//annotate TripService.languages_spec;
-//annotate TripService.currencies_spec;
-//annotate TripService.countries_spec;
 
 
 
@@ -97,10 +98,10 @@ define view TripService.cockpitTrips as (
         flo.actarrapt       AS zzschedarrapt,
         flo.actarrts        AS zzschedarrts,
         flo.actdeptts       AS zzscheddeptts,
-        flo.cfpno1          as zzcfpno1, 
-        flo.legstate        as zzlegstate, 
-        flo.origin          as zzorigin, 
-        flo.destination     as zzdestination, 
+        flo.cfpno1          AS zzcfpno1, 
+        flo.legstate        AS zzlegstate, 
+        flo.origin          AS zzorigin, 
+        flo.destination     AS zzdestination, 
         flo.scheddeptdate   AS zzrealscheddept,
         max(user_cargo.creation_timestamp) AS user_creation_timestamp :Decimal(15,0),
         max(intf_cargo.creation_timestamp) AS intf_creation_timestamp :Decimal(15,0),
@@ -120,8 +121,8 @@ define view TripService.cockpitTrips as (
             flo.surrogatenum            = user_pax.surrogatenum     OR
             ( flo.supcarriercode2.code  = user_pax.carriercode.code AND
             flo.flightno                = user_pax.inflightno       AND
-            flo.origin.code             = user_pax.inorigin         AND
-            flo.destination.code        = user_pax.indestination    AND
+            flo.origin.code                  = user_pax.inorigin         AND
+            flo.destination.code             = user_pax.indestination    AND
             flo.scheddeptdate           = user_pax.inscheddeptdate  )
             AND
             user_pax.user_ind           = true
@@ -129,8 +130,8 @@ define view TripService.cockpitTrips as (
             flo.surrogatenum            = user_cargo.surrogatenum       OR
             ( flo.supcarriercode2.code  = user_cargo.insupcarriercode2  AND
             flo.flightno                = user_cargo.inflightno         AND
-            flo.origin.code             = user_cargo.inorigin           AND
-            flo.destination.code        = user_cargo.indestination      AND
+            flo.origin.code                  = user_cargo.inorigin           AND
+            flo.destination.code             = user_cargo.indestination      AND
             flo.scheddeptdate           = user_cargo.inscheddeptdate  )
             AND
             user_cargo.user_ind         = true
@@ -138,8 +139,8 @@ define view TripService.cockpitTrips as (
             flo.surrogatenum            = intf_cargo.surrogatenum       OR
             ( flo.supcarriercode2.code  = intf_cargo.insupcarriercode2  AND
             flo.flightno                = intf_cargo.inflightno         AND
-           flo.origin.code              = intf_cargo.inorigin           AND
-           flo.destination.code         = intf_cargo.indestination      AND
+            flo.origin.code                  = intf_cargo.inorigin           AND
+            flo.destination.code             = intf_cargo.indestination      AND
             flo.scheddeptdate           = intf_cargo.inscheddeptdate  )
             AND
             user_cargo.user_ind         = false
