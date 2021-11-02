@@ -1,7 +1,7 @@
-ID_texts;ID;code;locale;name;descr
-e845e4c9-161c-4d8a-8f88-f85b5c3cb7ad;a6a9320c-c4fe-4c68-b50e-fb733be38f22;en;sp;spEngles;spEnglish
-c207038c-083f-41b6-b487-ac184867acd6;f897ab95-c105-4ee8-9869-4576499f0e1c;de;sp;spAlmen;spGerman
-3deec1c2-1473-473b-bcc9-b2817957ffb2;6b3ceaba-036c-468d-a6ab-60b0c0d04098;sp;sp;spEspaniol;spEspaniol
-4f3d152e-4c0c-4946-ad8a-a9a524ec6012;a6a9320c-c4fe-4c68-b50e-fb733be38f22;en;de;deEngles;deEnglish
-6e9ec350-1d53-48e9-a281-9f409f82d2d5;f897ab95-c105-4ee8-9869-4576499f0e1c;de;de;deAlmen;deGerman
-eb79df9f-9532-4b82-8b82-fac867b1f68e;6b3ceaba-036c-468d-a6ab-60b0c0d04098;sp;de;deEspaniol;deEspaniol
+ID_texts;code;locale;name;descr
+e845e4c9-161c-4d8a-8f88-f85b5c3cb7ad;en;sp;spEngles;spEnglish
+c207038c-083f-41b6-b487-ac184867acd6;de;sp;spAlmen;spGerman
+3deec1c2-1473-473b-bcc9-b2817957ffb2;sp;sp;spEspaniol;spEspaniol
+4f3d152e-4c0c-4946-ad8a-a9a524ec6012;en;de;deEngles;deEnglish
+6e9ec350-1d53-48e9-a281-9f409f82d2d5;de;de;deAlmen;deGerman
+eb79df9f-9532-4b82-8b82-fac867b1f68e;sp;de;deEspaniol;deEspaniol

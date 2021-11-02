@@ -1,4 +1,4 @@
-ID;code;aptcd_icao;online_ind;company_ind;fo_po_days;country_code.code;ekgrp;catloadstat.code;catgroundime;lat_coord;lon_coord;lat_coord_sign.code;lon_coord_sign.code
-25a559da-f310-4e91-98ae-534301ae214f;FRA;EDDF;false;false;7;DE;;;;0.87324600000000;0.1495170000000;+;+
-de577cf4-eb9a-41ca-a8eb-003c36e74827;MIA;KMIA;false;false;7;US;;;;0.45017700000000;1.40133500000000;+;-
-47bf9101-3700-438d-9e60-3959636fae77;BOG;SKBO;true;false;7;CO;;;'01';0.08208400000000;1.29395800000000;+;-
+code;aptcd_icao;online_ind;company_ind;fo_po_days;country_code.code;ekgrp;catloadstat.code;catgroundime;lat_coord;lon_coord;lat_coord_sign.code;lon_coord_sign.code
+FRA;EDDF;false;false;7;DE;;;;0.87324600000000;0.1495170000000;+;+
+MIA;KMIA;false;false;7;US;;;;0.45017700000000;1.40133500000000;+;-
+BOG;SKBO;true;false;7;CO;;;'01';0.08208400000000;1.29395800000000;+;-

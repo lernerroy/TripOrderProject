@@ -1,13 +1,13 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Fri Oct 29 2021 06:57:10 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Mon Nov 01 2021 21:17:01 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori|
 |**App Generator Version**<br>1.4.0|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>Local Cap|
-|**Service URL**<br>/browse/
+|**Service URL**<br>/draft/
 |**Module Name**<br>carriers|
 |**Application Title**<br>Manage Carriers|
 |**Namespace**<br>|

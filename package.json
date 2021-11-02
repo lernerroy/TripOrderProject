@@ -117,6 +117,12 @@
     "app/fas",
     "app/legstates",
     "app/carriers",
-    "app/project1"
+    "app/project1",
+    "app/airports",
+    "app/countries",
+    "app/language",
+    "app/currency",
+    "app/project1",
+    "app/carriers"
   ]
 }

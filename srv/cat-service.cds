@@ -75,6 +75,7 @@ service TripService {
     entity Currencies 
     @(restrict: [ { grant: ['*'], to: 'Admin'}])
     as projection on commonCurrencies;
+
     //////////////////////////////////////////////////////////////////////
 
 };

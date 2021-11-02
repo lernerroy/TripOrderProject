@@ -1,7 +1,7 @@
-ID_texts;ID;locale;name;descr
-f598eec3-18ec-48bc-bcb8-bbe4bfe7cec0;25a559da-f310-4e91-98ae-534301ae214f;de;German 1;German 1
-ffa63422-0406-45d4-88f6-c2132b22546d;de577cf4-eb9a-41ca-a8eb-003c36e74827;de;German 2;German 2
-d565bf81-02c0-43eb-83b5-e23c89356e06;47bf9101-3700-438d-9e60-3959636fae77;de;German 3;German 3
-bc633e68-c22d-4066-9c2d-79662b92d5e6;25a559da-f310-4e91-98ae-534301ae214f;sp;Spanish 1;Spanish 1
-6e642742-5447-402d-b622-f53206cb839c;de577cf4-eb9a-41ca-a8eb-003c36e74827;sp;Spanish 2;Spanish 2
-a42771ae-b687-4af0-bf20-93519485a18a;47bf9101-3700-438d-9e60-3959636fae77;sp;Spanish 3;Spanish 3
+ID_texts;code;locale;name;descr
+f598eec3-18ec-48bc-bcb8-bbe4bfe7cec0;FRA;de;German 1;German 1
+ffa63422-0406-45d4-88f6-c2132b22546d;MIA;de;German 2;German 2
+d565bf81-02c0-43eb-83b5-e23c89356e06;BOG;de;German 3;German 3
+bc633e68-c22d-4066-9c2d-79662b92d5e6;FRA;sp;Spanish 1;Spanish 1
+6e642742-5447-402d-b622-f53206cb839c;MIA;sp;Spanish 2;Spanish 2
+a42771ae-b687-4af0-bf20-93519485a18a;BOG;sp;Spanish 3;Spanish 3

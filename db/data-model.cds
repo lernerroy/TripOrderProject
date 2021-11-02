@@ -11,46 +11,30 @@ using { sap.common.Currencies } from '@sap/cds/common';
 
 
 // Domains
+//////////////////////////////////////////////////////////////////////
 entity loadingStationCodes : CodeList, managed{
     key code : String(2)      @(title : '{i18n>catloadstatcode}');
 };
 entity coord_signs : CodeList, managed{
     key code : String(1)         @(title : '{i18n>coord_sign_code}');
 };
+//////////////////////////////////////////////////////////////////////
+
 
 // Tables
-entity carriers : CodeList, managed {// , cuid{
-    @readonly key ID : UUID;
-    code : String(2)             @title : '{i18n>supcarriercode}';
+//////////////////////////////////////////////////////////////////////
+entity carriers : CodeList, managed {
+    key code : String(2)             @title : '{i18n>supcarriercode}';
 };
-/*entity airportCodes : CodeList, managed {//, cuid{
-    @readonly key ID : UUID;
-    key code : String(3)               @title : '{i18n>aptcd}';
-};*/
-entity legstates : CodeList, managed {//, cuid {
-    @readonly key ID : UUID;
-    code            : String(3)               @title : '{i18n>legstate}';
+
+entity legstates : CodeList, managed {
+    key code        : String(3)               @title : '{i18n>legstate}';
     stonr           : String(2)               @title : '{i18n>stonr}';
     finalLegstate   : Boolean  default false  @title : '{i18n>finalLegstate}';
 };
 
-extend Languages with { @readonly key ID : UUID; };
-extend Countries with { @readonly key ID : UUID; };
-extend Currencies with { @readonly key ID : UUID; };
-
-
-// Types
-type airportCode : Association to airports { code }; //airportCodes;
-type loadingStationCode : Association to loadingStationCodes;
-type coord_sign : Association to coord_signs;
-type legstate : Association to legstates { code };
-type carriercode : Association to carriers { code };
-
-
-// Entities
 entity airports : CodeList, managed{
-    @readonly key ID : UUID;
-    code             : String(3)             @title : '{i18n>aptcd}';
+    key code         : String(3)             @title : '{i18n>aptcd}';
     aptcd_icao       : String(4)             @title : '{i18n>aptcd_icao}';
     online_ind       : Boolean               @title : '{i18n>online_ind}';
     company_ind      : Boolean               @title : '{i18n>company_ind}';
@@ -64,10 +48,21 @@ entity airports : CodeList, managed{
     lat_coord_sign   : coord_sign            @title : '{i18n>lat_coord_sign}';
     lon_coord_sign   : coord_sign            @title : '{i18n>lon_coord_sign}';
 };
+//////////////////////////////////////////////////////////////////////
+
+// Types
+//////////////////////////////////////////////////////////////////////
+type airportCode : Association to airports { code }; //airportCodes;
+type loadingStationCode : Association to loadingStationCodes;
+type coord_sign : Association to coord_signs;
+type legstate : Association to legstates { code };
+type carriercode : Association to carriers { code };
+//////////////////////////////////////////////////////////////////////
 
 
 
-
+// Trip Record Entities
+//////////////////////////////////////////////////////////////////////
 
 aspect surrogatenum {
     key surrogatenum      : String(23);

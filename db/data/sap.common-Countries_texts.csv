@@ -1,7 +1,7 @@
-ID_texts;ID;code;locale;name;descr
-ca144dbf-9327-4e5a-a48f-db5a3da97797;519a4878-8951-4575-bcc6-32e1fd3ee7c0;CO;de;deColombia;deRepública de colombia
-6c4a2fc1-b83c-4f82-86d3-e4ee368bc138;c98ba09f-8a37-4460-aae5-0b38d3f46713;DE;de;deAlemania;deRepública Federal de Alemania
-26182103-3b96-4b7a-ab19-bcd3f6337aaa;8ce5f024-5f66-4717-8a78-9c5e676d3d84;US;de;deEstados Unidos;deEstados Unidos de América (USA)
-453f2f15-a401-4c1f-bd1f-85d04d78917d;519a4878-8951-4575-bcc6-32e1fd3ee7c0;CO;sp;spColombia;spRepública de colombia
-c1604f47-5d2b-403d-b742-8ceab780caa0;c98ba09f-8a37-4460-aae5-0b38d3f46713;DE;sp;spAlemania;spRepública Federal de Alemania
-6f88671f-49e5-4b96-ba7e-acb149629ba0;8ce5f024-5f66-4717-8a78-9c5e676d3d84;US;sp;spEstados Unidos;spEstados Unidos de América (USA)
+ID_texts;code;locale;name;descr
+ca144dbf-9327-4e5a-a48f-db5a3da97797;CO;de;deColombia;deRepública de colombia
+6c4a2fc1-b83c-4f82-86d3-e4ee368bc138;DE;de;deAlemania;deRepública Federal de Alemania
+26182103-3b96-4b7a-ab19-bcd3f6337aaa;US;de;deEstados Unidos;deEstados Unidos de América (USA)
+453f2f15-a401-4c1f-bd1f-85d04d78917d;CO;sp;spColombia;spRepública de colombia
+c1604f47-5d2b-403d-b742-8ceab780caa0;DE;sp;spAlemania;spRepública Federal de Alemania
+6f88671f-49e5-4b96-ba7e-acb149629ba0;US;sp;spEstados Unidos;spEstados Unidos de América (USA)
