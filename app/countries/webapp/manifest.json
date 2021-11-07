@@ -36,7 +36,7 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "countries_configuration",
-                    "action": "Manage Countries",
+                    "action": "manage_countries",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "info": "{{flpInfo}}",

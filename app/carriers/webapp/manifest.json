@@ -36,7 +36,7 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "carriers_configuration",
-                    "action": "Manage Carriers",
+                    "action": "manage_carriers",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "info": "{{flpInfo}}",

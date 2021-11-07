@@ -36,7 +36,7 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "currencies_configuration",
-                    "action": "Manage Currencies",
+                    "action": "manage_currencies",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "info": "{{flpInfo}}",

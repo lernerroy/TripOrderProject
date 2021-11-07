@@ -36,7 +36,7 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "languages_configuration",
-                    "action": "Manage Languages",
+                    "action": "manage_languages",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "info": "{{flpInfo}}",

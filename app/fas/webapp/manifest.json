@@ -1,5 +1,9 @@
 {
     "_version": "1.32.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui"
+    },
     "sap.app": {
         "id": "fas",
         "type": "application",
@@ -32,10 +36,10 @@
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "FlightAcceptanceCockpit",
-                    "action": "manage",
-                    "title": "Flight Acceptance Cockpit",
-                    "info": "Flight Acceptance Cockpit",
+                    "semanticObject": "flight_acceptance",
+                    "action": "accept_flights",
+                    "title": "{{appTitle}}",
+                    "info": "{{appDescription}}",
                     "icon": "sap-icon://flight"
                 }
             }
@@ -284,9 +288,5 @@
                 }
             }
         }
-    },
-    "sap.cloud": {
-        "public": true,
-        "service": "fas"
     }
 }

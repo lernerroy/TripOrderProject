@@ -263,12 +263,12 @@ sap.ui.define(
         var oFlightItem = this.getModel().getProperty(sPath);
 
         var params = {
-          CarrierCode: oFlightItem.Precarriercode,
-          FlightNo: oFlightItem.Preflightno,
-          Origin: oFlightItem.Predepairp,
-          Destination: oFlightItem.Prearrairp,
-          SchDate: oFlightItem.Predepdate,
-          surrogatenum: "",
+          CarrierCode: '', //oFlightItem.Precarriercode,
+          FlightNo: '', // oFlightItem.Preflightno,
+          Origin: '', //oFlightItem.Predepairp,
+          Destination: '', //oFlightItem.Prearrairp,
+          SchDate: '1900-01-01',//oFlightItem.Predepdate,
+          surrogatenum: oFlightItem.Preaufnr,
         };
 
         this.onNavigateToTrip(params);
@@ -281,12 +281,12 @@ sap.ui.define(
         var oFlightItem = this.getModel().getProperty(sPath);
 
         var params = {
-          CarrierCode: oFlightItem.Carriercode,
-          FlightNo: oFlightItem.Flightno,
-          Origin: oFlightItem.Prearrairp,
-          Destination: oFlightItem.Arrairp,
-          SchDate: oFlightItem.Depdate,
-          surrogatenum: "",
+          CarrierCode: '', //oFlightItem.Carriercode,
+          FlightNo: '', //oFlightItem.Flightno,
+          Origin: '', //oFlightItem.Prearrairp,
+          Destination: '', //oFlightItem.Arrairp,
+          SchDate: '1900-01-01', //oFlightItem.Depdate,
+          surrogatenum: oFlightItem.Aufnr,
         };
 
         this.onNavigateToTrip(params);

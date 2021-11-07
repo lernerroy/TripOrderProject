@@ -36,7 +36,7 @@
                         "additionalParameters": "allowed"
                     },
                     "semanticObject": "legstates_configuration",
-                    "action": "Manage Leg States",
+                    "action": "manage_legstates",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
                     "info": "{{flpInfo}}",
