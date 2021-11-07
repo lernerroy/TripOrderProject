@@ -1,5 +1,9 @@
 {
     "_version": "1.32.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui" 
+    },
     "sap.app": {
         "id": "legstates",
         "type": "application",
@@ -23,6 +27,22 @@
         "sourceTemplate": {
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "legstates-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "legstates_configuration",
+                    "action": "Manage Leg States",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "info": "{{flpInfo}}",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {
@@ -47,7 +67,7 @@
             "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.95.0",
+            "minUI5Version": "1.96.0",
             "libs": {
                 "sap.ui.core": {},
                 "sap.fe.templates": {}
@@ -77,42 +97,65 @@
             "routes": [
                 {
                     "pattern": ":?query:",
-                    "name": "legstatesList",
-                    "target": "legstatesList"
+                    "name": "LegstatesList",
+                    "target": "LegstatesList"
                 },
                 {
-                    "pattern": "legstates({key}):?query:",
-                    "name": "legstatesObjectPage",
-                    "target": "legstatesObjectPage"
+                    "pattern": "Legstates({key}):?query:",
+                    "name": "LegstatesObjectPage",
+                    "target": "LegstatesObjectPage"
+                },
+                {
+                    "pattern": "Legstates({key})/texts({key2}):?query:",
+                    "name": "Legstates_textsObjectPage",
+                    "target": "Legstates_textsObjectPage"
                 }
             ],
             "targets": {
-                "legstatesList": {
+                "LegstatesList": {
                     "type": "Component",
-                    "id": "legstatesList",
+                    "id": "LegstatesList",
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
-                            "entitySet": "legstates",
+                            "entitySet": "Legstates",
                             "variantManagement": "Page",
                             "navigation": {
-                                "legstates": {
+                                "Legstates": {
                                     "detail": {
-                                        "route": "legstatesObjectPage"
+                                        "route": "LegstatesObjectPage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "legstatesObjectPage": {
+                "LegstatesObjectPage": {
                     "type": "Component",
-                    "id": "legstatesObjectPage",
+                    "id": "LegstatesObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "legstates"
+                            "entitySet": "Legstates",
+                            "navigation": {
+                                "texts": {
+                                    "detail": {
+                                        "route": "Legstates_textsObjectPage"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "Legstates_textsObjectPage": {
+                    "type": "Component",
+                    "id": "Legstates_textsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "Legstates_texts"
                         }
                     }
                 }

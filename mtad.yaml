@@ -34,11 +34,13 @@ modules:
           extend_xssecurity:
             per_plan:
               api:
-                authorities: []
+                authorities:
+                - $XSMASTERAPPNAME.API_User
               default:
                 authorities:
                 - $XSMASTERAPPNAME.User
                 - $XSMASTERAPPNAME.API_User
+                - $XSMASTERAPPNAME.Admin
             shared:
               oauth2-configuration:
                 credential-types:
@@ -65,20 +67,6 @@ modules:
   - name: triporder_html_repo_host
     parameters:
       content-target: true
-- name: triporder-approuter
-  type: javascript.nodejs
-  path: triporder-approuter
-  properties:
-    SEND_XFRAMEOPTIONS: false
-    TENANT_HOST_PATTERN: ^(.*)-${space}-${app-name}.${default-domain}
-  requires:
-  - name: triporder_html_repo_runtime
-  - name: uaa_triporder
-  - name: srv-api
-  - name: triporder-destination
-  parameters:
-    disk-quota: 256M
-    memory: 256M
 resources:
 - name: triporder-broker-credentials
   properties:
@@ -87,6 +75,18 @@ resources:
 - name: triporder-destination
   type: org.cloudfoundry.managed-service
   parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
     service: destination
     service-plan: lite
 - name: triporder-smc

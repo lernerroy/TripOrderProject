@@ -1,26 +1,27 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Tue Oct 26 2021 20:19:44 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Fri Nov 05 2021 07:58:50 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori|
-|**App Generator Version**<br>1.3.7|
+|**App Generator Version**<br>1.4.0|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>Local Cap|
-|**Service URL**<br>/browse/
+|**Service URL**<br>/draft/
 |**Module Name**<br>legstates|
-|**Application Title**<br>Manage Legstates|
+|**Application Title**<br>Manage Leg States|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|
 |**Enable Code Assist Libraries**<br>False|
 |**Add Eslint configuration**<br>False|
 |**Enable Telemetry**<br>True|
-|**Main Entity**<br>legstates|
+|**Main Entity**<br>Legstates|
+|**Navigation Entity**<br>texts|
 
 ## legstates
 
-Manage Legstates
+Leg States Configuration
 
 ### Starting the generated app
 

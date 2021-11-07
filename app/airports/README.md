@@ -1,22 +1,22 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Sun Oct 31 2021 23:26:41 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Sun Nov 07 2021 11:12:21 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori|
 |**App Generator Version**<br>1.4.0|
 |**Generation Platform**<br>SAP Business Application Studio|
 |**Floorplan Used**<br>List Report Object Page V4|
 |**Service Type**<br>Local Cap|
-|**Service URL**<br>/browse/
+|**Service URL**<br>/draft/
 |**Module Name**<br>airports|
-|**Application Title**<br>Manage Airports|
+|**Application Title**<br>Airports Configuration|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|
 |**Enable Code Assist Libraries**<br>False|
 |**Add Eslint configuration**<br>False|
 |**Enable Telemetry**<br>True|
-|**Main Entity**<br>airports|
+|**Main Entity**<br>Airports|
 |**Navigation Entity**<br>texts|
 
 ## airports

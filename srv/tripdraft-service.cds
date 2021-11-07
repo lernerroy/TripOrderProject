@@ -11,20 +11,20 @@ service TripDraft {
 
     // TripRecord
     //////////////////////////////////////////////////////////////////////
-    entity carriers @(restrict : [{
+    entity Carriers @(restrict : [{
         grant : ['*'],
         to    : 'Admin'
-    }]) as projection on trips.carriers;
+    }]) as projection on trips.Carriers;
 
-    entity airports @(restrict : [{
+    entity Airports @(restrict : [{
         grant : ['*'],
         to    : 'Admin'
-    }]) as projection on trips.airports;
+    }]) as projection on trips.Airports;
 
-    entity legstates @(restrict : [{
+    entity Legstates @(restrict : [{
         grant : ['*'],
         to    : 'Admin'
-    }]) as projection on trips.legstates;
+    }]) as projection on trips.Legstates;
 
     // entity airportsCodes
     // @(restrict: [ { grant: ['*'], to: 'Admin'}])
@@ -52,12 +52,12 @@ service TripDraft {
 
 };
 
-annotate trips.legstates with @fiori.draft.enabled;
-annotate TripDraft.legstates with @odata.draft.enabled;
-annotate trips.carriers with @fiori.draft.enabled;
-annotate TripDraft.carriers with @odata.draft.enabled;
-annotate trips.airports with @fiori.draft.enabled;
-annotate TripDraft.airports with @odata.draft.enabled;
+annotate trips.Legstates with @fiori.draft.enabled;
+annotate TripDraft.Legstates with @odata.draft.enabled;
+annotate trips.Carriers with @fiori.draft.enabled;
+annotate TripDraft.Carriers with @odata.draft.enabled;
+annotate trips.Airports with @fiori.draft.enabled;
+annotate TripDraft.Airports with @odata.draft.enabled;
 annotate commonLanguages with @fiori.draft.enabled;
 annotate TripDraft.Languages with @odata.draft.enabled;
 annotate commonCountries with @fiori.draft.enabled;
@@ -73,29 +73,29 @@ extend service TripDraft {
 
 // Enable MultiLine For Description Field
 // Legstate
-annotate TripDraft.legstates with {
+annotate TripDraft.Legstates with {
     descr @UI.MultiLineText;
 }
 
-annotate TripDraft.legstates.texts with {
+annotate TripDraft.Legstates.texts with {
     descr @UI.MultiLineText;
 }
 
 // Carrier
-annotate TripDraft.carriers with {
+annotate TripDraft.Carriers with {
     descr @UI.MultiLineText;
 }
 
-annotate TripDraft.carriers.texts with {
+annotate TripDraft.Carriers.texts with {
     descr @UI.MultiLineText;
 }
 
 // Airports
-annotate TripDraft.airports with {
+annotate TripDraft.Airports with {
     descr @UI.MultiLineText;
 }
 
-annotate TripDraft.airports.texts with {
+annotate TripDraft.Airports.texts with {
     descr @UI.MultiLineText;
 }
 
@@ -128,7 +128,7 @@ annotate TripDraft.Currencies.texts with {
 // Start of Legstate Draft UI
 
 // Legstates
-annotate TripDraft.legstates with @(
+annotate TripDraft.Legstates with @(
 Common.SemanticKey: [name],
 UI : {
 Identification: [{Value:name}],
@@ -181,7 +181,7 @@ title: name,
 }, );
 
 //  Draft for Localized Data
-annotate TripDraft.legstates.texts @(UI : {
+annotate TripDraft.Legstates.texts @(UI : {
     // Identification  : [{Value : code}],
     SelectionFields : [
         locale,
@@ -196,7 +196,7 @@ annotate TripDraft.legstates.texts @(UI : {
 
 // Add Value Help for Locales
 
-annotate TripDraft.legstates.texts {
+annotate TripDraft.Legstates.texts {
     locale @Common.ValueListWithFixedValues : true  @ValueList : {
         entity : 'languages_vh',
         type   : #fixed,
@@ -206,7 +206,7 @@ annotate TripDraft.legstates.texts {
 
 
 // Carrier
-annotate TripDraft.carriers with @(UI : {
+annotate TripDraft.Carriers with @(UI : {
     SelectionFields   : [
         code,
         name
@@ -249,7 +249,7 @@ annotate TripDraft.carriers with @(UI : {
 });
 
 //  Draft for Localized Data
-annotate TripDraft.carriers.texts @(UI : {
+annotate TripDraft.Carriers.texts @(UI : {
     Identification  : [{Value : name}],
     SelectionFields : [
         locale,
@@ -263,7 +263,7 @@ annotate TripDraft.carriers.texts @(UI : {
 });
 
 // Add Value Help for Locales
-annotate TripDraft.carriers.texts {
+annotate TripDraft.Carriers.texts {
     locale @Common.ValueListWithFixedValues : true  @ValueList : {
         entity : 'languages_vh',
         type   : #fixed,
@@ -272,7 +272,7 @@ annotate TripDraft.carriers.texts {
 }
 
 // Airports
-annotate TripDraft.airports with @(UI : {
+annotate TripDraft.Airports with @(UI : {
 
     SelectionFields   : [
 
@@ -312,14 +312,14 @@ annotate TripDraft.airports with @(UI : {
         {Value : online_ind, },
         {Value : company_ind, },
         {Value : fo_po_days, },
-        {Value : country_code, },
+        {Value : country_code.code, },
         {Value : ekgrp, },
-        {Value : catloadstat, },
+        {Value : catloadstat.code, },
         {Value : catgroundime, },
         {Value : lat_coord, },
         {Value : lon_coord, },
-        {Value : lat_coord_sign, },
-        {Value : lon_coord_sign, },
+        {Value : lat_coord_sign.code, },
+        {Value : lon_coord_sign.code, },
         {Value : name, },
         {Value : descr, }
     ]},
@@ -333,7 +333,7 @@ annotate TripDraft.airports with @(UI : {
 });
 
 //  Draft for Localized Data
-annotate TripDraft.airports.texts @(UI : {
+annotate TripDraft.Airports.texts @(UI : {
     Identification  : [{Value : name}],
     SelectionFields : [
         locale,
@@ -347,7 +347,7 @@ annotate TripDraft.airports.texts @(UI : {
 });
 
 // Add Value Help for Locales
-annotate TripDraft.airports.texts {
+annotate TripDraft.Airports.texts {
     locale @Common.ValueListWithFixedValues : true  @ValueList : {
         entity : 'languages_vh',
         type   : #fixed,

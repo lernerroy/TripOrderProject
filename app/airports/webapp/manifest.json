@@ -1,5 +1,9 @@
 {
     "_version": "1.32.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui" 
+    },
     "sap.app": {
         "id": "airports",
         "type": "application",
@@ -23,6 +27,22 @@
         "sourceTemplate": {
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "airports-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "airports_configuration",
+                    "action": "Manage Airports",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "info": "{{flpInfo}}",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {
@@ -47,7 +67,7 @@
             "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.95.0",
+            "minUI5Version": "1.96.0",
             "libs": {
                 "sap.ui.core": {},
                 "sap.fe.templates": {}
@@ -77,68 +97,68 @@
             "routes": [
                 {
                     "pattern": ":?query:",
-                    "name": "airportsList",
-                    "target": "airportsList"
+                    "name": "AirportsList",
+                    "target": "AirportsList"
                 },
                 {
-                    "pattern": "airports({key}):?query:",
-                    "name": "airportsObjectPage",
-                    "target": "airportsObjectPage"
+                    "pattern": "Airports({key}):?query:",
+                    "name": "AirportsObjectPage",
+                    "target": "AirportsObjectPage"
                 },
-                    {
-                        "pattern": "airports({key})/texts({key2}):?query:",
-                        "name": "airports_textsObjectPage",
-                        "target": "airports_textsObjectPage"
-                    }
+                {
+                    "pattern": "Airports({key})/texts({key2}):?query:",
+                    "name": "Airports_textsObjectPage",
+                    "target": "Airports_textsObjectPage"
+                }
             ],
             "targets": {
-                "airportsList": {
+                "AirportsList": {
                     "type": "Component",
-                    "id": "airportsList",
+                    "id": "AirportsList",
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
-                            "entitySet": "airports",
+                            "entitySet": "Airports",
                             "variantManagement": "Page",
                             "navigation": {
-                                "airports": {
+                                "Airports": {
                                     "detail": {
-                                        "route": "airportsObjectPage"
+                                        "route": "AirportsObjectPage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "airportsObjectPage": {
+                "AirportsObjectPage": {
                     "type": "Component",
-                    "id": "airportsObjectPage",
+                    "id": "AirportsObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "airports",
-                                "navigation": {
-                                    "texts": {
-                                        "detail": {
-                                            "route": "airports_textsObjectPage"
-                                        }
+                            "entitySet": "Airports",
+                            "navigation": {
+                                "texts": {
+                                    "detail": {
+                                        "route": "Airports_textsObjectPage"
                                     }
                                 }
-                        }
-                    }
-                },
-                    "airports_textsObjectPage": {
-                        "type": "Component",
-                        "id": "airports_textsObjectPage",
-                        "name": "sap.fe.templates.ObjectPage",
-                        "options": {
-                            "settings": {
-                                "editableHeaderContent": false,
-                                "entitySet": "airports_texts"
                             }
                         }
                     }
+                },
+                "Airports_textsObjectPage": {
+                    "type": "Component",
+                    "id": "Airports_textsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "Airports_texts"
+                        }
+                    }
+                }
             }
         },
         "contentDensities": {

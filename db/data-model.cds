@@ -12,10 +12,10 @@ using { sap.common.Currencies } from '@sap/cds/common';
 
 // Domains
 //////////////////////////////////////////////////////////////////////
-entity loadingStationCodes : CodeList, managed{
+entity LoadingStationCodes : CodeList, managed{
     key code : String(2)      @(title : '{i18n>catloadstatcode}');
 };
-entity coord_signs : CodeList, managed{
+entity Coord_signs : CodeList, managed{
     key code : String(1)         @(title : '{i18n>coord_sign_code}');
 };
 //////////////////////////////////////////////////////////////////////
@@ -23,17 +23,17 @@ entity coord_signs : CodeList, managed{
 
 // Tables
 //////////////////////////////////////////////////////////////////////
-entity carriers : CodeList, managed {
+entity Carriers : CodeList, managed {
     key code : String(2)             @title : '{i18n>supcarriercode}';
 };
 
-entity legstates : CodeList, managed {
+entity Legstates : CodeList, managed {
     key code        : String(3)               @title : '{i18n>legstate}';
     stonr           : String(2)               @title : '{i18n>stonr}';
     finalLegstate   : Boolean  default false  @title : '{i18n>finalLegstate}';
 };
 
-entity airports : CodeList, managed{
+entity Airports : CodeList, managed{
     key code         : String(3)             @title : '{i18n>aptcd}';
     aptcd_icao       : String(4)             @title : '{i18n>aptcd_icao}';
     online_ind       : Boolean               @title : '{i18n>online_ind}';
@@ -52,11 +52,11 @@ entity airports : CodeList, managed{
 
 // Types
 //////////////////////////////////////////////////////////////////////
-type airportCode : Association to airports { code }; //airportCodes;
-type loadingStationCode : Association to loadingStationCodes;
-type coord_sign : Association to coord_signs;
-type legstate : Association to legstates { code };
-type carriercode : Association to carriers { code };
+type airportCode : Association to Airports { code }; //airportCodes;
+type loadingStationCode : Association to LoadingStationCodes;
+type coord_sign : Association to Coord_signs;
+type legstate : Association to Legstates { code };
+type carriercode : Association to Carriers { code };
 //////////////////////////////////////////////////////////////////////
 
 

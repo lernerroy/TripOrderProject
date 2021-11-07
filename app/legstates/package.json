@@ -1,7 +1,7 @@
 {
     "name": "legstates",
     "version": "0.0.1",
-    "description": "Manage Legstates",
+    "description": "Manage Leg States",
     "keywords": [
         "ui5",
         "openui5",
@@ -9,14 +9,20 @@
     ],
     "main": "webapp/index.html",
     "scripts": {
-        "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf"
+        "build": "mbt module-build -m legstates -g",
+        "deploy-config": "npx -p @sap/ux-ui5-tooling fiori add deploy-config cf",
+        "build:cf": "ui5 build preload --clean-dest --config ui5-deploy.yaml --include-task=generateManifestBundle generateCachebusterInfo"
     },
-	"devDependencies": {
-        "@ui5/cli": "^2.11.1",
-        "@ui5/fs": "^2.0.6",
-        "@ui5/logger": "^2.0.1",
-        "@sap/ux-ui5-tooling": "1",
-        "rimraf": "3.0.2",
-        "@sap/ux-specification": "latest"
-}
+    "devDependencies": {
+        "@sap/ui5-builder-webide-extension": "1.0.x",
+        "ui5-task-zipper": "^0.3.1",
+        "mbt": "^1.0.15"
+    },
+    "ui5": {
+        "dependencies": [
+            "@sap/ui5-builder-webide-extension",
+            "ui5-task-zipper",
+            "mbt"
+        ]
+    }
 }

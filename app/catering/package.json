@@ -6,7 +6,6 @@
     "engines": {
         "node": "^10"
     },
-    "version": "0.0.1",
     "private": true,
     "sapux": true,
     "description": "expose catering trips",

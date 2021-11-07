@@ -5,7 +5,7 @@
         "service": "triporder-ui" 
     },
     "sap.app": {
-        "id": "cargo.cargo",
+        "id": "cargo",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -39,7 +39,7 @@
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
         },
-         "crossNavigation": {
+        "crossNavigation": {
             "inbounds": {
                 "cargo-inbound": {
                     "signature": {
@@ -52,7 +52,6 @@
                     "info": "Present Cargo Information",
                     "subTitle": "Cargo information",
                     "icon": "sap-icon://cargo-train"
-                    
                 }
             }
         }

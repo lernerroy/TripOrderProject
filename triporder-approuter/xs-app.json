@@ -23,5 +23,5 @@
       "authenticationType": "xsuaa"
     }
   ],
-  "welcomeFile": "/cargocargo"
+  "welcomeFile": "/cargo"
 }

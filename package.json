@@ -1,128 +1,138 @@
 {
-  "engines": {
-    "node": "12.x"
-  },
-  "name": "triprecord",
-  "version": "1.0.0",
-  "description": "A simple CAP project.",
-  "repository": "<Add your repository here>",
-  "license": "UNLICENSED",
-  "private": true,
-  "dependencies": {
-    "@sap/audit-logging": "^5.1.0",
-    "@sap/cds": "^5.5.4",
-    "@sap/cds-mtx": "^2.3.3",
-    "@sap/hana-client": "^2.10.15",
-    "@sap/hdi-deploy": "^4.2.0",
-    "@sap/instance-manager": "^3.0.0",
-    "@sap/xsenv": "^3.1.1",
-    "@sap/xssec": "^3.2.7",
-    "express": "^4.17.1",
-    "hdb": "^0.18.3",
-    "passport": "^0.4.1"
-  },
-  "devDependencies": {
-    "@sap/ux-specification": "^1.90.13",
-    "sqlite3": "^5.0.2"
-  },
-  "scripts": {
-    "start": "cds run",
-    "undeploy": "cf undeploy triporderproject --delete-services --delete-service-keys"
-  },
-  "eslintConfig": {
-    "extends": "eslint:recommended",
-    "env": {
-      "es2020": true,
-      "node": true,
-      "jest": true,
-      "mocha": true
+    "engines": {
+        "node": "12.x"
     },
-    "globals": {
-      "SELECT": true,
-      "INSERT": true,
-      "UPDATE": true,
-      "DELETE": true,
-      "CREATE": true,
-      "DROP": true,
-      "CDL": true,
-      "CQL": true,
-      "CXL": true,
-      "cds": true
+    "name": "triprecord",
+    "version": "1.0.0",
+    "description": "A simple CAP project.",
+    "repository": "<Add your repository here>",
+    "license": "UNLICENSED",
+    "private": true,
+    "dependencies": {
+        "@sap/audit-logging": "^5.1.0",
+        "@sap/cds": "^5.5.4",
+        "@sap/cds-mtx": "^2.3.3",
+        "@sap/hana-client": "^2.10.15",
+        "@sap/hdi-deploy": "^4.2.0",
+        "@sap/instance-manager": "^3.0.0",
+        "@sap/xsenv": "^3.1.1",
+        "@sap/xssec": "^3.2.7",
+        "express": "^4.17.1",
+        "hdb": "^0.18.3",
+        "passport": "^0.4.1"
     },
-    "rules": {
-      "no-console": "off",
-      "require-atomic-updates": "off"
-    }
-  },
-  "cds": {
-    "i18n": {
-      "folders": [
-        "_i18n"
-      ]
+    "devDependencies": {
+        "@sap/ux-specification": "^1.90.13",
+        "sqlite3": "^5.0.2"
     },
-    "requires": {
-      "[production]": {
-        "db": {
-          "kind": "hana",
-          "model": [
-            "db",
-            "srv"
-          ],
-          "vcap": {
-            "label": "service-manager"
-          }
+    "scripts": {
+        "start": "cds run",
+        "watch": "cds watch",
+        "prebuild-srv": "cds build --production",
+        "build-srv": "mbt module-build -m triporder-srv -g",
+        "build-ui": "mbt module-build -m triporder_ui_deployer -g",
+        "deploy-srv": "cf deploy ./ -m triporder-srv",
+        "deploy-ui": "cf deploy ./ -m triporder_ui_deployer",
+        "undeploy": "cf undeploy triporderproject --delete-services --delete-service-keys"
+    },
+    "eslintConfig": {
+        "extends": "eslint:recommended",
+        "env": {
+            "es2020": true,
+            "node": true,
+            "jest": true,
+            "mocha": true
         },
-        "uaa": {
-          "kind": "xsuaa"
+        "globals": {
+            "SELECT": true,
+            "INSERT": true,
+            "UPDATE": true,
+            "DELETE": true,
+            "CREATE": true,
+            "DROP": true,
+            "CDL": true,
+            "CQL": true,
+            "CXL": true,
+            "cds": true
         },
-        "multitenancy": true
-      },
-      "[development]": {
-        "multitenancy": false,
-        "db": {
-          "kind": "hana"
-        },
-        "auth": {
-          "strategy": "mock",
-          "users": {
-            "roy.lerner@legstate.com": {
-              "password": "123",
-              "roles": [
-                "API_user",
-                "Admin",
-                "User"
-              ]
-            }
-          }
+        "rules": {
+            "no-console": "off",
+            "require-atomic-updates": "off"
         }
-      },
-      "cat-service": {
-        "kind": "odata",
-        "model": "srv/external/cat-service"
-      }
     },
-    "hana": {
-      "deploy-format": "hdbtable"
-    }
-  },
-  "sapux": [
-    "app/tripdetails",
-    "app/passengers",
-    "app/cargo",
-    "app/route_plan",
-    "app/accommodation",
-    "app/catering",
-    "app/tripcollated",
-    "app/tripinput",
-    "app/fas",
-    "app/legstates",
-    "app/carriers",
-    "app/project1",
-    "app/airports",
-    "app/countries",
-    "app/language",
-    "app/currency",
-    "app/project1",
-    "app/carriers"
-  ]
+    "cds": {
+        "i18n": {
+            "folders": [
+                "_i18n"
+            ]
+        },
+        "requires": {
+            "[production]": {
+                "db": {
+                    "kind": "hana",
+                    "model": [
+                        "db",
+                        "srv"
+                    ],
+                    "vcap": {
+                        "label": "service-manager"
+                    }
+                },
+                "uaa": {
+                    "kind": "xsuaa"
+                },
+                "multitenancy": true
+            },
+            "[development]": {
+                "multitenancy": false,
+                "db": {
+                    "kind": "hana"
+                },
+                "auth": {
+                    "strategy": "mock",
+                    "users": {
+                        "roy.lerner@legstate.com": {
+                            "password": "123",
+                            "roles": [
+                                "API_user",
+                                "Admin",
+                                "User"
+                            ]
+                        }
+                    }
+                }
+            },
+            "cat-service": {
+                "kind": "odata",
+                "model": "srv/external/cat-service"
+            },
+            "tripdraft-service": {
+                "kind": "odata",
+                "model": "srv/external/tripdraft-service"
+            }
+        },
+        "hana": {
+            "deploy-format": "hdbtable"
+        }
+    },
+    "sapux": [
+        "app/tripdetails",
+        "app/passengers",
+        "app/cargo",
+        "app/route_plan",
+        "app/accommodation",
+        "app/catering",
+        "app/tripcollated",
+        "app/tripinput",
+        "app/fas",
+        "app/languages",
+        "app/airports",
+        "app/carriers",
+        "app/countries",
+        "app/legstates",
+        "app/currencies",
+        "app/carriers",
+        "app/carriers",
+        "app/airports"
+    ]
 }

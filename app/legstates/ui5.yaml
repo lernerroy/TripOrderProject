@@ -9,7 +9,7 @@ server:
     configuration:
       ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
       backend:
-      - path: /browse
+      - path: /draft
         url: http://localhost:4004
       ui5:
         path: 

@@ -44,17 +44,17 @@ service TripService {
 
     // TripRecord
     //////////////////////////////////////////////////////////////////////
-    entity carriers 
+    entity Carriers 
     @(restrict: [ { grant: ['*'], to: 'Admin'}])
-    as projection on trips.carriers;
+    as projection on trips.Carriers;
 
-    entity airports 
+    entity Airports 
     @(restrict: [ { grant: ['*'], to: 'Admin'}])
-    as projection on trips.airports;
+    as projection on trips.Airports;
     
-    entity legstates 
+    entity Legstates 
     @(restrict: [ { grant: ['*'], to: 'Admin'}])
-    as projection on trips.legstates;
+    as projection on trips.Legstates;
     
     // entity airportsCodes 
     // @(restrict: [ { grant: ['*'], to: 'Admin'}])
@@ -75,7 +75,6 @@ service TripService {
     entity Currencies 
     @(restrict: [ { grant: ['*'], to: 'Admin'}])
     as projection on commonCurrencies;
-
     //////////////////////////////////////////////////////////////////////
 
 };

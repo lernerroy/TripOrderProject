@@ -1,5 +1,9 @@
 {
     "_version": "1.32.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui" 
+    },
     "sap.app": {
         "id": "carriers",
         "type": "application",
@@ -23,6 +27,22 @@
         "sourceTemplate": {
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "carriers-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "carriers_configuration",
+                    "action": "Manage Carriers",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "info": "{{flpInfo}}",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {
@@ -47,7 +67,7 @@
             "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.95.0",
+            "minUI5Version": "1.96.0",
             "libs": {
                 "sap.ui.core": {},
                 "sap.fe.templates": {}
@@ -77,68 +97,68 @@
             "routes": [
                 {
                     "pattern": ":?query:",
-                    "name": "carriersList",
-                    "target": "carriersList"
+                    "name": "CarriersList",
+                    "target": "CarriersList"
                 },
                 {
-                    "pattern": "carriers({key}):?query:",
-                    "name": "carriersObjectPage",
-                    "target": "carriersObjectPage"
+                    "pattern": "Carriers({key}):?query:",
+                    "name": "CarriersObjectPage",
+                    "target": "CarriersObjectPage"
                 },
-                    {
-                        "pattern": "carriers({key})/texts({key2}):?query:",
-                        "name": "carriers_textsObjectPage",
-                        "target": "carriers_textsObjectPage"
-                    }
+                {
+                    "pattern": "Carriers({key})/texts({key2}):?query:",
+                    "name": "Carriers_textsObjectPage",
+                    "target": "Carriers_textsObjectPage"
+                }
             ],
             "targets": {
-                "carriersList": {
+                "CarriersList": {
                     "type": "Component",
-                    "id": "carriersList",
+                    "id": "CarriersList",
                     "name": "sap.fe.templates.ListReport",
                     "options": {
                         "settings": {
-                            "entitySet": "carriers",
+                            "entitySet": "Carriers",
                             "variantManagement": "Page",
                             "navigation": {
-                                "carriers": {
+                                "Carriers": {
                                     "detail": {
-                                        "route": "carriersObjectPage"
+                                        "route": "CarriersObjectPage"
                                     }
                                 }
                             }
                         }
                     }
                 },
-                "carriersObjectPage": {
+                "CarriersObjectPage": {
                     "type": "Component",
-                    "id": "carriersObjectPage",
+                    "id": "CarriersObjectPage",
                     "name": "sap.fe.templates.ObjectPage",
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "carriers",
-                                "navigation": {
-                                    "texts": {
-                                        "detail": {
-                                            "route": "carriers_textsObjectPage"
-                                        }
+                            "entitySet": "Carriers",
+                            "navigation": {
+                                "texts": {
+                                    "detail": {
+                                        "route": "Carriers_textsObjectPage"
                                     }
                                 }
-                        }
-                    }
-                },
-                    "carriers_textsObjectPage": {
-                        "type": "Component",
-                        "id": "carriers_textsObjectPage",
-                        "name": "sap.fe.templates.ObjectPage",
-                        "options": {
-                            "settings": {
-                                "editableHeaderContent": false,
-                                "entitySet": "carriers_texts"
                             }
                         }
                     }
+                },
+                "Carriers_textsObjectPage": {
+                    "type": "Component",
+                    "id": "Carriers_textsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "Carriers_texts"
+                        }
+                    }
+                }
             }
         },
         "contentDensities": {

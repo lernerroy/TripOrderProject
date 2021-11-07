@@ -1,7 +1,7 @@
 ## Application Details
 |               |
 | ------------- |
-|**Generation Date and Time**<br>Mon Nov 01 2021 21:17:01 GMT+0000 (Coordinated Universal Time)|
+|**Generation Date and Time**<br>Sun Nov 07 2021 09:04:45 GMT+0000 (Coordinated Universal Time)|
 |**App Generator**<br>@sap/generator-fiori|
 |**App Generator Version**<br>1.4.0|
 |**Generation Platform**<br>SAP Business Application Studio|
@@ -9,14 +9,14 @@
 |**Service Type**<br>Local Cap|
 |**Service URL**<br>/draft/
 |**Module Name**<br>carriers|
-|**Application Title**<br>Manage Carriers|
+|**Application Title**<br>Carriers Configuration|
 |**Namespace**<br>|
 |**UI5 Theme**<br>sap_fiori_3|
 |**UI5 Version**<br>Latest|
 |**Enable Code Assist Libraries**<br>False|
 |**Add Eslint configuration**<br>False|
 |**Enable Telemetry**<br>True|
-|**Main Entity**<br>carriers|
+|**Main Entity**<br>Carriers|
 |**Navigation Entity**<br>texts|
 
 ## carriers

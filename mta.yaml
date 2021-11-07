@@ -110,6 +110,30 @@ modules:
       - tripinput.zip
       name: tripinput
       target-path: resources/
+    - artifacts:
+      - airports.zip
+      name: airports
+      target-path: resources/
+    - artifacts:
+      - carriers.zip
+      name: carriers
+      target-path: resources/
+    - artifacts:
+      - countries.zip
+      name: countries
+      target-path: resources/
+    - artifacts:
+      - currencies.zip
+      name: currencies
+      target-path: resources/
+    - artifacts:
+      - languages.zip
+      name: languages
+      target-path: resources/
+    - artifacts:
+      - legstates.zip
+      name: legstates
+      target-path: resources/
       
 - name: triporder-approuter
   type: approuter.nodejs
@@ -221,7 +245,67 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-
+    
+- name: airports
+  type: html5
+  path: app/airports
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: carriers
+  type: html5
+  path: app/carriers
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: countries
+  type: html5
+  path: app/countries
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: currencies
+  type: html5
+  path: app/currencies
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: languages
+  type: html5
+  path: app/languages
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: legstates
+  type: html5
+  path: app/legstates
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 
 resources:
 - name: triporder-broker-credentials 

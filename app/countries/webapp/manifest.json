@@ -1,7 +1,11 @@
 {
     "_version": "1.32.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui" 
+    },
     "sap.app": {
-        "id": "Countries",
+        "id": "countries",
         "type": "application",
         "i18n": "i18n/i18n.properties",
         "applicationVersion": {
@@ -23,6 +27,22 @@
         "sourceTemplate": {
             "id": "ui5template.fiorielements.v4.lrop",
             "version": "1.0.0"
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "countries-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "countries_configuration",
+                    "action": "Manage Countries",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "info": "{{flpInfo}}",
+                    "icon": ""
+                }
+            }
         }
     },
     "sap.ui": {
@@ -47,7 +67,7 @@
             "css": []
         },
         "dependencies": {
-            "minUI5Version": "1.95.0",
+            "minUI5Version": "1.96.0",
             "libs": {
                 "sap.ui.core": {},
                 "sap.fe.templates": {}
@@ -85,11 +105,11 @@
                     "name": "CountriesObjectPage",
                     "target": "CountriesObjectPage"
                 },
-                    {
-                        "pattern": "Countries({key})/texts({key2}):?query:",
-                        "name": "Countries_textsObjectPage",
-                        "target": "Countries_textsObjectPage"
-                    }
+                {
+                    "pattern": "Countries({key})/texts({key2}):?query:",
+                    "name": "Countries_textsObjectPage",
+                    "target": "Countries_textsObjectPage"
+                }
             ],
             "targets": {
                 "CountriesList": {
@@ -118,27 +138,27 @@
                         "settings": {
                             "editableHeaderContent": false,
                             "entitySet": "Countries",
-                                "navigation": {
-                                    "texts": {
-                                        "detail": {
-                                            "route": "Countries_textsObjectPage"
-                                        }
+                            "navigation": {
+                                "texts": {
+                                    "detail": {
+                                        "route": "Countries_textsObjectPage"
                                     }
                                 }
-                        }
-                    }
-                },
-                    "Countries_textsObjectPage": {
-                        "type": "Component",
-                        "id": "Countries_textsObjectPage",
-                        "name": "sap.fe.templates.ObjectPage",
-                        "options": {
-                            "settings": {
-                                "editableHeaderContent": false,
-                                "entitySet": "Countries_texts"
                             }
                         }
                     }
+                },
+                "Countries_textsObjectPage": {
+                    "type": "Component",
+                    "id": "Countries_textsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "Countries_texts"
+                        }
+                    }
+                }
             }
         },
         "contentDensities": {
