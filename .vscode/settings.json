@@ -4,6 +4,5 @@
     "**/.git": true,
     "**/.vscode": true
 },
-"actions": [],
 "[xml].editor.defaultFormatter": "dotjoshjohnson.xml"
 }

@@ -65,6 +65,76 @@ annotate TripDraft.Countries with @odata.draft.enabled;
 annotate commonCurrencies with @fiori.draft.enabled;
 annotate TripDraft.Currencies with @odata.draft.enabled;
 
+////////////////////////////////////////////////////////////////////////////
+//
+//	Set Header Text
+//
+annotate TripDraft.Legstates with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: '{i18n>legstate_o}',
+			TypeNamePlural: '{i18n>legstate_o}',
+			Title: {Value: code},
+			Description: {Value: name}
+		},
+	}
+);
+
+annotate TripDraft.Carriers with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: '{i18n>carriers_o}',
+			TypeNamePlural: '{i18n>carriers_o}',
+			Title: {Value: code},
+			Description: {Value: name}
+		},
+	}
+);
+
+annotate TripDraft.Airports with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: '{i18n>airports_o}',
+			TypeNamePlural: '{i18n>airports_o}',
+			Title: {Value: code},
+			Description: {Value: name}
+		},
+	}
+);
+
+annotate TripDraft.Languages with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: '{i18n>languages_o}',
+			TypeNamePlural: '{i18n>languages_o}',
+			Title: {Value: code},
+			Description: {Value: name}
+		},
+	}
+);
+
+annotate TripDraft.Countries with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: '{i18n>countries_o}',
+			TypeNamePlural: '{i18n>countries_o}',
+			Title: {Value: code},
+			Description: {Value: name}
+		},
+	}
+);
+
+annotate TripDraft.Currencies with @(
+	UI: {
+		HeaderInfo: {
+			TypeName: '{i18n>currencies_o}',
+			TypeNamePlural: '{i18n>currencies_o}',
+			Title: {Value: code},
+			Description: {Value: name}
+		},
+	}
+);
+
 // In addition we need to expose Languages through TripDraft as a target for ValueList
 extend service TripDraft {
     @readonly
@@ -129,9 +199,9 @@ annotate TripDraft.Currencies.texts with {
 
 // Legstates
 annotate TripDraft.Legstates with @(
-Common.SemanticKey: [name],
+Common.SemanticKey: [code],
 UI : {
-Identification: [{Value:name}],
+Identification: [{Value:code}],
 title: name,
     SelectionFields     : [
 
