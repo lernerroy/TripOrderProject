@@ -1,6 +1,6 @@
 _schema-version: "3.1"
 ID: triporderproject
-description: A simple CAP project.
+description: The cloud based foundation to support trip details
 version: 1.0.0
 modules:
 
@@ -9,6 +9,7 @@ modules:
   path: srv-broker
   parameters:
       memory: 128M
+      disk-quota: 512M
   properties:
       SBF_ENABLE_AUDITLOG: false
       SBF_CREDENTIALS_PROVIDER_SERVICE: uaa_triporder
@@ -51,7 +52,8 @@ modules:
   type: nodejs
   path: gen/srv
   parameters:
-    memory: 512M
+    memory: 128M
+    disk-quota: 512M
   requires:
   #- name: triporder-db
   - name: uaa_triporder
@@ -340,7 +342,7 @@ resources:
         onSubscriptionAsync: false
         onUnSubscriptionAsync: false
       category: LegState Engineering
-      description: Trip Record services and apps
+      description: The cloud based foundation to support trip details
       displayName: Trip Record
       xsappname: triporder-xsapp
     service: saas-registry

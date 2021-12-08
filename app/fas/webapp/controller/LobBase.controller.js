@@ -5,8 +5,9 @@ sap.ui.define([
 	"../constants/Constants",
 	"fas/dialog/BusyDialogController",
 	"sap/m/MessageBox",
-	"sap/m/MessageToast"
-], function (Controller, BaseController, JSONModel, Constants, BusyDialog, MessageBox, MessageToast) {
+	"sap/m/MessageToast",
+    "fas/libs/lodash"
+], function (Controller, BaseController, JSONModel, Constants, BusyDialog, MessageBox, MessageToast, lodash) {
 	"use strict";
 
 	return BaseController.extend("fas.controller.LobBase", {

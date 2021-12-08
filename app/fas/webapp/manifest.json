@@ -95,6 +95,7 @@
             "": {
                 "dataSource": "mainService",
                 "preload": true
+                
             },
             "sharedState": {
                 "type": "sap.ui.model.json.JSONModel",

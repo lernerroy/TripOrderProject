@@ -1,6 +1,6 @@
 _schema-version: "3.1"
 ID: triporderproject
-description: A simple CAP project.
+description: The cloud based foundation to support trip details
 version: 1.0.0
 modules:
 - name: triporder-broker
@@ -46,6 +46,7 @@ modules:
                 credential-types:
                 - binding-secret
   parameters:
+    disk-quota: 512M
     memory: 128M
 - name: triporder-srv
   type: javascript.nodejs
@@ -59,7 +60,8 @@ modules:
     properties:
       srv-url: ${default-url}
   parameters:
-    memory: 512M
+    disk-quota: 512M
+    memory: 128M
 - name: triporder_ui_deployer
   type: com.sap.application.content
   path: .triprecord_mta_build_tmp/triporder_ui_deployer/data.zip
@@ -112,7 +114,7 @@ resources:
         onSubscriptionAsync: false
         onUnSubscriptionAsync: false
       category: LegState Engineering
-      description: Trip Record services and apps
+      description: The cloud based foundation to support trip details
       displayName: Trip Record
       xsappname: triporder-xsapp
     service: saas-registry
