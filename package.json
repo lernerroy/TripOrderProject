@@ -95,8 +95,8 @@
                             "password": "123",
                             "roles": [
                                 "API_user",
-                                "Admin",
-                                "User"
+                                "User",
+                                "Admin"
                             ]
                         }
                     }

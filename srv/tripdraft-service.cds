@@ -6,48 +6,44 @@ using {sap.common.Currencies as commonCurrencies} from '@sap/cds/common';
 
 
 @path : '/draft'
-//@impl: './trip-service.js'
 service TripDraft {
 
     // TripRecord
     //////////////////////////////////////////////////////////////////////
-    entity Carriers @(restrict : [{
-        grant : ['*'],
-        to    : 'Admin'
-    }]) as projection on trips.Carriers;
+    entity Carriers @(restrict : [
+        { grant: ['*'], to: ['Admin']},
+        { grant: ['READ'], to: ['User']}]) 
+    as projection on trips.Carriers;
 
-    entity Airports @(restrict : [{
-        grant : ['*'],
-        to    : 'Admin'
-    }]) as projection on trips.Airports;
+    entity Airports @(restrict : [
+        { grant: ['*'], to: ['Admin']},
+        { grant: ['READ'], to: ['User']}]) 
+    as projection on trips.Airports;
 
-    entity Legstates @(restrict : [{
-        grant : ['*'],
-        to    : 'Admin'
-    }]) as projection on trips.Legstates;
+    entity Legstates @(restrict : [
+        { grant: ['*'], to: ['Admin']},
+        { grant: ['READ'], to: ['User']}]) 
+    as projection on trips.Legstates;
 
-    // entity airportsCodes
-    // @(restrict: [ { grant: ['*'], to: 'Admin'}])
-    // as projection on trips.airportsCodes;
     //////////////////////////////////////////////////////////////////////
 
 
     // Common
     //////////////////////////////////////////////////////////////////////
-    entity Languages @(restrict : [{
-        grant : ['*'],
-        to    : 'Admin'
-    }]) as projection on commonLanguages;
+    entity Languages @(restrict : [
+        { grant: ['*'], to: ['Admin']},
+        { grant: ['READ'], to: ['User']}]) 
+    as projection on commonLanguages;
 
-    entity Countries @(restrict : [{
-        grant : ['*'],
-        to    : 'Admin'
-    }]) as projection on commonCountries;
+    entity Countries @(restrict : [
+        { grant: ['*'], to: ['Admin']},
+        { grant: ['READ'], to: ['User']}]) 
+    as projection on commonCountries;
 
-    entity Currencies @(restrict : [{
-        grant : ['*'],
-        to    : 'Admin'
-    }]) as projection on commonCurrencies;
+    entity Currencies @(restrict : [
+        { grant: ['*'], to: ['Admin']},
+        { grant: ['READ'], to: ['User']}]) 
+    as projection on commonCurrencies;
 //////////////////////////////////////////////////////////////////////
 
 };
@@ -382,14 +378,14 @@ annotate TripDraft.Airports with @(UI : {
         {Value : online_ind, },
         {Value : company_ind, },
         {Value : fo_po_days, },
-        {Value : country_code.code, },
+        {Value : country_code_code, },
         {Value : ekgrp, },
-        {Value : catloadstat.code, },
+        {Value : catloadstat_code, },
         {Value : catgroundime, },
         {Value : lat_coord, },
         {Value : lon_coord, },
-        {Value : lat_coord_sign.code, },
-        {Value : lon_coord_sign.code, },
+        {Value : lat_coord_sign_code, },
+        {Value : lon_coord_sign_code, },
         {Value : name, },
         {Value : descr, }
     ]},

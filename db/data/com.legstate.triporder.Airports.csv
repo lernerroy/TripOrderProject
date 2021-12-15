@@ -1,4 +1,4 @@
-xeicode;name;descr;aptcd_icao;online_ind;company_ind;fo_po_days;country_code.code;ekgrp;catloadstat.code;catgroundime;lat_coord;lon_coord;lat_coord_sign.code;lon_coord_sign.code
+code;name;descr;aptcd_icao;online_ind;company_ind;fo_po_days;country_code.code;ekgrp;catloadstat.code;catgroundime;lat_coord;lon_coord;lat_coord_sign.code;lon_coord_sign.code
 FRA;English 1;English 1;EDDF;false;false;7;DE;;;;0.87324600000000;0.1495170000000;+;+
 MIA;English 2;English 2;KMIA;false;false;7;US;;;;0.45017700000000;1.40133500000000;+;-
 BOG;English 3;English 3;SKBO;true;false;7;CO;;;'01';0.08208400000000;1.29395800000000;+;-

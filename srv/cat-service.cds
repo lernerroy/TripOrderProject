@@ -3,77 +3,84 @@ using { sap.common.Countries as commonCountries } from '@sap/cds/common';
 using { sap.common.Languages as commonLanguages } from '@sap/cds/common';
 using { sap.common.Currencies as commonCurrencies } from '@sap/cds/common';
 
-annotate trips with @(requires : [
-    'Admin',
-    'API_user',
-    'User'
-]);
 
-annotate trips with @(restrict : [
-    {
-        grant : [
-            'READ',
-            'WRITE'
-        ],
-        to    : 'API_user'
-    },
-    {
-        grant : ['*'],
-        to    : 'User'
-    },
-    {
-        grant : ['*'],
-        to    : 'Admin'
-    }
-]);
+
 
 @path : '/browse'
-//@impl: './trip-service.js'
 service TripService {
-    entity triprecord as projection on trips.triprecord;
-    entity pax as projection on trips.passenger;
-    entity cargorecord as projection on trips.cargorecord;
-    entity routeplan as projection on trips.routeplan;
-    entity accommodation as projection on trips.accommodation;
-    entity catering as projection on trips.catering;
+    entity triprecord 
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+      //            { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.triprecord;
+
+    entity pax 
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+      //            { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.passenger;
+
+    entity cargorecord 
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+     //             { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.cargorecord;
+
+    entity routeplan 
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.routeplan;
+    
+    entity accommodation
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.accommodation;
+    
+    entity catering
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.catering;
 
     // Views
     //////////////////////////////////////////////////////////////////////
-    entity cockpitTripsActuals as projection on TripService.cockpitTrips;
+    entity cockpitTripsActuals 
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ'], to: ['API_user']} ])
+    as projection on TripService.cockpitTrips;
     //////////////////////////////////////////////////////////////////////
 
     // TripRecord
     //////////////////////////////////////////////////////////////////////
-    entity Carriers 
-    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    entity Carriers
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+     //             { grant: ['READ'], to: ['API_user']} ])
     as projection on trips.Carriers;
 
     entity Airports 
-    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
+     //             { grant: ['READ'], to: ['API_user']}])
     as projection on trips.Airports;
     
     entity Legstates 
-    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    //@(restrict: [ { grant: ['*'], to: ['Admin']},
+     //             { grant: ['READ'], to: ['API_user','User']}])
     as projection on trips.Legstates;
     
-    // entity airportsCodes 
-    // @(restrict: [ { grant: ['*'], to: 'Admin'}])
-    // as projection on trips.airportsCodes;
     //////////////////////////////////////////////////////////////////////
 
 
     // Common
     //////////////////////////////////////////////////////////////////////
     entity Languages 
-    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    //@(restrict: [ { grant: ['*'], to: ['Admin']},
+     //             { grant: ['READ'], to: ['API_user','User']}])
     as projection on commonLanguages;
 
     entity Countries 
-    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    //@(restrict: [ { grant: ['*'], to: ['Admin']},
+     //             { grant: ['READ'], to: ['API_user','User']}])
     as projection on commonCountries;
 
     entity Currencies 
-    @(restrict: [ { grant: ['*'], to: 'Admin'}])
+    //@(restrict: [ { grant: ['*'], to: ['Admin']},
+     //             { grant: ['READ'], to: ['API_user','User']}])
     as projection on commonCurrencies;
     //////////////////////////////////////////////////////////////////////
 

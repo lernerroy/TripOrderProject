@@ -9,7 +9,6 @@ using { sap.common.Languages } from '@sap/cds/common';
 using { sap.common.Currencies } from '@sap/cds/common';
 
 
-
 // Domains
 //////////////////////////////////////////////////////////////////////
 entity LoadingStationCodes : CodeList, managed{
@@ -19,7 +18,6 @@ entity Coord_signs : CodeList, managed{
     key code : String(1)         @(title : '{i18n>coord_sign_code}');
 };
 //////////////////////////////////////////////////////////////////////
-
 
 // Tables
 //////////////////////////////////////////////////////////////////////
@@ -39,14 +37,14 @@ entity Airports : CodeList, managed{
     online_ind       : Boolean               @title : '{i18n>online_ind}';
     company_ind      : Boolean               @title : '{i18n>company_ind}';
     fo_po_days       : Integer               @title : '{i18n>fo_po_days}';
-    country_code     : Country               @title : '{i18n>country_code}';
+    country_code     : association to one Countries              @title : '{i18n>country_code}';
     ekgrp            : String(3)             @title : '{i18n>ekgrp}';
     catloadstat      : loadingStationCode    @title : '{i18n>catloadstatcode}';
     catgroundime     : String(4)             @title : '{i18n>catgroundime}';
     lat_coord        : Decimal(16,14)        @title : '{i18n>lat_coord}';
     lon_coord        : Decimal(16,14)        @title : '{i18n>lon_coord}';
-    lat_coord_sign   : coord_sign            @title : '{i18n>lat_coord_sign}';
-    lon_coord_sign   : coord_sign            @title : '{i18n>lon_coord_sign}';
+    lat_coord_sign   : coord_sign @title : '{i18n>lat_coord_sign}';
+    lon_coord_sign   : coord_sign @title : '{i18n>lon_coord_sign}';
 };
 //////////////////////////////////////////////////////////////////////
 
