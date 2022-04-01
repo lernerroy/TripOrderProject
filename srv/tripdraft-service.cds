@@ -272,7 +272,9 @@ annotate TripDraft.Legstates.texts {
 
 
 // Carrier
-annotate TripDraft.Carriers with @(UI : {
+annotate TripDraft.Carriers with @(
+  Common.SemanticKey: [code],
+  UI : {
     SelectionFields   : [
         code,
         name
@@ -338,7 +340,9 @@ annotate TripDraft.Carriers.texts {
 }
 
 // Airports
-annotate TripDraft.Airports with @(UI : {
+annotate TripDraft.Airports with @(
+    Common.SemanticKey: [code],
+    UI : {
 
     SelectionFields   : [
 
@@ -422,7 +426,9 @@ annotate TripDraft.Airports.texts {
 }
 
 // Languages
-annotate TripDraft.Languages with @(UI : {
+annotate TripDraft.Languages with @(
+    Common.SemanticKey: [code],
+    UI : {
     SelectionFields  : [
 
         code,
@@ -482,7 +488,9 @@ annotate TripDraft.Languages.texts {
 }
 
 // Currencies
-annotate TripDraft.Currencies with @(UI : {
+annotate TripDraft.Currencies with @(
+    Common.SemanticKey: [code],
+    UI : {
     SelectionFields  : [
 
         code,
@@ -545,7 +553,9 @@ annotate TripDraft.Currencies.texts {
 }
 
 // Countries
-annotate TripDraft.Countries with @(UI : {
+annotate TripDraft.Countries with @(
+    Common.SemanticKey: [code],
+    UI : {
     SelectionFields  : [
 
     code],
