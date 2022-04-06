@@ -387,8 +387,8 @@ annotate TripDraft.Airports with @(
         {Value : catloadstat_code, },
         {Value : catgroundime, },
         {Value : lat_coord, },
-        {Value : lon_coord, },
         {Value : lat_coord_sign_code, },
+        {Value : lon_coord, },
         {Value : lon_coord_sign_code, },
         {Value : name, },
         {Value : descr, }
@@ -422,6 +422,20 @@ annotate TripDraft.Airports.texts {
         entity : 'languages_vh',
         type   : #fixed,
         title  : '{i18n>Languages}'
+    }
+}
+
+// Add Value Help for Coord Sign
+annotate TripDraft.Airports {
+    lat_coord_sign  @Common.ValueListWithFixedValues : true  @ValueList : {
+        entity : 'trips.Coord_signs',
+        type   : #fixed,
+        title  : '{i18n>lat_coord_sign}'
+    };
+    lon_coord_sign  @Common.ValueListWithFixedValues : true  @ValueList : {
+        entity : 'trips.Coord_signs',
+        type   : #fixed,
+        title  : '{i18n>lon_coord_sign}'
     }
 }
 
