@@ -16,3 +16,4 @@ using from './currencies/annotations';
 using from './carriers/annotations';
 using from './carriers/annotations';
 using from './airports/annotations';
+using from './triplog/annotations';

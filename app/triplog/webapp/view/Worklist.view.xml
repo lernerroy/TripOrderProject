@@ -1,0 +1,99 @@
+<mvc:View controllerName="triplog.controller.Worklist"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:fb="sap.ui.comp.filterbar" displayBlock="true">
+    <f:DynamicPage id="page" headerExpanded="true" showFooter="false">
+
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{i18n>worklistTitle}" level="H2"/>
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <fb:FilterBar reset="onReset" search="onFilter" useToolbar="false">
+                        <fb:filterItems>
+                            <fb:FilterItem name="creation_timestamp" label="{i18n>creation_timestamp}">
+                                <fb:control>
+                                    <DateRangeSelection id="dateRangeFilter" showCurrentDateButton="true" showFooter="true"/>
+                                </fb:control>
+                            </fb:FilterItem>
+                            <fb:FilterItem name="status" label="{i18n>status}">
+                                <fb:control>
+                                    <MultiComboBox id="statusFilter" showSelectAll="true" showClearIcon="true" items="{
+				                            path: '/Status',
+				                            sorter: { path: 'sequence' }
+			                            }">
+                                        <core:Item key="{code}" text="{text}"/>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterItem>
+                        </fb:filterItems>
+                    </fb:FilterBar>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <Table id="table" width="auto" 
+            visible="false" mode="MultiSelect" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished">
+
+                <headerToolbar>
+                    <OverflowToolbar>
+                        <Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
+                        <ToolbarSpacer />
+                        <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch">
+                            <layoutData>
+                                <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
+                            </layoutData>
+                        </SearchField>
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column id="insupcarriercode2">
+                        <Text text="{i18n>insupcarriercode2}" />
+                    </Column>
+                    <Column id="inflightno">
+                        <Text text="{i18n>inflightno}"/>
+                    </Column>
+                    <Column id="inorigin">
+                        <Text text="{i18n>inorigin}"/>
+                    </Column>
+                    <Column id="indestination">
+                        <Text text="{i18n>indestination}"/>
+                    </Column>
+                    <Column id="inscheddeptdate">
+                        <Text text="{i18n>inscheddeptdate}"/>
+                    </Column>
+                    <Column id="surrogatenum">
+                        <Text text="{i18n>surrogatenum}"/>
+                    </Column>
+                    <Column id="fosuffix">
+                        <Text text="{i18n>fosuffix}" />
+                    </Column>
+                    <Column id="creation_timestamp">
+                        <Text text="{i18n>creation_timestamp}"/>
+                    </Column>
+                    <Column id="unitStatusColumn" hAlign="End">
+                        <Text text="{i18n>status}" id="Status"/>
+                    </Column>
+                </columns>
+            </Table>
+        </f:content>
+
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Button text="Process Message" press="onProcess" type="Emphasized"/>
+            </OverflowToolbar>
+        </f:footer>
+
+    </f:DynamicPage>
+</mvc:View>

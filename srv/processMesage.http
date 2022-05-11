@@ -1,0 +1,17 @@
+
+POST http://localhost:4004/browse/processMessage
+Content-Type: application/json
+
+{ 
+    "trips": [
+        {
+	        "insupcarriercode2": "X7",
+	        "inflightno": "",
+	        "inorigin": "",
+	        "indestination": "",
+	        "inscheddeptdate": "1900-01-01",
+	        "fosuffix": null,
+	        "surrogatenum": "201005"
+        }
+    ]
+}

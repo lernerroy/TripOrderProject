@@ -78,9 +78,8 @@ aspect aufnr {
 };
 
 
-
 //@cds.persistence.exists
-entity triprecord : recordsKey, surrogatenum, aufnr {
+aspect triprecorddetails : recordsKey, surrogatenum, aufnr {
     supcarriercode2     : carriercode; //String(2);
     scheddeptdate       : Date;
     flightno            : String(4);
@@ -163,6 +162,25 @@ entity triprecord : recordsKey, surrogatenum, aufnr {
     route               : String(10);
     cfpno1              : String(10);
     cfpno2              : String(10);
+};
+
+entity triprecord : triprecorddetails{};
+entity triprecordStaging : triprecorddetails{
+    creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+};
+
+entity triplog : recordsKey, surrogatenum {
+    //status : Decimal(2,0) @(title : '{i18n>status}') ;
+    status: Association to Status @(title : '{i18n>status}');
+    //messagetext : String @(title : '{i18n>messagetext}');
+    creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+};
+
+@cds.autoexpose
+entity Status {
+    key code     : Decimal(2, 0) @title: '{i18n>status}';
+        text     : localized String(255) @title : '{i18n>messagetext}';
+        sequence : Integer;
 };
 
 //@cds.persistence.exists

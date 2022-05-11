@@ -13,7 +13,7 @@ service TripDraft {
     entity Carriers @(restrict : [
         { grant: ['*'], to: ['Admin']},
         { grant: ['READ'], to: ['User']}]) 
-    as projection on trips.Carriers;
+    as projection on trips.Carriers;    
 
     entity Airports @(restrict : [
         { grant: ['*'], to: ['Admin']},
@@ -144,6 +144,7 @@ annotate TripDraft.Legstates with {
 }
 
 annotate TripDraft.Legstates.texts with {
+    ID_texts @Core.Computed;
     descr @UI.MultiLineText;
 }
 
@@ -153,6 +154,7 @@ annotate TripDraft.Carriers with {
 }
 
 annotate TripDraft.Carriers.texts with {
+    ID_texts @Core.Computed;
     descr @UI.MultiLineText;
 }
 
@@ -162,6 +164,7 @@ annotate TripDraft.Airports with {
 }
 
 annotate TripDraft.Airports.texts with {
+    ID_texts @Core.Computed;
     descr @UI.MultiLineText;
 }
 
@@ -171,6 +174,7 @@ annotate TripDraft.Countries with {
 }
 
 annotate TripDraft.Countries.texts with {
+    ID_texts @Core.Computed;
     descr @UI.MultiLineText;
 }
 
@@ -180,6 +184,7 @@ annotate TripDraft.Languages with {
 }
 
 annotate TripDraft.Languages.texts with {
+    ID_texts @Core.Computed;
     descr @UI.MultiLineText;
 }
 
@@ -189,6 +194,7 @@ annotate TripDraft.Currencies with {
 }
 
 annotate TripDraft.Currencies.texts with {
+    ID_texts @Core.Computed;
     descr @UI.MultiLineText;
 }
 // Start of Legstate Draft UI

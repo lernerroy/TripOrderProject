@@ -9,58 +9,68 @@ using { sap.common.Currencies as commonCurrencies } from '@sap/cds/common';
 @path : '/browse'
 service TripService {
     entity triprecord 
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-      //            { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.triprecord;
 
+    entity triprecordStaging
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.triprecordStaging;
+
+    entity triplog
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.triplog;
+
     entity pax 
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-      //            { grant: ['READ','WRITE'], to: ['API_user']} ])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.passenger;
 
     entity cargorecord 
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-     //             { grant: ['READ','WRITE'], to: ['API_user']} ])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.cargorecord;
 
     entity routeplan 
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.routeplan;
     
     entity accommodation
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.accommodation;
     
     entity catering
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.catering;
 
     // Views
     //////////////////////////////////////////////////////////////////////
     entity cockpitTripsActuals 
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ'], to: ['API_user']} ])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ'], to: ['API_user']} ])
     as projection on TripService.cockpitTrips;
     //////////////////////////////////////////////////////////////////////
 
     // TripRecord
     //////////////////////////////////////////////////////////////////////
     entity Carriers
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-     //             { grant: ['READ'], to: ['API_user']} ])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ'], to: ['API_user']} ])
     as projection on trips.Carriers;
 
     entity Airports 
-    //@(restrict: [ { grant: ['*'], to: ['Admin','User']},
-     //             { grant: ['READ'], to: ['API_user']}])
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ'], to: ['API_user']}])
     as projection on trips.Airports;
     
     entity Legstates 
-    //@(restrict: [ { grant: ['*'], to: ['Admin']},
-     //             { grant: ['READ'], to: ['API_user','User']}])
+    @(restrict: [ { grant: ['*'], to: ['Admin']},
+                 { grant: ['READ'], to: ['API_user','User']}])
     as projection on trips.Legstates;
     
     //////////////////////////////////////////////////////////////////////
@@ -69,20 +79,22 @@ service TripService {
     // Common
     //////////////////////////////////////////////////////////////////////
     entity Languages 
-    //@(restrict: [ { grant: ['*'], to: ['Admin']},
-     //             { grant: ['READ'], to: ['API_user','User']}])
+    @(restrict: [ { grant: ['*'], to: ['Admin']},
+                 { grant: ['READ'], to: ['API_user','User']}])
     as projection on commonLanguages;
 
     entity Countries 
-    //@(restrict: [ { grant: ['*'], to: ['Admin']},
-     //             { grant: ['READ'], to: ['API_user','User']}])
+    @(restrict: [ { grant: ['*'], to: ['Admin']},
+                 { grant: ['READ'], to: ['API_user','User']}])
     as projection on commonCountries;
 
     entity Currencies 
-    //@(restrict: [ { grant: ['*'], to: ['Admin']},
-     //             { grant: ['READ'], to: ['API_user','User']}])
+    @(restrict: [ { grant: ['*'], to: ['Admin']},
+                 { grant: ['READ'], to: ['API_user','User']}])
     as projection on commonCurrencies;
     //////////////////////////////////////////////////////////////////////
+
+    action processMessage(trips: array of triplog);
 
 };
 

@@ -104,11 +104,6 @@
                     "pattern": "Countries({key}):?query:",
                     "name": "CountriesObjectPage",
                     "target": "CountriesObjectPage"
-                },
-                {
-                    "pattern": "Countries({key})/texts({key2}):?query:",
-                    "name": "Countries_textsObjectPage",
-                    "target": "Countries_textsObjectPage"
                 }
             ],
             "targets": {
@@ -137,14 +132,8 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "Countries",
-                            "navigation": {
-                                "texts": {
-                                    "detail": {
-                                        "route": "Countries_textsObjectPage"
-                                    }
-                                }
-                            }
+                            "entitySet": "Countries"
+                    
                         }
                     }
                 },

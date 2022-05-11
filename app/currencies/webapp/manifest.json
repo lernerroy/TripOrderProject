@@ -104,11 +104,6 @@
                     "pattern": "Currencies({key}):?query:",
                     "name": "CurrenciesObjectPage",
                     "target": "CurrenciesObjectPage"
-                },
-                {
-                    "pattern": "Currencies({key})/texts({key2}):?query:",
-                    "name": "Currencies_textsObjectPage",
-                    "target": "Currencies_textsObjectPage"
                 }
             ],
             "targets": {
@@ -137,14 +132,7 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "Currencies",
-                            "navigation": {
-                                "texts": {
-                                    "detail": {
-                                        "route": "Currencies_textsObjectPage"
-                                    }
-                                }
-                            }
+                            "entitySet": "Currencies"
                         }
                     }
                 },

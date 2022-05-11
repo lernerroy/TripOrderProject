@@ -104,11 +104,6 @@
                     "pattern": "Legstates({key}):?query:",
                     "name": "LegstatesObjectPage",
                     "target": "LegstatesObjectPage"
-                },
-                {
-                    "pattern": "Legstates({key})/texts({key2}):?query:",
-                    "name": "Legstates_textsObjectPage",
-                    "target": "Legstates_textsObjectPage"
                 }
             ],
             "targets": {
@@ -137,14 +132,7 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "Legstates",
-                            "navigation": {
-                                "texts": {
-                                    "detail": {
-                                        "route": "Legstates_textsObjectPage"
-                                    }
-                                }
-                            }
+                            "entitySet": "Legstates"
                         }
                     }
                 },

@@ -104,12 +104,8 @@
                     "pattern": "Airports({key}):?query:",
                     "name": "AirportsObjectPage",
                     "target": "AirportsObjectPage"
-                },
-                {
-                    "pattern": "Airports({key})/texts({key2}):?query:",
-                    "name": "Airports_textsObjectPage",
-                    "target": "Airports_textsObjectPage"
                 }
+            
             ],
             "targets": {
                 "AirportsList": {
@@ -137,25 +133,8 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "Airports",
-                            "navigation": {
-                                "texts": {
-                                    "detail": {
-                                        "route": "Airports_textsObjectPage"
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "Airports_textsObjectPage": {
-                    "type": "Component",
-                    "id": "Airports_textsObjectPage",
-                    "name": "sap.fe.templates.ObjectPage",
-                    "options": {
-                        "settings": {
-                            "editableHeaderContent": false,
-                            "entitySet": "Airports_texts"
+                            "entitySet": "Airports"
+                            
                         }
                     }
                 }

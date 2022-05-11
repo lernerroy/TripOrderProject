@@ -104,11 +104,6 @@
                     "pattern": "Languages({key}):?query:",
                     "name": "LanguagesObjectPage",
                     "target": "LanguagesObjectPage"
-                },
-                {
-                    "pattern": "Languages({key})/texts({key2}):?query:",
-                    "name": "Languages_textsObjectPage",
-                    "target": "Languages_textsObjectPage"
                 }
             ],
             "targets": {
@@ -137,14 +132,7 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "Languages",
-                            "navigation": {
-                                "texts": {
-                                    "detail": {
-                                        "route": "Languages_textsObjectPage"
-                                    }
-                                }
-                            }
+                            "entitySet": "Languages"
                         }
                     }
                 },

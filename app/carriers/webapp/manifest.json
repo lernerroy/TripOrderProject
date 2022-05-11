@@ -104,11 +104,6 @@
                     "pattern": "Carriers({key}):?query:",
                     "name": "CarriersObjectPage",
                     "target": "CarriersObjectPage"
-                },
-                {
-                    "pattern": "Carriers({key})/texts({key2}):?query:",
-                    "name": "Carriers_textsObjectPage",
-                    "target": "Carriers_textsObjectPage"
                 }
             ],
             "targets": {
@@ -137,14 +132,8 @@
                     "options": {
                         "settings": {
                             "editableHeaderContent": false,
-                            "entitySet": "Carriers",
-                            "navigation": {
-                                "texts": {
-                                    "detail": {
-                                        "route": "Carriers_textsObjectPage"
-                                    }
-                                }
-                            }
+                            "entitySet": "Carriers"
+                        
                         }
                     }
                 },
