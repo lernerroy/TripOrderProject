@@ -166,14 +166,14 @@ aspect triprecorddetails : recordsKey, surrogatenum, aufnr {
 
 entity triprecord : triprecorddetails{};
 entity triprecordStaging : triprecorddetails{
-    creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
 };
 
 entity triplog : recordsKey, surrogatenum {
     //status : Decimal(2,0) @(title : '{i18n>status}') ;
     status: Association to Status @(title : '{i18n>status}');
     //messagetext : String @(title : '{i18n>messagetext}');
-    creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
 };
 
 @cds.autoexpose

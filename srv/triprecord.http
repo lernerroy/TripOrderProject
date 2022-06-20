@@ -1,17 +1,18 @@
+###
 POST http://localhost:4004/browse/triprecord
 Content-Type: application/json
 
 {
-		"insupcarriercode2": "X4",
+		"insupcarriercode2": "",
 		"inflightno": "",
 		"inorigin": "",
 		"indestination": "",
 		"inscheddeptdate": "1900-01-01",
 		"fosuffix": null,
-		"surrogatenum": "201005",
+		"surrogatenum": "DanielTest6",
 		"aufnr": null,
 		"supcarriercode2_code": "AV",
-		"scheddeptdate": "2021-10-16",
+		"scheddeptdate": "2021-10-17",
 		"flightno": "0007",
 		"supcarriercode_code": "AV",
 		"carriercode_code": "AV",

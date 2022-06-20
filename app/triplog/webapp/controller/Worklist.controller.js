@@ -247,7 +247,7 @@ sap.ui.define(
       },
 
       onProcess: function(oEvent) {
-        const sPath = "/odata/v4/TripService/browse/processMessage";
+        const sPath = this.getView().getModel().sServiceUrl.slice(1) + "processMessage";
         const requestData = {
             trips: []
         };
@@ -256,15 +256,26 @@ sap.ui.define(
             requestData.trips.push(oContext.getObject());
         })
         this.getView().setBusy(true);
-        Rest.ajaxCall("POST", sPath, requestData).then(
+        const csrfToken = this.getView().getModel().getHttpHeaders()["X-CSRF-Token"];
+        Rest.ajaxCall("POST", sPath, csrfToken, requestData).then(
             (oSuccess) => {
                 oTable.getBinding("items").refresh();
                 sap.m.MessageToast.show(this.getResourceBundle().getText("messageProcessSuccesful"));
                 this.getView().setBusy(false);
             },
             (oError) => {
+               
+               if (oError.responseJSON)
+               {
                 sap.m.MessageBox.error(`${oError.responseJSON.error.code} - ${oError.responseJSON.error.message}`);
+               } 
+               else{
+                sap.m.MessageBox.error(`${oError.responseText}`);
+               }
+                
                 this.getView().setBusy(false);
+
+
             }
         );
       }

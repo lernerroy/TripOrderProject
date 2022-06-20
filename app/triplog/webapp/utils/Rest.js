@@ -11,9 +11,10 @@ sap.ui.define([], function () {
      * @param {String} sPath - Relative URL or URL to be called
      * @return {Object} A promise object with the request
      */
-    ajaxCall: function (sMethod, sPath, requestData) {
+    ajaxCall: function (sMethod, sPath, csrfToken, requestData) {
       let pPromise = {};
       const oHeaders = {};
+      oHeaders["X-CSRF-Token"] = csrfToken;
       switch (sMethod) {
         case "POST":
           pPromise = new Promise(function (resolve, reject) {
