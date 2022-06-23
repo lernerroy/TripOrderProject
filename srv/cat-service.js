@@ -16,6 +16,7 @@ class TripService extends cds.ApplicationService {
             triplogdata.fosuffix = req.data.fosuffix;
             triplogdata.status_code = 64;
             triplogdata.creation_timestamp = tripData.creation_timestamp;
+            // infinite loop
             await db.run(INSERT([tripData]).into(triprecordStaging));
             await db.run(INSERT([triplogdata]).into(triplog));
             return req.reply(tripData);
@@ -65,9 +66,14 @@ class TripService extends cds.ApplicationService {
                 ) {
                     inscheddeptdateTemp = "'" + trip.inscheddeptdate + "'";
                 }
-                let creation_timestamp = "'" + trip.creation_timestamp + "'";
-                
-        
+                let creation_timestamp = trip.creation_timestamp;
+                if (
+                    creation_timestamp !== null &&
+                    creation_timestamp !== undefined
+                ) {
+                    creation_timestamp = "'" + trip.creation_timestamp + "'";
+                }
+
                 const whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} )`;
                 if (whereString === "") {
                     whereString = whereComponent;
@@ -89,7 +95,8 @@ class TripService extends cds.ApplicationService {
                         triplog.inorigin === trip.inorigin &&
                         triplog.indestination === trip.indestination &&
                         triplog.inscheddeptdate === trip.inscheddeptdate &&
-                        triplog.surrogatenum === trip.surrogatenum
+                        triplog.surrogatenum === trip.surrogatenum &&
+                        triplog.creation_timestamp === trip.creation_timestamp
                     );
                 });
                 if (trip.legstate_code === "ARR" && !trip.actarrdate) {
@@ -103,101 +110,121 @@ class TripService extends cds.ApplicationService {
                 }
             });
             if (tripStagedFiltered.length > 0) {
-               // await db.run(INSERT(tripStagedFiltered).into(triprecord));
-               await db.run(UPDATE(triprecord,
-                {   
-                    insupcarriercode2: tripStagedFiltered.insupcarriercode2,
-                    inflightno: tripStagedFiltered.inflightno,
-                    inorigin: tripStagedFiltered.inorigin,
-                    indestination: tripStagedFiltered.indestination,
-                    inscheddeptdate: tripStagedFiltered.inscheddeptdate,
-                    surrogatenum: tripStagedFiltered.surrogatenum
-                }).with({
-                    
-                    supcarriercode2     : tripStagedFiltered.supcarriercode2,
-                    scheddeptdate       : tripStagedFiltered.scheddeptdate,
-                    flightno            : tripStagedFiltered.flightno,
-                    supcarriercode      : tripStagedFiltered.supcarriercode,
-                    carriercode         : tripStagedFiltered.carriercode,
-                    origin              : tripStagedFiltered.origin,
-                    destination         : tripStagedFiltered.destination,
-                    repeatno            : tripStagedFiltered.repeatno,
-                    idooutc             : tripStagedFiltered.idooutc,
-                    idoo                : tripStagedFiltered.idoo,
-                    doo                 : tripStagedFiltered.doo,
-                    dooutc              : tripStagedFiltered.dooutc,
-                    actarrapt           : tripStagedFiltered.actarrapt,
-                    actarrapticao       : tripStagedFiltered.actarrapticao,
-                    actdeptapt          : tripStagedFiltered.actdeptapt,
-                    actdeptapticao      : tripStagedFiltered.actdeptapticao,
-                    legstate            : tripStagedFiltered.legstate,
-                    aircrafttype        : tripStagedFiltered.aircrafttype,
-                    aircrafttypecpa     : tripStagedFiltered.aircrafttypecpa,
-                    tailno              : tripStagedFiltered.tailno,
-                    flighttype          : tripStagedFiltered.flighttype,
-                    deptparkposn        : tripStagedFiltered.deptparkposn,
-                    actgatetime         : tripStagedFiltered.actgatetime,
-                    servicetype         : tripStagedFiltered.servicetype,
-                    delayreason1        : tripStagedFiltered.delayreason1,
-                    delayreason2        : tripStagedFiltered.delayreason2,
-                    delayreason3        : tripStagedFiltered.delayreason3,
-                    delayreason4        : tripStagedFiltered.delayreason4,
-                    delayreason5        : tripStagedFiltered.delayreason5,
-                    actualflyingdur     : tripStagedFiltered.actualflyingdur,
-                    scheddepttime       : tripStagedFiltered.scheddepttime,
-                    scheddeptts         : tripStagedFiltered.scheddeptts,
-                    actdeptts           : tripStagedFiltered.actdeptts,
-                    takeoffdate         : tripStagedFiltered.takeoffdate,
-                    takeofftime         : tripStagedFiltered.takeofftime,
-                    touchdndate         : tripStagedFiltered.touchdndate,
-                    touchdntime         : tripStagedFiltered.touchdntime,
-                    actdeptdate         : tripStagedFiltered.actdeptdate,
-                    actdepttime         : tripStagedFiltered.actdepttime,
-                    actarrdate          : tripStagedFiltered.actarrdate,
-                    actarrtime          : tripStagedFiltered.actarrtime,
-                    takeoffdateutc      : tripStagedFiltered.takeoffdateutc,
-                    takeofftimeutc      : tripStagedFiltered.takeofftimeutc,
-                    touchdndateutc      : tripStagedFiltered.touchdndateutc,
-                    touchdntimeutc      : tripStagedFiltered.touchdntimeutc,
-                    actdeptdateutc      : tripStagedFiltered.actdeptdateutc,
-                    actdepttimeutc      : tripStagedFiltered.actdepttimeutc,
-                    actarrdateutc       : tripStagedFiltered.actarrdateutc,
-                    actarrtimeutc       : tripStagedFiltered.actarrtimeutc,
-                    scheddeptdateutc    : tripStagedFiltered.scheddeptdateutc,
-                    scheddepttimeutc    : tripStagedFiltered.scheddepttimeutc,
-                    schedarrdateutc     : tripStagedFiltered.schedarrdateutc,
-                    schedarrtimeutc     : tripStagedFiltered.schedarrtimeutc,
-                    schedarrdate        : tripStagedFiltered.schedarrdate,
-                    schedarrtime        : tripStagedFiltered.schedarrtime,
-                    schedarrts          : tripStagedFiltered.schedarrts,
-                    actarrts            : tripStagedFiltered.actarrts,
-                    estdeptdate         : tripStagedFiltered.estdeptdate,
-                    estdepttime         : tripStagedFiltered.estdepttime,
-                    estdeptdateutc      : tripStagedFiltered.estdeptdateutc,
-                    estdepttimeutc      : tripStagedFiltered.estdepttimeutc,
-                    estarrdateutc       : tripStagedFiltered.estarrdateutc,
-                    estarrtimeutc       : tripStagedFiltered.estarrtimeutc,
-                    estarrdate          : tripStagedFiltered.estarrdate,
-                    estarrtime          : tripStagedFiltered.estarrtime,
-                    planblocktime       : tripStagedFiltered.planblocktime,
-                    schedarrapticao     : tripStagedFiltered.schedarrapticao,
-                    schedarrapt         : tripStagedFiltered.schedarrapt,
-                    scheddeptapticao    : tripStagedFiltered.scheddeptapticao,
-                    scheddeptapt        : tripStagedFiltered.scheddeptapt,
-                    flight_tm           : tripStagedFiltered.flight_tm,
-                    arr_stand           : tripStagedFiltered.arr_stand,
-                    dep_terminal        : tripStagedFiltered.dep_terminal,
-                    arr_terminal        : tripStagedFiltered.arr_terminal,
-                    onblockdate         : tripStagedFiltered.onblockdate,
-                    onblocktime         : tripStagedFiltered.onblocktime,
-                    offblockdate        : tripStagedFiltered.offblockdate,
-                    offblocktime        : tripStagedFiltered.offblocktime,
-                    taxi_out_time       : tripStagedFiltered.taxi_out_time,
-                    route               : tripStagedFiltered.route,
-                    cfpno1              : tripStagedFiltered.cfpno1,
-                    cfpno2              : tripStagedFiltered.cfpno2
-                }) );
-                    
+                // Update rows, and insert if they do not exist
+                tripStagedFiltered.map(async (trip) => {
+                    try {
+                        const updRes = await db.run(UPDATE(triprecord,
+                        {   
+                            insupcarriercode2: trip.insupcarriercode2,
+                            inflightno: trip.inflightno,
+                            inorigin: trip.inorigin,
+                            indestination: trip.indestination,
+                            inscheddeptdate: trip.inscheddeptdate,
+                            surrogatenum: trip.surrogatenum
+                        }).with({
+                            supcarriercode2     : trip.supcarriercode2,
+                            scheddeptdate       : trip.scheddeptdate,
+                            flightno            : trip.flightno,
+                            supcarriercode      : trip.supcarriercode,
+                            carriercode         : trip.carriercode,
+                            origin              : trip.origin,
+                            destination         : trip.destination,
+                            repeatno            : trip.repeatno,
+                            idooutc             : trip.idooutc,
+                            idoo                : trip.idoo,
+                            doo                 : trip.doo,
+                            dooutc              : trip.dooutc,
+                            actarrapt           : trip.actarrapt,
+                            actarrapticao       : trip.actarrapticao,
+                            actdeptapt          : trip.actdeptapt,
+                            actdeptapticao      : trip.actdeptapticao,
+                            legstate            : trip.legstate,
+                            aircrafttype        : trip.aircrafttype,
+                            aircrafttypecpa     : trip.aircrafttypecpa,
+                            tailno              : trip.tailno,
+                            flighttype          : trip.flighttype,
+                            deptparkposn        : trip.deptparkposn,
+                            actgatetime         : trip.actgatetime,
+                            servicetype         : trip.servicetype,
+                            delayreason1        : trip.delayreason1,
+                            delayreason2        : trip.delayreason2,
+                            delayreason3        : trip.delayreason3,
+                            delayreason4        : trip.delayreason4,
+                            delayreason5        : trip.delayreason5,
+                            actualflyingdur     : trip.actualflyingdur,
+                            scheddepttime       : trip.scheddepttime,
+                            scheddeptts         : trip.scheddeptts,
+                            actdeptts           : trip.actdeptts,
+                            takeoffdate         : trip.takeoffdate,
+                            takeofftime         : trip.takeofftime,
+                            touchdndate         : trip.touchdndate,
+                            touchdntime         : trip.touchdntime,
+                            actdeptdate         : trip.actdeptdate,
+                            actdepttime         : trip.actdepttime,
+                            actarrdate          : trip.actarrdate,
+                            actarrtime          : trip.actarrtime,
+                            takeoffdateutc      : trip.takeoffdateutc,
+                            takeofftimeutc      : trip.takeofftimeutc,
+                            touchdndateutc      : trip.touchdndateutc,
+                            touchdntimeutc      : trip.touchdntimeutc,
+                            actdeptdateutc      : trip.actdeptdateutc,
+                            actdepttimeutc      : trip.actdepttimeutc,
+                            actarrdateutc       : trip.actarrdateutc,
+                            actarrtimeutc       : trip.actarrtimeutc,
+                            scheddeptdateutc    : trip.scheddeptdateutc,
+                            scheddepttimeutc    : trip.scheddepttimeutc,
+                            schedarrdateutc     : trip.schedarrdateutc,
+                            schedarrtimeutc     : trip.schedarrtimeutc,
+                            schedarrdate        : trip.schedarrdate,
+                            schedarrtime        : trip.schedarrtime,
+                            schedarrts          : trip.schedarrts,
+                            actarrts            : trip.actarrts,
+                            estdeptdate         : trip.estdeptdate,
+                            estdepttime         : trip.estdepttime,
+                            estdeptdateutc      : trip.estdeptdateutc,
+                            estdepttimeutc      : trip.estdepttimeutc,
+                            estarrdateutc       : trip.estarrdateutc,
+                            estarrtimeutc       : trip.estarrtimeutc,
+                            estarrdate          : trip.estarrdate,
+                            estarrtime          : trip.estarrtime,
+                            planblocktime       : trip.planblocktime,
+                            schedarrapticao     : trip.schedarrapticao,
+                            schedarrapt         : trip.schedarrapt,
+                            scheddeptapticao    : trip.scheddeptapticao,
+                            scheddeptapt        : trip.scheddeptapt,
+                            flight_tm           : trip.flight_tm,
+                            arr_stand           : trip.arr_stand,
+                            dep_terminal        : trip.dep_terminal,
+                            arr_terminal        : trip.arr_terminal,
+                            onblockdate         : trip.onblockdate,
+                            onblocktime         : trip.onblocktime,
+                            offblockdate        : trip.offblockdate,
+                            offblocktime        : trip.offblocktime,
+                            taxi_out_time       : trip.taxi_out_time,
+                            route               : trip.route,
+                            cfpno1              : trip.cfpno1,
+                            cfpno2              : trip.cfpno2
+                        }) )
+                        if (updRes == 0) {
+                            try {
+                                const insRes = await db.run(INSERT(tripStagedFiltered).into(triprecord));
+                            } catch (insError) {
+                                debugger;
+                            }
+                        }
+                    } catch (updErr) {
+                        debugger;
+                    }
+                });
+                        // if( successRow == 0){
+                        //     await Promise.all(
+                        //         await db.run(INSERT(trip).into(triprecord))
+                        //     ).then(function(resultInsert){
+                        //         debugger;
+                        //     });
+                        // }
+                // );
+                // await db.run(INSERT(tripStagedFiltered).into(triprecord));
                     //tripStagedFiltered) );
             }
             await Promise.all(
@@ -211,7 +238,7 @@ class TripService extends cds.ApplicationService {
                                 indestination: trip.indestination,
                                 inscheddeptdate: trip.inscheddeptdate,
                                 surrogatenum: trip.surrogatenum,
-                                creation_timestamp: trip.creation_timestamp,
+                                creation_timestamp: trip.creation_timestamp
                             }
                         ).with({
                             status_code: trip.status_code
