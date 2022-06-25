@@ -36,7 +36,7 @@
                         "parameters": {},
                         "additionalParameters": "allowed"
                     },
-                    "semanticObject": "trip_log1",
+                    "semanticObject": "trip_log",
                     "action": "trip_log",
                     "title": "{{flpTitle}}",
                     "subTitle": "{{flpSubtitle}}",
