@@ -5,7 +5,7 @@ version: 1.0.0
 modules:
 
 - name: triporder-broker
-  type: nodejs
+  type: nodejs 
   path: srv-broker
   parameters:
       memory: 128M
