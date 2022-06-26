@@ -26,6 +26,7 @@ class TripService extends cds.ApplicationService {
                 req.data.trips
             );
             if (!isSuccess) throw req.reject(500, "Message Processing Failed");
+            // else if(isSuccess == "no Rows") throw req.reject(500, 'No Rows were processed');
         });
         this.pushTripsToActualEntity = async (trips) => {
             let whereString = "";
@@ -99,20 +100,25 @@ class TripService extends cds.ApplicationService {
                         triplog.creation_timestamp === trip.creation_timestamp
                     );
                 });
-                if (trip.legstate_code === "ARR" && !trip.actarrdate) {
-                    trips[triplogMatchingIndex].status_code = 51;
-                } else {
-                    delete trip.creation_timestamp;
-                    delete trip.modifiedAt;
-                    delete trip.modifiedBy;
-                    tripStagedFiltered.push(trip);
-                    trips[triplogMatchingIndex].status_code = 53;
+                if (trips[triplogMatchingIndex].status_code != 53) {
+                    if (trip.legstate_code === "ARR" && !trip.actarrdate) {
+                        trips[triplogMatchingIndex].status_code = 51;
+                    } else {
+                        delete trip.creation_timestamp;
+                        delete trip.modifiedAt;
+                        delete trip.modifiedBy;
+                        tripStagedFiltered.push(trip);
+                        trips[triplogMatchingIndex].status_code = 53;
+                    }
                 }
             });
-            if (tripStagedFiltered.length > 0) {
+            if (tripStagedFiltered.length == 0) {
+                return "no Rows";
+            } else {
+                let rowInserted = false;
                 // Update rows, and insert if they do not exist
                 tripStagedFiltered.map(async (trip) => {
-                    try {
+                    // try {
                         const updRes = await db.run(UPDATE(triprecord,
                         {   
                             insupcarriercode2: trip.insupcarriercode2,
@@ -205,17 +211,64 @@ class TripService extends cds.ApplicationService {
                             cfpno1              : trip.cfpno1,
                             cfpno2              : trip.cfpno2
                         }) )
-                        if (updRes == 0) {
-                            try {
-                                const insRes = await db.run(INSERT(tripStagedFiltered).into(triprecord));
-                            } catch (insError) {
-                                debugger;
-                            }
+                        if (updRes == 0 && !rowInserted) {
+                            rowInserted = true;
+                            const insRes = await db.run(INSERT(tripStagedFiltered).into(triprecord));
                         }
-                    } catch (updErr) {
-                        debugger;
-                    }
-                });
+
+                        // const triplogMatchingIndex = trips.findIndex((triplog) => {
+                        //     return (
+                        //         triplog.insupcarriercode2 === trip.insupcarriercode2 &&
+                        //         triplog.inflightno === trip.inflightno &&
+                        //         triplog.inorigin === trip.inorigin &&
+                        //         triplog.indestination === trip.indestination &&
+                        //         triplog.inscheddeptdate === trip.inscheddeptdate &&
+                        //         triplog.surrogatenum === trip.surrogatenum &&
+                        //         triplog.creation_timestamp === trip.creation_timestamp
+                        //     );
+                        // });
+
+                        // await Promise.all(
+                        //     await db.run(
+                        //         UPDATE(
+                        //             triplog, {   
+                        //                 insupcarriercode2: trips[triplogMatchingIndex].insupcarriercode2,
+                        //                 inflightno: trips[triplogMatchingIndex].inflightno,
+                        //                 inorigin: trips[triplogMatchingIndex].inorigin,
+                        //                 indestination: trips[triplogMatchingIndex].indestination,
+                        //                 inscheddeptdate: trips[triplogMatchingIndex].inscheddeptdate,
+                        //                 surrogatenum: trips[triplogMatchingIndex].surrogatenum,
+                        //                 creation_timestamp: trips[triplogMatchingIndex].creation_timestamp
+                        //             }
+                        //         ).with({
+                        //             status_code: trips[triplogMatchingIndex].status_code
+                        //         })
+                        // ));
+                    // } catch (updErr) {
+                    //     debugger;
+                    // }
+                    });
+                    await Promise.all(
+                        trips.map(async (trip) => {
+                            if ( trip.status === null || trip.status.code != 53) {
+                                await db.run(
+                                    UPDATE(
+                                        triplog, {   
+                                            insupcarriercode2: trip.insupcarriercode2,
+                                            inflightno: trip.inflightno,
+                                            inorigin: trip.inorigin,
+                                            indestination: trip.indestination,
+                                            inscheddeptdate: trip.inscheddeptdate,
+                                            surrogatenum: trip.surrogatenum,
+                                            creation_timestamp: trip.creation_timestamp
+                                        }
+                                    ).with({
+                                        status_code: trip.status_code
+                                    })
+                                );
+                            }
+                        })
+                    );
                         // if( successRow == 0){
                         //     await Promise.all(
                         //         await db.run(INSERT(trip).into(triprecord))
@@ -226,26 +279,26 @@ class TripService extends cds.ApplicationService {
                 // );
                 // await db.run(INSERT(tripStagedFiltered).into(triprecord));
                     //tripStagedFiltered) );
-            }
-            await Promise.all(
-                trips.map(async (trip) => {
-                    await db.run(
-                        UPDATE(
-                            triplog, {   
-                                insupcarriercode2: trip.insupcarriercode2,
-                                inflightno: trip.inflightno,
-                                inorigin: trip.inorigin,
-                                indestination: trip.indestination,
-                                inscheddeptdate: trip.inscheddeptdate,
-                                surrogatenum: trip.surrogatenum,
-                                creation_timestamp: trip.creation_timestamp
-                            }
-                        ).with({
-                            status_code: trip.status_code
-                        })
-                    );
-                })
-            );
+                }
+            // await Promise.all(
+            //     trips.map(async (trip) => {
+            //         await db.run(
+            //             UPDATE(
+            //                 triplog, {   
+            //                     insupcarriercode2: trip.insupcarriercode2,
+            //                     inflightno: trip.inflightno,
+            //                     inorigin: trip.inorigin,
+            //                     indestination: trip.indestination,
+            //                     inscheddeptdate: trip.inscheddeptdate,
+            //                     surrogatenum: trip.surrogatenum,
+            //                     creation_timestamp: trip.creation_timestamp
+            //                 }
+            //             ).with({
+            //                 status_code: trip.status_code
+            //             })
+            //         );
+            //     })
+            // );
             return true;
         };
         await super.init();
