@@ -4,13 +4,10 @@ description: The cloud based foundation to support trip details
 version: 1.0.0
 modules:
 
-<<<<<<< HEAD
 - name: triporder-broker
   type: nodejs 
-=======
 - name: triporder-broker 
   type: nodejs
->>>>>>> 600083529b852c70cda3e9a407157157886c9f63
   path: srv-broker
   parameters:
       memory: 128M
