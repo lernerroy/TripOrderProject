@@ -28,7 +28,7 @@
                                 <fb:control>
                                     <MultiComboBox id="statusFilter" showSelectAll="true" showClearIcon="true" items="{
 				                            path: '/Status',
-				                            sorter: { path: 'sequence' }
+                                            sorter: { path: 'sequence' }
 			                            }">
                                         <core:Item key="{code}" text="{text}"/>
                                     </MultiComboBox>
@@ -57,6 +57,9 @@
                 </headerToolbar>
 
                 <columns>
+                    <Column id="logtype" >
+                        <Text text="{i18n>logtype}" />
+                    </Column>
                     <Column id="insupcarriercode2">
                         <Text text="{i18n>insupcarriercode2}" />
                     </Column>

@@ -171,10 +171,31 @@ entity triprecordStaging : triprecorddetails{
 
 entity triplog : recordsKey, surrogatenum {
     //status : Decimal(2,0) @(title : '{i18n>status}') ;
+    // status: Status @(title : '{i18n>status}');
     status: Association to Status @(title : '{i18n>status}');
     //messagetext : String @(title : '{i18n>messagetext}');
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key logtype: logType @(title: '{i18n>logtype}');
 };
+
+// @cds.autoexpose
+// type Status : String
+//     enum {          
+//         ReadyForProcessing = '64'; 
+//         Error = '51'; 
+//         Warning = '52'; 
+//         Processed = '53';
+//         };
+
+@cds.autoexpose
+type logType : String
+    enum {
+        Trip = '1';
+        Passenger = '2';
+        Cargo = '3';
+        RoutePlan = '4';
+        Catering = '5';
+    }
 
 @cds.autoexpose
 entity Status {
@@ -184,7 +205,7 @@ entity Status {
 };
 
 //@cds.persistence.exists
-entity passenger : recordsKey, surrogatenum {
+entity passengerdetails : recordsKey, surrogatenum {
     carriercode     : carriercode; //String(4);
     version         : Integer;
     user_ind        : String(1);
@@ -270,9 +291,13 @@ entity passenger : recordsKey, surrogatenum {
     bcvoml          : Integer;
     umnr            : Integer;
 };
+entity passenger : passengerdetails{};
+entity passengerStaging : passengerdetails{
+    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+};
 
 //@cds.persistence.exists
-entity cargorecord : recordsKey, surrogatenum {
+entity cargorecorddetails : recordsKey, surrogatenum {
     version             : String(3);
     user_ind            : String(1);
     //flightinddate       : Date;
@@ -339,9 +364,13 @@ entity cargorecord : recordsKey, surrogatenum {
     chgtottranstonn     : Decimal(8,2);
 };
 
+entity cargorecord : cargorecorddetails{};
+entity cargorecordStaging : cargorecorddetails{
+    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+};
 
 //@cds.persistence.exists
-entity routeplan : recordsKey, surrogatenum {
+entity routeplanDetails : recordsKey, surrogatenum {
     key lineno              : String(3);
     key cfpno               : String(15);
     routeno                 : String(4);
@@ -366,11 +395,16 @@ entity routeplan : recordsKey, surrogatenum {
     currency                : Currency; //String(5);;
     entrypoint              : String(10);
     exitpoint               : String(10);
-    entryawy                : String(10);
-    exitawy                 : String(10);
+    entryway                : String(10);
+    exitway                 : String(10);
     chargetype              : String(2);
     provid                  : String(2);
     gcd                     : Decimal(8,0);
+};
+
+entity routeplan : routeplanDetails{};
+entity routeplanStaging : routeplanDetails{
+    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
 };
 
 //@cds.persistence.exists
@@ -394,7 +428,7 @@ entity accommodation : recordsKey, surrogatenum {
 
 
 //@cds.persistence.exists
-entity catering : recordsKey, surrogatenum {
+entity cateringdetails : recordsKey, surrogatenum {
     carriercode     : carriercode; //String(2);
     origin          : airportCode; //String(3);
     destination     : airportCode; //String(3);
@@ -428,4 +462,9 @@ entity catering : recordsKey, surrogatenum {
     gstvat_perc     : String(3);
     surcharge_perc  : String(3);
     consumptiontax_perc : String(3);
+};
+
+entity catering : cateringdetails{};
+entity cateringStaging : cateringdetails{
+    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
 };

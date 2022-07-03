@@ -187,6 +187,7 @@ sap.ui.define(
                 if (!oTable.getBinding("items")) {
                     const oTemplate = new ColumnListItem({
                         cells: [
+                            new ObjectIdentifier({ title: "{logtype}" }),
                             new ObjectIdentifier({
                                 title: "{insupcarriercode2}",
                             }),
@@ -201,7 +202,7 @@ sap.ui.define(
                             new ObjectAttribute({
                                 text: "{creation_timestamp}",
                             }),
-                            new ObjectStatus({
+                            new ObjectStatus({ //text: "{status}"
                                 text: "{status/text}",
                                 inverted: true,
                                 state: {

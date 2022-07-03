@@ -24,19 +24,39 @@ service TripService {
     as projection on trips.triplog;
 
     entity pax 
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.passenger;
 
+    entity paxStaging
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.passengerStaging;
+    
+    // entity passengerrecord
+    // // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    // //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // as projection on trips.passengerrecord;
+
     entity cargorecord 
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.cargorecord;
+
+    entity cargorecordStaging 
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.cargorecordStaging;
 
     entity routeplan 
     @(restrict: [ { grant: ['*'], to: ['Admin','User']},
                  { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.routeplan;
+
+    entity routeplanStaging
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.routeplanStaging;
     
     entity accommodation
     @(restrict: [ { grant: ['*'], to: ['Admin','User']},
@@ -47,6 +67,11 @@ service TripService {
     @(restrict: [ { grant: ['*'], to: ['Admin','User']},
                  { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.catering;
+
+    entity cateringStaging
+    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.cateringStaging;
 
     // Views
     //////////////////////////////////////////////////////////////////////
@@ -461,8 +486,8 @@ annotate TripService.routeplan with {
     currency          @title : '{i18n>currency}';
     entrypoint        @title : '{i18n>entrypoint}';
     exitpoint         @title : '{i18n>exitpoint}';
-    entryawy          @title : '{i18n>entryawy}';
-    exitawy           @title : '{i18n>exitawy}';
+    entryway          @title : '{i18n>entryway}';
+    exitway           @title : '{i18n>exitway}';
     chargetype        @title : '{i18n>chargetype}';
     provid            @title : '{i18n>provid}';
     gcd               @title : '{i18n>gcd}';

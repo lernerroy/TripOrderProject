@@ -773,10 +773,10 @@
                                                     <Text text="{i18n>exitpoint}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
-                                                    <Text text="{i18n>entryawy}"/>
+                                                    <Text text="{i18n>entryway}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
-                                                    <Text text="{i18n>axitawy}"/>
+                                                    <Text text="{i18n>exitway}"/>
                                                 </Column>
                                                 <Column minScreenWidth="Phone" demandPopin="true" hAlign="Left" width="50%">
                                                     <Text text="{i18n>chargetype}"/>
@@ -815,8 +815,8 @@
                                                         <Input value="{routeplan>/currency /}"/>
                                                         <Input value="{routeplan>/entrypoint /}"/>
                                                         <Input value="{routeplan>/exitpoint /}"/>
-                                                        <Input value="{routeplan>/entryawy /}"/>
-                                                        <Input value="{routeplan>/exitawy /}"/>
+                                                        <Input value="{routeplan>/entryway /}"/>
+                                                        <Input value="{routeplan>/exitway /}"/>
                                                         <Input value="{routeplan>/chargetype /}"/>
                                                         <Input value="{routeplan>/provid /}"/>
                                                         <Input value="{routeplan>/gcd /}"/>
