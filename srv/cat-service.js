@@ -465,7 +465,7 @@ class TripService extends cds.ApplicationService {
             if(wherePaxString != ""){
                 const paxStaged = await SELECT.from(paxStaging).where(
                     cds.parse.expr(wherePaxString)
-                );
+                ).orderBy("creation_timestamp asc");
 
                 if (paxStaged) {
                     stagedRow = true;
@@ -607,7 +607,7 @@ class TripService extends cds.ApplicationService {
             if(whereCargoString != "") {
                 const cargoStaged = await SELECT.from(cargoStaging).where(
                     cds.parse.expr(whereCargoString)
-                );
+                ).orderBy("creation_timestamp asc");
 
                 if (cargoStaged) {
                     stagedRow = true;
@@ -727,7 +727,7 @@ class TripService extends cds.ApplicationService {
             if(whereRouteString != ""){
                 const routePlanStaged = await SELECT.from(routeplanStaging).where(
                     cds.parse.expr(whereRouteString)
-                );
+                ).orderBy("creation_timestamp asc");
 
                 if (routePlanStaged) {
                     stagedRow = true;
@@ -815,7 +815,7 @@ class TripService extends cds.ApplicationService {
             if(whereCateringString != ""){
                 const cateringStaged = await SELECT.from(cateringStaging).where(
                     cds.parse.expr(whereCateringString)
-                );
+                ).orderBy("creation_timestamp asc");
 
                 if (cateringStaged) {
                     stagedRow = true;
