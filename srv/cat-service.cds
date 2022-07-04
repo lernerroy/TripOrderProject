@@ -49,13 +49,13 @@ service TripService {
     as projection on trips.cargorecordStaging;
 
     entity routeplan 
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.routeplan;
 
     entity routeplanStaging
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.routeplanStaging;
     
     entity accommodation
@@ -64,13 +64,13 @@ service TripService {
     as projection on trips.accommodation;
     
     entity catering
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.catering;
 
     entity cateringStaging
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ','WRITE'], to: ['API_user']} ])
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     as projection on trips.cateringStaging;
 
     // Views
