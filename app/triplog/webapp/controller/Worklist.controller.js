@@ -212,21 +212,14 @@ sap.ui.define(
                             }),
                         ],
                     });
-                    // oTable.bindItems({
-                    //     path: "/triplog",
-                    //     parameters: {
-                    //         $expand: {
-                    //             status: {
-                    //                 $select: "code,text",
-                    //             },
-                    //         },
-                    //     },
-                    //     template: oTemplate,
-                    // });
+                    oTable.bindItems({
+                        path: "/triplog",
+                        template: oTemplate,
+                    });
                 }
                 const oTableBinding = oTable.getBinding("items");
                 // oTableBinding.filter(filters);
-                // oTableBinding.refresh();
+                oTableBinding.refresh();
                 oTable.setVisible(true);
                 oView.byId("page").setShowFooter(true);
             },
