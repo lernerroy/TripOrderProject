@@ -22,8 +22,8 @@ sap.ui.define([
             return Enums.getStatusState()[parseInt(sValue)];
         },
 
-        statusTextFormat: function (sValue) {
 
+        statusTextFormat: function (sValue) {
             var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
             var statuses = Enums.getStatuses(resourceBundle);
 
@@ -33,10 +33,6 @@ sap.ui.define([
             } else {
                 return "";
             }
-        },
-
-        statusStateFormat: function (sValue) {
-
         },
 
         logTypeFormat: function (sValue) {

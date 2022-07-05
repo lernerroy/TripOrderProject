@@ -10,7 +10,7 @@ sap.ui.define(
         "sap/m/ObjectAttribute",
         "sap/m/ObjectStatus",
         "triplog/utils/Rest",
-        "sap/ui/core/format/DateFormat",
+        "sap/ui/core/format/DateFormat",        
         "../model/enums"
     ],
     function (
@@ -319,79 +319,28 @@ sap.ui.define(
             onProcess: function (oEvent) {
 
                 var oTable = this.getView().byId("tripLogTable");
-
-                var aSelectedItems = oTable.getSelectedContexts().map(function(oContext){
+                // get all selected objects 
+                var aSelectedItems = oTable.getSelectedContexts().map(function (oContext) {
                     return oContext.getObject();
                 });
-
-                // var aItemsToProcess = aSelectedItems.filter(function (item) {
-                //     return item.status !== Enums.Status.PROCESSED
-                // });
+                // get all items that needs to be processed
+                var aItemsToProcess = aSelectedItems.filter(function (item) {
+                    return item.status !== Enums.Status.PROCESSED
+                });
 
                 var oOperation = this.getModel().bindContext(
                     "/processMessage(...)"
                 );
-                // var oOperationParameters = oOperation.getParameterContext();
-                oOperation.setParameter("trips", aSelectedItems);
-
+                oOperation.setParameter("trips", aItemsToProcess);
 
                 oOperation
-                .execute()
-                .then(function(oUpdatedContext){
-                    debugger;
-                })
-                .catch(function(err){
-                    alert("error " + err.message);
-                });
-
-                // var oDataProcessMsgListBinding = this.getModel().bindList("processMessage");
-
-                // oDataProcessMsgListBinding.create({
-                //     trips: aItemsToProcess
-                // }, false, false, false);
-
-                
-                // oDataProcessMsgListBinding.attachCreateCompleted(function (oEvent) {
-                //     debugger;
-                // });
-
-
-
-                // // const sPath = this.getView().getModel().sServiceUrl.slice(2) + "processMessage";  // For deployment
-                // const sPath = "/browse/processMessage"; // For Local
-                // const requestData = {
-                //     trips: []
-                // };
-                // const oTable = this.getView().byId("table");
-                // oTable.getSelectedContexts().forEach((oContext) => {
-                //     requestData.trips.push(oContext.getObject());
-                // });
-                // this.getView().setBusy(true);
-                // const csrfToken = this.getView().getModel().getHttpHeaders()[
-                //     "X-CSRF-Token"
-                // ];
-                // Rest.ajaxCall("POST", sPath, csrfToken, requestData).then(
-                //     (oSuccess) => {
-                //         oTable.getBinding("items").refresh();
-                //         sap.m.MessageToast.show(
-                //             this.getResourceBundle().getText(
-                //                 "messageProcessSuccesful"
-                //             )
-                //         );
-                //         this.getView().setBusy(false);
-                //     },
-                //     (oError) => {
-                //         if (oError.responseJSON) {
-                //             sap.m.MessageBox.error(
-                //                 `${oError.responseJSON.error.code} - ${oError.responseJSON.error.message}`
-                //             );
-                //         } else {
-                //             sap.m.MessageBox.error(`${oError.responseText}`);
-                //         }
-
-                //         this.getView().setBusy(false);
-                //     }
-                // );
+                    .execute()
+                    .then(function (oUpdatedContext) {
+                        debugger;
+                    })
+                    .catch(function (err) {
+                        console.log("Error", err);
+                    });
             }
         });
     }
