@@ -27,9 +27,18 @@
                             <fb:FilterItem name="status" label="{i18n>status}">
                                 <fb:control>
                                     <!-- <SearchField id="statusFilter" width="100%" /> -->
-                                    <MultiComboBox id="statusFilter" showSelectAll="true" showClearIcon="true" items="{
+                                    <MultiComboBox showSelectAll="true" showClearIcon="true" items="{
 				                            path: 'enums>/statuses'
 			                            }" selectedKeys="{triplogFilters>/selectedStatuses}">
+                                        <core:Item key="{enums>code}" text="{enums>text}"/>
+                                    </MultiComboBox>
+                                </fb:control>
+                            </fb:FilterItem>
+                            <fb:FilterItem name="logType" label="{i18n>logtype}">
+                                <fb:control>
+                                    <MultiComboBox showSelectAll="true" showClearIcon="true" items="{
+				                            path: 'enums>/logTypes'
+			                            }" selectedKeys="{triplogFilters>/selectedLogTypes}">
                                         <core:Item key="{enums>code}" text="{enums>text}"/>
                                     </MultiComboBox>
                                 </fb:control>

@@ -68,7 +68,8 @@ sap.ui.define(
                         to: undefined,
                         dateFormat: "yyyy/MM/dd"
                     },
-                    selectedStatuses: []
+                    selectedStatuses: [],
+                    selectedLogTypes: []
                 });
 
                 this.setModel(oFilterModel, "triplogFilters");
