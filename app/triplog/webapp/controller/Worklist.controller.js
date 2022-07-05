@@ -169,20 +169,20 @@ sap.ui.define(
                         )
                     );
                 }
-                // const aStatus = oView.byId("statusFilter").getSelectedKeys();
-                // if (aStatus.length > 0) {
-                //     const aStatusFilter = [];
-                //     aStatus.forEach((vStatus) => {
-                //         aStatusFilter.push(
-                //             new Filter(
-                //                 "status_code",
-                //                 FilterOperator.EQ,
-                //                 vStatus
-                //             )
-                //         );
-                //     });
-                //     filters.push(new Filter(aStatusFilter, false));
-                // }
+                const aStatus = oView.byId("statusFilter").getSelectedKeys();
+                if (aStatus.length > 0) {
+                    const aStatusFilter = [];
+                    aStatus.forEach((vStatus) => {
+                        aStatusFilter.push(
+                            new Filter(
+                                "status_code",
+                                FilterOperator.EQ,
+                                vStatus
+                            )
+                        );
+                    });
+                    filters.push(new Filter(aStatusFilter, false));
+                }
                 const oTable = oView.byId("table");
                 if (!oTable.getBinding("items")) {
                     const oTemplate = new ColumnListItem({
@@ -202,23 +202,30 @@ sap.ui.define(
                             new ObjectAttribute({
                                 text: "{creation_timestamp}",
                             }),
-                            new ObjectStatus({ text: "{status}"
-                                // text: "{status/text}",
-                                // inverted: true,
-                                // state: {
-                                //     path: "status/code",
-                                //     formatter: formatter.statusFormat,
-                                // },
+                            new ObjectStatus({ //text: "{status}"
+                                text: "{status/text}",
+                                inverted: true,
+                                state: {
+                                    path: "status/code",
+                                    formatter: formatter.statusFormat,
+                                },
                             }),
                         ],
                     });
                     oTable.bindItems({
                         path: "/triplog",
+                        parameters: {
+                            $expand: {
+                                status: {
+                                    $select: "code,text",
+                                },
+                            },
+                        },
                         template: oTemplate,
                     });
                 }
                 const oTableBinding = oTable.getBinding("items");
-                // oTableBinding.filter(filters);
+                oTableBinding.filter(filters);
                 oTableBinding.refresh();
                 oTable.setVisible(true);
                 oView.byId("page").setShowFooter(true);

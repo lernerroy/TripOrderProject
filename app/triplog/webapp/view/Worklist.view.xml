@@ -26,13 +26,13 @@
                             </fb:FilterItem>
                             <fb:FilterItem name="status" label="{i18n>status}">
                                 <fb:control>
-                                    <SearchField id="statusFilter" width="100%" />
-                                    <!-- <MultiComboBox id="statusFilter" showSelectAll="true" showClearIcon="true" items="{
+                                    <!-- <SearchField id="statusFilter" width="100%" /> -->
+                                    <MultiComboBox id="statusFilter" showSelectAll="true" showClearIcon="true" items="{
 				                            path: '/Status',
                                             sorter: { path: 'sequence' }
 			                            }">
                                         <core:Item key="{code}" text="{text}"/>
-                                    </MultiComboBox> -->
+                                    </MultiComboBox>
                                 </fb:control>
                             </fb:FilterItem>
                         </fb:filterItems>
