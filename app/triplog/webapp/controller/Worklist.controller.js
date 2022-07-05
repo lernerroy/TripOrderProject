@@ -59,6 +59,7 @@ sap.ui.define(
                     tableNoDataText: this.getResourceBundle().getText(
                         "tableNoDataText"
                     ),
+                    showFooter: true
                 });
                 this.setModel(oViewModel, "worklistView");
 
@@ -88,7 +89,16 @@ sap.ui.define(
              * @param {sap.ui.base.Event} oEvent the update finished event
              * @public
              */
-            onUpdateFinished: function (oEvent) {
+            onWorklistUpdateFinished: function (oEvent) {
+
+                var oItemsBinding = oEvent.getSource().getBinding("items");
+
+                var aItems = oItemsBinding.getContexts().map(function(context){
+                    return context.getObject();
+                });
+
+                debugger;
+                
 
                 // // update the worklist's object counter after the table update
                 // var sTitle,
@@ -187,7 +197,7 @@ sap.ui.define(
 
                 selectedStatuses.forEach(status => {
                     aStatusFilters.push(new Filter({
-                        path: "status_code",
+                        path: "status",
                         operator: FilterOperator.EQ,
                         value1: status
                     }));
@@ -199,6 +209,28 @@ sap.ui.define(
                         and: false
                     }));
                 }
+
+
+                // Build log type filters 
+                const selectedLogTypes = oFiltersModel.getProperty("/selectedLogTypes");
+
+                var aLogTypesFilters = [];
+
+                selectedLogTypes.forEach(logType => {
+                    aLogTypesFilters.push(new Filter({
+                        path: "logtype",
+                        operator: FilterOperator.EQ,
+                        value1: logType
+                    }));
+                });
+
+                if (aLogTypesFilters.length){
+                    aFilters.push(new Filter({
+                        filters: aLogTypesFilters,
+                        and: false
+                    }));
+                }
+
 
                 oTable.getBinding("items").filter(aFilters);
 

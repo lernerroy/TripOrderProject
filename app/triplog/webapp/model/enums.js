@@ -1,9 +1,17 @@
 sap.ui.define([
-
-], function () {
+    "sap/ui/core/ValueState"
+], function (ValueState) {
     "use strict";
 
     return {
+        getStatusState: function() {
+            return {
+                51: ValueState.Error,
+                52: ValueState.Warning,
+                53: ValueState.Success,
+                64: ValueState.None
+            };
+        },
         getStatuses: function (resourceBundle) {
             return [
                 {

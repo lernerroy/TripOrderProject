@@ -11,42 +11,35 @@ sap.ui.define([
          * @param {string} sValue the number string to be rounded
          * @returns {string} sValue with 2 digits rounded
          */
-        numberUnit : function (sValue) {
+        numberUnit: function (sValue) {
             if (!sValue) {
                 return "";
             }
             return parseFloat(sValue).toFixed(2);
         },
 
-        statusFormat: function(sValue) {
-            let status = null;
-            if(sValue === "53") {
-                status = "Success";
-            } else if(sValue === "51") {
-                status = "Error";
-            } else if(sValue === "52") {
-                status = "Warning";
-            } else {
-                status = "None";
-            }
-            return status;
+        statusStateFormat: function (sValue) {
+            return Enums.getStatusState()[parseInt(sValue)];
         },
 
-        statusTextFormat: function(sValue) {
-            let status = null;
-            if(sValue === "53") {
-                status = "Processed";
-            } else if(sValue === "51") {
-                status = "Failed";
-            } else if(sValue === "52") {
-                status = "Warning";
+        statusTextFormat: function (sValue) {
+
+            var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
+            var statuses = Enums.getStatuses(resourceBundle);
+
+            var status = statuses.find(item => item.code === parseInt(sValue));
+            if (status) {
+                return status.text;
             } else {
-                status = "Ready for Processing";
+                return "";
             }
-            return status;
         },
 
-        logTypeFormat: function(sValue) {
+        statusStateFormat: function (sValue) {
+
+        },
+
+        logTypeFormat: function (sValue) {
             var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
             return Enums.getLogTypes(resourceBundle)[sValue];
         }

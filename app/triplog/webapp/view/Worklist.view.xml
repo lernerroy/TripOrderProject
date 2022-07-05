@@ -4,7 +4,7 @@
     xmlns:core="sap.ui.core"
     xmlns:f="sap.f"
     xmlns:fb="sap.ui.comp.filterbar" displayBlock="true">
-    <f:DynamicPage id="page" headerExpanded="true" showFooter="false">
+    <f:DynamicPage headerExpanded="true" showFooter="{worklistView>/showFooter}">
 
         <f:title>
             <f:DynamicPageTitle>
@@ -52,10 +52,13 @@
         <f:content>
             <Table id="tripLogTable" width="auto" items="{
                 path: '/triplog',
-                suspended: true
+                suspended: false,
+                parameters: {
+                    top: 30
+                }
             }"
             visible="true"
-            mode="MultiSelect" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished">
+            mode="MultiSelect" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onWorklistUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
@@ -96,10 +99,10 @@
                     </Column>
                     <Column id="creation_timestamp">
                         <Text text="{i18n>creation_timestamp}"/>
-                    </Column>
+                    </Column>-->
                     <Column id="unitStatusColumn" hAlign="End">
                         <Text text="{i18n>status}" id="Status"/>
-                    </Column> -->
+                    </Column> 
                 </columns>
                 <items>
                     <ColumnListItem id="template">
@@ -108,6 +111,13 @@
                                 path: 'logtype',
                                 formatter: '.formatter.logTypeFormat'
                             }" />
+                            <ObjectStatus text="{
+                                path: 'status',
+                                formatter: '.formatter.statusTextFormat'
+                            }" state="{
+                                path: 'status',
+                                formatter: '.formatter.statusStateFormat'
+                            }" inverted="true" />
                         </cells>
                     </ColumnListItem>
                 </items>

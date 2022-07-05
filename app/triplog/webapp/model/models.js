@@ -20,10 +20,24 @@ sap.ui.define([
                 oModel.setDefaultBindingMode("OneWay");
                 return oModel;
             },
-            createEnumsModel: function(resourceBundle) {
+            createEnumsModel: function (resourceBundle) {
+
+                var logTypesMap = Enums.getLogTypes(resourceBundle);
+                var logTypes = [];
+
+
+
+                Object.entries(logTypesMap).forEach(([key, value])=> {
+                    logTypes.push({
+                        code: key,
+                        text: value
+                    });
+                });
+
+
                 var oModel = new JSONModel({
                     statuses: Enums.getStatuses(resourceBundle),
-                    logTypes: Enums.getLogTypes(resourceBundle)
+                    logTypes: logTypes
                 });
                 oModel.setDefaultBindingMode("OneWay");
                 return oModel;
