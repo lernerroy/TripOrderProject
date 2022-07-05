@@ -1,4 +1,6 @@
-sap.ui.define([], function () {
+sap.ui.define([
+    "./enums"
+], function (Enums) {
     "use strict";
 
     return {
@@ -42,6 +44,11 @@ sap.ui.define([], function () {
                 status = "Ready for Processing";
             }
             return status;
+        },
+
+        logTypeFormat: function(sValue) {
+            var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
+            return Enums.getLogTypes(resourceBundle)[sValue];
         }
 
     };

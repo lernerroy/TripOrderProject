@@ -9,7 +9,8 @@ sap.ui.define(
         "sap/m/ObjectIdentifier",
         "sap/m/ObjectAttribute",
         "sap/m/ObjectStatus",
-        "triplog/utils/Rest"
+        "triplog/utils/Rest",
+        "sap/ui/core/format/DateFormat"
     ],
     function (
         BaseController,
@@ -21,7 +22,8 @@ sap.ui.define(
         ObjectIdentifier,
         ObjectAttribute,
         ObjectStatus,
-        Rest
+        Rest,
+        DateFormat
     ) {
         "use strict";
 
@@ -59,6 +61,17 @@ sap.ui.define(
                     ),
                 });
                 this.setModel(oViewModel, "worklistView");
+
+                var oFilterModel = new JSONModel({
+                    timestamp: {
+                        from: undefined,
+                        to: undefined,
+                        dateFormat: "yyyy/MM/dd"
+                    },
+                    selectedStatuses: []
+                });
+
+                this.setModel(oFilterModel, "triplogFilters");
             },
 
             /* =========================================================== */
@@ -75,26 +88,27 @@ sap.ui.define(
              * @public
              */
             onUpdateFinished: function (oEvent) {
-                // update the worklist's object counter after the table update
-                var sTitle,
-                    oTable = oEvent.getSource(),
-                    iTotalItems = oEvent.getParameter("total");
-                // only update the counter if the length is final and
-                // the table is not empty
-                if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
-                    sTitle = this.getResourceBundle().getText(
-                        "worklistTableTitleCount",
-                        [iTotalItems]
-                    );
-                } else {
-                    sTitle = this.getResourceBundle().getText(
-                        "worklistTableTitle"
-                    );
-                }
-                this.getModel("worklistView").setProperty(
-                    "/worklistTableTitle",
-                    sTitle
-                );
+
+                // // update the worklist's object counter after the table update
+                // var sTitle,
+                //     oTable = oEvent.getSource(),
+                //     iTotalItems = oEvent.getParameter("total");
+                // // only update the counter if the length is final and
+                // // the table is not empty
+                // if (iTotalItems && oTable.getBinding("items").isLengthFinal()) {
+                //     sTitle = this.getResourceBundle().getText(
+                //         "worklistTableTitleCount",
+                //         [iTotalItems]
+                //     );
+                // } else {
+                //     sTitle = this.getResourceBundle().getText(
+                //         "worklistTableTitle"
+                //     );
+                // }
+                // this.getModel("worklistView").setProperty(
+                //     "/worklistTableTitle",
+                //     sTitle
+                // );
             },
 
             /**
@@ -142,93 +156,54 @@ sap.ui.define(
             },
             /** Event Handler for Search Functionality on Filter */
             onFilter: function () {
-                const oView = this.getView();
-                const filters = [];
-                const oDateRange = oView.byId("dateRangeFilter");
-                let dateFrom = oDateRange.getDateValue();
-                let dateTo = oDateRange.getSecondDateValue();
-                if (dateFrom && dateTo) {
-                    let date = dateFrom.getUTCDate();
-                    if (date < 10) date = "0" + date;
-                    let month = dateFrom.getUTCMonth() + 1;
-                    if (month < 10) month = "0" + month;
-                    let year = dateFrom.getUTCFullYear();
-                    dateFrom = `${year}-${month}-${date}T00:00:00.000Z`;
-                    date = dateTo.getUTCDate();
-                    if (date < 10) date = "0" + date;
-                    month = dateTo.getUTCMonth() + 1;
-                    if (month < 10) month = "0" + month;
-                    year = dateTo.getUTCFullYear();
-                    dateTo = `${year}-${month}-${date}T23:59:59.000Z`;
-                    filters.push(
-                        new Filter(
-                            "creation_timestamp",
-                            FilterOperator.BT,
-                            dateFrom,
-                            dateTo
-                        )
-                    );
+                var aFilters = [];
+                var oTable = this.getView().byId("tripLogTable");
+                var oBinding = oTable.getBinding("items");
+                var oFiltersModel = this.getModel("triplogFilters");
+
+                var timestamp = oFiltersModel.getProperty("/timestamp");
+
+                if (timestamp.from && timestamp.to) {
+                    var dateFormat = DateFormat.getDateInstance({ pattern: "YYYY-MM-ddTHH:mm:ss.sss", UTC: true });
+                    // set start of day 
+                    var fromStringDate = dateFormat.format(timestamp.from, false) + "Z";
+                    // set end of day
+                    var toStringDate = dateFormat.format(timestamp.to, false) + "Z";
+    
+                    // build the timestamp filters
+                    aFilters.push(new Filter({
+                        path: "creation_timestamp",
+                        operator: FilterOperator.BT,
+                        value1: fromStringDate,
+                        value2: toStringDate
+                    }));
                 }
-                const aStatus = oView.byId("statusFilter").getSelectedKeys();
-                if (aStatus.length > 0) {
-                    const aStatusFilter = [];
-                    aStatus.forEach((vStatus) => {
-                        aStatusFilter.push(
-                            new Filter(
-                                "status_code",
-                                FilterOperator.EQ,
-                                vStatus
-                            )
-                        );
-                    });
-                    filters.push(new Filter(aStatusFilter, false));
+
+                // build statuses filter
+                const selectedStatuses = oFiltersModel.getProperty("/selectedStatuses");
+
+                var aStatusFilters = [];
+
+                selectedStatuses.forEach(status => {
+                    aStatusFilters.push(new Filter({
+                        path: "status_code",
+                        operator: FilterOperator.EQ,
+                        value1: status
+                    }));
+                });
+
+                if (aStatusFilters.length){
+                    aFilters.push(new Filter({
+                        filters: aStatusFilters,
+                        and: false
+                    }));
                 }
-                const oTable = oView.byId("table");
-                if (!oTable.getBinding("items")) {
-                    const oTemplate = new ColumnListItem({
-                        cells: [
-                            new ObjectIdentifier({ title: "{logtype}" }),
-                            new ObjectIdentifier({
-                                title: "{insupcarriercode2}",
-                            }),
-                            new ObjectIdentifier({ title: "{inflightno}" }),
-                            new ObjectIdentifier({ title: "{inorigin}" }),
-                            new ObjectIdentifier({ title: "{indestination}" }),
-                            new ObjectIdentifier({
-                                title: "{inscheddeptdate}",
-                            }),
-                            new ObjectIdentifier({ title: "{surrogatenum}" }),
-                            new ObjectAttribute({ text: "{fosuffix}" }),
-                            new ObjectAttribute({
-                                text: "{creation_timestamp}",
-                            }),
-                            new ObjectStatus({ //text: "{status}"
-                                text: "{status/text}",
-                                inverted: true,
-                                state: {
-                                    path: "status/code",
-                                    formatter: formatter.statusFormat,
-                                },
-                            }),
-                        ],
-                    });
-                    oTable.bindItems({
-                        path: "/triplog",
-                        parameters: {
-                            $expand: {
-                                status: {
-                                    $select: "code,text",
-                                },
-                            },
-                        },
-                        template: oTemplate,
-                    });
+
+                oTable.getBinding("items").filter(aFilters);
+
+                if (oBinding.isSuspended()) {
+                    oTable.getBinding("items").resume();
                 }
-                const oTableBinding = oTable.getBinding("items");
-                oTableBinding.filter(filters);
-                oTableBinding.refresh();
-                oTable.setVisible(true);
-                oView.byId("page").setShowFooter(true);
             },
 
             /**
@@ -237,8 +212,8 @@ sap.ui.define(
              * @public
              */
             onRefresh: function () {
-                var oTable = this.byId("table");
-                oTable.getBinding("items").refresh();
+                // var oTable = this.byId("table");
+                // oTable.getBinding("items").refresh();
             },
 
             /* =========================================================== */

@@ -2,15 +2,16 @@ sap.ui.define([
     "sap/ui/core/UIComponent",
     "sap/ui/Device",
     "./model/models",
-    "./controller/ErrorHandler"
+    "./controller/ErrorHandler",
 ], function (UIComponent, Device, models, ErrorHandler) {
     "use strict";
 
     return UIComponent.extend("triplog.Component", {
 
-        metadata : {
+        metadata: {
             manifest: "json"
         },
+
 
         /**
          * The component is initialized by UI5 automatically during the startup of the app and calls the init method once.
@@ -18,7 +19,7 @@ sap.ui.define([
          * @public
          * @override
          */
-        init : function () {
+        init: function () {
             // call the base component's init function
             UIComponent.prototype.init.apply(this, arguments);
 
@@ -27,6 +28,11 @@ sap.ui.define([
 
             // set the device model
             this.setModel(models.createDeviceModel(), "device");
+
+            var resourceBundle = this.getModel("i18n").getResourceBundle()
+
+            // set the enums model 
+            this.setModel(models.createEnumsModel(resourceBundle), "enums");
 
             // create the views based on the url/hash
             this.getRouter().initialize();
@@ -38,7 +44,7 @@ sap.ui.define([
          * @public
          * @override
          */
-        destroy : function () {
+        destroy: function () {
             this._oErrorHandler.destroy();
             // call the base component's destroy function
             UIComponent.prototype.destroy.apply(this, arguments);
@@ -50,7 +56,7 @@ sap.ui.define([
          * @public
          * @return {string} css class, either 'sapUiSizeCompact' or 'sapUiSizeCozy' - or an empty string if no css class should be set
          */
-        getContentDensityClass : function() {
+        getContentDensityClass: function () {
             if (this._sContentDensityClass === undefined) {
                 // check whether FLP has already set the content density class; do nothing in this case
                 // eslint-disable-next-line sap-no-proprietary-browser-api

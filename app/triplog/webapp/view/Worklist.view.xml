@@ -21,17 +21,16 @@
                         <fb:filterItems>
                             <fb:FilterItem name="creation_timestamp" label="{i18n>creation_timestamp}">
                                 <fb:control>
-                                    <DateRangeSelection id="dateRangeFilter" showCurrentDateButton="true" showFooter="true"/>
+                                    <DateRangeSelection showCurrentDateButton="true" showFooter="true" displayFormat="{triplogFilters>/timestamp/dateFormat}" dateValue="{triplogFilters>/timestamp/from}" secondDateValue="{triplogFilters>/timestamp/to}"/>
                                 </fb:control>
                             </fb:FilterItem>
                             <fb:FilterItem name="status" label="{i18n>status}">
                                 <fb:control>
                                     <!-- <SearchField id="statusFilter" width="100%" /> -->
                                     <MultiComboBox id="statusFilter" showSelectAll="true" showClearIcon="true" items="{
-				                            path: '/Status',
-                                            sorter: { path: 'sequence' }
-			                            }">
-                                        <core:Item key="{code}" text="{text}"/>
+				                            path: 'enums>/statuses'
+			                            }" selectedKeys="{triplogFilters>/selectedStatuses}">
+                                        <core:Item key="{enums>code}" text="{enums>text}"/>
                                     </MultiComboBox>
                                 </fb:control>
                             </fb:FilterItem>
@@ -42,8 +41,12 @@
         </f:header>
 
         <f:content>
-            <Table id="table" width="auto" 
-            visible="false" mode="MultiSelect" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished">
+            <Table id="tripLogTable" width="auto" items="{
+                path: '/triplog',
+                suspended: true
+            }"
+            visible="true"
+            mode="MultiSelect" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
@@ -59,9 +62,9 @@
 
                 <columns>
                     <Column id="logtype" >
-                        <Text text="{i18n>logtype}" />
+                        <Text text="{i18n>logtype}"  />
                     </Column>
-                    <Column id="insupcarriercode2">
+                    <!-- <Column id="insupcarriercode2">
                         <Text text="{i18n>insupcarriercode2}" />
                     </Column>
                     <Column id="inflightno">
@@ -87,8 +90,18 @@
                     </Column>
                     <Column id="unitStatusColumn" hAlign="End">
                         <Text text="{i18n>status}" id="Status"/>
-                    </Column>
+                    </Column> -->
                 </columns>
+                <items>
+                    <ColumnListItem id="template">
+                        <cells>
+                            <Text text="{
+                                path: 'logtype',
+                                formatter: '.formatter.logTypeFormat'
+                            }" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
             </Table>
         </f:content>
 
