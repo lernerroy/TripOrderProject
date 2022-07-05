@@ -1,8 +1,8 @@
 const cds = require("@sap/cds");
 class TripService extends cds.ApplicationService {
     async init() {
-        const { triprecord, triprecordStaging, pax, paxStaging, cargorecord, cargorecordStaging, 
-                routeplan, routeplanStaging, catering, cateringStaging, triplog } = this.entities;
+        const { triprecord, triprecordStaging, pax, paxStaging, cargorecord, cargorecordStaging,
+            routeplan, routeplanStaging, catering, cateringStaging, triplog } = this.entities;
         const db = await cds.connect.to("db");
         this.on("CREATE", triprecord, async (req) => {
             let tripData = req.data;
@@ -23,7 +23,7 @@ class TripService extends cds.ApplicationService {
             await db.run(INSERT([triplogdata]).into(triplog));
             return req.reply(tripData);
         });
-        this.on("CREATE", pax, async (req) => { 
+        this.on("CREATE", pax, async (req) => {
             let paxData = req.data;
             paxData.creation_timestamp = Date.now();
             const paxlogdata = {};
@@ -42,7 +42,7 @@ class TripService extends cds.ApplicationService {
             await db.run(INSERT([paxlogdata]).into(triplog));
             return req.reply(paxData);
         });
-        this.on("CREATE", cargorecord, async (req) => { 
+        this.on("CREATE", cargorecord, async (req) => {
             let cargoData = req.data;
             cargoData.creation_timestamp = Date.now();
             const cargologdata = {};
@@ -61,7 +61,7 @@ class TripService extends cds.ApplicationService {
             await db.run(INSERT([cargologdata]).into(triplog));
             return req.reply(cargoData);
         });
-        this.on("CREATE", routeplan, async (req) => { 
+        this.on("CREATE", routeplan, async (req) => {
             let routeData = req.data;
             routeData.creation_timestamp = Date.now();
             const routelogdata = {};
@@ -82,7 +82,7 @@ class TripService extends cds.ApplicationService {
             await db.run(INSERT([routelogdata]).into(triplog));
             return req.reply(routeData);
         });
-        this.on("CREATE", catering, async (req) => { 
+        this.on("CREATE", catering, async (req) => {
             let cateringData = req.data;
             cateringData.creation_timestamp = Date.now();
             const cateringlogdata = {};
@@ -202,7 +202,7 @@ class TripService extends cds.ApplicationService {
                         ) {
                             cfpnoTemp = "'" + trip.cfpno + "'";
                         }
-                        const whereRouteComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ${insupcarriercode2Temp}` + 
+                        const whereRouteComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ${insupcarriercode2Temp}` +
                             ` and inflightno = ${inflightnoTemp} and inorigin = ${inoriginTemp} and indestination = ${indestinationTemp}` +
                             ` and inscheddeptdate = ${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp}` +
                             ` and lineno = ${linenoTemp} and cfpno = ${cfpnoTemp} )`;
@@ -224,13 +224,13 @@ class TripService extends cds.ApplicationService {
             });
 
             // Update selected trips
-            if(whereTripString != ""){
+            if (whereTripString != "") {
                 const tripsStaged = await SELECT.from(triprecordStaging).where(
                     cds.parse.expr(whereTripString)
                 ).orderBy("creation_timestamp asc");
-                
+
                 if (tripsStaged) {
-                    
+
                     stagedRow = true;
                     const tripStagedFiltered = [];
                     // Validation and Sanitation
@@ -244,7 +244,7 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                ( triplog.logtype === '1' || triplog.logtype === 'Trip' )
+                                (triplog.logtype === '1' || triplog.logtype === 'Trip')
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
@@ -361,108 +361,108 @@ class TripService extends cds.ApplicationService {
                             //     }) )
                             // }
                             const updRes = await db.run(UPDATE(triprecord,
-                            {   
-                                insupcarriercode2: trip.insupcarriercode2,
-                                inflightno: trip.inflightno,
-                                inorigin: trip.inorigin,
-                                indestination: trip.indestination,
-                                inscheddeptdate: trip.inscheddeptdate,
-                                surrogatenum: trip.surrogatenum
-                            }).with({
-                                supcarriercode2     : trip.supcarriercode2,
-                                scheddeptdate       : trip.scheddeptdate,
-                                flightno            : trip.flightno,
-                                supcarriercode      : trip.supcarriercode,
-                                carriercode         : trip.carriercode,
-                                origin              : trip.origin,
-                                destination         : trip.destination,
-                                repeatno            : trip.repeatno,
-                                idooutc             : trip.idooutc,
-                                idoo                : trip.idoo,
-                                doo                 : trip.doo,
-                                dooutc              : trip.dooutc,
-                                actarrapt           : trip.actarrapt,
-                                actarrapticao       : trip.actarrapticao,
-                                actdeptapt          : trip.actdeptapt,
-                                actdeptapticao      : trip.actdeptapticao,
-                                legstate            : trip.legstate,
-                                aircrafttype        : trip.aircrafttype,
-                                aircrafttypecpa     : trip.aircrafttypecpa,
-                                tailno              : trip.tailno,
-                                flighttype          : trip.flighttype,
-                                deptparkposn        : trip.deptparkposn,
-                                actgatetime         : trip.actgatetime,
-                                servicetype         : trip.servicetype,
-                                delayreason1        : trip.delayreason1,
-                                delayreason2        : trip.delayreason2,
-                                delayreason3        : trip.delayreason3,
-                                delayreason4        : trip.delayreason4,
-                                delayreason5        : trip.delayreason5,
-                                actualflyingdur     : trip.actualflyingdur,
-                                scheddepttime       : trip.scheddepttime,
-                                scheddeptts         : trip.scheddeptts,
-                                actdeptts           : trip.actdeptts,
-                                takeoffdate         : trip.takeoffdate,
-                                takeofftime         : trip.takeofftime,
-                                touchdndate         : trip.touchdndate,
-                                touchdntime         : trip.touchdntime,
-                                actdeptdate         : trip.actdeptdate,
-                                actdepttime         : trip.actdepttime,
-                                actarrdate          : trip.actarrdate,
-                                actarrtime          : trip.actarrtime,
-                                takeoffdateutc      : trip.takeoffdateutc,
-                                takeofftimeutc      : trip.takeofftimeutc,
-                                touchdndateutc      : trip.touchdndateutc,
-                                touchdntimeutc      : trip.touchdntimeutc,
-                                actdeptdateutc      : trip.actdeptdateutc,
-                                actdepttimeutc      : trip.actdepttimeutc,
-                                actarrdateutc       : trip.actarrdateutc,
-                                actarrtimeutc       : trip.actarrtimeutc,
-                                scheddeptdateutc    : trip.scheddeptdateutc,
-                                scheddepttimeutc    : trip.scheddepttimeutc,
-                                schedarrdateutc     : trip.schedarrdateutc,
-                                schedarrtimeutc     : trip.schedarrtimeutc,
-                                schedarrdate        : trip.schedarrdate,
-                                schedarrtime        : trip.schedarrtime,
-                                schedarrts          : trip.schedarrts,
-                                actarrts            : trip.actarrts,
-                                estdeptdate         : trip.estdeptdate,
-                                estdepttime         : trip.estdepttime,
-                                estdeptdateutc      : trip.estdeptdateutc,
-                                estdepttimeutc      : trip.estdepttimeutc,
-                                estarrdateutc       : trip.estarrdateutc,
-                                estarrtimeutc       : trip.estarrtimeutc,
-                                estarrdate          : trip.estarrdate,
-                                estarrtime          : trip.estarrtime,
-                                planblocktime       : trip.planblocktime,
-                                schedarrapticao     : trip.schedarrapticao,
-                                schedarrapt         : trip.schedarrapt,
-                                scheddeptapticao    : trip.scheddeptapticao,
-                                scheddeptapt        : trip.scheddeptapt,
-                                flight_tm           : trip.flight_tm,
-                                arr_stand           : trip.arr_stand,
-                                dep_terminal        : trip.dep_terminal,
-                                arr_terminal        : trip.arr_terminal,
-                                onblockdate         : trip.onblockdate,
-                                onblocktime         : trip.onblocktime,
-                                offblockdate        : trip.offblockdate,
-                                offblocktime        : trip.offblocktime,
-                                taxi_out_time       : trip.taxi_out_time,
-                                route               : trip.route,
-                                cfpno1              : trip.cfpno1,
-                                cfpno2              : trip.cfpno2
-                            }) )
+                                {
+                                    insupcarriercode2: trip.insupcarriercode2,
+                                    inflightno: trip.inflightno,
+                                    inorigin: trip.inorigin,
+                                    indestination: trip.indestination,
+                                    inscheddeptdate: trip.inscheddeptdate,
+                                    surrogatenum: trip.surrogatenum
+                                }).with({
+                                    supcarriercode2: trip.supcarriercode2,
+                                    scheddeptdate: trip.scheddeptdate,
+                                    flightno: trip.flightno,
+                                    supcarriercode: trip.supcarriercode,
+                                    carriercode: trip.carriercode,
+                                    origin: trip.origin,
+                                    destination: trip.destination,
+                                    repeatno: trip.repeatno,
+                                    idooutc: trip.idooutc,
+                                    idoo: trip.idoo,
+                                    doo: trip.doo,
+                                    dooutc: trip.dooutc,
+                                    actarrapt: trip.actarrapt,
+                                    actarrapticao: trip.actarrapticao,
+                                    actdeptapt: trip.actdeptapt,
+                                    actdeptapticao: trip.actdeptapticao,
+                                    legstate: trip.legstate,
+                                    aircrafttype: trip.aircrafttype,
+                                    aircrafttypecpa: trip.aircrafttypecpa,
+                                    tailno: trip.tailno,
+                                    flighttype: trip.flighttype,
+                                    deptparkposn: trip.deptparkposn,
+                                    actgatetime: trip.actgatetime,
+                                    servicetype: trip.servicetype,
+                                    delayreason1: trip.delayreason1,
+                                    delayreason2: trip.delayreason2,
+                                    delayreason3: trip.delayreason3,
+                                    delayreason4: trip.delayreason4,
+                                    delayreason5: trip.delayreason5,
+                                    actualflyingdur: trip.actualflyingdur,
+                                    scheddepttime: trip.scheddepttime,
+                                    scheddeptts: trip.scheddeptts,
+                                    actdeptts: trip.actdeptts,
+                                    takeoffdate: trip.takeoffdate,
+                                    takeofftime: trip.takeofftime,
+                                    touchdndate: trip.touchdndate,
+                                    touchdntime: trip.touchdntime,
+                                    actdeptdate: trip.actdeptdate,
+                                    actdepttime: trip.actdepttime,
+                                    actarrdate: trip.actarrdate,
+                                    actarrtime: trip.actarrtime,
+                                    takeoffdateutc: trip.takeoffdateutc,
+                                    takeofftimeutc: trip.takeofftimeutc,
+                                    touchdndateutc: trip.touchdndateutc,
+                                    touchdntimeutc: trip.touchdntimeutc,
+                                    actdeptdateutc: trip.actdeptdateutc,
+                                    actdepttimeutc: trip.actdepttimeutc,
+                                    actarrdateutc: trip.actarrdateutc,
+                                    actarrtimeutc: trip.actarrtimeutc,
+                                    scheddeptdateutc: trip.scheddeptdateutc,
+                                    scheddepttimeutc: trip.scheddepttimeutc,
+                                    schedarrdateutc: trip.schedarrdateutc,
+                                    schedarrtimeutc: trip.schedarrtimeutc,
+                                    schedarrdate: trip.schedarrdate,
+                                    schedarrtime: trip.schedarrtime,
+                                    schedarrts: trip.schedarrts,
+                                    actarrts: trip.actarrts,
+                                    estdeptdate: trip.estdeptdate,
+                                    estdepttime: trip.estdepttime,
+                                    estdeptdateutc: trip.estdeptdateutc,
+                                    estdepttimeutc: trip.estdepttimeutc,
+                                    estarrdateutc: trip.estarrdateutc,
+                                    estarrtimeutc: trip.estarrtimeutc,
+                                    estarrdate: trip.estarrdate,
+                                    estarrtime: trip.estarrtime,
+                                    planblocktime: trip.planblocktime,
+                                    schedarrapticao: trip.schedarrapticao,
+                                    schedarrapt: trip.schedarrapt,
+                                    scheddeptapticao: trip.scheddeptapticao,
+                                    scheddeptapt: trip.scheddeptapt,
+                                    flight_tm: trip.flight_tm,
+                                    arr_stand: trip.arr_stand,
+                                    dep_terminal: trip.dep_terminal,
+                                    arr_terminal: trip.arr_terminal,
+                                    onblockdate: trip.onblockdate,
+                                    onblocktime: trip.onblocktime,
+                                    offblockdate: trip.offblockdate,
+                                    offblocktime: trip.offblocktime,
+                                    taxi_out_time: trip.taxi_out_time,
+                                    route: trip.route,
+                                    cfpno1: trip.cfpno1,
+                                    cfpno2: trip.cfpno2
+                                }))
                             if (updRes == 0 && !rowInserted) {
                                 rowInserted = true;
                                 const insRes = await db.run(INSERT(tripStagedFiltered).into(triprecord));
                             }
                         });
-                    }                
+                    }
                 }
             }
-            
+
             // Update selected passangers            
-            if(wherePaxString != ""){
+            if (wherePaxString != "") {
                 const paxStaged = await SELECT.from(paxStaging).where(
                     cds.parse.expr(wherePaxString)
                 ).orderBy("creation_timestamp asc");
@@ -481,7 +481,7 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                ( triplog.logtype === '2' || triplog.logtype === 'Passenger' )
+                                (triplog.logtype === '2' || triplog.logtype === 'Passenger')
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
@@ -502,99 +502,99 @@ class TripService extends cds.ApplicationService {
                         paxStagedFiltered.map(async (trip) => {
                             // try {
                             const updRes = await db.run(UPDATE(pax,
-                            {   
-                                insupcarriercode2: trip.insupcarriercode2,
-                                inflightno: trip.inflightno,
-                                inorigin: trip.inorigin,
-                                indestination: trip.indestination,
-                                inscheddeptdate: trip.inscheddeptdate,
-                                surrogatenum: trip.surrogatenum
-                            }).with({
-                                carriercode     : trip.carriercode,
-                                version         : trip.version,
-                                user_ind        : trip.user_ind,
-                                firstclasspax   : trip.firstclasspax,
-                                busclasspax     : trip.busclasspax,
-                                premecopax      : trip.premecopax,
-                                ecopax          : trip.ecopax,
-                                totalpax        : trip.totalpax,
-                                revpaxfirst     : trip.revpaxfirst,
-                                revpaxbus       : trip.revpaxbus,
-                                revpaxpreco     : trip.revpaxpreco,
-                                revpaxeco       : trip.revpaxeco,
-                                revpaxtot       : trip.revpaxtot,
-                                nrevpaxfirst    : trip.nrevpaxfirst,
-                                nrevpaxbus      : trip.nrevpaxbus,
-                                nrevpaxpreco    : trip.nrevpaxpreco,
-                                nrevpaxeco      : trip.nrevpaxeco,
-                                nrevpaxtot      : trip.nrevpaxtot,
-                                chdpax          : trip.chdpax,
-                                infpax          : trip.infpax,
-                                wchpax          : trip.wchpax,
-                                wchc            : trip.wchc,
-                                wchs            : trip.wchs,
-                                wchr            : trip.wchr,
-                                wcbd            : trip.wcbd,
-                                wcbw            : trip.wcbw,
-                                wcmp            : trip.wcmp,
-                                wcob            : trip.wcob,
-                                wclb            : trip.wclb,
-                                boardpax        : trip.boardpax,
-                                transitpax      : trip.transitpax,
-                                transferpax     : trip.transferpax,
-                                bagquan         : trip.bagquan,
-                                bagweight       : trip.bagweight,
-                                traint          : trip.traint,
-                                tradom          : trip.tradom,
-                                creation_timestamp : trip.creation_timestamp,
-                                tecnum          : trip.tecnum,
-                                cabnum          : trip.cabnum,
-                                capnum          : trip.capnum,
-                                cocnum          : trip.cocnum,
-                                ecavml          : trip.ecavml,
-                                ecbbml          : trip.ecbbml,
-                                ecblml          : trip.ecblml,
-                                ecchml          : trip.ecchml,
-                                ecdbml          : trip.ecdbml,
-                                ecfpml          : trip.ecfpml,
-                                ecgfml          : trip.ecgfml,
-                                echnml          : trip.echnml,
-                                ecksml          : trip.ecksml,
-                                eclcml          : trip.eclcml,
-                                eclfml          : trip.eclfml,
-                                eclsml          : trip.eclsml,
-                                ecmoml          : trip.ecmoml,
-                                ecnlml          : trip.ecnlml,
-                                ecorml          : trip.ecorml,
-                                ecrvml          : trip.ecrvml,
-                                ecsfml          : trip.ecsfml,
-                                ecvgml          : trip.ecvgml,
-                                ecvjml          : trip.ecvjml,
-                                ecvlml          : trip.ecvlml,
-                                ecvoml          : trip.ecvoml,
-                                bcavml          : trip.bcavml,
-                                bcbbml          : trip.bcbbml,
-                                bcblml          : trip.bcblml,
-                                bcchml          : trip.bcchml,
-                                bcdbml          : trip.bcdbml,
-                                bcfpml          : trip.bcfpml,
-                                bcgfml          : trip.bcgfml,
-                                bchnml          : trip.bchnml,
-                                bcksml          : trip.bcksml,
-                                bclcml          : trip.bclcml,
-                                bclfml          : trip.bclfml,
-                                bclsml          : trip.bclsml,
-                                bcmoml          : trip.bcmoml,
-                                bcnlml          : trip.bcnlml,
-                                bcorml          : trip.bcorml,
-                                bcrvml          : trip.bcrvml,
-                                bcsfml          : trip.bcsfml,
-                                bcvgml          : trip.bcvgml,
-                                bcvjml          : trip.bcvjml,
-                                bcvlml          : trip.bcvlml,
-                                bcvoml          : trip.bcvoml,
-                                umnr            : trip.umnr
-                            }) )
+                                {
+                                    insupcarriercode2: trip.insupcarriercode2,
+                                    inflightno: trip.inflightno,
+                                    inorigin: trip.inorigin,
+                                    indestination: trip.indestination,
+                                    inscheddeptdate: trip.inscheddeptdate,
+                                    surrogatenum: trip.surrogatenum
+                                }).with({
+                                    carriercode: trip.carriercode,
+                                    version: trip.version,
+                                    user_ind: trip.user_ind,
+                                    firstclasspax: trip.firstclasspax,
+                                    busclasspax: trip.busclasspax,
+                                    premecopax: trip.premecopax,
+                                    ecopax: trip.ecopax,
+                                    totalpax: trip.totalpax,
+                                    revpaxfirst: trip.revpaxfirst,
+                                    revpaxbus: trip.revpaxbus,
+                                    revpaxpreco: trip.revpaxpreco,
+                                    revpaxeco: trip.revpaxeco,
+                                    revpaxtot: trip.revpaxtot,
+                                    nrevpaxfirst: trip.nrevpaxfirst,
+                                    nrevpaxbus: trip.nrevpaxbus,
+                                    nrevpaxpreco: trip.nrevpaxpreco,
+                                    nrevpaxeco: trip.nrevpaxeco,
+                                    nrevpaxtot: trip.nrevpaxtot,
+                                    chdpax: trip.chdpax,
+                                    infpax: trip.infpax,
+                                    wchpax: trip.wchpax,
+                                    wchc: trip.wchc,
+                                    wchs: trip.wchs,
+                                    wchr: trip.wchr,
+                                    wcbd: trip.wcbd,
+                                    wcbw: trip.wcbw,
+                                    wcmp: trip.wcmp,
+                                    wcob: trip.wcob,
+                                    wclb: trip.wclb,
+                                    boardpax: trip.boardpax,
+                                    transitpax: trip.transitpax,
+                                    transferpax: trip.transferpax,
+                                    bagquan: trip.bagquan,
+                                    bagweight: trip.bagweight,
+                                    traint: trip.traint,
+                                    tradom: trip.tradom,
+                                    creation_timestamp: trip.creation_timestamp,
+                                    tecnum: trip.tecnum,
+                                    cabnum: trip.cabnum,
+                                    capnum: trip.capnum,
+                                    cocnum: trip.cocnum,
+                                    ecavml: trip.ecavml,
+                                    ecbbml: trip.ecbbml,
+                                    ecblml: trip.ecblml,
+                                    ecchml: trip.ecchml,
+                                    ecdbml: trip.ecdbml,
+                                    ecfpml: trip.ecfpml,
+                                    ecgfml: trip.ecgfml,
+                                    echnml: trip.echnml,
+                                    ecksml: trip.ecksml,
+                                    eclcml: trip.eclcml,
+                                    eclfml: trip.eclfml,
+                                    eclsml: trip.eclsml,
+                                    ecmoml: trip.ecmoml,
+                                    ecnlml: trip.ecnlml,
+                                    ecorml: trip.ecorml,
+                                    ecrvml: trip.ecrvml,
+                                    ecsfml: trip.ecsfml,
+                                    ecvgml: trip.ecvgml,
+                                    ecvjml: trip.ecvjml,
+                                    ecvlml: trip.ecvlml,
+                                    ecvoml: trip.ecvoml,
+                                    bcavml: trip.bcavml,
+                                    bcbbml: trip.bcbbml,
+                                    bcblml: trip.bcblml,
+                                    bcchml: trip.bcchml,
+                                    bcdbml: trip.bcdbml,
+                                    bcfpml: trip.bcfpml,
+                                    bcgfml: trip.bcgfml,
+                                    bchnml: trip.bchnml,
+                                    bcksml: trip.bcksml,
+                                    bclcml: trip.bclcml,
+                                    bclfml: trip.bclfml,
+                                    bclsml: trip.bclsml,
+                                    bcmoml: trip.bcmoml,
+                                    bcnlml: trip.bcnlml,
+                                    bcorml: trip.bcorml,
+                                    bcrvml: trip.bcrvml,
+                                    bcsfml: trip.bcsfml,
+                                    bcvgml: trip.bcvgml,
+                                    bcvjml: trip.bcvjml,
+                                    bcvlml: trip.bcvlml,
+                                    bcvoml: trip.bcvoml,
+                                    umnr: trip.umnr
+                                }))
                             if (updRes == 0 && !rowInserted) {
                                 rowInserted = true;
                                 const insRes = await db.run(INSERT(trip).into(pax));
@@ -604,7 +604,7 @@ class TripService extends cds.ApplicationService {
                 }
             }
             // Update selected cargo
-            if(whereCargoString != "") {
+            if (whereCargoString != "") {
                 const cargoStaged = await SELECT.from(cargorecordStaging).where(
                     cds.parse.expr(whereCargoString)
                 ).orderBy("creation_timestamp asc");
@@ -623,7 +623,7 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                ( triplog.logtype === '3' || triplog.logtype === 'Cargo' )
+                                (triplog.logtype === '3' || triplog.logtype === 'Cargo')
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
@@ -644,78 +644,78 @@ class TripService extends cds.ApplicationService {
                         cargoStagedFiltered.map(async (trip) => {
                             // try {
                             const updRes = await db.run(UPDATE(cargorecord,
-                            {   
-                                insupcarriercode2: trip.insupcarriercode2,
-                                inflightno: trip.inflightno,
-                                inorigin: trip.inorigin,
-                                indestination: trip.indestination,
-                                inscheddeptdate: trip.inscheddeptdate,
-                                surrogatenum: trip.surrogatenum
-                            }).with({
-                                version             : trip.version,
-                                user_ind            : trip.user_ind,
-                                chgtottonn          : trip.chgtottonn,
-                                acttottonn          : trip.acttottonn,
-                                tottranstonn        : trip.tottranstonn,
-                                chgtotimptonn       : trip.chgtotimptonn,
-                                acttotimptonn       : trip.acttotimptonn,
-                                chgtotexptonn       : trip.chgtotexptonn,
-                                acttotexptonn       : trip.acttotexptonn,
-                                chgimploose         : trip.chgimploose,
-                                actimploose         : trip.actimploose,
-                                chgimpprepck        : trip.chgimpprepck,
-                                actimpprepck        : trip.actimpprepck,
-                                chgexploose         : trip.chgexploose,
-                                actexploose         : trip.actexploose,
-                                chgexpprepack       : trip.chgexpprepack,
-                                actexpprepack       : trip.actexpprepack,
-                                chgmailimport       : trip.chgmailimport,
-                                actmailimport       : trip.actmailimport,
-                                chgmailexport       : trip.chgmailexport,
-                                actmailexport       : trip.actmailexport,
-                                avichgtkg           : trip.avichgtkg,
-                                aviactkg            : trip.aviactkg,
-                                avinoawb            : trip.avinoawb,
-                                dgrchgtkg           : trip.dgrchgtkg,
-                                dgractkg            : trip.dgractkg,
-                                dgrnoawb            : trip.dgrnoawb,
-                                humchgkg            : trip.humchgkg,
-                                humactkg            : trip.humactkg,
-                                humnoawb            : trip.humnoawb,
-                                perchgkg            : trip.perchgkg,
-                                peractkg            : trip.peractkg,
-                                pernoawb            : trip.pernoawb,
-                                valchgkg            : trip.valchgkg,
-                                valactkg            : trip.valactkg,
-                                valnoawb            : trip.valnoawb,
-                                pilchgkg            : trip.pilchgkg,
-                                pilactkg            : trip.pilactkg,
-                                pilnoawb            : trip.pilnoawb,
-                                pefchgkg            : trip.pefchgkg,
-                                pefactkg            : trip.pefactkg,
-                                pefnoawb            : trip.pefnoawb,
-                                temchgkg            : trip.temchgkg,
-                                temactkg            : trip.temactkg,
-                                temnoawb            : trip.temnoawb,
-                                vunchgkg            : trip.vunchgkg,
-                                vunactkg            : trip.vunactkg,
-                                vunnoawb            : trip.vunnoawb,
-                                totawb              : trip.totawb,
-                                chgtransloose       : trip.chgtransloose,
-                                acttransloose       : trip.acttransloose,
-                                chgtransprepack     : trip.chgtransprepack,
-                                acttransprepack     : trip.acttransprepack,
-                                chgephloose         : trip.chgephloose,
-                                actephloose         : trip.actephloose,
-                                chgephprepack       : trip.chgephprepack,
-                                actephprepack       : trip.actephprepack,
-                                chgepdcgo           : trip.chgepdcgo,
-                                actepdcgo           : trip.actepdcgo,
-                                creation_timestamp  : trip.creation_timestamp,
-                                chgimptonn          : trip.chgimptonn,
-                                chgexptonn          : trip.chgexptonn,
-                                chgtottranstonn     : trip.chgtottranstonn
-                            }) )
+                                {
+                                    insupcarriercode2: trip.insupcarriercode2,
+                                    inflightno: trip.inflightno,
+                                    inorigin: trip.inorigin,
+                                    indestination: trip.indestination,
+                                    inscheddeptdate: trip.inscheddeptdate,
+                                    surrogatenum: trip.surrogatenum
+                                }).with({
+                                    version: trip.version,
+                                    user_ind: trip.user_ind,
+                                    chgtottonn: trip.chgtottonn,
+                                    acttottonn: trip.acttottonn,
+                                    tottranstonn: trip.tottranstonn,
+                                    chgtotimptonn: trip.chgtotimptonn,
+                                    acttotimptonn: trip.acttotimptonn,
+                                    chgtotexptonn: trip.chgtotexptonn,
+                                    acttotexptonn: trip.acttotexptonn,
+                                    chgimploose: trip.chgimploose,
+                                    actimploose: trip.actimploose,
+                                    chgimpprepck: trip.chgimpprepck,
+                                    actimpprepck: trip.actimpprepck,
+                                    chgexploose: trip.chgexploose,
+                                    actexploose: trip.actexploose,
+                                    chgexpprepack: trip.chgexpprepack,
+                                    actexpprepack: trip.actexpprepack,
+                                    chgmailimport: trip.chgmailimport,
+                                    actmailimport: trip.actmailimport,
+                                    chgmailexport: trip.chgmailexport,
+                                    actmailexport: trip.actmailexport,
+                                    avichgtkg: trip.avichgtkg,
+                                    aviactkg: trip.aviactkg,
+                                    avinoawb: trip.avinoawb,
+                                    dgrchgtkg: trip.dgrchgtkg,
+                                    dgractkg: trip.dgractkg,
+                                    dgrnoawb: trip.dgrnoawb,
+                                    humchgkg: trip.humchgkg,
+                                    humactkg: trip.humactkg,
+                                    humnoawb: trip.humnoawb,
+                                    perchgkg: trip.perchgkg,
+                                    peractkg: trip.peractkg,
+                                    pernoawb: trip.pernoawb,
+                                    valchgkg: trip.valchgkg,
+                                    valactkg: trip.valactkg,
+                                    valnoawb: trip.valnoawb,
+                                    pilchgkg: trip.pilchgkg,
+                                    pilactkg: trip.pilactkg,
+                                    pilnoawb: trip.pilnoawb,
+                                    pefchgkg: trip.pefchgkg,
+                                    pefactkg: trip.pefactkg,
+                                    pefnoawb: trip.pefnoawb,
+                                    temchgkg: trip.temchgkg,
+                                    temactkg: trip.temactkg,
+                                    temnoawb: trip.temnoawb,
+                                    vunchgkg: trip.vunchgkg,
+                                    vunactkg: trip.vunactkg,
+                                    vunnoawb: trip.vunnoawb,
+                                    totawb: trip.totawb,
+                                    chgtransloose: trip.chgtransloose,
+                                    acttransloose: trip.acttransloose,
+                                    chgtransprepack: trip.chgtransprepack,
+                                    acttransprepack: trip.acttransprepack,
+                                    chgephloose: trip.chgephloose,
+                                    actephloose: trip.actephloose,
+                                    chgephprepack: trip.chgephprepack,
+                                    actephprepack: trip.actephprepack,
+                                    chgepdcgo: trip.chgepdcgo,
+                                    actepdcgo: trip.actepdcgo,
+                                    creation_timestamp: trip.creation_timestamp,
+                                    chgimptonn: trip.chgimptonn,
+                                    chgexptonn: trip.chgexptonn,
+                                    chgtottranstonn: trip.chgtottranstonn
+                                }))
                             if (updRes == 0 && !rowInserted) {
                                 rowInserted = true;
                                 const insRes = await db.run(INSERT(trip).into(cargorecord));
@@ -724,7 +724,7 @@ class TripService extends cds.ApplicationService {
                     }
                 }
             }
-            if(whereRouteString != ""){
+            if (whereRouteString != "") {
                 const routePlanStaged = await SELECT.from(routeplanStaging).where(
                     cds.parse.expr(whereRouteString)
                 ).orderBy("creation_timestamp asc");
@@ -743,7 +743,7 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                ( triplog.logtype === '4' || triplog.logtype === 'RoutePlan' )
+                                (triplog.logtype === '4' || triplog.logtype === 'RoutePlan')
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
@@ -764,44 +764,44 @@ class TripService extends cds.ApplicationService {
                         routeStagedFiltered.map(async (trip) => {
                             // try {
                             const updRes = await db.run(UPDATE(routeplan,
-                            {   
-                                insupcarriercode2: trip.insupcarriercode2,
-                                inflightno: trip.inflightno,
-                                inorigin: trip.inorigin,
-                                indestination: trip.indestination,
-                                inscheddeptdate: trip.inscheddeptdate,
-                                surrogatenum: trip.surrogatenum,
-                                lineno : trip.lineno,
-                                cfpno : trip.cfpno
-                            }).with({
-                                routeno         : trip.routeno,
-                                countrycode     : trip.countrycode,
-                                airspdistnm     : trip.airspdistnm,
-                                airspdistm      : trip.airspdistm,
-                                airspdistkm     : trip.airspdistkm,
-                                elapsedtime     : trip.elapsedtime,
-                                deptapticao     : trip.deptapticao,
-                                arrapticao      : trip.arrapticao,
-                                tailno          : trip.tailno,
-                                entrydatelmt    : trip.entrydatelmt,
-                                entrytimelmt    : trip.entrytimelmt,
-                                entrydateutc    : trip.entrydateutc,
-                                entrytimeutc    : trip.entrytimeutc,
-                                exitdatelmt     : trip.exitdatelmt,
-                                exittimelmt     : trip.exittimelmt,
-                                exitdateutc     : trip.exitdateutc,
-                                exittimeutc     : trip.exittimeutc,
-                                amount          : trip.amount,
-                                rate            : trip.rate,
-                                currency        : trip.currency,
-                                entrypoint      : trip.entrypoint,
-                                exitpoint       : trip.exitpoint,
-                                entryway        : trip.entryway,
-                                exitway         : trip.exitway,
-                                chargetype      : trip.chargetype,
-                                provid          : trip.provid,
-                                gcd             : trip.gcd
-                            }) )
+                                {
+                                    insupcarriercode2: trip.insupcarriercode2,
+                                    inflightno: trip.inflightno,
+                                    inorigin: trip.inorigin,
+                                    indestination: trip.indestination,
+                                    inscheddeptdate: trip.inscheddeptdate,
+                                    surrogatenum: trip.surrogatenum,
+                                    lineno: trip.lineno,
+                                    cfpno: trip.cfpno
+                                }).with({
+                                    routeno: trip.routeno,
+                                    countrycode: trip.countrycode,
+                                    airspdistnm: trip.airspdistnm,
+                                    airspdistm: trip.airspdistm,
+                                    airspdistkm: trip.airspdistkm,
+                                    elapsedtime: trip.elapsedtime,
+                                    deptapticao: trip.deptapticao,
+                                    arrapticao: trip.arrapticao,
+                                    tailno: trip.tailno,
+                                    entrydatelmt: trip.entrydatelmt,
+                                    entrytimelmt: trip.entrytimelmt,
+                                    entrydateutc: trip.entrydateutc,
+                                    entrytimeutc: trip.entrytimeutc,
+                                    exitdatelmt: trip.exitdatelmt,
+                                    exittimelmt: trip.exittimelmt,
+                                    exitdateutc: trip.exitdateutc,
+                                    exittimeutc: trip.exittimeutc,
+                                    amount: trip.amount,
+                                    rate: trip.rate,
+                                    currency: trip.currency,
+                                    entrypoint: trip.entrypoint,
+                                    exitpoint: trip.exitpoint,
+                                    entryway: trip.entryway,
+                                    exitway: trip.exitway,
+                                    chargetype: trip.chargetype,
+                                    provid: trip.provid,
+                                    gcd: trip.gcd
+                                }))
                             if (updRes == 0 && !rowInserted) {
                                 rowInserted = true;
                                 const insRes = await db.run(INSERT(trip).into(routeplan));
@@ -812,7 +812,7 @@ class TripService extends cds.ApplicationService {
             }
 
             // Update selected catering
-            if(whereCateringString != ""){
+            if (whereCateringString != "") {
                 const cateringStaged = await SELECT.from(cateringStaging).where(
                     cds.parse.expr(whereCateringString)
                 ).orderBy("creation_timestamp asc");
@@ -831,7 +831,7 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                ( triplog.logtype === '5' || triplog.logtype === 'Catering' )
+                                (triplog.logtype === '5' || triplog.logtype === 'Catering')
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
@@ -852,48 +852,48 @@ class TripService extends cds.ApplicationService {
                         cateringStagedFiltered.map(async (trip) => {
                             // try {
                             const updRes = await db.run(UPDATE(catering,
-                            {   
-                                insupcarriercode2: trip.insupcarriercode2,
-                                inflightno: trip.inflightno,
-                                inorigin: trip.inorigin,
-                                indestination: trip.indestination,
-                                inscheddeptdate: trip.inscheddeptdate,
-                                surrogatenum: trip.surrogatenum
-                            }).with({
-                                carriercode     : trip.carriercode,
-                                origin          : trip.origin,
-                                destination     : trip.destination,
-                                classtype       : trip.classtype,
-                                sapmeal         : trip.sapmeal,
-                                exdescription   : trip.exdescription,
-                                paxqun          : trip.paxqun,
-                                unitofmesur     : trip.unitofmesur,
-                                exmenucode      : trip.exmenucode,
-                                exmenudesc      : trip.exmenudesc,
-                                salescat        : trip.salescat,
-                                pricerel        : trip.pricerel,
-                                mealfact        : trip.mealfact,
-                                quant           : trip.quant,
-                                netprice        : trip.netprice,
-                                grossgross      : trip.grossgross,
-                                custdiscount    : trip.custdiscount,
-                                netamont        : trip.netamont,
-                                airportfee      : trip.airportfee,
-                                airportfeevat   : trip.airportfeevat,
-                                gstvat          : trip.gstvat,
-                                consumptiontax  : trip.consumptiontax,
-                                surchargeamount : trip.surchargeamount,
-                                vatp            : trip.vatp,
-                                gipba           : trip.gipba,
-                                totalamount     : trip.totalamount,
-                                currency        : trip.currency,
-                                invoicetype     : trip.invoicetype,
-                                custdiscount_perc : trip.custdiscount_perc,
-                                airportfee_perc : trip.airportfee_perc,
-                                gstvat_perc     : trip.gstvat_perc,
-                                surcharge_perc  : trip.surcharge_perc,
-                                consumptiontax_perc : trip.consumptiontax_perc
-                            }) )
+                                {
+                                    insupcarriercode2: trip.insupcarriercode2,
+                                    inflightno: trip.inflightno,
+                                    inorigin: trip.inorigin,
+                                    indestination: trip.indestination,
+                                    inscheddeptdate: trip.inscheddeptdate,
+                                    surrogatenum: trip.surrogatenum
+                                }).with({
+                                    carriercode: trip.carriercode,
+                                    origin: trip.origin,
+                                    destination: trip.destination,
+                                    classtype: trip.classtype,
+                                    sapmeal: trip.sapmeal,
+                                    exdescription: trip.exdescription,
+                                    paxqun: trip.paxqun,
+                                    unitofmesur: trip.unitofmesur,
+                                    exmenucode: trip.exmenucode,
+                                    exmenudesc: trip.exmenudesc,
+                                    salescat: trip.salescat,
+                                    pricerel: trip.pricerel,
+                                    mealfact: trip.mealfact,
+                                    quant: trip.quant,
+                                    netprice: trip.netprice,
+                                    grossgross: trip.grossgross,
+                                    custdiscount: trip.custdiscount,
+                                    netamont: trip.netamont,
+                                    airportfee: trip.airportfee,
+                                    airportfeevat: trip.airportfeevat,
+                                    gstvat: trip.gstvat,
+                                    consumptiontax: trip.consumptiontax,
+                                    surchargeamount: trip.surchargeamount,
+                                    vatp: trip.vatp,
+                                    gipba: trip.gipba,
+                                    totalamount: trip.totalamount,
+                                    currency: trip.currency,
+                                    invoicetype: trip.invoicetype,
+                                    custdiscount_perc: trip.custdiscount_perc,
+                                    airportfee_perc: trip.airportfee_perc,
+                                    gstvat_perc: trip.gstvat_perc,
+                                    surcharge_perc: trip.surcharge_perc,
+                                    consumptiontax_perc: trip.consumptiontax_perc
+                                }))
                             if (updRes == 0 && !rowInserted) {
                                 rowInserted = true;
                                 const insRes = await db.run(INSERT(trip).into(catering));
@@ -902,32 +902,32 @@ class TripService extends cds.ApplicationService {
                     }
                 }
             }
-            
+
             // const cateringStaged = await SELECT.from(cateringStaging).where(
             //     cds.parse.expr(whereCateringString)
             // );
-            
+
             // TODO: figure out how to do the update only for relevant rows post update - if fail 51, if succeed 53
             await Promise.all(
                 trips.map(async (trip) => {
-                    if ( trip.status === null || trip.status != 53) {
-                        await db.run(
-                            UPDATE(
-                                triplog, {   
-                                    insupcarriercode2: trip.insupcarriercode2,
-                                    inflightno: trip.inflightno,
-                                    inorigin: trip.inorigin,
-                                    indestination: trip.indestination,
-                                    inscheddeptdate: trip.inscheddeptdate,
-                                    surrogatenum: trip.surrogatenum,
-                                    creation_timestamp: trip.creation_timestamp,
-                                    logtype: trip.logtype
-                                }
-                            ).with({
-                                status: trip.status
-                            })
-                        );
-                    }
+                    // if ( trip.status === null || trip.status != 53) {
+                    await db.run(
+                        UPDATE(
+                            triplog, {
+                            insupcarriercode2: trip.insupcarriercode2,
+                            inflightno: trip.inflightno,
+                            inorigin: trip.inorigin,
+                            indestination: trip.indestination,
+                            inscheddeptdate: trip.inscheddeptdate,
+                            surrogatenum: trip.surrogatenum,
+                            creation_timestamp: trip.creation_timestamp,
+                            logtype: trip.logtype
+                        }
+                        ).with({
+                            status: trip.status
+                        })
+                    );
+                    // }
                 })
             );
             return true;
