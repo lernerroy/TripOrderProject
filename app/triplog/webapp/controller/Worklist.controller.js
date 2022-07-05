@@ -10,7 +10,8 @@ sap.ui.define(
         "sap/m/ObjectAttribute",
         "sap/m/ObjectStatus",
         "triplog/utils/Rest",
-        "sap/ui/core/format/DateFormat"
+        "sap/ui/core/format/DateFormat",
+        "../model/enums"
     ],
     function (
         BaseController,
@@ -23,7 +24,8 @@ sap.ui.define(
         ObjectAttribute,
         ObjectStatus,
         Rest,
-        DateFormat
+        DateFormat,
+        Enums
     ) {
         "use strict";
 
@@ -59,7 +61,8 @@ sap.ui.define(
                     tableNoDataText: this.getResourceBundle().getText(
                         "tableNoDataText"
                     ),
-                    showFooter: true
+                    showFooter: false,
+                    processButtonEnabled: false
                 });
                 this.setModel(oViewModel, "worklistView");
 
@@ -74,6 +77,15 @@ sap.ui.define(
                 });
 
                 this.setModel(oFilterModel, "triplogFilters");
+            },
+
+            onWorklistTableSelectionChange: function (oEvent) {
+                var aSelectedItems = oEvent.getSource().getSelectedItems();
+                var aItems = aSelectedItems.map(function (item) {
+                    return item.getBindingContext().getObject();
+                });
+
+                this.getModel("worklistView").setProperty("/processButtonEnabled", this._hasItemsForProcess(aItems));
             },
 
             /* =========================================================== */
@@ -93,12 +105,13 @@ sap.ui.define(
 
                 var oItemsBinding = oEvent.getSource().getBinding("items");
 
-                var aItems = oItemsBinding.getContexts().map(function(context){
+                var aItems = oItemsBinding.getContexts().map(function (context) {
                     return context.getObject();
                 });
 
-                debugger;
-                
+                var showProcessedFooter = this._hasItemsForProcess(aItems);
+                this.getModel("worklistView").setProperty("/showFooter", showProcessedFooter);
+
 
                 // // update the worklist's object counter after the table update
                 // var sTitle,
@@ -120,6 +133,20 @@ sap.ui.define(
                 //     "/worklistTableTitle",
                 //     sTitle
                 // );
+            },
+
+            _hasItemsForProcess: function (aItems) {
+                var hasItems = false;
+
+                // Check if we found at least one item that can be processed
+                for (var i = 0; i < aItems.length; i++) {
+                    if (aItems[i].status !== Enums.Status.PROCESSED) {
+                        hasItems = true;
+                        break;
+                    }
+                }
+
+                return hasItems;
             },
 
             /**
@@ -180,7 +207,7 @@ sap.ui.define(
                     var fromStringDate = dateFormat.format(timestamp.from, false) + "Z";
                     // set end of day
                     var toStringDate = dateFormat.format(timestamp.to, false) + "Z";
-    
+
                     // build the timestamp filters
                     aFilters.push(new Filter({
                         path: "creation_timestamp",
@@ -203,7 +230,7 @@ sap.ui.define(
                     }));
                 });
 
-                if (aStatusFilters.length){
+                if (aStatusFilters.length) {
                     aFilters.push(new Filter({
                         filters: aStatusFilters,
                         and: false
@@ -224,7 +251,7 @@ sap.ui.define(
                     }));
                 });
 
-                if (aLogTypesFilters.length){
+                if (aLogTypesFilters.length) {
                     aFilters.push(new Filter({
                         filters: aLogTypesFilters,
                         and: false
@@ -290,41 +317,81 @@ sap.ui.define(
             },
 
             onProcess: function (oEvent) {
-                // const sPath = this.getView().getModel().sServiceUrl.slice(2) + "processMessage";  // For deployment
-                const sPath = "/browse/processMessage"; // For Local
-                const requestData = {
-                    trips: []
-                };
-                const oTable = this.getView().byId("table");
-                oTable.getSelectedContexts().forEach((oContext) => {
-                    requestData.trips.push(oContext.getObject());
-                });
-                this.getView().setBusy(true);
-                const csrfToken = this.getView().getModel().getHttpHeaders()[
-                    "X-CSRF-Token"
-                ];
-                Rest.ajaxCall("POST", sPath, csrfToken, requestData).then(
-                    (oSuccess) => {
-                        oTable.getBinding("items").refresh();
-                        sap.m.MessageToast.show(
-                            this.getResourceBundle().getText(
-                                "messageProcessSuccesful"
-                            )
-                        );
-                        this.getView().setBusy(false);
-                    },
-                    (oError) => {
-                        if (oError.responseJSON) {
-                            sap.m.MessageBox.error(
-                                `${oError.responseJSON.error.code} - ${oError.responseJSON.error.message}`
-                            );
-                        } else {
-                            sap.m.MessageBox.error(`${oError.responseText}`);
-                        }
 
-                        this.getView().setBusy(false);
-                    }
+                var oTable = this.getView().byId("tripLogTable");
+
+                var aSelectedItems = oTable.getSelectedContexts().map(function(oContext){
+                    return oContext.getObject();
+                });
+
+                // var aItemsToProcess = aSelectedItems.filter(function (item) {
+                //     return item.status !== Enums.Status.PROCESSED
+                // });
+
+                var oOperation = this.getModel().bindContext(
+                    "/processMessage(...)"
                 );
+                // var oOperationParameters = oOperation.getParameterContext();
+                oOperation.setParameter("trips", aSelectedItems);
+
+
+                oOperation
+                .execute()
+                .then(function(oUpdatedContext){
+                    debugger;
+                })
+                .catch(function(err){
+                    alert("error " + err.message);
+                });
+
+                // var oDataProcessMsgListBinding = this.getModel().bindList("processMessage");
+
+                // oDataProcessMsgListBinding.create({
+                //     trips: aItemsToProcess
+                // }, false, false, false);
+
+                
+                // oDataProcessMsgListBinding.attachCreateCompleted(function (oEvent) {
+                //     debugger;
+                // });
+
+
+
+                // // const sPath = this.getView().getModel().sServiceUrl.slice(2) + "processMessage";  // For deployment
+                // const sPath = "/browse/processMessage"; // For Local
+                // const requestData = {
+                //     trips: []
+                // };
+                // const oTable = this.getView().byId("table");
+                // oTable.getSelectedContexts().forEach((oContext) => {
+                //     requestData.trips.push(oContext.getObject());
+                // });
+                // this.getView().setBusy(true);
+                // const csrfToken = this.getView().getModel().getHttpHeaders()[
+                //     "X-CSRF-Token"
+                // ];
+                // Rest.ajaxCall("POST", sPath, csrfToken, requestData).then(
+                //     (oSuccess) => {
+                //         oTable.getBinding("items").refresh();
+                //         sap.m.MessageToast.show(
+                //             this.getResourceBundle().getText(
+                //                 "messageProcessSuccesful"
+                //             )
+                //         );
+                //         this.getView().setBusy(false);
+                //     },
+                //     (oError) => {
+                //         if (oError.responseJSON) {
+                //             sap.m.MessageBox.error(
+                //                 `${oError.responseJSON.error.code} - ${oError.responseJSON.error.message}`
+                //             );
+                //         } else {
+                //             sap.m.MessageBox.error(`${oError.responseText}`);
+                //         }
+
+                //         this.getView().setBusy(false);
+                //     }
+                // );
             }
         });
     }

@@ -58,7 +58,7 @@
                 }
             }"
             visible="true"
-            mode="MultiSelect" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onWorklistUpdateFinished">
+            mode="MultiSelect" selectionChange=".onWorklistTableSelectionChange" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onWorklistUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
@@ -127,7 +127,7 @@
         <f:footer>
             <OverflowToolbar>
                 <ToolbarSpacer/>
-                <Button text="Process Message" press="onProcess" type="Emphasized"/>
+                <Button enabled="{worklistView>/processButtonEnabled}" text="Process Message" press="onProcess" type="Emphasized"/>
             </OverflowToolbar>
         </f:footer>
 

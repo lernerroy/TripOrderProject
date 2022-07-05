@@ -4,6 +4,12 @@ sap.ui.define([
     "use strict";
 
     return {
+        Status: {
+            READY_FOR_PROCESSING: 64,
+            ERROR: 51,
+            WARNING: 52,
+            PROCESSED: 53
+        },
         getStatusState: function() {
             return {
                 51: ValueState.Error,
