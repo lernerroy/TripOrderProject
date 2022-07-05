@@ -171,21 +171,21 @@ entity triprecordStaging : triprecorddetails{
 
 entity triplog : recordsKey, surrogatenum {
     //status : Decimal(2,0) @(title : '{i18n>status}') ;
-    // status: Status @(title : '{i18n>status}');
-    status: Association to Status @(title : '{i18n>status}');
+    status: Status @(title : '{i18n>status}');
+    // status: Association to Status @(title : '{i18n>status}');
     //messagetext : String @(title : '{i18n>messagetext}');
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
     key logtype: logType @(title: '{i18n>logtype}');
 };
 
-// @cds.autoexpose
-// type Status : Decimal(2,0)
-//     enum {          
-//         ReadyForProcessing = 64; 
-//         Error = 51; 
-//         Warning = 52; 
-//         Processed = 53;
-//         };
+@cds.autoexpose
+type Status : Decimal(2,0)
+    enum {          
+        ReadyForProcessing = 64; 
+        Error = 51; 
+        Warning = 52; 
+        Processed = 53;
+        };
 
 @cds.autoexpose
 type logType : String
@@ -197,12 +197,12 @@ type logType : String
         Catering = '5';
     }
 
-@cds.autoexpose
-entity Status {
-    key code     : Decimal(2, 0) @title: '{i18n>status}';
-        text     : localized String(255) @title : '{i18n>messagetext}';
-        sequence : Integer;
-};
+// @cds.autoexpose
+// entity Status {
+//     key code     : Decimal(2, 0) @title: '{i18n>status}';
+//         text     : localized String(255) @title : '{i18n>messagetext}';
+//         sequence : Integer;
+// };
 
 //@cds.persistence.exists
 entity passengerdetails : recordsKey, surrogatenum {
