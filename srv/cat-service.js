@@ -15,7 +15,7 @@ class TripService extends cds.ApplicationService {
             triplogdata.indestination = req.data.indestination;
             triplogdata.inscheddeptdate = req.data.inscheddeptdate;
             triplogdata.fosuffix = req.data.fosuffix;
-            triplogdata.status_code = 64;
+            triplogdata.status = 64;
             triplogdata.creation_timestamp = tripData.creation_timestamp;
             triplogdata.logtype = '1';
             // TODO: infinite loop
@@ -34,7 +34,7 @@ class TripService extends cds.ApplicationService {
             paxlogdata.indestination = req.data.indestination;
             paxlogdata.inscheddeptdate = req.data.inscheddeptdate;
             paxlogdata.fosuffix = req.data.fosuffix;
-            paxlogdata.status_code = 64;
+            paxlogdata.status = 64;
             paxlogdata.creation_timestamp = paxData.creation_timestamp;
             paxlogdata.logtype = '2';
             // TODO: infinite loop
@@ -53,7 +53,7 @@ class TripService extends cds.ApplicationService {
             cargologdata.indestination = req.data.indestination;
             cargologdata.inscheddeptdate = req.data.inscheddeptdate;
             cargologdata.fosuffix = req.data.fosuffix;
-            cargologdata.status_code = 64;
+            cargologdata.status = 64;
             cargologdata.creation_timestamp = cargoData.creation_timestamp;
             cargologdata.logtype = '3';
             // TODO: infinite loop
@@ -74,7 +74,7 @@ class TripService extends cds.ApplicationService {
             routelogdata.fosuffix = req.data.fosuffix;
             routelogdata.lineno = req.data.lineno;
             routelogdata.cfpno = req.data.cfpno;
-            routelogdata.status_code = 64;
+            routelogdata.status = 64;
             routelogdata.creation_timestamp = routeData.creation_timestamp;
             routelogdata.logtype = '4';
             // TODO: infinite loop
@@ -93,7 +93,7 @@ class TripService extends cds.ApplicationService {
             cateringlogdata.indestination = req.data.indestination;
             cateringlogdata.inscheddeptdate = req.data.inscheddeptdate;
             cateringlogdata.fosuffix = req.data.fosuffix;
-            cateringlogdata.status_code = 64;
+            cateringlogdata.status = 64;
             cateringlogdata.creation_timestamp = cateringData.creation_timestamp;
             cateringlogdata.logtype = '5';
             // TODO: infinite loop
@@ -247,15 +247,15 @@ class TripService extends cds.ApplicationService {
                                 ( triplog.logtype === '1' || triplog.logtype === 'Trip' )
                             );
                         });
-                        if (trips[triplogMatchingIndex].status_code != 53) {
+                        if (trips[triplogMatchingIndex].status != 53) {
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
-                                trips[triplogMatchingIndex].status_code = 51;
+                                trips[triplogMatchingIndex].status = 51;
                             } else {
                                 delete trip.creation_timestamp;
                                 delete trip.modifiedAt;
                                 delete trip.modifiedBy;
                                 tripStagedFiltered.push(trip);
-                                trips[triplogMatchingIndex].status_code = 53;
+                                trips[triplogMatchingIndex].status = 53;
                             }
                         }
                     });
@@ -484,15 +484,15 @@ class TripService extends cds.ApplicationService {
                                 ( triplog.logtype === '2' || triplog.logtype === 'Passenger' )
                             );
                         });
-                        if (trips[triplogMatchingIndex].status_code != 53) {
+                        if (trips[triplogMatchingIndex].status != 53) {
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
-                                trips[triplogMatchingIndex].status_code = 51;
+                                trips[triplogMatchingIndex].status = 51;
                             } else {
                                 delete trip.creation_timestamp;
                                 delete trip.modifiedAt;
                                 delete trip.modifiedBy;
                                 paxStagedFiltered.push(trip);
-                                trips[triplogMatchingIndex].status_code = 53;
+                                trips[triplogMatchingIndex].status = 53;
                             }
                         }
                     });
@@ -626,15 +626,15 @@ class TripService extends cds.ApplicationService {
                                 ( triplog.logtype === '3' || triplog.logtype === 'Cargo' )
                             );
                         });
-                        if (trips[triplogMatchingIndex].status_code != 53) {
+                        if (trips[triplogMatchingIndex].status != 53) {
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
-                                trips[triplogMatchingIndex].status_code = 51;
+                                trips[triplogMatchingIndex].status = 51;
                             } else {
                                 delete trip.creation_timestamp;
                                 delete trip.modifiedAt;
                                 delete trip.modifiedBy;
                                 cargoStagedFiltered.push(trip);
-                                trips[triplogMatchingIndex].status_code = 53;
+                                trips[triplogMatchingIndex].status = 53;
                             }
                         }
                     });
@@ -746,15 +746,15 @@ class TripService extends cds.ApplicationService {
                                 ( triplog.logtype === '4' || triplog.logtype === 'RoutePlan' )
                             );
                         });
-                        if (trips[triplogMatchingIndex].status_code != 53) {
+                        if (trips[triplogMatchingIndex].status != 53) {
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
-                                trips[triplogMatchingIndex].status_code = 51;
+                                trips[triplogMatchingIndex].status = 51;
                             } else {
                                 delete trip.creation_timestamp;
                                 delete trip.modifiedAt;
                                 delete trip.modifiedBy;
                                 routeStagedFiltered.push(trip);
-                                trips[triplogMatchingIndex].status_code = 53;
+                                trips[triplogMatchingIndex].status = 53;
                             }
                         }
                     });
@@ -834,15 +834,15 @@ class TripService extends cds.ApplicationService {
                                 ( triplog.logtype === '5' || triplog.logtype === 'Catering' )
                             );
                         });
-                        if (trips[triplogMatchingIndex].status_code != 53) {
+                        if (trips[triplogMatchingIndex].status != 53) {
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
-                                trips[triplogMatchingIndex].status_code = 51;
+                                trips[triplogMatchingIndex].status = 51;
                             } else {
                                 delete trip.creation_timestamp;
                                 delete trip.modifiedAt;
                                 delete trip.modifiedBy;
                                 cateringStagedFiltered.push(trip);
-                                trips[triplogMatchingIndex].status_code = 53;
+                                trips[triplogMatchingIndex].status = 53;
                             }
                         }
                     });
@@ -910,7 +910,7 @@ class TripService extends cds.ApplicationService {
             // TODO: figure out how to do the update only for relevant rows post update - if fail 51, if succeed 53
             await Promise.all(
                 trips.map(async (trip) => {
-                    if ( trip.status === null || trip.status.code != 53) {
+                    if ( trip.status === null || trip.status != 53) {
                         await db.run(
                             UPDATE(
                                 triplog, {   
@@ -924,7 +924,7 @@ class TripService extends cds.ApplicationService {
                                     logtype: trip.logtype
                                 }
                             ).with({
-                                status_code: trip.status_code
+                                status: trip.status
                             })
                         );
                     }
