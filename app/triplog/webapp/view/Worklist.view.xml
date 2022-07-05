@@ -64,7 +64,7 @@
                     <OverflowToolbar>
                         <Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
                         <ToolbarSpacer />
-                        <SearchField id="searchField" tooltip="{i18n>worklistSearchTooltip}" search=".onSearch">
+                        <SearchField tooltip="{i18n>worklistSearchTooltip}" search=".onFilter" value="{worklistView>/search}">
                             <layoutData>
                                 <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>
                             </layoutData>

@@ -10,7 +10,7 @@ sap.ui.define(
         "sap/m/ObjectAttribute",
         "sap/m/ObjectStatus",
         "triplog/utils/Rest",
-        "sap/ui/core/format/DateFormat",        
+        "sap/ui/core/format/DateFormat",
         "../model/enums"
     ],
     function (
@@ -62,7 +62,8 @@ sap.ui.define(
                         "tableNoDataText"
                     ),
                     showFooter: false,
-                    processButtonEnabled: false
+                    processButtonEnabled: false,
+                    search: ""
                 });
                 this.setModel(oViewModel, "worklistView");
 
@@ -140,12 +141,11 @@ sap.ui.define(
 
                 // Check if we found at least one item that can be processed
                 for (var i = 0; i < aItems.length; i++) {
-                    if (aItems[i].status !== Enums.Status.PROCESSED) {
+                    if (parseInt(aItems[i].status) !== Enums.Status.PROCESSED) {
                         hasItems = true;
                         break;
                     }
                 }
-
                 return hasItems;
             },
 
@@ -170,27 +170,29 @@ sap.ui.define(
             },
 
             onSearch: function (oEvent) {
-                if (oEvent.getParameters().refreshButtonPressed) {
-                    // Search field's 'refresh' button has been pressed.
-                    // This is visible if you select any main list item.
-                    // In this case no new search is triggered, we only
-                    // refresh the list binding.
-                    this.onRefresh();
-                } else {
-                    var aTableSearchState = [];
-                    var sQuery = oEvent.getParameter("query");
+                var sQuery = oEvent.getParameter("query");
 
-                    if (sQuery && sQuery.length > 0) {
-                        aTableSearchState = [
-                            new Filter(
-                                "insupcarriercode2",
-                                FilterOperator.Contains,
-                                sQuery
-                            ),
-                        ];
-                    }
-                    this._applySearch(aTableSearchState);
-                }
+                // if (oEvent.getParameters().refreshButtonPressed) {
+                //     // Search field's 'refresh' button has been pressed.
+                //     // This is visible if you select any main list item.
+                //     // In this case no new search is triggered, we only
+                //     // refresh the list binding.
+                //     this.onRefresh();
+                // } else {
+                //     var aTableSearchState = [];
+                //     var sQuery = oEvent.getParameter("query");
+
+                //     if (sQuery && sQuery.length > 0) {
+                //         aTableSearchState = [
+                //             new Filter(
+                //                 "insupcarriercode2",
+                //                 FilterOperator.Contains,
+                //                 sQuery
+                //             ),
+                //         ];
+                //     }
+                //     this._applySearch(aTableSearchState);
+                // }
             },
             /** Event Handler for Search Functionality on Filter */
             onFilter: function () {
@@ -198,6 +200,17 @@ sap.ui.define(
                 var oTable = this.getView().byId("tripLogTable");
                 var oBinding = oTable.getBinding("items");
                 var oFiltersModel = this.getModel("triplogFilters");
+
+                
+                var sQuery = this.getModel("worklistView").getProperty("/search");
+
+                var aSearchFilters = this._getSearchFilters(sQuery);
+                if (aSearchFilters.length){
+                    aFilters.push(new Filter({
+                        filters: aSearchFilters,
+                        and: false
+                    }));
+                }
 
                 var timestamp = oFiltersModel.getProperty("/timestamp");
 
@@ -264,6 +277,27 @@ sap.ui.define(
                 if (oBinding.isSuspended()) {
                     oTable.getBinding("items").resume();
                 }
+            },
+
+            _getSearchFilters: function (sQuery) {
+
+                if (!sQuery || !sQuery.length) {
+                    return [];
+                }
+
+                var searchFields = [
+                    'insupcarriercode2',
+                    'surrogatenum',
+                    // you can add more fields in here
+                ];
+
+                return searchFields.map(function (field) {
+                    return new Filter({
+                        path: field,
+                        operator: FilterOperator.Contains,
+                        value1: sQuery
+                    });
+                });
             },
 
             /**
@@ -333,10 +367,13 @@ sap.ui.define(
                 );
                 oOperation.setParameter("trips", aItemsToProcess);
 
+                var self = this;
+
                 oOperation
                     .execute()
                     .then(function (oUpdatedContext) {
-                        debugger;
+                        self.showMessage(self.getResourceBundle().getText("messageProcessSuccesful"));
+                        oTable.getBinding("items").refresh();
                     })
                     .catch(function (err) {
                         console.log("Error", err);
