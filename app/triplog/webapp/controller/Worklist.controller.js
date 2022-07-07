@@ -203,6 +203,7 @@ sap.ui.define(
                 var aFilters = [];
                 var oTable = this.getView().byId("tripLogTable");
                 var oBinding = oTable.getBinding("items");
+                oBinding.refresh();
                 var oFiltersModel = this.getModel("triplogFilters");
 
 
@@ -383,6 +384,7 @@ sap.ui.define(
                     })
                     .catch(function (err) {
                         console.log("Error", err);
+                        oTable.getBinding("items").refresh();
                         self.getView().setBusy(false);
                     });
             }

@@ -105,11 +105,23 @@ class TripService extends cds.ApplicationService {
         });
         this.on("processMessage", async (req) => {
             const isSuccess = await this.pushTripsToActualEntity(
-                req.data.trips
+                req.data.trips, "processMessage"
             );
             if (!isSuccess) throw req.reject(500, "Message Processing Failed");
 
             // else if(isSuccess == "no Rows") throw req.reject(500, 'No Rows were processed');
+        });
+        this.on("processMessagesIn", async (req, caller) => {
+            const status = req.data.status;
+            const triplogInput = await SELECT.from(triplog).where('status =', status);
+            const triplogOutput = await this.pushTripsToActualEntity(
+                triplogInput, "processMessageIn"
+            );
+            if(triplogOutput === false) {
+                throw req.reject(500, "Message Processing Failed");
+            } else {
+                req.reply(triplogOutput);
+            }
         });
         this.pushTripsToActualEntity = async (trips) => {
             let whereTripString = "";
@@ -168,12 +180,6 @@ class TripService extends cds.ApplicationService {
                         if (trips[triplogMatchingIndex].status != 53) {
                             oldTripStatus.push({
                                 index: triplogMatchingIndex,
-                                insupcarriercode2: trips[triplogMatchingIndex].insupcarriercode2,
-                                inflightno: trips[triplogMatchingIndex].inflightno,
-                                inorigin: trips[triplogMatchingIndex].inorigin,
-                                indestination: trips[triplogMatchingIndex].indestination,
-                                inscheddeptdate: trips[triplogMatchingIndex].inscheddeptdate,
-                                surrogatenum: trips[triplogMatchingIndex].surrogatenum,
                                 status: trips[triplogMatchingIndex].status
                             });
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
@@ -782,31 +788,12 @@ class TripService extends cds.ApplicationService {
                     );
                 }
             }
-
-            // await Promise.all(
-            //     trips.map(async (trip) => {
-            //         // if ( trip.status === null || trip.status != 53) {
-            //         await db.run(
-            //             UPDATE(
-            //                 triplog, {
-            //                 insupcarriercode2: trip.insupcarriercode2,
-            //                 inflightno: trip.inflightno,
-            //                 inorigin: trip.inorigin,
-            //                 indestination: trip.indestination,
-            //                 inscheddeptdate: trip.inscheddeptdate,
-            //                 surrogatenum: trip.surrogatenum,
-            //                 creation_timestamp: trip.creation_timestamp,
-            //                 logtype: trip.logtype
-            //             }
-            //             ).with({
-            //                 status: trip.status
-            //             })
-            //         );
-            //         // }
-            //     })
-            // );
-            return true;
-            // return stagedRow;
+            
+            if(caller === "processMessage") {
+                return true;
+            } else {
+                return trips;
+            }
         };
 
         /**
