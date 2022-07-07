@@ -1,4 +1,7 @@
 ###
+GET http://localhost:4004/browse/triplog?$select=creation_timestamp,fosuffix,indestination,inflightno,inorigin,inscheddeptdate,insupcarriercode2,logtype,status,surrogatenum&$skip=3&$top=80
+
+###
 POST http://localhost:4004/browse/triprecord
 Content-Type: application/json
 
@@ -9,10 +12,10 @@ Content-Type: application/json
 		"indestination": "",
 		"inscheddeptdate": "1900-01-01",
 		"fosuffix": null,
-		"surrogatenum": "RanTest1",
+		"surrogatenum": "DanielTest2",
 		"aufnr": null,
 		"supcarriercode2_code": "AV",
-		"scheddeptdate": "2021-12-02",
+		"scheddeptdate": "2021-01-01",
 		"flightno": "0007",
 		"supcarriercode_code": "AV",
 		"carriercode_code": "AV",

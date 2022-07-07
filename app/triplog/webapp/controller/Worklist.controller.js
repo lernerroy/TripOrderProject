@@ -11,6 +11,7 @@ sap.ui.define(
         "sap/m/ObjectStatus",
         "triplog/utils/Rest",
         "sap/ui/core/format/DateFormat",
+        "sap/ui/table/library",
         "../model/enums"
     ],
     function (
@@ -25,9 +26,12 @@ sap.ui.define(
         ObjectStatus,
         Rest,
         DateFormat,
+        library,
         Enums
     ) {
         "use strict";
+        // shortcut for sap.ui.table.SortOrder
+        var sortOrder = library.SortOrder;
 
         return BaseController.extend("triplog.controller.Worklist", {
             formatter: formatter,
@@ -201,11 +205,11 @@ sap.ui.define(
                 var oBinding = oTable.getBinding("items");
                 var oFiltersModel = this.getModel("triplogFilters");
 
-                
+
                 var sQuery = this.getModel("worklistView").getProperty("/search");
 
                 var aSearchFilters = this._getSearchFilters(sQuery);
-                if (aSearchFilters.length){
+                if (aSearchFilters.length) {
                     aFilters.push(new Filter({
                         filters: aSearchFilters,
                         and: false
@@ -366,7 +370,8 @@ sap.ui.define(
                     "/processMessage(...)"
                 );
                 oOperation.setParameter("trips", aItemsToProcess);
-
+                
+                this.getView().setBusy(true);
                 var self = this;
 
                 oOperation
@@ -374,9 +379,11 @@ sap.ui.define(
                     .then(function (oUpdatedContext) {
                         self.showMessage(self.getResourceBundle().getText("messageProcessSuccesful"));
                         oTable.getBinding("items").refresh();
+                        self.getView().setBusy(false);
                     })
                     .catch(function (err) {
                         console.log("Error", err);
+                        self.getView().setBusy(false);
                     });
             }
         });

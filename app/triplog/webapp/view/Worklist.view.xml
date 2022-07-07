@@ -52,13 +52,12 @@
         <f:content>
             <Table id="tripLogTable" width="auto" items="{
                 path: '/triplog',
-                suspended: false,
-                parameters: {
-                    top: 30
-                }
+                suspended: false
             }"
-            visible="true"
-            mode="MultiSelect" selectionChange=".onWorklistTableSelectionChange" noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" growing="true" growingScrollToLoad="true" updateFinished=".onWorklistUpdateFinished">
+            visible="true" alternateRowColors="true"
+            mode="MultiSelect" selectionChange=".onWorklistTableSelectionChange" 
+            noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
+            growing="true" growingScrollToLoad="true" updateFinished=".onWorklistUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>
@@ -73,10 +72,10 @@
                 </headerToolbar>
 
                 <columns>
-                    <Column id="logtype" >
-                        <Text text="{i18n>logtype}"  />
+                    <Column id="logtype">
+                    <Text text="{i18n>logtype}"  />
                     </Column>
-                    <!-- <Column id="insupcarriercode2">
+                    <Column id="insupcarriercode2">
                         <Text text="{i18n>insupcarriercode2}" />
                     </Column>
                     <Column id="inflightno">
@@ -99,7 +98,7 @@
                     </Column>
                     <Column id="creation_timestamp">
                         <Text text="{i18n>creation_timestamp}"/>
-                    </Column>-->
+                    </Column>
                     <Column id="unitStatusColumn" hAlign="End">
                         <Text text="{i18n>status}" id="Status"/>
                     </Column> 
@@ -111,6 +110,14 @@
                                 path: 'logtype',
                                 formatter: '.formatter.logTypeFormat'
                             }" />
+                        <Text text="{path: 'insupcarriercode2'}" />
+                        <Text text="{path: 'inflightno'}"/>
+                        <Text text="{path: 'inorigin'}"/>
+                        <Text text="{path: 'indestination'}"/>
+                        <Text text="{path: 'inscheddeptdate'}"/>
+                        <Text text="{path: 'surrogatenum'}"/>
+                        <Text text="{path: 'fosuffix'}" />
+                        <Text text="{path: 'creation_timestamp'}"/>
                             <ObjectStatus text="{
                                 path: 'status',
                                 formatter: '.formatter.statusTextFormat'

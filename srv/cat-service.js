@@ -3,6 +3,8 @@ class TripService extends cds.ApplicationService {
     async init() {
         const { triprecord, triprecordStaging, pax, paxStaging, cargorecord, cargorecordStaging,
             routeplan, routeplanStaging, catering, cateringStaging, triplog } = this.entities;
+        const tripLogType = '1', paxLogType = '2', cargoLogType = '3', routeLogType = '4',
+            cateringLogType = '5';
         const db = await cds.connect.to("db");
         this.on("CREATE", triprecord, async (req) => {
             let tripData = req.data;
@@ -17,7 +19,7 @@ class TripService extends cds.ApplicationService {
             triplogdata.fosuffix = req.data.fosuffix;
             triplogdata.status = 64;
             triplogdata.creation_timestamp = tripData.creation_timestamp;
-            triplogdata.logtype = '1';
+            triplogdata.logtype = tripLogType;
             // TODO: infinite loop
             await db.run(INSERT([tripData]).into(triprecordStaging));
             await db.run(INSERT([triplogdata]).into(triplog));
@@ -36,7 +38,7 @@ class TripService extends cds.ApplicationService {
             paxlogdata.fosuffix = req.data.fosuffix;
             paxlogdata.status = 64;
             paxlogdata.creation_timestamp = paxData.creation_timestamp;
-            paxlogdata.logtype = '2';
+            paxlogdata.logtype = paxLogType;
             // TODO: infinite loop
             await db.run(INSERT([paxData]).into(paxStaging));
             await db.run(INSERT([paxlogdata]).into(triplog));
@@ -55,7 +57,7 @@ class TripService extends cds.ApplicationService {
             cargologdata.fosuffix = req.data.fosuffix;
             cargologdata.status = 64;
             cargologdata.creation_timestamp = cargoData.creation_timestamp;
-            cargologdata.logtype = '3';
+            cargologdata.logtype = cargoLogType;
             // TODO: infinite loop
             await db.run(INSERT([cargoData]).into(cargorecordStaging));
             await db.run(INSERT([cargologdata]).into(triplog));
@@ -76,7 +78,7 @@ class TripService extends cds.ApplicationService {
             routelogdata.cfpno = req.data.cfpno;
             routelogdata.status = 64;
             routelogdata.creation_timestamp = routeData.creation_timestamp;
-            routelogdata.logtype = '4';
+            routelogdata.logtype = routeLogType;
             // TODO: infinite loop
             await db.run(INSERT([routeData]).into(routeplanStaging));
             await db.run(INSERT([routelogdata]).into(triplog));
@@ -95,7 +97,7 @@ class TripService extends cds.ApplicationService {
             cateringlogdata.fosuffix = req.data.fosuffix;
             cateringlogdata.status = 64;
             cateringlogdata.creation_timestamp = cateringData.creation_timestamp;
-            cateringlogdata.logtype = '5';
+            cateringlogdata.logtype = cateringLogType;
             // TODO: infinite loop
             await db.run(INSERT([cateringData]).into(cateringStaging));
             await db.run(INSERT([cateringlogdata]).into(triplog));
@@ -106,6 +108,7 @@ class TripService extends cds.ApplicationService {
                 req.data.trips
             );
             if (!isSuccess) throw req.reject(500, "Message Processing Failed");
+
             // else if(isSuccess == "no Rows") throw req.reject(500, 'No Rows were processed');
         });
         this.pushTripsToActualEntity = async (trips) => {
@@ -115,110 +118,25 @@ class TripService extends cds.ApplicationService {
             let whereRouteString = "";
             let whereCateringString = "";
             let stagedRow = false;
+            const oldTripStatus = [];
+
             trips.forEach((trip) => {
-                let surrogatenumTemp = trip.surrogatenum;
-                if (
-                    surrogatenumTemp !== null &&
-                    surrogatenumTemp !== undefined
-                ) {
-                    surrogatenumTemp = "'" + trip.surrogatenum + "'";
-                }
-                let insupcarriercode2Temp = trip.insupcarriercode2;
-                if (
-                    insupcarriercode2Temp !== null &&
-                    insupcarriercode2Temp !== undefined
-                ) {
-                    insupcarriercode2Temp = "'" + trip.insupcarriercode2 + "'";
-                }
-                let inflightnoTemp = trip.inflightno;
-                if (inflightnoTemp !== null && inflightnoTemp !== undefined) {
-                    inflightnoTemp = "'" + trip.inflightno + "'";
-                }
-                let inoriginTemp = trip.inorigin;
-                if (inoriginTemp !== null && inoriginTemp !== undefined) {
-                    inoriginTemp = "'" + trip.inorigin + "'";
-                }
-                let indestinationTemp = trip.indestination;
-                if (
-                    indestinationTemp !== null &&
-                    indestinationTemp !== undefined
-                ) {
-                    indestinationTemp = "'" + trip.indestination + "'";
-                }
-                let inscheddeptdateTemp = trip.inscheddeptdate;
-                if (
-                    inscheddeptdateTemp !== null &&
-                    inscheddeptdateTemp !== undefined
-                ) {
-                    inscheddeptdateTemp = "'" + trip.inscheddeptdate + "'";
-                }
-                let creation_timestamp = trip.creation_timestamp;
-                if (
-                    creation_timestamp !== null &&
-                    creation_timestamp !== undefined
-                ) {
-                    creation_timestamp = "'" + trip.creation_timestamp + "'";
-                }
-                const whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} )`;
                 switch (trip.logtype) {
                     default:
-                    case '1':
-                    case 'Trip':
-                        if (whereTripString === "") {
-                            whereTripString = whereComponent;
-                        } else {
-                            whereTripString = `${whereTripString} or ${whereComponent}`;
-                        }
+                    case tripLogType:
+                        whereTripString = this.buildWhereString(trip, whereTripString);
                         break;
-                    case '2':
-                    case 'Passenger':
-                        if (wherePaxString === "") {
-                            wherePaxString = whereComponent;
-                        } else {
-                            wherePaxString = `${wherePaxString} or ${whereComponent}`;
-                        }
+                    case paxLogType:
+                        wherePaxString = this.buildWhereString(trip, wherePaxString);
                         break;
-                    case '3':
-                    case 'Cargo':
-                        if (whereCargoString === "") {
-                            whereCargoString = whereComponent;
-                        } else {
-                            whereCargoString = `${whereCargoString} or ${whereComponent}`;
-                        }
+                    case cargoLogType:
+                        whereCargoString = this.buildWhereString(trip, whereCargoString);
                         break;
-                    case '4':
-                    case 'RoutePlan':
-                        let linenoTemp = trip.lineno;
-                        if (
-                            linenoTemp !== null &&
-                            linenoTemp !== undefined
-                        ) {
-                            linenoTemp = "'" + trip.lineno + "'";
-                        }
-                        let cfpnoTemp = trip.cfpno;
-                        if (
-                            cfpnoTemp !== null &&
-                            cfpnoTemp !== undefined
-                        ) {
-                            cfpnoTemp = "'" + trip.cfpno + "'";
-                        }
-                        const whereRouteComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ${insupcarriercode2Temp}` +
-                            ` and inflightno = ${inflightnoTemp} and inorigin = ${inoriginTemp} and indestination = ${indestinationTemp}` +
-                            ` and inscheddeptdate = ${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp}` +
-                            ` and lineno = ${linenoTemp} and cfpno = ${cfpnoTemp} )`;
-                        if (whereRouteString === "") {
-                            whereRouteString = whereRouteComponent;
-                        } else {
-                            whereRouteString = `${whereRouteString} or ${whereRouteComponent}`;
-                        }
+                    case routeLogType:
+                        whereRouteString = this.buildWhereString(trip, whereRouteString);
                         break;
-                    case '5':
-                    case 'Catering':
-                        if (whereCateringString === "") {
-                            whereCateringString = whereComponent;
-                        } else {
-                            whereCateringString = `${whereCateringString} or ${whereComponent}`;
-                        }
+                    case cateringLogType:
+                        whereCateringString = this.buildWhereString(trip, whereCateringString);
                         break;
                 }
             });
@@ -244,10 +162,20 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                (triplog.logtype === '1' || triplog.logtype === 'Trip')
+                                (triplog.logtype === tripLogType)
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
+                            oldTripStatus.push({
+                                index: triplogMatchingIndex,
+                                insupcarriercode2: trips[triplogMatchingIndex].insupcarriercode2,
+                                inflightno: trips[triplogMatchingIndex].inflightno,
+                                inorigin: trips[triplogMatchingIndex].inorigin,
+                                indestination: trips[triplogMatchingIndex].indestination,
+                                inscheddeptdate: trips[triplogMatchingIndex].inscheddeptdate,
+                                surrogatenum: trips[triplogMatchingIndex].surrogatenum,
+                                status: trips[triplogMatchingIndex].status
+                            });
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
                                 trips[triplogMatchingIndex].status = 51;
                             } else {
@@ -259,107 +187,17 @@ class TripService extends cds.ApplicationService {
                             }
                         }
                     });
-                    if (tripStagedFiltered.length > 0) {
-                        let rowInserted = false;
+                    if (tripStagedFiltered.length) {
                         // Update rows, and insert if they do not exist
-                        tripStagedFiltered.map(async (trip) => {
-                            // try {
-                            // try {
-                            //     await db.run(INSERT(trip).into(triprecord));
-                            // } catch (error) {
-                            //     await db.run(UPDATE(triprecord,
-                            //     {   
-                            //         insupcarriercode2: trip.insupcarriercode2,
-                            //         inflightno: trip.inflightno,
-                            //         inorigin: trip.inorigin,
-                            //         indestination: trip.indestination,
-                            //         inscheddeptdate: trip.inscheddeptdate,
-                            //         surrogatenum: trip.surrogatenum
-                            //     }).with({
-                            //         supcarriercode2     : trip.supcarriercode2,
-                            //         scheddeptdate       : trip.scheddeptdate,
-                            //         flightno            : trip.flightno,
-                            //         supcarriercode      : trip.supcarriercode,
-                            //         carriercode         : trip.carriercode,
-                            //         origin              : trip.origin,
-                            //         destination         : trip.destination,
-                            //         repeatno            : trip.repeatno,
-                            //         idooutc             : trip.idooutc,
-                            //         idoo                : trip.idoo,
-                            //         doo                 : trip.doo,
-                            //         dooutc              : trip.dooutc,
-                            //         actarrapt           : trip.actarrapt,
-                            //         actarrapticao       : trip.actarrapticao,
-                            //         actdeptapt          : trip.actdeptapt,
-                            //         actdeptapticao      : trip.actdeptapticao,
-                            //         legstate            : trip.legstate,
-                            //         aircrafttype        : trip.aircrafttype,
-                            //         aircrafttypecpa     : trip.aircrafttypecpa,
-                            //         tailno              : trip.tailno,
-                            //         flighttype          : trip.flighttype,
-                            //         deptparkposn        : trip.deptparkposn,
-                            //         actgatetime         : trip.actgatetime,
-                            //         servicetype         : trip.servicetype,
-                            //         delayreason1        : trip.delayreason1,
-                            //         delayreason2        : trip.delayreason2,
-                            //         delayreason3        : trip.delayreason3,
-                            //         delayreason4        : trip.delayreason4,
-                            //         delayreason5        : trip.delayreason5,
-                            //         actualflyingdur     : trip.actualflyingdur,
-                            //         scheddepttime       : trip.scheddepttime,
-                            //         scheddeptts         : trip.scheddeptts,
-                            //         actdeptts           : trip.actdeptts,
-                            //         takeoffdate         : trip.takeoffdate,
-                            //         takeofftime         : trip.takeofftime,
-                            //         touchdndate         : trip.touchdndate,
-                            //         touchdntime         : trip.touchdntime,
-                            //         actdeptdate         : trip.actdeptdate,
-                            //         actdepttime         : trip.actdepttime,
-                            //         actarrdate          : trip.actarrdate,
-                            //         actarrtime          : trip.actarrtime,
-                            //         takeoffdateutc      : trip.takeoffdateutc,
-                            //         takeofftimeutc      : trip.takeofftimeutc,
-                            //         touchdndateutc      : trip.touchdndateutc,
-                            //         touchdntimeutc      : trip.touchdntimeutc,
-                            //         actdeptdateutc      : trip.actdeptdateutc,
-                            //         actdepttimeutc      : trip.actdepttimeutc,
-                            //         actarrdateutc       : trip.actarrdateutc,
-                            //         actarrtimeutc       : trip.actarrtimeutc,
-                            //         scheddeptdateutc    : trip.scheddeptdateutc,
-                            //         scheddepttimeutc    : trip.scheddepttimeutc,
-                            //         schedarrdateutc     : trip.schedarrdateutc,
-                            //         schedarrtimeutc     : trip.schedarrtimeutc,
-                            //         schedarrdate        : trip.schedarrdate,
-                            //         schedarrtime        : trip.schedarrtime,
-                            //         schedarrts          : trip.schedarrts,
-                            //         actarrts            : trip.actarrts,
-                            //         estdeptdate         : trip.estdeptdate,
-                            //         estdepttime         : trip.estdepttime,
-                            //         estdeptdateutc      : trip.estdeptdateutc,
-                            //         estdepttimeutc      : trip.estdepttimeutc,
-                            //         estarrdateutc       : trip.estarrdateutc,
-                            //         estarrtimeutc       : trip.estarrtimeutc,
-                            //         estarrdate          : trip.estarrdate,
-                            //         estarrtime          : trip.estarrtime,
-                            //         planblocktime       : trip.planblocktime,
-                            //         schedarrapticao     : trip.schedarrapticao,
-                            //         schedarrapt         : trip.schedarrapt,
-                            //         scheddeptapticao    : trip.scheddeptapticao,
-                            //         scheddeptapt        : trip.scheddeptapt,
-                            //         flight_tm           : trip.flight_tm,
-                            //         arr_stand           : trip.arr_stand,
-                            //         dep_terminal        : trip.dep_terminal,
-                            //         arr_terminal        : trip.arr_terminal,
-                            //         onblockdate         : trip.onblockdate,
-                            //         onblocktime         : trip.onblocktime,
-                            //         offblockdate        : trip.offblockdate,
-                            //         offblocktime        : trip.offblocktime,
-                            //         taxi_out_time       : trip.taxi_out_time,
-                            //         route               : trip.route,
-                            //         cfpno1              : trip.cfpno1,
-                            //         cfpno2              : trip.cfpno2
-                            //     }) )
-                            // }
+                        for (const trip of tripStagedFiltered) {
+
+                            // let tx = db.tx();
+                            // const tripsStaged = await SELECT.from(triprecord).where(
+                            //     cds.parse.expr(whereTripString).count());
+
+                            // tripStagedFiltered.map(async (trip) => {
+                            // await tx.commit();
+                            // await tx.begin();
                             const updRes = await db.run(UPDATE(triprecord,
                                 {
                                     insupcarriercode2: trip.insupcarriercode2,
@@ -451,12 +289,16 @@ class TripService extends cds.ApplicationService {
                                     route: trip.route,
                                     cfpno1: trip.cfpno1,
                                     cfpno2: trip.cfpno2
-                                }))
-                            if (updRes == 0 && !rowInserted) {
-                                rowInserted = true;
-                                const insRes = await db.run(INSERT(tripStagedFiltered).into(triprecord));
-                            }
-                        });
+                                }));
+                            if (!updRes) {
+                                await db.run(INSERT.into(triprecord, trip));
+                                // await tx.insert(trip).into(triprecord);
+                                // await tx.commit();
+                                // await tx.begin();
+                                // await db.run(INSERT(tripStagedFiltered).into(triprecord));
+                            } 
+                            // });
+                        }
                     }
                 }
             }
@@ -471,7 +313,7 @@ class TripService extends cds.ApplicationService {
                     stagedRow = true;
                     const paxStagedFiltered = [];
                     // Validation and Sanitation
-                    paxStaged.forEach((trip) => {
+                    for (const trip of paxStaged) {
                         const triplogMatchingIndex = trips.findIndex((triplog) => {
                             return (
                                 triplog.insupcarriercode2 === trip.insupcarriercode2 &&
@@ -481,10 +323,14 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                (triplog.logtype === '2' || triplog.logtype === 'Passenger')
+                                (triplog.logtype === paxLogType)
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
+                            oldTripStatus.push({
+                                index: triplogMatchingIndex,
+                                status: trips[triplogMatchingIndex].status
+                            });
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
                                 trips[triplogMatchingIndex].status = 51;
                             } else {
@@ -495,7 +341,7 @@ class TripService extends cds.ApplicationService {
                                 trips[triplogMatchingIndex].status = 53;
                             }
                         }
-                    });
+                    };
                     if (paxStagedFiltered.length > 0) {
                         let rowInserted = false;
                         // Update rows, and insert if they do not exist
@@ -613,7 +459,7 @@ class TripService extends cds.ApplicationService {
                     stagedRow = true;
                     const cargoStagedFiltered = [];
                     // Validation and Sanitation
-                    cargoStaged.forEach((trip) => {
+                    for (const trip of cargoStaged) {
                         const triplogMatchingIndex = trips.findIndex((triplog) => {
                             return (
                                 triplog.insupcarriercode2 === trip.insupcarriercode2 &&
@@ -623,10 +469,14 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                (triplog.logtype === '3' || triplog.logtype === 'Cargo')
+                                (triplog.logtype === cargoLogType)
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
+                            oldTripStatus.push({
+                                index: triplogMatchingIndex,
+                                status: trips[triplogMatchingIndex].status
+                            });
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
                                 trips[triplogMatchingIndex].status = 51;
                             } else {
@@ -637,7 +487,7 @@ class TripService extends cds.ApplicationService {
                                 trips[triplogMatchingIndex].status = 53;
                             }
                         }
-                    });
+                    };
                     if (cargoStagedFiltered.length > 0) {
                         let rowInserted = false;
                         // Update rows, and insert if they do not exist
@@ -733,7 +583,7 @@ class TripService extends cds.ApplicationService {
                     stagedRow = true;
                     const routeStagedFiltered = [];
                     // Validation and Sanitation
-                    routePlanStaged.forEach((trip) => {
+                    for (const trip of routePlanStaged) {
                         const triplogMatchingIndex = trips.findIndex((triplog) => {
                             return (
                                 triplog.insupcarriercode2 === trip.insupcarriercode2 &&
@@ -743,10 +593,14 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                (triplog.logtype === '4' || triplog.logtype === 'RoutePlan')
+                                (triplog.logtype === routeLogType)
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
+                            oldTripStatus.push({
+                                index: triplogMatchingIndex,
+                                status: trips[triplogMatchingIndex].status
+                            });
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
                                 trips[triplogMatchingIndex].status = 51;
                             } else {
@@ -757,7 +611,7 @@ class TripService extends cds.ApplicationService {
                                 trips[triplogMatchingIndex].status = 53;
                             }
                         }
-                    });
+                    };
                     if (routeStagedFiltered.length > 0) {
                         let rowInserted = false;
                         // Update rows, and insert if they do not exist
@@ -821,7 +675,7 @@ class TripService extends cds.ApplicationService {
                     stagedRow = true;
                     const cateringStagedFiltered = [];
                     // Validation and Sanitation
-                    cateringStaged.forEach((trip) => {
+                    for (const trip of cateringStaged) {
                         const triplogMatchingIndex = trips.findIndex((triplog) => {
                             return (
                                 triplog.insupcarriercode2 === trip.insupcarriercode2 &&
@@ -831,10 +685,14 @@ class TripService extends cds.ApplicationService {
                                 triplog.inscheddeptdate === trip.inscheddeptdate &&
                                 triplog.surrogatenum === trip.surrogatenum &&
                                 triplog.creation_timestamp === trip.creation_timestamp &&
-                                (triplog.logtype === '5' || triplog.logtype === 'Catering')
+                                (triplog.logtype === cateringLogType)
                             );
                         });
                         if (trips[triplogMatchingIndex].status != 53) {
+                            oldTripStatus.push({
+                                index: triplogMatchingIndex,
+                                status: trips[triplogMatchingIndex].status
+                            });
                             if (trip.legstate_code === "ARR" && !trip.actarrdate) {
                                 trips[triplogMatchingIndex].status = 51;
                             } else {
@@ -845,7 +703,7 @@ class TripService extends cds.ApplicationService {
                                 trips[triplogMatchingIndex].status = 53;
                             }
                         }
-                    });
+                    };
                     if (cateringStagedFiltered.length > 0) {
                         let rowInserted = false;
                         // Update rows, and insert if they do not exist
@@ -903,36 +761,146 @@ class TripService extends cds.ApplicationService {
                 }
             }
 
-            // const cateringStaged = await SELECT.from(cateringStaging).where(
-            //     cds.parse.expr(whereCateringString)
-            // );
-
             // TODO: figure out how to do the update only for relevant rows post update - if fail 51, if succeed 53
-            await Promise.all(
-                trips.map(async (trip) => {
-                    // if ( trip.status === null || trip.status != 53) {
+            for (var oldTrip of oldTripStatus) {
+                if (oldTrip.status !== trips[oldTrip.index].status && oldTrip.status !== 53) {
                     await db.run(
                         UPDATE(
                             triplog, {
-                            insupcarriercode2: trip.insupcarriercode2,
-                            inflightno: trip.inflightno,
-                            inorigin: trip.inorigin,
-                            indestination: trip.indestination,
-                            inscheddeptdate: trip.inscheddeptdate,
-                            surrogatenum: trip.surrogatenum,
-                            creation_timestamp: trip.creation_timestamp,
-                            logtype: trip.logtype
+                            insupcarriercode2: trips[oldTrip.index].insupcarriercode2,
+                            inflightno: trips[oldTrip.index].inflightno,
+                            inorigin: trips[oldTrip.index].inorigin,
+                            indestination: trips[oldTrip.index].indestination,
+                            inscheddeptdate: trips[oldTrip.index].inscheddeptdate,
+                            surrogatenum: trips[oldTrip.index].surrogatenum,
+                            creation_timestamp: trips[oldTrip.index].creation_timestamp,
+                            logtype: trips[oldTrip.index].logtype
                         }
                         ).with({
-                            status: trip.status
+                            status: trips[oldTrip.index].status
                         })
                     );
-                    // }
-                })
-            );
+                }
+            }
+
+            // await Promise.all(
+            //     trips.map(async (trip) => {
+            //         // if ( trip.status === null || trip.status != 53) {
+            //         await db.run(
+            //             UPDATE(
+            //                 triplog, {
+            //                 insupcarriercode2: trip.insupcarriercode2,
+            //                 inflightno: trip.inflightno,
+            //                 inorigin: trip.inorigin,
+            //                 indestination: trip.indestination,
+            //                 inscheddeptdate: trip.inscheddeptdate,
+            //                 surrogatenum: trip.surrogatenum,
+            //                 creation_timestamp: trip.creation_timestamp,
+            //                 logtype: trip.logtype
+            //             }
+            //             ).with({
+            //                 status: trip.status
+            //             })
+            //         );
+            //         // }
+            //     })
+            // );
             return true;
             // return stagedRow;
         };
+
+        /**
+         * Called to build the where condition for a specific trip
+         */
+        this.buildWhereString = (trip, whereString) => {
+            let whereComponent = this.buildWhereComponent(trip, trip.logtype);
+            if (whereString === "") {
+                whereString = whereComponent;
+            } else {
+                whereString = `${whereString} or ${whereComponent}`;
+            }
+            return whereString;
+        };
+
+        /**
+         * Called to build a single trip where clause depending on log type
+         */
+        this.buildWhereComponent = (trip, logType) => {
+            let whereComponent = "";
+            let surrogatenumTemp = trip.surrogatenum;
+            if (
+                surrogatenumTemp !== null &&
+                surrogatenumTemp !== undefined
+            ) {
+                surrogatenumTemp = "'" + trip.surrogatenum + "'";
+            }
+            let insupcarriercode2Temp = trip.insupcarriercode2;
+            if (
+                insupcarriercode2Temp !== null &&
+                insupcarriercode2Temp !== undefined
+            ) {
+                insupcarriercode2Temp = "'" + trip.insupcarriercode2 + "'";
+            }
+            let inflightnoTemp = trip.inflightno;
+            if (inflightnoTemp !== null && inflightnoTemp !== undefined) {
+                inflightnoTemp = "'" + trip.inflightno + "'";
+            }
+            let inoriginTemp = trip.inorigin;
+            if (inoriginTemp !== null && inoriginTemp !== undefined) {
+                inoriginTemp = "'" + trip.inorigin + "'";
+            }
+            let indestinationTemp = trip.indestination;
+            if (
+                indestinationTemp !== null &&
+                indestinationTemp !== undefined
+            ) {
+                indestinationTemp = "'" + trip.indestination + "'";
+            }
+            let inscheddeptdateTemp = trip.inscheddeptdate;
+            if (
+                inscheddeptdateTemp !== null &&
+                inscheddeptdateTemp !== undefined
+            ) {
+                inscheddeptdateTemp = "'" + trip.inscheddeptdate + "'";
+            }
+            let creation_timestamp = trip.creation_timestamp;
+            if (
+                creation_timestamp !== null &&
+                creation_timestamp !== undefined
+            ) {
+                creation_timestamp = "'" + trip.creation_timestamp + "'";
+            }
+
+            if (logType !== routeLogType) {
+                whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ` +
+                    `${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ` +
+                    `${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ` +
+                    `${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} )`;
+            } else {
+                let linenoTemp = trip.lineno;
+                if (
+                    linenoTemp !== null &&
+                    linenoTemp !== undefined
+                ) {
+                    linenoTemp = "'" + trip.lineno + "'";
+                }
+                let cfpnoTemp = trip.cfpno;
+                if (
+                    cfpnoTemp !== null &&
+                    cfpnoTemp !== undefined
+                ) {
+                    cfpnoTemp = "'" + trip.cfpno + "'";
+                }
+
+                whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ` +
+                    `${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ` +
+                    `${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ` +
+                    `${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} and` +
+                    ` lineno = ${linenoTemp} and cfpno = ${cfpnoTemp} )`;
+            }
+            return whereComponent;
+        };
+
         await super.init();
     }
 }
