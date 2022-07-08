@@ -63,6 +63,10 @@
                     <OverflowToolbar>
                         <Title id="tableHeader" text="{worklistView>/worklistTableTitle}" level="H3"/>
                         <ToolbarSpacer />
+                        <Button
+							tooltip="Sort"
+							icon="sap-icon://sort"
+							press="handleSortButtonPressed"/> 
                         <SearchField tooltip="{i18n>worklistSearchTooltip}" search=".onFilter" value="{worklistView>/search}">
                             <layoutData>
                                 <OverflowToolbarLayoutData maxWidth="200px" priority="NeverOverflow"/>

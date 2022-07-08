@@ -12,6 +12,8 @@ sap.ui.define(
         "triplog/utils/Rest",
         "sap/ui/core/format/DateFormat",
         "sap/ui/table/library",
+		'sap/ui/core/Fragment',
+		'sap/ui/Device',
         "../model/enums"
     ],
     function (
@@ -27,6 +29,8 @@ sap.ui.define(
         Rest,
         DateFormat,
         library,
+        Fragment,
+        Device,
         Enums
     ) {
         "use strict";
@@ -49,6 +53,9 @@ sap.ui.define(
 
                 // keeps the search state
                 this._aTableSearchState = [];
+
+                // keeps the reference to any of the created sap.m.ViewSettingsDialog
+                this._mViewSettingsDialogs = {};
 
                 // Model used to manipulate control states
                 oViewModel = new JSONModel({
@@ -387,6 +394,49 @@ sap.ui.define(
                         oTable.getBinding("items").refresh();
                         self.getView().setBusy(false);
                     });
+            },
+
+            getViewSettingsDialog: function (sDialogFragmentName) {
+                var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
+    
+                if (!pDialog) {
+                    pDialog = Fragment.load({
+                        id: this.getView().getId(),
+                        name: sDialogFragmentName,
+                        controller: this
+                    }).then(function (oDialog) {
+                        if (Device.system.desktop) {
+                            oDialog.addStyleClass("sapUiSizeCompact");
+                        }
+                        return oDialog;
+                    });
+                    this._mViewSettingsDialogs[sDialogFragmentName] = pDialog;
+                }
+                return pDialog;
+            },
+
+            handleSortButtonPressed: function(){
+                this.getViewSettingsDialog("triplog.SortDialog")
+                // this.getViewSettingsDialog("controller.Worklist.SortDialog")
+				.then(function (oViewSettingsDialog) {
+					oViewSettingsDialog.open();
+				});
+            },
+
+            handleSortDialogConfirm: function (oEvent) {
+                var oTable = this.byId("tripLogTable"),
+                    mParams = oEvent.getParameters(),
+                    oBinding = oTable.getBinding("items"),
+                    sPath,
+                    bDescending,
+                    aSorters = [];
+    
+                sPath = mParams.sortItem.getKey();
+                bDescending = mParams.sortDescending;
+                aSorters.push(new Sorter(sPath, bDescending));
+    
+                // apply the selected sort and group settings
+                oBinding.sort(aSorters);
             }
         });
     }
