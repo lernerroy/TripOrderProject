@@ -2,6 +2,9 @@
 GET http://localhost:4004/browse/triplog?$select=creation_timestamp,fosuffix,indestination,inflightno,inorigin,inscheddeptdate,insupcarriercode2,logtype,status,surrogatenum&$skip=3&$top=80
 
 ###
+GET http://localhost:4004/browse/triplog?$select=creation_timestamp&$top=3
+
+###
 POST http://localhost:4004/browse/triprecord
 Content-Type: application/json
 

@@ -6,12 +6,14 @@ sap.ui.define([
     return {
         Status: {
             READY_FOR_PROCESSING: 64,
+            BEING_PROCESSED: 50,
             ERROR: 51,
             WARNING: 52,
             PROCESSED: 53
         },
         getStatusState: function() {
             return {
+                50: ValueState.Information,
                 51: ValueState.Error,
                 52: ValueState.Warning,
                 53: ValueState.Success,
@@ -20,6 +22,11 @@ sap.ui.define([
         },
         getStatuses: function (resourceBundle) {
             return [
+                {
+                    code: 50,
+                    codeText: "BeingProcessed",
+                    text: resourceBundle.getText('StatusBeingProcessed')
+                },
                 {
                     code: 51,
                     codeText: "Error",

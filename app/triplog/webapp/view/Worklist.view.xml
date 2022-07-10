@@ -57,7 +57,7 @@
             visible="true" alternateRowColors="true"
             mode="MultiSelect" selectionChange=".onWorklistTableSelectionChange" 
             noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
-            growing="true" growingScrollToLoad="true" updateFinished=".onWorklistUpdateFinished">
+            growing="true" growingScrollToLoad="true" growingThreshold="100" updateFinished=".onWorklistUpdateFinished">
 
                 <headerToolbar>
                     <OverflowToolbar>

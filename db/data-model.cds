@@ -181,7 +181,8 @@ entity triplog : recordsKey, surrogatenum {
 @cds.autoexpose
 type Status : Decimal(2,0)
     enum {          
-        ReadyForProcessing = 64; 
+        ReadyForProcessing = 64;
+        BeingProcessed = 50; 
         Error = 51; 
         Warning = 52; 
         Processed = 53;

@@ -13,6 +13,7 @@ sap.ui.define(
         "sap/ui/core/format/DateFormat",
         "sap/ui/table/library",
 		'sap/ui/core/Fragment',
+		'sap/ui/model/Sorter',
 		'sap/ui/Device',
         "../model/enums"
     ],
@@ -30,6 +31,7 @@ sap.ui.define(
         DateFormat,
         library,
         Fragment,
+        Sorter,
         Device,
         Enums
     ) {
@@ -416,9 +418,13 @@ sap.ui.define(
             },
 
             handleSortButtonPressed: function(){
-                this.getViewSettingsDialog("triplog.SortDialog")
-                // this.getViewSettingsDialog("controller.Worklist.SortDialog")
+                var oBundle = this.getView().getModel("i18n").getResourceBundle();
+                this.getViewSettingsDialog("triplog.view.SortDialog")
 				.then(function (oViewSettingsDialog) {
+                    var i18nModel = new sap.ui.model.resource.ResourceModel({
+                        bundleUrl : oBundle.aPropertyOrigins[0]
+                    });
+                    oViewSettingsDialog.setModel(i18nModel, "i18n");
 					oViewSettingsDialog.open();
 				});
             },
