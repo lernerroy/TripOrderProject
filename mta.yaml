@@ -144,7 +144,11 @@ modules:
       - legstates.zip
       name: legstates
       target-path: resources/
-      
+    - artifacts:
+      - UpdUtilityuploadutility.zip
+      name: UpdUtilityuploadutility
+      target-path: resources/ 
+
 - name: triporder-approuter
   type: approuter.nodejs
   path: triporder-approuter
@@ -327,6 +331,17 @@ modules:
     - npm run build:cf
     supported-platforms: []
 
+- name: UpdUtilityuploadutility
+  type: html5
+  path: app/upload_utility
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+    
 resources:
 - name: triporder-broker-credentials 
   properties:
