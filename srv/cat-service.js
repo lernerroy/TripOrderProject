@@ -411,7 +411,12 @@ class TripService extends cds.ApplicationService {
                     logtype: logType
                 }
                 ).with({
-                    status: status
+                    status: status,
+                    statusCode: trip.statusCode,
+                    statusParam1: trip.statusParam1,
+                    statusParam2: trip.statusParam2,
+                    statusParam3: trip.statusParam3,
+                    statusParam4: trip.statusParam4
                 })
             );
 
@@ -425,6 +430,10 @@ class TripService extends cds.ApplicationService {
          * TODO: fix upsert so it'll work with scale
          */
         this.updateTripRecord = async (trip) => {
+            trip.actdeptts = this._calcTimeStamp(trip.actdeptdate, trip.actdepttime);
+            trip.scheddeptts = this._calcTimeStamp(trip.scheddeptdate, trip.scheddepttime);
+            trip.actarrts = this._calcTimeStamp(trip.actarrdate, trip.actarrtime);
+            trip.schedarrts = this._calcTimeStamp(trip.schedarrdate, trip.schedarrtime);
             // let tx = db.tx();
             // const tripsStaged = await SELECT.from(triprecord).where(
             //     cds.parse.expr(whereTripString).count());
@@ -857,6 +866,20 @@ class TripService extends cds.ApplicationService {
                 // TODO: error handling if there is any to be done
             };
             return true;
+        }
+
+        /**
+         * this method gets a date and a time, and builds a timestamp from them
+         */
+        this._calcTimeStamp = (date, time) => {
+            let timestamp = "";
+            for (let datePart of date.split('-')) {
+                timestamp = timestamp + datePart;
+            }
+            for (let timePart of time.split(':')) {
+                timestamp = timestamp + timePart;
+            }
+            return timestamp;
         }
 
         await super.init();
