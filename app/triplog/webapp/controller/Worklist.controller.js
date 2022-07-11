@@ -12,9 +12,9 @@ sap.ui.define(
         "triplog/utils/Rest",
         "sap/ui/core/format/DateFormat",
         "sap/ui/table/library",
-		'sap/ui/core/Fragment',
-		'sap/ui/model/Sorter',
-		'sap/ui/Device',
+        'sap/ui/core/Fragment',
+        'sap/ui/model/Sorter',
+        'sap/ui/Device',
         "../model/enums"
     ],
     function (
@@ -76,6 +76,7 @@ sap.ui.define(
                     ),
                     showFooter: false,
                     processButtonEnabled: false,
+                    resetButtonEnabled: false,
                     search: ""
                 });
                 this.setModel(oViewModel, "worklistView");
@@ -100,6 +101,7 @@ sap.ui.define(
                 });
 
                 this.getModel("worklistView").setProperty("/processButtonEnabled", this._hasItemsForProcess(aItems));
+                this.getModel("worklistView").setProperty("/resetButtonEnabled", this._hasItemsForReset(aItems));
             },
 
             /* =========================================================== */
@@ -123,7 +125,7 @@ sap.ui.define(
                     return context.getObject();
                 });
 
-                var showProcessedFooter = this._hasItemsForProcess(aItems);
+                var showProcessedFooter = this._hasItemsForProcess(aItems) || this._hasItemsForReset(aItems);
                 this.getModel("worklistView").setProperty("/showFooter", showProcessedFooter);
 
 
@@ -155,6 +157,18 @@ sap.ui.define(
                 // Check if we found at least one item that can be processed
                 for (var i = 0; i < aItems.length; i++) {
                     if (parseInt(aItems[i].status) !== Enums.Status.PROCESSED) {
+                        hasItems = true;
+                        break;
+                    }
+                }
+                return hasItems;
+            },
+
+            _hasItemsForReset: function (aItems) {
+                var hasItems = false;
+                // Check if we found at least one item that can be processed
+                for (var i = 0; i < aItems.length; i++) {
+                    if (parseInt(aItems[i].status) !== Enums.Status.READY_FOR_PROCESSING) {
                         hasItems = true;
                         break;
                     }
@@ -380,7 +394,41 @@ sap.ui.define(
                     "/processMessage(...)"
                 );
                 oOperation.setParameter("trips", aItemsToProcess);
-                
+
+                this.getView().setBusy(true);
+                var self = this;
+
+                oOperation
+                    .execute()
+                    .then(function (oUpdatedContext) {
+                        self.showMessage(self.getResourceBundle().getText("messageProcessSuccesful"));
+                        oTable.getBinding("items").refresh();
+                        self.getView().setBusy(false);
+                    })
+                    .catch(function (err) {
+                        console.log("Error", err);
+                        oTable.getBinding("items").refresh();
+                        self.getView().setBusy(false);
+                    });
+            },
+
+            onReset: function (oEvent) {
+
+                var oTable = this.getView().byId("tripLogTable");
+                // get all selected objects 
+                var aSelectedItems = oTable.getSelectedContexts().map(function (oContext) {
+                    return oContext.getObject();
+                });
+                // get all items that needs to be processed
+                var aItemsToProcess = aSelectedItems.filter(function (item) {
+                    return item.status !== Enums.Status.READY_FOR_PROCESSING
+                });
+
+                var oOperation = this.getModel().bindContext(
+                    "/resetMessage(...)"
+                );
+                oOperation.setParameter("trips", aItemsToProcess);
+
                 this.getView().setBusy(true);
                 var self = this;
 
@@ -400,7 +448,7 @@ sap.ui.define(
 
             getViewSettingsDialog: function (sDialogFragmentName) {
                 var pDialog = this._mViewSettingsDialogs[sDialogFragmentName];
-    
+
                 if (!pDialog) {
                     pDialog = Fragment.load({
                         id: this.getView().getId(),
@@ -417,16 +465,16 @@ sap.ui.define(
                 return pDialog;
             },
 
-            handleSortButtonPressed: function(){
+            handleSortButtonPressed: function () {
                 var oBundle = this.getView().getModel("i18n").getResourceBundle();
                 this.getViewSettingsDialog("triplog.view.SortDialog")
-				.then(function (oViewSettingsDialog) {
-                    var i18nModel = new sap.ui.model.resource.ResourceModel({
-                        bundleUrl : oBundle.aPropertyOrigins[0]
+                    .then(function (oViewSettingsDialog) {
+                        var i18nModel = new sap.ui.model.resource.ResourceModel({
+                            bundleUrl: oBundle.aPropertyOrigins[0]
+                        });
+                        oViewSettingsDialog.setModel(i18nModel, "i18n");
+                        oViewSettingsDialog.open();
                     });
-                    oViewSettingsDialog.setModel(i18nModel, "i18n");
-					oViewSettingsDialog.open();
-				});
             },
 
             handleSortDialogConfirm: function (oEvent) {
@@ -436,11 +484,11 @@ sap.ui.define(
                     sPath,
                     bDescending,
                     aSorters = [];
-    
+
                 sPath = mParams.sortItem.getKey();
                 bDescending = mParams.sortDescending;
                 aSorters.push(new Sorter(sPath, bDescending));
-    
+
                 // apply the selected sort and group settings
                 oBinding.sort(aSorters);
             }

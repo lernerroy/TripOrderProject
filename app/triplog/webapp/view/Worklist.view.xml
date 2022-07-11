@@ -139,6 +139,7 @@
             <OverflowToolbar>
                 <ToolbarSpacer/>
                 <Button enabled="{worklistView>/processButtonEnabled}" text="Process Message" press="onProcess" type="Emphasized"/>
+                <Button enabled="{worklistView>/resetButtonEnabled}" text="Reset Message" press="onReset" type="Emphasized"/>
             </OverflowToolbar>
         </f:footer>
 

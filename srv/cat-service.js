@@ -125,6 +125,12 @@ class TripService extends cds.ApplicationService {
                 req.reply(triplogOutput);
             }
         });
+        this.on("resetMessage", async (req) => {
+            const isSuccess = await this.changeStatuses(
+                req.data.trips, statusReady
+            );
+            if (!isSuccess) throw req.reject(500, "Message Processing Failed");
+        });
         this.pushTripsToActualEntity = async (trips, caller) => {
             let whereTripString = "";
             let wherePaxString = "";
@@ -160,7 +166,7 @@ class TripService extends cds.ApplicationService {
                 ).orderBy("creation_timestamp asc");
 
                 if (tripsStaged) {
-                    for(let trip of tripsStaged){
+                    for (let trip of tripsStaged) {
                         trips = await this.updateTrip(trips, trip, tripLogType);
                     };
                 }
@@ -173,7 +179,7 @@ class TripService extends cds.ApplicationService {
                 ).orderBy("creation_timestamp asc");
 
                 if (paxStaged) {
-                    for(let trip of paxStaged){
+                    for (let trip of paxStaged) {
                         trips = await this.updateTrip(trips, trip, paxLogType);
                     };
                 }
@@ -186,7 +192,7 @@ class TripService extends cds.ApplicationService {
                 ).orderBy("creation_timestamp asc");
 
                 if (cargoStaged) {
-                    for(let trip of cargoStaged){
+                    for (let trip of cargoStaged) {
                         trips = await this.updateTrip(trips, trip, cargoLogType);
                     };
                 }
@@ -199,7 +205,7 @@ class TripService extends cds.ApplicationService {
                 ).orderBy("creation_timestamp asc");
 
                 if (routePlanStaged) {
-                    for(let trip of routePlanStaged){
+                    for (let trip of routePlanStaged) {
                         trips = await this.updateTrip(trips, trip, routeLogType);
                     };
                 }
@@ -212,7 +218,7 @@ class TripService extends cds.ApplicationService {
                 ).orderBy("creation_timestamp asc");
 
                 if (cateringStaged) {
-                    for(let trip of cateringStaged){
+                    for (let trip of cateringStaged) {
                         trips = await this.updateTrip(trips, trip, cateringLogType);
                     };
                 }
@@ -335,7 +341,7 @@ class TripService extends cds.ApplicationService {
                 cds.parse.expr(whereTripLog)
             );
 
-            if (tripLogRow && (parseInt(tripLogRow.status) === statusError || 
+            if (tripLogRow && (parseInt(tripLogRow.status) === statusError ||
                 parseInt(tripLogRow.status) === statusReady)) {
                 statusUpdated = await this.updatetripLogStatus(trip, logType, newStatus);
 
@@ -379,7 +385,7 @@ class TripService extends cds.ApplicationService {
                         rowUpdated = await this.updateCateringRecord(trip);
                         break;
                 }
-    
+
                 if (rowUpdated) {
                     statusUpdated = await this.updatetripLogStatus(trip, logType, newStatus);
                 }
@@ -408,8 +414,8 @@ class TripService extends cds.ApplicationService {
                     status: status
                 })
             );
-            
-            if(updRes) return true;
+
+            if (updRes) return true;
             return false;
         };
 
@@ -835,7 +841,23 @@ class TripService extends cds.ApplicationService {
             return false;
         }
 
+        this.changeStatuses = async (trips, status) => {
+            for (let trip of trips) {
+                let whereTripLog = "";
+                let statusUpdated = false;
+                whereTripLog = this.buildWhereString(trip, whereTripLog, trip.logtype, true);
+                const tripLogRow = await SELECT.one.from(triplog).where(
+                    cds.parse.expr(whereTripLog)
+                );
 
+                if (tripLogRow && parseInt(tripLogRow.status) !== statusReady) {
+                    statusUpdated = await this.updatetripLogStatus(trip, trip.logtype, status);
+                }
+
+                // TODO: error handling if there is any to be done
+            };
+            return true;
+        }
 
         await super.init();
     }
