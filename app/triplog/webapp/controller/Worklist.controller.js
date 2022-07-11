@@ -277,7 +277,7 @@ sap.ui.define(
                 }
 
 
-                oTable.getBinding("items").filter(aFilters);
+                oTable.getBinding("items").filter(aFilters, sap.ui.model.FilterType.Control);
 
                 if (oBinding.isSuspended()) {
                     oTable.getBinding("items").resume();

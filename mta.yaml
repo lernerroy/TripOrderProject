@@ -54,12 +54,15 @@ modules:
   parameters:
     memory: 128M
     disk-quota: 512M
+  #properties:
+    #JOB_SCHED_APP_URL: '${org}-${space}-job-sched-app.${default-domain}'
+    #NODE_DEBUG: 'scheduler'
   requires:
   #- name: triporder-db
   - name: uaa_triporder
   - name: triporder-smc
   - name: triporder-reg
-  - name: triplogProcessMessages
+  #- name: triplogProcessMessages
   provides:
   - name: srv-api
     properties:
@@ -374,13 +377,13 @@ resources:
     service-plan: hdi-shared
   properties:
     hdi-service-name: ${service-name}
-- name: triplogProcessMessages
-  type:  org.cloudfoundry.managed-service
-  parameters:
-    service: jobscheduler
-    service-plan: standard
-  properties:
-    enable-xsuaa-support: true
+#- name: triplogProcessMessages
+#  type:  org.cloudfoundry.managed-service
+#  parameters:
+#    service: jobscheduler
+#    service-plan: standard
+#  properties:
+#    enable-xsuaa-support: true
 - name: triporder_html_repo_runtime
   type: org.cloudfoundry.managed-service
   parameters:
