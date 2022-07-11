@@ -76,6 +76,14 @@ aspect recordsKey : managed { // key ID to be reused in other entities
 aspect aufnr {
     aufnr      : String(12);
 };
+aspect statusCode {
+    statusCode: Decimal(3,0);
+    statusParam1: String(40);
+    statusParam2: String(40);
+    statusParam3: String(40);
+    statusParam4: String(40);
+
+};
 
 
 //@cds.persistence.exists
@@ -169,7 +177,7 @@ entity triprecordStaging : triprecorddetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
 };
 
-entity triplog : recordsKey, surrogatenum {
+entity triplog : recordsKey, surrogatenum, statusCode {
     //status : Decimal(2,0) @(title : '{i18n>status}') ;
     status: Status @(title : '{i18n>status}');
     // status: Association to Status @(title : '{i18n>status}');
@@ -181,7 +189,8 @@ entity triplog : recordsKey, surrogatenum {
 @cds.autoexpose
 type Status : Decimal(2,0)
     enum {          
-        ReadyForProcessing = 64; 
+        ReadyForProcessing = 64;
+        BeingProcessed = 50; 
         Error = 51; 
         Warning = 52; 
         Processed = 53;

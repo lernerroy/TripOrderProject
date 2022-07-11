@@ -1,0 +1,19 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<ViewSettingsDialog
+		confirm="handleSortDialogConfirm">
+		<sortItems>
+			<ViewSettingsItem text="{i18n>logtype}" key="logtype" selected="true" />
+			<ViewSettingsItem text="{i18n>insupcarriercode2}" key="insupcarriercode2" />
+			<ViewSettingsItem text="{i18n>inflightno}" key="inflightno" />
+			<ViewSettingsItem text="{i18n>inorigin}" key="inorigin" />
+			<ViewSettingsItem text="{i18n>indestination}" key="indestination" />
+			<ViewSettingsItem text="{i18n>inscheddeptdate}" key="inscheddeptdate" />
+			<ViewSettingsItem text="{i18n>surrogatenum}" key="surrogatenum" />
+			<ViewSettingsItem text="{i18n>fosuffix}" key="fosuffix" />
+			<ViewSettingsItem text="{i18n>creation_timestamp}" key="creation_timestamp" />
+			<ViewSettingsItem text="{i18n>status}" key="unitStatusColumn" />
+		</sortItems>
+	</ViewSettingsDialog>
+</core:FragmentDefinition>

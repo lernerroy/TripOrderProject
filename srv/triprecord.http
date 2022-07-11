@@ -2,6 +2,9 @@
 GET http://localhost:4004/browse/triplog?$select=creation_timestamp,fosuffix,indestination,inflightno,inorigin,inscheddeptdate,insupcarriercode2,logtype,status,surrogatenum&$skip=3&$top=80
 
 ###
+GET http://localhost:4004/browse/triplog?$select=creation_timestamp&$top=3
+
+###
 POST http://localhost:4004/browse/triprecord
 Content-Type: application/json
 
@@ -15,7 +18,7 @@ Content-Type: application/json
 		"surrogatenum": "DanielTest2_NC",
 		"aufnr": null,
 		"supcarriercode2_code": "AV",
-		"scheddeptdate": "2021-01-01",
+		"scheddeptdate": "2021-01-06",
 		"flightno": "0007",
 		"supcarriercode_code": "AV",
 		"carriercode_code": "AV",
@@ -113,10 +116,10 @@ Content-Type: application/json
 		"indestination": "",
 		"inscheddeptdate": "1900-01-01",
 		"fosuffix": null,
-		"surrogatenum": "RoyTest12",
+		"surrogatenum": "DanielTest2",
 		"version": 70,
         "user_ind": "",
-        "firstclasspax": 2,
+        "firstclasspax": 4,
         "busclasspax": 1,
         "premecopax": 1,
         "ecopax": 2,
@@ -209,10 +212,10 @@ Content-Type: application/json
         "indestination": "",
         "inscheddeptdate": "1900-01-01",
         "fosuffix": null,
-        "surrogatenum": "DanielTest1",
+        "surrogatenum": "DanielTest3",
         "version": "1",
         "user_ind": "",
-        "chgtottonn": 4300.00,
+        "chgtottonn": 4900.00,
         "acttottonn": 3664.90,
         "tottranstonn": 1832.00,
         "chgtotimptonn": 2112.00,
