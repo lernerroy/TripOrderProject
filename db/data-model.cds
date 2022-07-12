@@ -175,10 +175,16 @@ aspect triprecorddetails : recordsKey, surrogatenum, aufnr {
 entity triprecord : triprecorddetails{};
 entity triprecordStaging : triprecorddetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    triplog : Association to many triplog;
 };
 
 entity triplog : recordsKey, surrogatenum, statusCode {
     //status : Decimal(2,0) @(title : '{i18n>status}') ;
+    triprecordStaging : Association to one triprecordStaging;
+    passengerStaging : Association to one passengerStaging;
+    cargorecordStaging : Association to one cargorecordStaging;
+    routeplanStaging : Association to one routeplanStaging;
+    cateringStaging : Association to one cateringStaging;
     status: Status @(title : '{i18n>status}');
     // status: Association to Status @(title : '{i18n>status}');
     //messagetext : String @(title : '{i18n>messagetext}');
@@ -324,6 +330,7 @@ entity passengerdetails : recordsKey, surrogatenum {
 entity passenger : passengerdetails{};
 entity passengerStaging : passengerdetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    triplog : Association to many triplog;
 };
 
 //@cds.persistence.exists
@@ -397,6 +404,7 @@ entity cargorecorddetails : recordsKey, surrogatenum {
 entity cargorecord : cargorecorddetails{};
 entity cargorecordStaging : cargorecorddetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    triplog : Association to many triplog;
 };
 
 //@cds.persistence.exists
@@ -435,6 +443,7 @@ entity routeplanDetails : recordsKey, surrogatenum {
 entity routeplan : routeplanDetails{};
 entity routeplanStaging : routeplanDetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    triplog : Association to many triplog;
 };
 
 //@cds.persistence.exists
@@ -497,4 +506,5 @@ entity cateringdetails : recordsKey, surrogatenum {
 entity catering : cateringdetails{};
 entity cateringStaging : cateringdetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    triplog : Association to many triplog;
 };
