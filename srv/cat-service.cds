@@ -16,11 +16,13 @@ service TripService {
                              //              { grant: ['READ','WRITE'], to: ['API_user']} ])
                              as projection on trips.triprecordStaging;
 
+    @cds.redirection.target: false
     entity triplog
                              // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
                              //              { grant: ['READ','WRITE'], to: ['API_user']} ])
                              as projection on trips.triplogCurrent;
 
+    @cds.redirection.target: false
     entity triplogAll
                              // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
                              //              { grant: ['READ','WRITE'], to: ['API_user']} ])
