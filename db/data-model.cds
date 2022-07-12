@@ -175,7 +175,7 @@ aspect triprecorddetails : recordsKey, surrogatenum, aufnr {
 entity triprecord : triprecorddetails{};
 entity triprecordStaging : triprecorddetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
-    triplog : Association to many triplog on triplog.triprecordStaging = $self;
+    //triplog : Association to many triplog on triplog.triprecordStaging = $self;
 };
 
 entity triplog : recordsKey, surrogatenum, statusCode {
@@ -193,25 +193,30 @@ entity triplog : recordsKey, surrogatenum, statusCode {
     key logtype: logType @(title: '{i18n>logtype}');
 };
 
+view triplogAll as
+    select from triplog { * };
+
 view triplogCurrent as
-    select from triplog {
-        Key insupcarriercode2,
-        Key inflightno,
-        key inorigin,
-        key indestination,
-        key inscheddeptdate,
-        key surrogatenum,        
-        key creation_timestamp,
-        key logtype,
-        key max( status_timestamp ) as status_timestamp : Timestamp @(title : '{i18n>timestamp}'),
+    select from triplog {        
+        insupcarriercode2,
+        inflightno,
+        inorigin,
+        indestination,
+        inscheddeptdate,
+        surrogatenum,        
+        creation_timestamp,
+        logtype,
         fosuffix,
         status,
         statusCode,
         statusParam1,
         statusParam2,
         statusParam3,
-        statusParam4  
-    };
+        statusParam4,
+        max( status_timestamp ) as status_timestamp : Timestamp }
+        group by insupcarriercode2, inflightno, inorigin, indestination, inscheddeptdate, surrogatenum, creation_timestamp, logtype, fosuffix, status, statusCode,
+        statusParam1, statusParam2, statusParam3, statusParam4;
+    
 
 @cds.autoexpose
 type Status : Decimal(2,0)
@@ -330,7 +335,7 @@ entity passengerdetails : recordsKey, surrogatenum {
 entity passenger : passengerdetails{};
 entity passengerStaging : passengerdetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
-    triplog : Association to many triplog  on triplog.passengerStaging = $self;
+   // triplog : Association to many triplog  on triplog.passengerStaging = $self;
 };
 
 //@cds.persistence.exists
@@ -404,7 +409,7 @@ entity cargorecorddetails : recordsKey, surrogatenum {
 entity cargorecord : cargorecorddetails{};
 entity cargorecordStaging : cargorecorddetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
-    triplog : Association to many triplog on triplog.cargorecordStaging = $self;
+  //  triplog : Association to many triplog on triplog.cargorecordStaging = $self;
 };
 
 //@cds.persistence.exists
@@ -443,7 +448,7 @@ entity routeplanDetails : recordsKey, surrogatenum {
 entity routeplan : routeplanDetails{};
 entity routeplanStaging : routeplanDetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
-    triplog : Association to many triplog  on triplog.routeplanStaging = $self;
+  //  triplog : Association to many triplog  on triplog.routeplanStaging = $self;
 };
 
 //@cds.persistence.exists
@@ -506,5 +511,5 @@ entity cateringdetails : recordsKey, surrogatenum {
 entity catering : cateringdetails{};
 entity cateringStaging : cateringdetails{
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
-    triplog : Association to many triplog  on triplog.cateringStaging = $self;
+   // triplog : Association to many triplog  on triplog.cateringStaging = $self;
 };
