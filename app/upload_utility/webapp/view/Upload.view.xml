@@ -3,6 +3,7 @@
     xmlns="sap.m"
     xmlns:u="sap.ui.unified"
     xmlns:mvc="sap.ui.core.mvc"
+    busy="{uploadView>/uploading}"
     xmlns:semantic="sap.f.semantic">
 
     <semantic:SemanticPage
@@ -21,9 +22,17 @@
                 name="csvFile"
                 fileType="csv"
                 change="onFileChange"
+                value="{uploadView>/selectedFile}"
                 tooltip="Upload your csv file"/>
+
+            <RadioButtonGroup columns="3" selectedIndex="{uploadView>/uploadTypeIndex}" class="sapUiMediumMarginBottom">
+                <RadioButton text="{i18n>uploadTripRecordsButtonTitle}" />
+                <RadioButton text="{i18n>uploadPassengerRecordsButtonTitle}" />
+                <RadioButton text="${i18n>uploadCargoRecordsButtonTitle}" />
+            </RadioButtonGroup>                
             <Button
                 text="Upload"
+                enabled="{= ${uploadView>/uploadTypeIndex} >= 0 &amp;&amp; ${uploadView>/selectedFile} !== '' ? true : false }"
                 press="onUpload"/>
             </VBox>
         </semantic:content>
