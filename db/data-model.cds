@@ -183,8 +183,29 @@ entity triplog : recordsKey, surrogatenum, statusCode {
     // status: Association to Status @(title : '{i18n>status}');
     //messagetext : String @(title : '{i18n>messagetext}');
     key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key status_timestamp : Timestamp @(title : '{i18n>timestamp}') @cds.on.insert : $now;
     key logtype: logType @(title: '{i18n>logtype}');
 };
+
+view triplogCurrent as
+    select from triplog {
+        Key insupcarriercode2,
+        Key inflightno,
+        key inorigin,
+        key indestination,
+        key inscheddeptdate,
+        key surrogatenum,        
+        key creation_timestamp,
+        key logtype,
+        key max( status_timestamp ) as status_timestamp,
+        fosuffix,
+        status,
+        statusCode,
+        statusParam1,
+        statusParam2,
+        statusParam3,
+        statusParam4  
+    };
 
 @cds.autoexpose
 type Status : Decimal(2,0)

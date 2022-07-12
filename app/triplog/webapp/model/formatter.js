@@ -38,6 +38,32 @@ sap.ui.define([
         logTypeFormat: function (sValue) {
             var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
             return Enums.getLogTypes(resourceBundle)[sValue];
+        },
+
+        statusDescFormat: function (statusCode, statusParam1, statusParam2, statusParam3, statusParam4) {
+            
+            if (!statusCode){
+                return "";
+            }
+
+            var resourceBundle = this.getView().getModel("i18n").getResourceBundle();
+            var aStatusDescs = Enums.getStatusDescs();
+            var oStatusDesc = aStatusDescs.find(function (item) {
+                return item.code === parseInt(statusCode);
+            });
+
+            // if status desc not maintained, we need to return the status code as it is
+            if (!oStatusDesc) {
+                return statusCode;
+            }
+
+            // otherwise, we will return the text from i18n props and send the parameters
+            return resourceBundle.getText(oStatusDesc.bundleRef, [
+                statusParam1,
+                statusParam2,
+                statusParam3,
+                statusParam4
+            ]);
         }
 
     };

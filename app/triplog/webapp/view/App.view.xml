@@ -2,13 +2,21 @@
     controllerName="triplog.controller.App"
     displayBlock="true"
     xmlns="sap.m"
+    xmlns:f="sap.f"
     xmlns:mvc="sap.ui.core.mvc">
 
-    <Shell appWidthLimited="false">
+        <!-- <Shell appWidthLimited="false"> -->
         <App
             id="app"
             busy="{appView>/busy}"
-            busyIndicatorDelay="{appView>/delay}"/>
-    </Shell>
+            busyIndicatorDelay="{appView>/delay}">
 
-</mvc:View>
+            <f:FlexibleColumnLayout id="layout"
+			    layout="{appView>/layout}"
+			    backgroundDesign="Translucent">
+	    	</f:FlexibleColumnLayout>
+
+        </App>
+    <!-- </Shell> -->
+
+</mvc:View> 

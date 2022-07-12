@@ -19,7 +19,7 @@ sap.ui.define(
   ) {
     "use strict";
 
-    return BaseController.extend("triplog.controller.Object", {
+    return BaseController.extend("triplog.controller.PassengerRecord", {
       formatter: formatter,
 
       /* =========================================================== */
@@ -39,15 +39,15 @@ sap.ui.define(
           delay: 0,
         });
 
-        this.setModel(oViewModel, "objectView");
+        this.setModel(oViewModel, "cargoRecordView");
 
         this.getRouter()
-          .getRoute("object")
+          .getRoute("cargoRecord")
           .attachPatternMatched(function (oEvent) {
             this.onObjectMatched(
               oViewModel,
               oEvent.getParameter("arguments"),
-              "/triprecordStaging"
+              "/cargorecordStaging"
             );
           }, this);
       }

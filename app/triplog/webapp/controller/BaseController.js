@@ -51,6 +51,10 @@ sap.ui.define([
             return this.getOwnerComponent().getModel("i18n").getResourceBundle();
         },
 
+        getAppViewModel: function() {
+            return this.getOwnerComponent().getModel("appView");
+        },
+
         /**
          * Event handler when the share by E-Mail button has been clicked
          * @public

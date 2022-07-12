@@ -115,31 +115,18 @@
             "routes": [
                 {
                     "pattern": "",
-                    "name": "worklist",
+                    "name": "upload",
                     "target": [
-                        "worklist"
-                    ]
-                },
-                {
-                    "pattern": "accommodation/{objectId}",
-                    "name": "object",
-                    "target": [
-                        "object"
+                        "upload"
                     ]
                 }
             ],
             "targets": {
-                "worklist": {
-                    "viewName": "Worklist",
-                    "viewId": "worklist",
+                "upload": {
+                    "viewName": "Upload",
+                    "viewId": "upload",
                     "viewLevel": 1,
                     "title": "{i18n>worklistViewTitle}"
-                },
-                "object": {
-                    "viewName": "Object",
-                    "viewId": "object",
-                    "viewLevel": 2,
-                    "title": "{i18n>objectViewTitle}"
                 },
                 "objectNotFound": {
                     "viewName": "ObjectNotFound",

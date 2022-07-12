@@ -1,199 +1,309 @@
-using { com.legstate.triporder as trips } from '../db/data-model';
-using { sap.common.Countries as commonCountries } from '@sap/cds/common';
-using { sap.common.Languages as commonLanguages } from '@sap/cds/common';
-using { sap.common.Currencies as commonCurrencies } from '@sap/cds/common';
-
-
+using {com.legstate.triporder as trips} from '../db/data-model';
+using {sap.common.Countries as commonCountries} from '@sap/cds/common';
+using {sap.common.Languages as commonLanguages} from '@sap/cds/common';
+using {sap.common.Currencies as commonCurrencies} from '@sap/cds/common';
 
 
 @path : '/browse'
 service TripService {
-    entity triprecord 
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.triprecord;
+    entity triprecord
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.triprecord;
 
     entity triprecordStaging
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.triprecordStaging;
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.triprecordStaging;
 
     entity triplog
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.triplog;
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.triplogCurrent;
 
-    entity pax 
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.passenger;
+    entity triplogAll
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.triplog;
+
+    entity pax
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.passenger;
 
     entity paxStaging
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.passengerStaging;
-    
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.passengerStaging;
+
     // entity passengerrecord
     // // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
     // //              { grant: ['READ','WRITE'], to: ['API_user']} ])
     // as projection on trips.passengerrecord;
 
-    entity cargorecord 
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.cargorecord;
+    entity cargorecord
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.cargorecord;
 
-    entity cargorecordStaging 
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.cargorecordStaging;
+    entity cargorecordStaging
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.cargorecordStaging;
 
-    entity routeplan 
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.routeplan;
+    entity routeplan
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.routeplan;
 
     entity routeplanStaging
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.routeplanStaging;
-    
-    entity accommodation
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.accommodation;
-    
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.routeplanStaging;
+
+    entity accommodation @(restrict : [
+        {
+            grant : ['*'],
+            to    : [
+                'Admin',
+                'User'
+            ]
+        },
+        {
+            grant : [
+                'READ',
+                'WRITE'
+            ],
+            to    : ['API_user']
+        }
+    ])                       as projection on trips.accommodation;
+
     entity catering
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.catering;
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.catering;
 
     entity cateringStaging
-    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-    as projection on trips.cateringStaging;
+                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+                             as projection on trips.cateringStaging;
 
     // Views
     //////////////////////////////////////////////////////////////////////
-    entity cockpitTripsActuals 
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ'], to: ['API_user']} ])
-    as projection on TripService.cockpitTrips;
+    entity cockpitTripsActuals @(restrict : [
+        {
+            grant : ['*'],
+            to    : [
+                'Admin',
+                'User'
+            ]
+        },
+        {
+            grant : ['READ'],
+            to    : ['API_user']
+        }
+    ])                       as projection on TripService.cockpitTrips;
     //////////////////////////////////////////////////////////////////////
 
     // TripRecord
     //////////////////////////////////////////////////////////////////////
-    entity Carriers
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ'], to: ['API_user']} ])
-    as projection on trips.Carriers;
+    entity Carriers @(restrict : [
+        {
+            grant : ['*'],
+            to    : [
+                'Admin',
+                'User'
+            ]
+        },
+        {
+            grant : ['READ'],
+            to    : ['API_user']
+        }
+    ])                       as projection on trips.Carriers;
 
-    entity Airports 
-    @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                 { grant: ['READ'], to: ['API_user']}])
-    as projection on trips.Airports;
-    
-    entity Legstates 
-    @(restrict: [ { grant: ['*'], to: ['Admin']},
-                 { grant: ['READ'], to: ['API_user','User']}])
-    as projection on trips.Legstates;
-    
+    entity Airports @(restrict : [
+        {
+            grant : ['*'],
+            to    : [
+                'Admin',
+                'User'
+            ]
+        },
+        {
+            grant : ['READ'],
+            to    : ['API_user']
+        }
+    ])                       as projection on trips.Airports;
+
+    entity Legstates @(restrict : [
+        {
+            grant : ['*'],
+            to    : ['Admin']
+        },
+        {
+            grant : ['READ'],
+            to    : [
+                'API_user',
+                'User'
+            ]
+        }
+    ])                       as projection on trips.Legstates;
+
     //////////////////////////////////////////////////////////////////////
 
 
     // Common
     //////////////////////////////////////////////////////////////////////
-    entity Languages 
-    @(restrict: [ { grant: ['*'], to: ['Admin']},
-                 { grant: ['READ'], to: ['API_user','User']}])
-    as projection on commonLanguages;
+    entity Languages @(restrict : [
+        {
+            grant : ['*'],
+            to    : ['Admin']
+        },
+        {
+            grant : ['READ'],
+            to    : [
+                'API_user',
+                'User'
+            ]
+        }
+    ])                       as projection on commonLanguages;
 
-    entity Countries 
-    @(restrict: [ { grant: ['*'], to: ['Admin']},
-                 { grant: ['READ'], to: ['API_user','User']}])
-    as projection on commonCountries;
+    entity Countries @(restrict : [
+        {
+            grant : ['*'],
+            to    : ['Admin']
+        },
+        {
+            grant : ['READ'],
+            to    : [
+                'API_user',
+                'User'
+            ]
+        }
+    ])                       as projection on commonCountries;
 
-    entity Currencies 
-    @(restrict: [ { grant: ['*'], to: ['Admin']},
-                 { grant: ['READ'], to: ['API_user','User']}])
-    as projection on commonCurrencies;
+    entity Currencies @(restrict : [
+        {
+            grant : ['*'],
+            to    : ['Admin']
+        },
+        {
+            grant : ['READ'],
+            to    : [
+                'API_user',
+                'User'
+            ]
+        }
+    ])                       as projection on commonCurrencies;
     //////////////////////////////////////////////////////////////////////
 
-    action processMessage(trips: array of triplog);
-    action processMessagesIn(status: String) returns array of triplog;
-    action resetMessage(trips: array of triplog);
+    action processMessage(trips : array of triplog);
+    action processMessagesIn(status : String) returns array of triplog;
+    action resetMessage(trips : array of triplog);
 };
 
 
-
-define view TripService.cockpitTrips as (
-    select 
-        flo.surrogatenum    as aufnr, 
-        flo.tailno          as zztailno, 
-        flo.flightno        as zzflightno, 
-        flo.aircrafttype    as zzaircrafttype, 
-        flo.carriercode     as zzcarriercode, 
-        flo.supcarriercode  as zzsupcarriercode, 
+define view TripService.cockpitTrips as(
+    select
+        flo.surrogatenum    as aufnr,
+        flo.tailno          as zztailno,
+        flo.flightno        as zzflightno,
+        flo.aircrafttype    as zzaircrafttype,
+        flo.carriercode     as zzcarriercode,
+        flo.supcarriercode  as zzsupcarriercode,
         flo.supcarriercode2 as zzsupcarriercode2,
-        flo.actdeptdate     AS zzscheddeptdate,
-        flo.actdepttime     AS zzscheddepttime,
-        flo.actarrdate      AS zzschedarrdate,
-        flo.actarrtime      AS zzschedarrtime,
-        flo.actdeptapt      AS zzscheddeptapt,
-        flo.actarrapt       AS zzschedarrapt,
-        flo.actarrts        AS zzschedarrts,
-        flo.actdeptts       AS zzscheddeptts,
-        flo.cfpno1          AS zzcfpno1, 
-        flo.legstate        AS zzlegstate, 
-        flo.origin          AS zzorigin, 
-        flo.destination     AS zzdestination, 
-        flo.scheddeptdate   AS zzrealscheddept,
-        max(user_cargo.creation_timestamp) AS user_creation_timestamp :Decimal(15,0),
-        max(intf_cargo.creation_timestamp) AS intf_creation_timestamp :Decimal(15,0),
-        max(user_pax.creation_timestamp) AS pax_user_creation_ts :Decimal(15,0),
-        max(intf_pax.creation_timestamp) AS pax_intf_creation_ts :Decimal(15,0)
-        from TripService.triprecord AS flo
-        LEFT JOIN TripService.pax AS intf_pax ON
-            flo.surrogatenum            = intf_pax.surrogatenum     OR
-            ( flo.supcarriercode2.code  = intf_pax.carriercode.code AND
-            flo.flightno                = intf_pax.inflightno       AND
-            flo.origin.code             = intf_pax.inorigin         AND
-            flo.destination.code        = intf_pax.indestination    AND
-            flo.scheddeptdate           = intf_pax.inscheddeptdate  )
-            AND
-            intf_pax.user_ind           = false
-        LEFT JOIN TripService.pax AS user_pax ON
-            flo.surrogatenum            = user_pax.surrogatenum     OR
-            ( flo.supcarriercode2.code  = user_pax.carriercode.code AND
-            flo.flightno                = user_pax.inflightno       AND
-            flo.origin.code                  = user_pax.inorigin         AND
-            flo.destination.code             = user_pax.indestination    AND
-            flo.scheddeptdate           = user_pax.inscheddeptdate  )
-            AND
-            user_pax.user_ind           = true
-        LEFT join TripService.cargorecord AS user_cargo on 
-            flo.surrogatenum            = user_cargo.surrogatenum       OR
-            ( flo.supcarriercode2.code  = user_cargo.insupcarriercode2  AND
-            flo.flightno                = user_cargo.inflightno         AND
-            flo.origin.code                  = user_cargo.inorigin           AND
-            flo.destination.code             = user_cargo.indestination      AND
-            flo.scheddeptdate           = user_cargo.inscheddeptdate  )
-            AND
-            user_cargo.user_ind         = true
-        LEFT join TripService.cargorecord AS intf_cargo on 
-            flo.surrogatenum            = intf_cargo.surrogatenum       OR
-            ( flo.supcarriercode2.code  = intf_cargo.insupcarriercode2  AND
-            flo.flightno                = intf_cargo.inflightno         AND
-            flo.origin.code                  = intf_cargo.inorigin           AND
-            flo.destination.code             = intf_cargo.indestination      AND
-            flo.scheddeptdate           = intf_cargo.inscheddeptdate  )
-            AND
-            user_cargo.user_ind         = false
-        GROUP BY flo.surrogatenum, flo.tailno, flo.flightno, flo.aircrafttype, flo.carriercode, flo.supcarriercode, flo.supcarriercode2,
-               flo.actdeptdate, flo.actdepttime, flo.actarrdate, flo.actarrtime, flo.actdeptapt, flo.actarrapt, flo.actarrts, flo.actdeptts,
-               flo.cfpno1, flo.legstate, flo.origin, flo.destination, flo.scheddeptdate 
-        ORDER BY zzschedarrdate, zzschedarrtime, zzschedarrapt
-        );
+        flo.actdeptdate     as zzscheddeptdate,
+        flo.actdepttime     as zzscheddepttime,
+        flo.actarrdate      as zzschedarrdate,
+        flo.actarrtime      as zzschedarrtime,
+        flo.actdeptapt      as zzscheddeptapt,
+        flo.actarrapt       as zzschedarrapt,
+        flo.actarrts        as zzschedarrts,
+        flo.actdeptts       as zzscheddeptts,
+        flo.cfpno1          as zzcfpno1,
+        flo.legstate        as zzlegstate,
+        flo.origin          as zzorigin,
+        flo.destination     as zzdestination,
+        flo.scheddeptdate   as zzrealscheddept,
+        max(
+            user_cargo.creation_timestamp
+        )                   as user_creation_timestamp : Decimal(15, 0),
+        max(
+            intf_cargo.creation_timestamp
+        )                   as intf_creation_timestamp : Decimal(15, 0),
+        max(
+            user_pax.creation_timestamp
+        )                   as pax_user_creation_ts    : Decimal(15, 0),
+        max(
+            intf_pax.creation_timestamp
+        )                   as pax_intf_creation_ts    : Decimal(15, 0)
+    from TripService.triprecord as flo
+    left join TripService.pax as intf_pax
+        on  flo.surrogatenum  = intf_pax.surrogatenum
+        or (
+                flo.supcarriercode2.code = intf_pax.carriercode.code
+            and flo.flightno             = intf_pax.inflightno
+            and flo.origin.code          = intf_pax.inorigin
+            and flo.destination.code     = intf_pax.indestination
+            and flo.scheddeptdate        = intf_pax.inscheddeptdate
+        )
+        and intf_pax.user_ind = false
+    left join TripService.pax as user_pax
+        on  flo.surrogatenum  = user_pax.surrogatenum
+        or (
+                flo.supcarriercode2.code = user_pax.carriercode.code
+            and flo.flightno             = user_pax.inflightno
+            and flo.origin.code          = user_pax.inorigin
+            and flo.destination.code     = user_pax.indestination
+            and flo.scheddeptdate        = user_pax.inscheddeptdate
+        )
+        and user_pax.user_ind = true
+    left join TripService.cargorecord as user_cargo
+        on  flo.surrogatenum    = user_cargo.surrogatenum
+        or (
+                flo.supcarriercode2.code = user_cargo.insupcarriercode2
+            and flo.flightno             = user_cargo.inflightno
+            and flo.origin.code          = user_cargo.inorigin
+            and flo.destination.code     = user_cargo.indestination
+            and flo.scheddeptdate        = user_cargo.inscheddeptdate
+        )
+        and user_cargo.user_ind = true
+    left join TripService.cargorecord as intf_cargo
+        on  flo.surrogatenum    = intf_cargo.surrogatenum
+        or (
+                flo.supcarriercode2.code = intf_cargo.insupcarriercode2
+            and flo.flightno             = intf_cargo.inflightno
+            and flo.origin.code          = intf_cargo.inorigin
+            and flo.destination.code     = intf_cargo.indestination
+            and flo.scheddeptdate        = intf_cargo.inscheddeptdate
+        )
+        and user_cargo.user_ind = false
+    group by
+        flo.surrogatenum,
+        flo.tailno,
+        flo.flightno,
+        flo.aircrafttype,
+        flo.carriercode,
+        flo.supcarriercode,
+        flo.supcarriercode2,
+        flo.actdeptdate,
+        flo.actdepttime,
+        flo.actarrdate,
+        flo.actarrtime,
+        flo.actdeptapt,
+        flo.actarrapt,
+        flo.actarrts,
+        flo.actdeptts,
+        flo.cfpno1,
+        flo.legstate,
+        flo.origin,
+        flo.destination,
+        flo.scheddeptdate
+    order by
+        zzschedarrdate,
+        zzschedarrtime,
+        zzschedarrapt
+);
 
 
 annotate TripService.triprecord with {

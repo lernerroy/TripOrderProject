@@ -1,5 +1,5 @@
 <mvc:View
-    controllerName="triplog.controller.Object"
+    controllerName="triplog.controller.PassengerRecord"
     xmlns="sap.m"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.ui.layout.form"
@@ -9,8 +9,8 @@
         id="page"
         headerPinnable="false"
         toggleHeaderOnTitleClick="false"
-        busy="{objectView>/busy}"
-        busyIndicatorDelay="{objectView>/delay}">
+        busy="{passengerView>/busy}"
+        busyIndicatorDelay="{passengerView>/delay}">
 
         <semantic:titleHeading>
             <Title

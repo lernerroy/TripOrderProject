@@ -11,6 +11,11 @@ sap.ui.define([
             WARNING: 52,
             PROCESSED: 53
         },
+        LogType: {
+            TRIP: 1,
+            PASSENGER: 2,
+            CARGO: 3
+        },
         getStatusState: function() {
             return {
                 50: ValueState.Information,
@@ -48,6 +53,14 @@ sap.ui.define([
                     text: resourceBundle.getText("StatusReadyForProcessing")
                 }
 
+            ];
+        },
+        getStatusDescs: function(resourceBundle) {
+            return [
+                {
+                    code: 1,
+                    bundleRef: "ErrorACExistence"
+                }
             ];
         },
         getLogTypes: function (resourceBundle) {

@@ -54,6 +54,7 @@
                 path: '/triplog',
                 suspended: false
             }"
+            itemPress="onWorklistItemPressed"
             visible="true" alternateRowColors="true"
             mode="MultiSelect" selectionChange=".onWorklistTableSelectionChange" 
             noDataText="{worklistView>/tableNoDataText}" busyIndicatorDelay="{worklistView>/tableBusyDelay}" 
@@ -103,12 +104,18 @@
                     <Column id="creation_timestamp">
                         <Text text="{i18n>creation_timestamp}"/>
                     </Column>
-                    <Column id="unitStatusColumn" hAlign="End">
+                    <Column id="unitStatusColumn">
                         <Text text="{i18n>status}" id="Status"/>
                     </Column> 
+                    <Column>
+                        <Text text="{i18n>statusDesc}"/>
+                    </Column>  
+                    <Column>
+                        <Text text="{i18n>preview}" />    
+                    </Column>                   
                 </columns>
                 <items>
-                    <ColumnListItem id="template">
+                    <ColumnListItem id="template" type="Navigation">
                         <cells>
                             <Text text="{
                                 path: 'logtype',
@@ -121,7 +128,7 @@
                         <Text text="{path: 'inscheddeptdate'}"/>
                         <Text text="{path: 'surrogatenum'}"/>
                         <Text text="{path: 'fosuffix'}" />
-                        <Text text="{path: 'creation_timestamp'}"/>
+                           <Text text="{path: 'creation_timestamp'}"/>
                             <ObjectStatus text="{
                                 path: 'status',
                                 formatter: '.formatter.statusTextFormat'
@@ -129,6 +136,14 @@
                                 path: 'status',
                                 formatter: '.formatter.statusStateFormat'
                             }" inverted="true" />
+                        <Text text="{parts: [
+                            'statusCode',
+                            'statusParam1',
+                            'statusParam2',
+                            'statusParam3',
+                            'statusParam4'
+                        ], formatter: '.formatter.statusDescFormat'}"></Text>
+                        <Button text="{i18n>preview}" press="onTripPreview"/>
                         </cells>
                     </ColumnListItem>
                 </items>

@@ -2,7 +2,7 @@ const cds = require("@sap/cds");
 class TripService extends cds.ApplicationService {
     async init() {
         const { triprecord, triprecordStaging, pax, paxStaging, cargorecord, cargorecordStaging,
-            routeplan, routeplanStaging, catering, cateringStaging, triplog } = this.entities;
+            routeplan, routeplanStaging, catering, cateringStaging, triplog, triplogAll } = this.entities;
         const tripLogType = '1', paxLogType = '2', cargoLogType = '3', routeLogType = '4',
             cateringLogType = '5';
         const statusBeingProcessed = 50, statusError = 51, statusWarning = 52, statusProcessed = 53,
@@ -24,7 +24,7 @@ class TripService extends cds.ApplicationService {
             triplogdata.logtype = tripLogType;
             // TODO: infinite loop
             await db.run(INSERT([tripData]).into(triprecordStaging));
-            await db.run(INSERT([triplogdata]).into(triplog));
+            await db.run(INSERT([triplogdata]).into(triplogAll));
             return req.reply(tripData);
         });
         this.on("CREATE", pax, async (req) => {
@@ -43,7 +43,7 @@ class TripService extends cds.ApplicationService {
             paxlogdata.logtype = paxLogType;
             // TODO: infinite loop
             await db.run(INSERT([paxData]).into(paxStaging));
-            await db.run(INSERT([paxlogdata]).into(triplog));
+            await db.run(INSERT([paxlogdata]).into(triplogAll));
             return req.reply(paxData);
         });
         this.on("CREATE", cargorecord, async (req) => {
@@ -62,7 +62,7 @@ class TripService extends cds.ApplicationService {
             cargologdata.logtype = cargoLogType;
             // TODO: infinite loop
             await db.run(INSERT([cargoData]).into(cargorecordStaging));
-            await db.run(INSERT([cargologdata]).into(triplog));
+            await db.run(INSERT([cargologdata]).into(triplogAll));
             return req.reply(cargoData);
         });
         this.on("CREATE", routeplan, async (req) => {
@@ -83,7 +83,7 @@ class TripService extends cds.ApplicationService {
             routelogdata.logtype = routeLogType;
             // TODO: infinite loop
             await db.run(INSERT([routeData]).into(routeplanStaging));
-            await db.run(INSERT([routelogdata]).into(triplog));
+            await db.run(INSERT([routelogdata]).into(triplogAll));
             return req.reply(routeData);
         });
         this.on("CREATE", catering, async (req) => {
@@ -102,7 +102,7 @@ class TripService extends cds.ApplicationService {
             cateringlogdata.logtype = cateringLogType;
             // TODO: infinite loop
             await db.run(INSERT([cateringData]).into(cateringStaging));
-            await db.run(INSERT([cateringlogdata]).into(triplog));
+            await db.run(INSERT([cateringlogdata]).into(triplogAll));
             return req.reply(cateringData);
         });
         this.on("processMessage", async (req) => {
@@ -343,7 +343,7 @@ class TripService extends cds.ApplicationService {
 
             if (tripLogRow && (parseInt(tripLogRow.status) === statusError ||
                 parseInt(tripLogRow.status) === statusReady)) {
-                statusUpdated = await this.updatetripLogStatus(trip, logType, newStatus);
+                statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
 
                 const triplogMatchingIndex = trips.findIndex((triplog) => {
                     return (
@@ -387,7 +387,7 @@ class TripService extends cds.ApplicationService {
                 }
 
                 if (rowUpdated) {
-                    statusUpdated = await this.updatetripLogStatus(trip, logType, newStatus);
+                    statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
                 }
             }
 
@@ -397,28 +397,32 @@ class TripService extends cds.ApplicationService {
         /**
          * Update in Trip Log DB the trip status according to the log type 
          */
-        this.updatetripLogStatus = async (trip, logType, status) => {
-            const updRes = await db.run(
-                UPDATE(
-                    triplog, {
-                    insupcarriercode2: trip.insupcarriercode2,
-                    inflightno: trip.inflightno,
-                    inorigin: trip.inorigin,
-                    indestination: trip.indestination,
-                    inscheddeptdate: trip.inscheddeptdate,
-                    surrogatenum: trip.surrogatenum,
-                    creation_timestamp: trip.creation_timestamp,
-                    logtype: logType
-                }
-                ).with({
-                    status: status,
-                    statusCode: trip.statusCode,
-                    statusParam1: trip.statusParam1,
-                    statusParam2: trip.statusParam2,
-                    statusParam3: trip.statusParam3,
-                    statusParam4: trip.statusParam4
-                })
-            );
+        this.insertTriplogStatus = async (trip, logType, status) => {
+            let newTrip = trip;
+            newTrip.logtype = logType;
+            newTrip.status = status;
+            const updRes = await db.run(INSERT([newTrip]).into(triplogAll));
+            // const updRes = await db.run(
+            //     UPDATE(
+            //         triplog, {
+            //         insupcarriercode2: trip.insupcarriercode2,
+            //         inflightno: trip.inflightno,
+            //         inorigin: trip.inorigin,
+            //         indestination: trip.indestination,
+            //         inscheddeptdate: trip.inscheddeptdate,
+            //         surrogatenum: trip.surrogatenum,
+            //         creation_timestamp: trip.creation_timestamp,
+            //         logtype: logType
+            //     }
+            //     ).with({
+            //         status: status,
+            //         statusCode: trip.statusCode,
+            //         statusParam1: trip.statusParam1,
+            //         statusParam2: trip.statusParam2,
+            //         statusParam3: trip.statusParam3,
+            //         statusParam4: trip.statusParam4
+            //     })
+            // );
 
             if (updRes) return true;
             return false;
@@ -860,7 +864,7 @@ class TripService extends cds.ApplicationService {
                 );
 
                 if (tripLogRow && parseInt(tripLogRow.status) !== statusReady) {
-                    statusUpdated = await this.updatetripLogStatus(trip, trip.logtype, status);
+                    statusUpdated = await this.insertTriplogStatus(trip, trip.logtype, status);
                 }
 
                 // TODO: error handling if there is any to be done

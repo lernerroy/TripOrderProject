@@ -1,0 +1,33 @@
+<mvc:View
+    controllerName="UpdUtility.uploadutility.controller.Upload"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:semantic="sap.f.semantic">
+
+    <semantic:SemanticPage
+        headerPinnable="false"
+        toggleHeaderOnTitleClick="false">
+
+        <semantic:titleHeading>
+            <Title
+                text="{i18n>uploadTitle}"
+                level="H2"/>
+        </semantic:titleHeading>
+
+        <semantic:content>
+            <VBox>
+                <u:FileUploader
+                name="csvFile"
+                fileType="csv"
+                change="onFileChange"
+                tooltip="Upload your csv file"/>
+            <Button
+                text="Upload"
+                press="onUpload"/>
+            </VBox>
+        </semantic:content>
+
+    </semantic:SemanticPage>
+
+</mvc:View>
