@@ -414,7 +414,7 @@ class TripService extends cds.ApplicationService {
             let newTrip = trip;
             newTrip.logtype = logType;
             newTrip.status = status;
-            // newTrip.status_timestamp = Date.now();
+            newTrip.status_timestamp = Date.now();
             const updRes = await db.run(INSERT([newTrip]).into(triplogAll));
             // const updRes = await db.run(
             //     UPDATE(
