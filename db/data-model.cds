@@ -198,13 +198,13 @@ view triplogAll as
 
 view triplogCurrent as
     select from triplog as triplog1 {        
-        insupcarriercode2,
-        inflightno,
-        inorigin,
-        indestination,
-        inscheddeptdate,
-        surrogatenum,        
-        creation_timestamp,
+        key insupcarriercode2,
+        key inflightno,
+        key inorigin,
+        key indestination,
+        key inscheddeptdate,
+        key surrogatenum,        
+        key creation_timestamp,
         logtype,
         fosuffix,
         status,
@@ -218,7 +218,7 @@ view triplogCurrent as
         cargorecordStaging,
         routeplanStaging,
         cateringStaging,
-        max( status_timestamp ) as status_timestamp : Timestamp }
+        key max( status_timestamp ) as status_timestamp : Timestamp }
         group by insupcarriercode2, inflightno, inorigin, indestination, inscheddeptdate, surrogatenum, creation_timestamp, logtype, fosuffix, status, statusCode,
         statusParam1, statusParam2, statusParam3, statusParam4, triprecordStaging, passengerStaging, cargorecordStaging, routeplanStaging, cateringStaging
         having max( status_timestamp ) = ( select from triplog {max( status_timestamp ) as status_timestamp : Timestamp }
