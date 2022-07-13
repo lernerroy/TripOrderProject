@@ -335,13 +335,20 @@ class TripService extends cds.ApplicationService {
             ) {
                 creation_timestamp = "'" + trip.creation_timestamp + "'";
             }
+            // let status_timestamp = trip.status_timestamp;
+            // if(
+            //     status_timestamp !== null &&
+            //     status_timestamp !== undefined
+            // ){
+            //     status_timestamp = "'" + trip.status_timestamp + "'";
+            // }
 
             if (isLogTable) {
                 whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ` +
                     `${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ` +
                     `${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ` +
                     `${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} and ` +
-                    `logtype = ${logType} )`;
+                    `logtype = ${logType} )`; //and status_timestamp = ${status_timestamp}
             } else {
                 if (logType !== routeLogType) {
                     whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ` +
@@ -444,6 +451,7 @@ class TripService extends cds.ApplicationService {
             let newTrip = trip;
             newTrip.logtype = logType;
             newTrip.status = status;
+            newTrip.status_timestamp = Date.now();
             const updRes = await db.run(INSERT([newTrip]).into(triplogAll));
             // const updRes = await db.run(
             //     UPDATE(
@@ -901,14 +909,14 @@ class TripService extends cds.ApplicationService {
             for (let trip of trips) {
                 let whereTripLog = "";
                 let statusUpdated = false;
-                whereTripLog = this.buildWhereString(trip, whereTripLog, trip.logtype, true);
-                const tripLogRow = await SELECT.one.from(triplog).where(
-                    cds.parse.expr(whereTripLog)
-                );
+                // whereTripLog = this.buildWhereString(trip, whereTripLog, trip.logtype, true);
+                // const tripLogRow = await SELECT.one.from(triplog).where(
+                //     cds.parse.expr(whereTripLog)
+                // );
 
-                if (tripLogRow && parseInt(tripLogRow.status) !== statusReady) {
+                // if (tripLogRow && parseInt(tripLogRow.status) !== statusReady) {
                     statusUpdated = await this.insertTriplogStatus(trip, trip.logtype, status);
-                }
+                // }
 
                 // TODO: error handling if there is any to be done
             };

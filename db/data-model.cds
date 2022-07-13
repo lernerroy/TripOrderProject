@@ -197,7 +197,7 @@ view triplogAll as
     select from triplog { * };
 
 view triplogCurrent as
-    select from triplog {        
+    select from triplog as triplog1 {        
         insupcarriercode2,
         inflightno,
         inorigin,
@@ -220,7 +220,16 @@ view triplogCurrent as
         cateringStaging,
         max( status_timestamp ) as status_timestamp : Timestamp }
         group by insupcarriercode2, inflightno, inorigin, indestination, inscheddeptdate, surrogatenum, creation_timestamp, logtype, fosuffix, status, statusCode,
-        statusParam1, statusParam2, statusParam3, statusParam4, triprecordStaging, passengerStaging, cargorecordStaging, routeplanStaging, cateringStaging;
+        statusParam1, statusParam2, statusParam3, statusParam4, triprecordStaging, passengerStaging, cargorecordStaging, routeplanStaging, cateringStaging
+        having max( status_timestamp ) = ( select from triplog {max( status_timestamp ) as status_timestamp : Timestamp }
+        where 
+        inflightno = triplog1.inflightno and
+        inorigin = triplog1.inorigin and
+        indestination = triplog1.indestination and
+        inscheddeptdate = triplog1.inscheddeptdate and
+        surrogatenum = triplog1.surrogatenum and
+        creation_timestamp = triplog1.creation_timestamp and
+        logtype  = triplog1.logtype );
     
 
 @cds.autoexpose
