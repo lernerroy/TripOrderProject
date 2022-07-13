@@ -43,8 +43,35 @@ sap.ui.define(
           .getRoute("statuses")
           .attachPatternMatched(this.onObjectMatched, this);
       },
+      _onMessageProcessed: function (oEvent) {
+        // currently we simply refresh the statuses each time a message is being processed o
+        // we can check if we really need to refresh it by checking the data in the event and
+        // check there if one of the processed items is the current items that we are displaying.
+        var oTable = this.getView().byId("statusesTable");
+        oTable.getBinding("items").refresh();
+      },
+      _onMessageReset: function (oEvent) {
+        var oTable = this.getView().byId("statusesTable");
+        oTable.getBinding("items").refresh();
+      },
       onObjectMatched: function (oEvent) {
         var oArgs = oEvent.getParameter("arguments");
+
+        // subscribe to process message and reset message events
+        this.getEventBus().subscribe(
+          null,
+          "messageProcessed",
+          this._onMessageProcessed,
+          this
+        );
+
+        // subscribe to process message and reset message events
+        this.getEventBus().subscribe(
+          null,
+          "messageReset",
+          this._onMessageReset,
+          this
+        );
 
         var aFilters = [];
 

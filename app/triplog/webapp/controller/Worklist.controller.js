@@ -16,6 +16,11 @@ sap.ui.define(
     "sap/ui/model/Sorter",
     "sap/ui/Device",
     "../model/enums",
+    "sap/m/Dialog",
+    "sap/m/Button",
+    "sap/m/ButtonType",
+    "sap/m/DialogType",
+    "sap/m/Text",
   ],
   function (
     BaseController,
@@ -33,7 +38,12 @@ sap.ui.define(
     Fragment,
     Sorter,
     Device,
-    Enums
+    Enums,
+    Dialog,
+    Button,
+    ButtonType,
+    DialogType,
+    Text
   ) {
     "use strict";
     // shortcut for sap.ui.table.SortOrder
@@ -449,26 +459,59 @@ sap.ui.define(
           return item.status !== Enums.Status.PROCESSED;
         });
 
-        var oOperation = this.getModel().bindContext("/processMessage(...)");
-        oOperation.setParameter("trips", aItemsToProcess);
+        this.oProcessDialog = new Dialog({
+          type: DialogType.Message,
+          title: this.getResourceBundle().getText("processMessagesTitle"),
+          content: new Text({
+            text: this.getResourceBundle().getText("processMessages"),
+          }),
+          beginButton: new Button({
+            type: ButtonType.Emphasized,
+            text: this.getResourceBundle().getText("yes"),
+            press: function () {
+              this.oProcessDialog.close();
+              var oOperation = this.getModel().bindContext(
+                "/processMessage(...)"
+              );
+              oOperation.setParameter("trips", aItemsToProcess);
 
-        this.getView().setBusy(true);
-        var self = this;
+              this.getView().setBusy(true);
+              var self = this;
 
-        oOperation
-          .execute()
-          .then(function (oUpdatedContext) {
-            self.showMessage(
-              self.getResourceBundle().getText("messageProcessSuccesful")
-            );
-            oTable.getBinding("items").refresh();
-            self.getView().setBusy(false);
-          })
-          .catch(function (err) {
-            console.log("Error", err);
-            oTable.getBinding("items").refresh();
-            self.getView().setBusy(false);
-          });
+              oOperation
+                .execute()
+                .then(function (oUpdatedContext) {
+                  self.showMessage(
+                    self.getResourceBundle().getText("messageProcessSuccesful")
+                  );
+                  oTable.getBinding("items").refresh();
+
+                  self.getEventBus().publish(null, "messageProcessed", {
+                    items: aItemsToProcess,
+                  });
+
+                  self.getView().setBusy(false);
+                })
+                .catch(function (err) {
+                  console.log("Error", err);
+                  oTable.getBinding("items").refresh();
+                  self.getView().setBusy(false);
+                });
+            }.bind(this),
+          }),
+          endButton: new Button({
+            text: this.getResourceBundle().getText("cancel"),
+            press: function () {
+              this.oProcessDialog.close();
+            }.bind(this),
+          }),
+        });
+
+        this.oProcessDialog.open();
+
+        this.oProcessDialog.attachAfterClose(function () {
+          this.oProcessDialog = null;
+        });
       },
 
       onReset: function (oEvent) {
@@ -484,26 +527,58 @@ sap.ui.define(
           return item.status !== Enums.Status.READY_FOR_PROCESSING;
         });
 
-        var oOperation = this.getModel().bindContext("/resetMessage(...)");
-        oOperation.setParameter("trips", aItemsToProcess);
+        this.oResetDialog = new Dialog({
+          type: DialogType.Message,
+          title: this.getResourceBundle().getText("processMessagesTitle"),
+          content: new Text({
+            text: this.getResourceBundle().getText("processMessages"),
+          }),
+          beginButton: new Button({
+            type: ButtonType.Emphasized,
+            text: this.getResourceBundle().getText("yes"),
+            press: function () {
+              this.oResetDialog.close();
 
-        this.getView().setBusy(true);
-        var self = this;
+              var oOperation = this.getModel().bindContext(
+                "/resetMessage(...)"
+              );
+              oOperation.setParameter("trips", aItemsToProcess);
 
-        oOperation
-          .execute()
-          .then(function (oUpdatedContext) {
-            self.showMessage(
-              self.getResourceBundle().getText("messageProcessSuccesful")
-            );
-            oTable.getBinding("items").refresh();
-            self.getView().setBusy(false);
-          })
-          .catch(function (err) {
-            console.log("Error", err);
-            oTable.getBinding("items").refresh();
-            self.getView().setBusy(false);
-          });
+              this.getView().setBusy(true);
+              var self = this;
+
+              oOperation
+                .execute()
+                .then(function (oUpdatedContext) {
+                  self.showMessage(
+                    self.getResourceBundle().getText("messageProcessSuccesful")
+                  );
+                  oTable.getBinding("items").refresh();
+                  self.getEventBus().publish(null, "messageReset", {
+                    items: aItemsToProcess,
+                  });
+                  self.getView().setBusy(false);
+                })
+                .catch(function (err) {
+                  console.log("Error", err);
+                  oTable.getBinding("items").refresh();
+                  self.getView().setBusy(false);
+                });
+            }.bind(this),
+          }),
+          endButton: new Button({
+            text: this.getResourceBundle().getText("cancel"),
+            press: function () {
+              this.oResetDialog.close();
+            }.bind(this),
+          }),
+        });
+
+        this.oResetDialog.open();
+
+        this.oResetDialog.attachAfterClose(function () {
+          this.oResetDialog = null;
+        });
       },
 
       getViewSettingsDialog: function (sDialogFragmentName) {
