@@ -180,11 +180,6 @@ entity triprecordStaging : triprecorddetails{
 
 entity triplog : recordsKey, surrogatenum, statusCode {
     //status : Decimal(2,0) @(title : '{i18n>status}') ;
-    triprecordStaging : Association to one triprecordStaging;
-    passengerStaging : Association to one passengerStaging;
-    cargorecordStaging : Association to one cargorecordStaging;
-    routeplanStaging : Association to one routeplanStaging;
-    cateringStaging : Association to one cateringStaging;
     status: Status @(title : '{i18n>status}');
     // status: Association to Status @(title : '{i18n>status}');
     //messagetext : String @(title : '{i18n>messagetext}');
@@ -213,14 +208,9 @@ view triplogCurrent as
         statusParam2,
         statusParam3,
         statusParam4,
-        triprecordStaging,
-        passengerStaging,
-        cargorecordStaging,
-        routeplanStaging,
-        cateringStaging,
         key max( status_timestamp ) as status_timestamp : Timestamp }
         group by insupcarriercode2, inflightno, inorigin, indestination, inscheddeptdate, surrogatenum, creation_timestamp, logtype, fosuffix, status, statusCode,
-        statusParam1, statusParam2, statusParam3, statusParam4, triprecordStaging, passengerStaging, cargorecordStaging, routeplanStaging, cateringStaging
+        statusParam1, statusParam2, statusParam3, statusParam4
         having max( status_timestamp ) = ( select from triplog {max( status_timestamp ) as status_timestamp : Timestamp }
         where 
         inflightno = triplog1.inflightno and
