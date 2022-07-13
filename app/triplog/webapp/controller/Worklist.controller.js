@@ -93,7 +93,6 @@ sap.ui.define(
       },
 
       onTripPreview: function (oEvent) {
-        debugger;
         var oItem = {};
 
         var params = {
@@ -336,6 +335,19 @@ sap.ui.define(
         if (oBinding.isSuspended()) {
           oTable.getBinding("items").resume();
         }
+      },
+
+      showStatuses: function (oEvent) {
+        var oItem = oEvent.getSource().getBindingContext().getObject();
+        this.getRouter().navTo("statuses", {
+          insupcarriercode2: oItem.insupcarriercode2,
+          inflightno: oItem.inflightno,
+          inorigin: oItem.inorigin,
+          indestination: oItem.indestination,
+          inscheddeptdate: oItem.inscheddeptdate,
+          surrogatenum: oItem.surrogatenum,
+          creation_timestamp: oItem.creation_timestamp,
+        });
       },
 
       _getSearchFilters: function (sQuery) {

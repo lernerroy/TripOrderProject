@@ -131,10 +131,15 @@
           "target": ["worklist", "passengerRecord"]
         },
         {
-            "pattern": "cargorecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{creation_timestamp}",
-            "name": "cargoRecord",
-            "target": ["worklist", "cargoRecord"]
-          }        
+          "pattern": "cargorecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{creation_timestamp}",
+          "name": "cargoRecord",
+          "target": ["worklist", "cargoRecord"]
+        },
+        {
+          "pattern": "statuses/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{creation_timestamp}",
+          "name": "statuses",
+          "target": ["worklist", "statuses"]
+        }
       ],
       "targets": {
         "worklist": {
@@ -159,12 +164,18 @@
           "controlAggregation": "midColumnPages"
         },
         "cargoRecord": {
-            "viewName": "CargoRecord",
-            "viewId": "cargorecord",
-            "viewLevel": 2,
-            "title": "{i18n>objectViewTitle}",
-            "controlAggregation": "midColumnPages"
-          },        
+          "viewName": "CargoRecord",
+          "viewId": "cargorecord",
+          "viewLevel": 2,
+          "title": "{i18n>objectViewTitle}",
+          "controlAggregation": "midColumnPages"
+        },
+        "statuses": {
+          "viewName": "Statuses",
+          "viewId": "statuses",
+          "viewLevel": 2,
+          "controlAggregation": "midColumnPages"
+        },
         "objectNotFound": {
           "viewName": "ObjectNotFound",
           "viewId": "objectNotFound"

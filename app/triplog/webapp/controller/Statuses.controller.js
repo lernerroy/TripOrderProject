@@ -1,0 +1,82 @@
+sap.ui.define(
+  [
+    "./DetailsBaseController",
+    "sap/ui/model/json/JSONModel",
+    "../model/formatter",
+    "sap/f/LayoutType",
+    "sap/ui/model/Filter",
+    "sap/ui/model/FilterOperator",
+  ],
+  function (
+    BaseController,
+    JSONModel,
+    formatter,
+    LayoutType,
+    Filter,
+    FilterOperator
+  ) {
+    "use strict";
+
+    return BaseController.extend("triplog.controller.Statuses", {
+      formatter: formatter,
+
+      /* =========================================================== */
+      /* lifecycle methods                                           */
+      /* =========================================================== */
+
+      /**
+       * Called when the worklist controller is instantiated.
+       * @public
+       */
+      onInit: function () {
+        // Model used to manipulate control states. The chosen values make sure,
+        // detail page shows busy indication immediately so there is no break in
+        // between the busy indication for loading the view's meta data
+        var oViewModel = new JSONModel({
+          busy: false,
+          delay: 0,
+        });
+
+        this.setModel(oViewModel, "statusView");
+
+        this.getRouter()
+          .getRoute("statuses")
+          .attachPatternMatched(this.onObjectMatched, this);
+      },
+      onObjectMatched: function (oEvent) {
+        var oArgs = oEvent.getParameter("arguments");
+
+        var aFilters = [];
+
+        Object.entries(oArgs).forEach(([key, value]) => {
+          aFilters.push(
+            new Filter({
+              path: key,
+              operator: FilterOperator.EQ,
+              value1: value,
+            })
+          );
+        });
+
+        var oFilter = new Filter({
+          filters: aFilters,
+          and: true,
+        });
+
+        var oTable = this.getView().byId("statusesTable");
+        var oBinding = oTable.getBinding("items");
+
+        oBinding.filter(oFilter, sap.ui.model.FilterType.Control);
+
+        if (oBinding.isSuspended()) {
+          oBinding.resume();
+        }
+
+        this.getAppViewModel().setProperty(
+          "/layout",
+          LayoutType.TwoColumnsBeginExpanded
+        );
+      },
+    });
+  }
+);

@@ -104,18 +104,21 @@
                     <Column id="creation_timestamp">
                         <Text text="{i18n>creation_timestamp}"/>
                     </Column>
-                    <Column id="unitStatusColumn">
-                        <Text text="{i18n>status}" id="Status"/>
+                    <Column >
+                        <Text text="{i18n>status}"/>
                     </Column> 
                     <Column>
                         <Text text="{i18n>statusDesc}"/>
                     </Column>  
                     <Column>
+                        <Text text="{i18n>statuses}"/>
+                    </Column>                     
+                    <Column>
                         <Text text="{i18n>preview}" />    
                     </Column>                   
                 </columns>
                 <items>
-                    <ColumnListItem id="template" type="Navigation">
+                    <ColumnListItem type="Navigation">
                         <cells>
                             <Text text="{
                                 path: 'logtype',
@@ -128,21 +131,22 @@
                         <Text text="{path: 'inscheddeptdate'}"/>
                         <Text text="{path: 'surrogatenum'}"/>
                         <Text text="{path: 'fosuffix'}" />
-                           <Text text="{path: 'creation_timestamp'}"/>
-                            <ObjectStatus text="{
-                                path: 'status',
-                                formatter: '.formatter.statusTextFormat'
-                            }" state="{
-                                path: 'status',
-                                formatter: '.formatter.statusStateFormat'
-                            }" inverted="true" />
+                        <Text text="{path: 'creation_timestamp'}"/>
+                        <ObjectStatus text="{
+                            path: 'status',
+                            formatter: '.formatter.statusTextFormat'
+                        }" state="{
+                            path: 'status',
+                            formatter: '.formatter.statusStateFormat'
+                        }" inverted="true" />
                         <Text text="{parts: [
                             'statusCode',
                             'statusParam1',
                             'statusParam2',
                             'statusParam3',
                             'statusParam4'
-                        ], formatter: '.formatter.statusDescFormat'}"></Text>
+                        ], formatter: '.formatter.statusDescFormat'}" />
+                        <Button text="Show" press="showStatuses"/>                        
                         <Button text="{i18n>preview}" press="onTripPreview"/>
                         </cells>
                     </ColumnListItem>

@@ -46,7 +46,7 @@ sap.ui.define(
           .attachPatternMatched(function (oEvent) {
             this.onObjectMatched(
               oViewModel,
-              oEvent.getParameter("arguments"),
+              oEvent.getParameter("arguments"),              
               "/cargorecordStaging"
             );
           }, this);

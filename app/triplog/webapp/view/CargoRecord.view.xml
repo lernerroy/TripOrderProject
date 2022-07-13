@@ -36,14 +36,18 @@
                     columnsXL="1"
                     columnsL="1"
                     columnsM="1">
-                	<Label text="{i18n>inflightno}" />
+                	<!-- <Label text="{i18n>inflightno}" />
 				    <Text text="{inflightno}" />
                     <Label text="{i18n>inorigin}" />
 				    <Text text="{inorigin}" />
                     <Label text="{i18n>indestination}" />
 				    <Text text="{indestination}" />
                     <Label text="{i18n>inscheddeptdate}" />
-				    <Text text="{inscheddeptdate}" />
+				    <Text text="{inscheddeptdate}" /> -->
+                    <Label text="{i18n>importlose}" />
+                    <Text text="{actimploose}" />
+                    <Label text="{i18n>exportloose}" />
+                    <Text text="{actexploose}" />                    
 
                 </f:SimpleForm>
 			</VBox >

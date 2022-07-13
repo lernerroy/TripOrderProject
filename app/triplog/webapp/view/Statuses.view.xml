@@ -1,0 +1,74 @@
+<mvc:View
+    controllerName="triplog.controller.Statuses"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:semantic="sap.f.semantic">
+
+    <semantic:SemanticPage
+        id="page"
+        headerPinnable="false"
+        toggleHeaderOnTitleClick="false"
+        busy="{statusView>/busy}"
+        busyIndicatorDelay="{statusView>/delay}">
+
+        <semantic:titleHeading>
+            <Title
+                text="{i18n>statuses}"
+                level="H2"/>
+        </semantic:titleHeading>
+        
+		<semantic:closeAction>
+			<semantic:CloseAction press=".onClose"/>
+		</semantic:closeAction> 
+        <semantic:content>  
+            <Table id="statusesTable" items="{
+                path: '/triplogAll',
+                suspended: false,
+                sorter: [
+                    {
+                        path: 'status_timestamp',
+                        descending: 'true'
+                    }
+                ]
+            }">
+                <columns>
+                    <Column>
+                        <Text text="{i18n>status}"  />
+                    </Column>
+                    <Column>
+                        <Text text="{i18n>statusDesc}"/>
+                    </Column>   
+                    <Column>    
+                        <Text text="Status Timestamp" />
+                    </Column>   
+                    <Column>    
+                        <Text text="Created By" />
+                    </Column>                                        
+                </columns>
+               <ColumnListItem>
+                    <cells>
+                        <ObjectStatus text="{
+                            path: 'status',
+                            formatter: '.formatter.statusTextFormat'
+                        }" state="{
+                            path: 'status',
+                            formatter: '.formatter.statusStateFormat'
+                        }" inverted="true" /> 
+                        <Text text="{parts: [
+                            'statusCode',
+                            'statusParam1',
+                            'statusParam2',
+                            'statusParam3',
+                            'statusParam4'
+                        ], formatter: '.formatter.statusDescFormat'}" />       
+                        <Text text="{status_timestamp}" />       
+                        <Text text="{createdBy}" />                                  
+                    </cells>
+                </ColumnListItem>                
+            </Table>
+        </semantic:content>      
+
+    </semantic:SemanticPage>
+
+</mvc:View>

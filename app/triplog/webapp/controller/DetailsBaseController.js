@@ -41,18 +41,18 @@ sap.ui.define(
         );
 
         oListBinding
-          .requestContexts(0, 1)
+          .requestContexts(0, 100)
           .then(
             function (aContexts) {
               if (aContexts && aContexts.length > 0) {
-                this.oContext = aContexts[0];
-                this._bindView(this.oContext, oViewModel);
+                this.bindView(aContexts, oViewModel);
               }
             }.bind(this)
           )
           .catch(function (error) {}.bind(this));
       },
-      _bindView: function (oContext, oViewModel) {
+      bindView: function (aContexts, oViewModel) {
+        var oContext = aContexts[0];
         this.getView().bindElement({
           path: oContext.getPath(),
           events: {

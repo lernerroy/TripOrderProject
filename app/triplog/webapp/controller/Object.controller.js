@@ -47,7 +47,7 @@ sap.ui.define(
             this.onObjectMatched(
               oViewModel,
               oEvent.getParameter("arguments"),
-              "/triprecordStaging"
+             "/triprecordStaging"
             );
           }, this);
       }
