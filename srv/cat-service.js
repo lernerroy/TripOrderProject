@@ -22,6 +22,15 @@ class TripService extends cds.ApplicationService {
             triplogdata.status = statusReady;
             triplogdata.creation_timestamp = tripData.creation_timestamp;
             triplogdata.logtype = tripLogType;
+            triplogdata.triprecordStaging_insupcarriercode2 = tripData.insupcarriercode2;
+            triplogdata.triprecordStaging_inflightno = tripData.inflightno;
+            triplogdata.triprecordStaging_inorigin = tripData.inorigin;
+            triplogdata.triprecordStaging_indestination = tripData.indestination;
+            triplogdata.triprecordStaging_inscheddeptdate = tripData.inscheddeptdate;
+            triplogdata.triprecordStaging_surrogatenum = tripData.surrogatenum;
+            triplogdata.triprecordStaging_creation_timestamp = tripData.creation_timestamp;
+            triplogdata.statusCode = 1;
+            triplogdata.statusParam1 = "UECCC";
             // TODO: infinite loop
             await db.run(INSERT([tripData]).into(triprecordStaging));
             await db.run(INSERT([triplogdata]).into(triplogAll));
@@ -41,6 +50,15 @@ class TripService extends cds.ApplicationService {
             paxlogdata.status = statusReady;
             paxlogdata.creation_timestamp = paxData.creation_timestamp;
             paxlogdata.logtype = paxLogType;
+            paxlogdata.passengerStaging_insupcarriercode2 = paxData.insupcarriercode2;
+            paxlogdata.passengerStaging_inflightno = paxData.inflightno;
+            paxlogdata.passengerStaging_inorigin = paxData.inorigin;
+            paxlogdata.passengerStaging_indestination = paxData.indestination;
+            paxlogdata.passengerStaging_inscheddeptdate = paxData.inscheddeptdate;
+            paxlogdata.passengerStaging_surrogatenum = paxData.surrogatenum;
+            paxlogdata.passengerStaging_creation_timestamp = paxData.creation_timestamp;
+            paxlogdata.statusCode = 1;
+            paxlogdata.statusParam1 = "UECCC";
             // TODO: infinite loop
             await db.run(INSERT([paxData]).into(paxStaging));
             await db.run(INSERT([paxlogdata]).into(triplogAll));
@@ -60,6 +78,15 @@ class TripService extends cds.ApplicationService {
             cargologdata.status = statusReady;
             cargologdata.creation_timestamp = cargoData.creation_timestamp;
             cargologdata.logtype = cargoLogType;
+            cargologdata.cargorecordStaging_insupcarriercode2 = cargoData.insupcarriercode2;
+            cargologdata.cargorecordStaging_inflightno = cargoData.inflightno;
+            cargologdata.cargorecordStaging_inorigin = cargoData.inorigin;
+            cargologdata.cargorecordStaging_indestination = cargoData.indestination;
+            cargologdata.cargorecordStaging_inscheddeptdate = cargoData.inscheddeptdate;
+            cargologdata.cargorecordStaging_surrogatenum = cargoData.surrogatenum;
+            cargologdata.cargorecordStaging_creation_timestamp = cargoData.creation_timestamp;
+            cargologdata.statusCode = 1;
+            cargologdata.statusParam1 = "UECCC";
             // TODO: infinite loop
             await db.run(INSERT([cargoData]).into(cargorecordStaging));
             await db.run(INSERT([cargologdata]).into(triplogAll));
@@ -81,6 +108,15 @@ class TripService extends cds.ApplicationService {
             routelogdata.status = statusReady;
             routelogdata.creation_timestamp = routeData.creation_timestamp;
             routelogdata.logtype = routeLogType;
+            routelogdata.routeplanStaging_insupcarriercode2 = routeData.insupcarriercode2;
+            routelogdata.routeplanStaging_inflightno = routeData.inflightno;
+            routelogdata.routeplanStaging_inorigin = routeData.inorigin;
+            routelogdata.routeplanStaging_indestination = routeData.indestination;
+            routelogdata.routeplanStaging_inscheddeptdate = routeData.inscheddeptdate;
+            routelogdata.routeplanStaging_surrogatenum = routeData.surrogatenum;
+            routelogdata.routeplanStaging_lineno = routeData.lineno;
+            routelogdata.routeplanStaging_cfpno = routeData.cfpno;
+            routelogdata.routeplanStaging_creation_timestamp = routeData.creation_timestamp;
             // TODO: infinite loop
             await db.run(INSERT([routeData]).into(routeplanStaging));
             await db.run(INSERT([routelogdata]).into(triplogAll));
@@ -100,6 +136,13 @@ class TripService extends cds.ApplicationService {
             cateringlogdata.status = statusReady;
             cateringlogdata.creation_timestamp = cateringData.creation_timestamp;
             cateringlogdata.logtype = cateringLogType;
+            cateringlogdata.cateringStaging_insupcarriercode2 = cateringData.insupcarriercode2;
+            cateringlogdata.cateringStaging_inflightno = cateringData.inflightno;
+            cateringlogdata.cateringStaging_inorigin = cateringData.inorigin;
+            cateringlogdata.cateringStaging_indestination = cateringData.indestination;
+            cateringlogdata.cateringStaging_inscheddeptdate = cateringData.inscheddeptdate;
+            cateringlogdata.cateringStaging_surrogatenum = cateringData.surrogatenum;
+            cateringlogdata.cateringStaging_creation_timestamp = cateringData.creation_timestamp;
             // TODO: infinite loop
             await db.run(INSERT([cateringData]).into(cateringStaging));
             await db.run(INSERT([cateringlogdata]).into(triplogAll));

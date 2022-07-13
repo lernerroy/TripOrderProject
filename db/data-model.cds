@@ -213,9 +213,14 @@ view triplogCurrent as
         statusParam2,
         statusParam3,
         statusParam4,
+        triprecordStaging,
+        passengerStaging,
+        cargorecordStaging,
+        routeplanStaging,
+        cateringStaging,
         max( status_timestamp ) as status_timestamp : Timestamp }
         group by insupcarriercode2, inflightno, inorigin, indestination, inscheddeptdate, surrogatenum, creation_timestamp, logtype, fosuffix, status, statusCode,
-        statusParam1, statusParam2, statusParam3, statusParam4;
+        statusParam1, statusParam2, statusParam3, statusParam4, triprecordStaging, passengerStaging, cargorecordStaging, routeplanStaging, cateringStaging;
     
 
 @cds.autoexpose
