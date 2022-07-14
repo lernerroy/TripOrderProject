@@ -569,6 +569,41 @@ class TripService extends cds.ApplicationService {
          * TODO: fix upsert so it'll work with scale
          */
         this.updatePaxRecord = async (trip) => {
+            // trip.bagweight = Number(trip.bagweight);
+            // trip.firstclasspax = Number(trip.firstclasspax);
+            // trip.busclasspax = Number(trip.busclasspax);
+            // trip.premecopax = Number(trip.premecopax);
+            // trip.ecopax = Number(trip.ecopax);
+            // trip.totalpax = Number(trip.totalpax);
+            // trip.revpaxfirst = Number(trip.revpaxfirst);
+            // trip.revpaxbus = Number(trip.revpaxbus);
+            // trip.revpaxpreco = Number(trip.revpaxpreco);
+            // trip.revpaxeco = Number(trip.revpaxeco);
+            // trip.revpaxtot = Number(trip.revpaxtot);
+            // trip.nrevpaxfirst = Number(trip.nrevpaxfirst);
+            // trip.nrevpaxbus = Number(trip.nrevpaxbus);
+            // trip.nrevpaxpreco = Number(trip.nrevpaxpreco);
+            // trip.nrevpaxeco = Number(trip.nrevpaxeco);
+            // trip.nrevpaxtot = Number(trip.nrevpaxtot);
+            // trip.chdpax = Number(trip.chdpax);
+            // trip.infpax = Number(trip.infpax);
+            // trip.wchpax = Number(trip.wchpax);
+            // trip.wchc = Number(trip.wchc);
+            // trip.wchs = Number(trip.wchs);
+            // trip.wchr = Number(trip.wchr);
+            // trip.wcbd = Number(trip.wcbd);
+            // trip.wcbw = Number(trip.wcbw);
+            // trip.wcmp = Number(trip.wcmp);
+            // trip.wcob = Number(trip.wcob);
+            // trip.wclb = Number(trip.wclb);
+            // trip.boardpax = Number(trip.boardpax);
+            // trip.transitpax = Number(trip.transitpax);
+            // trip.transferpax = Number(trip.transferpax);
+            // trip.bagquan = Number(trip.bagquan);
+            // trip.bagweight = Number(trip.bagweight);
+            // trip.traint = Number(trip.traint);
+            // trip.tradom = Number(trip.tradom);
+            // trip.creation_timestamp = Number(trip.creation_timestamp);
             let updRes = await db.run(UPDATE(pax,
                 {
                     insupcarriercode2: trip.insupcarriercode2,
@@ -614,7 +649,7 @@ class TripService extends cds.ApplicationService {
                     bagweight: trip.bagweight,
                     traint: trip.traint,
                     tradom: trip.tradom,
-                    creation_timestamp: trip.creation_timestamp,
+                    sent_creation_timestamp: trip.sent_creation_timestamp,
                     tecnum: trip.tecnum,
                     cabnum: trip.cabnum,
                     capnum: trip.capnum,
@@ -677,6 +712,7 @@ class TripService extends cds.ApplicationService {
          * TODO: fix upsert so it'll work with scale
          */
         this.updateCargoRecord = async (trip) => {
+            // trip.actepdcgo
             let updRes = await db.run(UPDATE(cargorecord,
                 {
                     insupcarriercode2: trip.insupcarriercode2,
@@ -745,7 +781,7 @@ class TripService extends cds.ApplicationService {
                     actephprepack: trip.actephprepack,
                     chgepdcgo: trip.chgepdcgo,
                     actepdcgo: trip.actepdcgo,
-                    creation_timestamp: trip.creation_timestamp,
+                    sent_creation_timestamp: trip.sent_creation_timestamp,
                     chgimptonn: trip.chgimptonn,
                     chgexptonn: trip.chgexptonn,
                     chgtottranstonn: trip.chgtottranstonn

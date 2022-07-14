@@ -287,7 +287,7 @@ entity passengerdetails : recordsKey, surrogatenum {
     bagweight       : Decimal(8,2);
     traint          : Decimal(3,0);
     tradom          : Decimal(3,0);
-    creation_timestamp : Decimal(15,0);
+    sent_creation_timestamp : Decimal(15,0);
     tecnum          : Integer;
     cabnum          : Integer;
     capnum          : Integer;
@@ -404,7 +404,7 @@ entity cargorecorddetails : recordsKey, surrogatenum {
     actephprepack       : Decimal(8,2);
     chgepdcgo           : Decimal(8,2);
     actepdcgo           : Decimal(8,2);
-    creation_timestamp  : Decimal(15,0);
+    sent_creation_timestamp  : Decimal(15,0);
     chgimptonn          : Decimal(8,2);
     chgexptonn          : Decimal(8,2);
     chgtottranstonn     : Decimal(8,2);

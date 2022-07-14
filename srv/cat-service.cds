@@ -226,16 +226,16 @@ define view TripService.cockpitTrips as(
         flo.destination     as zzdestination,
         flo.scheddeptdate   as zzrealscheddept,
         max(
-            user_cargo.creation_timestamp
+            user_cargo.sent_creation_timestamp
         )                   as user_creation_timestamp : Decimal(15, 0),
         max(
-            intf_cargo.creation_timestamp
+            intf_cargo.sent_creation_timestamp
         )                   as intf_creation_timestamp : Decimal(15, 0),
         max(
-            user_pax.creation_timestamp
+            user_pax.sent_creation_timestamp
         )                   as pax_user_creation_ts    : Decimal(15, 0),
         max(
-            intf_pax.creation_timestamp
+            intf_pax.sent_creation_timestamp
         )                   as pax_intf_creation_ts    : Decimal(15, 0)
     from TripService.triprecord as flo
     left join TripService.pax as intf_pax
