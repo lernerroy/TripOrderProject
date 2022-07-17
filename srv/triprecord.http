@@ -1,8 +1,8 @@
 ###
-GET http://localhost:4004/browse/triplog?$select=creation_timestamp,fosuffix,indestination,inflightno,inorigin,inscheddeptdate,insupcarriercode2,logtype,status,surrogatenum&$skip=3&$top=80
+GET http://localhost:4004/browse/triplog?$select=staging_creation_timestamp,fosuffix,indestination,inflightno,inorigin,inscheddeptdate,insupcarriercode2,logtype,status,surrogatenum&$skip=3&$top=80
 
 ###
-GET http://localhost:4004/browse/triplog?$select=creation_timestamp&$top=3
+GET http://localhost:4004/browse/triplog?$select=staging_creation_timestamp&$top=3
 
 ###
 POST http://localhost:4004/browse/triprecord
@@ -18,7 +18,7 @@ Content-Type: application/json
 		"surrogatenum": "DanielNavTest11",
 		"aufnr": null,
 		"supcarriercode2_code": "AV",
-		"scheddeptdate": "2021-01-09",
+		"scheddeptdate": "2021-01-10",
 		"flightno": "0007",
 		"supcarriercode_code": "AV",
 		"carriercode_code": "AV",
@@ -152,7 +152,7 @@ Content-Type: application/json
         "bagweight": 1,
         "traint": 1,
         "tradom": 0,
-        "sent_creation_timestamp": 20210525042713,
+        "creation_timestamp": 20210525042713,
         "tecnum": 0,
         "cabnum": 0,
         "capnum": 0,
@@ -272,7 +272,7 @@ Content-Type: application/json
         "actephprepack": 0,
         "chgepdcgo": 0,
         "actepdcgo": 0,
-        "sent_creation_timestamp": 20200617125922,
+        "creation_timestamp": 20200617125922,
         "chgimptonn": 0,
         "chgexptonn": 0,
         "chgtottranstonn": 2165.00

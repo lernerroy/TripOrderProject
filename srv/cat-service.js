@@ -10,7 +10,7 @@ class TripService extends cds.ApplicationService {
         const db = await cds.connect.to("db");
         this.on("CREATE", triprecord, async (req) => {
             let tripData = req.data;
-            tripData.creation_timestamp = Date.now();
+            tripData.staging_creation_timestamp = Date.now();
             const triplogdata = {};
             triplogdata.surrogatenum = req.data.surrogatenum;
             triplogdata.insupcarriercode2 = req.data.insupcarriercode2;
@@ -20,7 +20,7 @@ class TripService extends cds.ApplicationService {
             triplogdata.inscheddeptdate = req.data.inscheddeptdate;
             triplogdata.fosuffix = req.data.fosuffix;
             triplogdata.status = statusReady;
-            triplogdata.creation_timestamp = tripData.creation_timestamp;
+            triplogdata.staging_creation_timestamp = tripData.staging_creation_timestamp;
             triplogdata.logtype = tripLogType;
             triplogdata.statusCode = 1;
             triplogdata.statusParam1 = "UECCC";
@@ -31,7 +31,7 @@ class TripService extends cds.ApplicationService {
         });
         this.on("CREATE", pax, async (req) => {
             let paxData = req.data;
-            paxData.creation_timestamp = Date.now();
+            paxData.staging_creation_timestamp = Date.now();
             const paxlogdata = {};
             paxlogdata.surrogatenum = req.data.surrogatenum;
             paxlogdata.insupcarriercode2 = req.data.insupcarriercode2;
@@ -41,7 +41,7 @@ class TripService extends cds.ApplicationService {
             paxlogdata.inscheddeptdate = req.data.inscheddeptdate;
             paxlogdata.fosuffix = req.data.fosuffix;
             paxlogdata.status = statusReady;
-            paxlogdata.creation_timestamp = paxData.creation_timestamp;
+            paxlogdata.staging_creation_timestamp = paxData.staging_creation_timestamp;
             paxlogdata.logtype = paxLogType;
             paxlogdata.statusCode = 1;
             paxlogdata.statusParam1 = "UECCC";
@@ -52,7 +52,7 @@ class TripService extends cds.ApplicationService {
         });
         this.on("CREATE", cargorecord, async (req) => {
             let cargoData = req.data;
-            cargoData.creation_timestamp = Date.now();
+            cargoData.staging_creation_timestamp = Date.now();
             const cargologdata = {};
             cargologdata.surrogatenum = req.data.surrogatenum;
             cargologdata.insupcarriercode2 = req.data.insupcarriercode2;
@@ -62,7 +62,7 @@ class TripService extends cds.ApplicationService {
             cargologdata.inscheddeptdate = req.data.inscheddeptdate;
             cargologdata.fosuffix = req.data.fosuffix;
             cargologdata.status = statusReady;
-            cargologdata.creation_timestamp = cargoData.creation_timestamp;
+            cargologdata.staging_creation_timestamp = cargoData.staging_creation_timestamp;
             cargologdata.logtype = cargoLogType;
             cargologdata.statusCode = 1;
             cargologdata.statusParam1 = "UECCC";
@@ -73,7 +73,7 @@ class TripService extends cds.ApplicationService {
         });
         this.on("CREATE", routeplan, async (req) => {
             let routeData = req.data;
-            routeData.creation_timestamp = Date.now();
+            routeData.staging_creation_timestamp = Date.now();
             const routelogdata = {};
             routelogdata.surrogatenum = req.data.surrogatenum;
             routelogdata.insupcarriercode2 = req.data.insupcarriercode2;
@@ -85,7 +85,7 @@ class TripService extends cds.ApplicationService {
             routelogdata.lineno = req.data.lineno;
             routelogdata.cfpno = req.data.cfpno;
             routelogdata.status = statusReady;
-            routelogdata.creation_timestamp = routeData.creation_timestamp;
+            routelogdata.staging_creation_timestamp = routeData.staging_creation_timestamp;
             routelogdata.logtype = routeLogType;
             // TODO: infinite loop
             await db.run(INSERT([routeData]).into(routeplanStaging));
@@ -94,7 +94,7 @@ class TripService extends cds.ApplicationService {
         });
         this.on("CREATE", catering, async (req) => {
             let cateringData = req.data;
-            cateringData.creation_timestamp = Date.now();
+            cateringData.staging_creation_timestamp = Date.now();
             const cateringlogdata = {};
             cateringlogdata.surrogatenum = req.data.surrogatenum;
             cateringlogdata.insupcarriercode2 = req.data.insupcarriercode2;
@@ -104,7 +104,7 @@ class TripService extends cds.ApplicationService {
             cateringlogdata.inscheddeptdate = req.data.inscheddeptdate;
             cateringlogdata.fosuffix = req.data.fosuffix;
             cateringlogdata.status = statusReady;
-            cateringlogdata.creation_timestamp = cateringData.creation_timestamp;
+            cateringlogdata.staging_creation_timestamp = cateringData.staging_creation_timestamp;
             cateringlogdata.logtype = cateringLogType;
             // TODO: infinite loop
             await db.run(INSERT([cateringData]).into(cateringStaging));
@@ -169,7 +169,7 @@ class TripService extends cds.ApplicationService {
             if (whereTripString) {
                 const tripsStaged = await SELECT.from(triprecordStaging).where(
                     cds.parse.expr(whereTripString)
-                ).orderBy("creation_timestamp asc");
+                ).orderBy("staging_creation_timestamp asc");
 
                 if (tripsStaged) {
                     for (let trip of tripsStaged) {
@@ -182,7 +182,7 @@ class TripService extends cds.ApplicationService {
             if (wherePaxString) {
                 const paxStaged = await SELECT.from(paxStaging).where(
                     cds.parse.expr(wherePaxString)
-                ).orderBy("creation_timestamp asc");
+                ).orderBy("staging_creation_timestamp asc");
 
                 if (paxStaged) {
                     for (let trip of paxStaged) {
@@ -195,7 +195,7 @@ class TripService extends cds.ApplicationService {
             if (whereCargoString) {
                 const cargoStaged = await SELECT.from(cargorecordStaging).where(
                     cds.parse.expr(whereCargoString)
-                ).orderBy("creation_timestamp asc");
+                ).orderBy("staging_creation_timestamp asc");
 
                 if (cargoStaged) {
                     for (let trip of cargoStaged) {
@@ -208,7 +208,7 @@ class TripService extends cds.ApplicationService {
             if (whereRouteString) {
                 const routePlanStaged = await SELECT.from(routeplanStaging).where(
                     cds.parse.expr(whereRouteString)
-                ).orderBy("creation_timestamp asc");
+                ).orderBy("staging_creation_timestamp asc");
 
                 if (routePlanStaged) {
                     for (let trip of routePlanStaged) {
@@ -221,7 +221,7 @@ class TripService extends cds.ApplicationService {
             if (whereCateringString) {
                 const cateringStaged = await SELECT.from(cateringStaging).where(
                     cds.parse.expr(whereCateringString)
-                ).orderBy("creation_timestamp asc");
+                ).orderBy("staging_creation_timestamp asc");
 
                 if (cateringStaged) {
                     for (let trip of cateringStaged) {
@@ -291,12 +291,12 @@ class TripService extends cds.ApplicationService {
             ) {
                 inscheddeptdateTemp = "'" + trip.inscheddeptdate + "'";
             }
-            let creation_timestamp = trip.creation_timestamp;
+            let staging_creation_timestamp = trip.staging_creation_timestamp;
             if (
-                creation_timestamp !== null &&
-                creation_timestamp !== undefined
+                staging_creation_timestamp !== null &&
+                staging_creation_timestamp !== undefined
             ) {
-                creation_timestamp = "'" + trip.creation_timestamp + "'";
+                staging_creation_timestamp = "'" + trip.staging_creation_timestamp + "'";
             }
             // let status_timestamp = trip.status_timestamp;
             // if(
@@ -310,14 +310,14 @@ class TripService extends cds.ApplicationService {
                 whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ` +
                     `${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ` +
                     `${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ` +
-                    `${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} and ` +
+                    `${inscheddeptdateTemp} and staging_creation_timestamp = ${staging_creation_timestamp} and ` +
                     `logtype = ${logType} )`; //and status_timestamp = ${status_timestamp}
             } else {
                 if (logType !== routeLogType) {
                     whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ` +
                         `${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ` +
                         `${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ` +
-                        `${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} )`;
+                        `${inscheddeptdateTemp} and staging_creation_timestamp = ${staging_creation_timestamp} )`;
                 } else {
                     let linenoTemp = trip.lineno;
                     if (
@@ -337,7 +337,7 @@ class TripService extends cds.ApplicationService {
                     whereComponent = `(surrogatenum = ${surrogatenumTemp} and insupcarriercode2 = ` +
                         `${insupcarriercode2Temp} and inflightno = ${inflightnoTemp} and inorigin = ` +
                         `${inoriginTemp} and indestination = ${indestinationTemp} and inscheddeptdate = ` +
-                        `${inscheddeptdateTemp} and creation_timestamp = ${creation_timestamp} and` +
+                        `${inscheddeptdateTemp} and staging_creation_timestamp = ${staging_creation_timestamp} and` +
                         ` lineno = ${linenoTemp} and cfpno = ${cfpnoTemp} )`;
                 }
             }
@@ -366,7 +366,7 @@ class TripService extends cds.ApplicationService {
                         triplog.indestination === trip.indestination &&
                         triplog.inscheddeptdate === trip.inscheddeptdate &&
                         triplog.surrogatenum === trip.surrogatenum &&
-                        triplog.creation_timestamp === trip.creation_timestamp &&
+                        triplog.staging_creation_timestamp === trip.staging_creation_timestamp &&
                         triplog.logtype === logType
                     );
                 });
@@ -649,7 +649,7 @@ class TripService extends cds.ApplicationService {
                     bagweight: trip.bagweight,
                     traint: trip.traint,
                     tradom: trip.tradom,
-                    sent_creation_timestamp: trip.sent_creation_timestamp,
+                    creation_timestamp: trip.creation_timestamp,
                     tecnum: trip.tecnum,
                     cabnum: trip.cabnum,
                     capnum: trip.capnum,
@@ -781,7 +781,7 @@ class TripService extends cds.ApplicationService {
                     actephprepack: trip.actephprepack,
                     chgepdcgo: trip.chgepdcgo,
                     actepdcgo: trip.actepdcgo,
-                    sent_creation_timestamp: trip.sent_creation_timestamp,
+                    creation_timestamp: trip.creation_timestamp,
                     chgimptonn: trip.chgimptonn,
                     chgexptonn: trip.chgexptonn,
                     chgtottranstonn: trip.chgtottranstonn

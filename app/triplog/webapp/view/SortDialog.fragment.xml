@@ -12,7 +12,7 @@
 			<ViewSettingsItem text="{i18n>inscheddeptdate}" key="inscheddeptdate" />
 			<ViewSettingsItem text="{i18n>surrogatenum}" key="surrogatenum" />
 			<ViewSettingsItem text="{i18n>fosuffix}" key="fosuffix" />
-			<ViewSettingsItem text="{i18n>creation_timestamp}" key="creation_timestamp" />
+			<ViewSettingsItem text="{i18n>staging_creation_timestamp}" key="staging_creation_timestamp" />
 			<ViewSettingsItem text="{i18n>status}" key="status" />
 		</sortItems>
 	</ViewSettingsDialog>

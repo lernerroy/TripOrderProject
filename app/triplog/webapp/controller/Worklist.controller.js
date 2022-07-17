@@ -282,7 +282,7 @@ sap.ui.define(
           // build the timestamp filters
           aFilters.push(
             new Filter({
-              path: "creation_timestamp",
+              path: "staging_creation_timestamp",
               operator: FilterOperator.BT,
               value1: fromStringDate,
               value2: toStringDate,
@@ -356,7 +356,7 @@ sap.ui.define(
           indestination: oItem.indestination,
           inscheddeptdate: oItem.inscheddeptdate,
           surrogatenum: oItem.surrogatenum,
-          creation_timestamp: oItem.creation_timestamp,
+          staging_creation_timestamp: oItem.staging_creation_timestamp,
         });
       },
 
@@ -424,7 +424,7 @@ sap.ui.define(
           indestination: oItem.indestination,
           inscheddeptdate: oItem.inscheddeptdate,
           surrogatenum: oItem.surrogatenum,
-          creation_timestamp: oItem.creation_timestamp,
+          staging_creation_timestamp: oItem.staging_creation_timestamp,
         });
       },
 

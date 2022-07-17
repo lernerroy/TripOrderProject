@@ -121,22 +121,22 @@
           "target": ["worklist"]
         },
         {
-          "pattern": "triprecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{creation_timestamp}",
+          "pattern": "triprecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
           "name": "object",
           "target": ["worklist", "object"]
         },
         {
-          "pattern": "passengerrecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{creation_timestamp}",
+          "pattern": "passengerrecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
           "name": "passengerRecord",
           "target": ["worklist", "passengerRecord"]
         },
         {
-          "pattern": "cargorecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{creation_timestamp}",
+          "pattern": "cargorecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
           "name": "cargoRecord",
           "target": ["worklist", "cargoRecord"]
         },
         {
-          "pattern": "statuses/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{creation_timestamp}",
+          "pattern": "statuses/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
           "name": "statuses",
           "target": ["worklist", "statuses"]
         }

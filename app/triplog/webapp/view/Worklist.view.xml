@@ -19,7 +19,7 @@
                 <f:content>
                     <fb:FilterBar reset="onReset" search="onFilter" useToolbar="false">
                         <fb:filterItems>
-                            <fb:FilterItem name="creation_timestamp" label="{i18n>creation_timestamp}">
+                            <fb:FilterItem name="staging_creation_timestamp" label="{i18n>staging_creation_timestamp}">
                                 <fb:control>
                                     <DateRangeSelection showCurrentDateButton="true" showFooter="true" displayFormat="{triplogFilters>/timestamp/dateFormat}" dateValue="{triplogFilters>/timestamp/from}" secondDateValue="{triplogFilters>/timestamp/to}"/>
                                 </fb:control>
@@ -101,8 +101,8 @@
                     <Column id="fosuffix">
                         <Text text="{i18n>fosuffix}" />
                     </Column>
-                    <Column id="creation_timestamp">
-                        <Text text="{i18n>creation_timestamp}"/>
+                    <Column id="staging_creation_timestamp">
+                        <Text text="{i18n>staging_creation_timestamp}"/>
                     </Column>
                     <Column >
                         <Text text="{i18n>status}"/>
@@ -131,7 +131,7 @@
                         <Text text="{path: 'inscheddeptdate'}"/>
                         <Text text="{path: 'surrogatenum'}"/>
                         <Text text="{path: 'fosuffix'}" />
-                        <Text text="{path: 'creation_timestamp'}"/>
+                        <Text text="{path: 'staging_creation_timestamp'}"/>
                         <ObjectStatus text="{
                             path: 'status',
                             formatter: '.formatter.statusTextFormat'

@@ -174,7 +174,7 @@ aspect triprecorddetails : recordsKey, surrogatenum, aufnr {
 
 entity triprecord : triprecorddetails{};
 entity triprecordStaging : triprecorddetails{
-    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
     //triplog : Association to many triplog on triplog.triprecordStaging = $self;
 };
 
@@ -183,7 +183,7 @@ entity triplog : recordsKey, surrogatenum, statusCode {
     status: Status @(title : '{i18n>status}');
     // status: Association to Status @(title : '{i18n>status}');
     //messagetext : String @(title : '{i18n>messagetext}');
-    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
     key status_timestamp : Timestamp @cds.on.insert : $now @(title : '{i18n>timestamp}') ;
     key logtype: logType @(title: '{i18n>logtype}');
 };
@@ -199,7 +199,7 @@ view triplogCurrent as
         key indestination,
         key inscheddeptdate,
         key surrogatenum,        
-        key creation_timestamp,
+        key staging_creation_timestamp,
         logtype,
         fosuffix,
         status,
@@ -209,7 +209,7 @@ view triplogCurrent as
         statusParam3,
         statusParam4,
         key max( status_timestamp ) as status_timestamp : Timestamp }
-        group by insupcarriercode2, inflightno, inorigin, indestination, inscheddeptdate, surrogatenum, creation_timestamp, logtype, fosuffix, status, statusCode,
+        group by insupcarriercode2, inflightno, inorigin, indestination, inscheddeptdate, surrogatenum, staging_creation_timestamp, logtype, fosuffix, status, statusCode,
         statusParam1, statusParam2, statusParam3, statusParam4
         having max( status_timestamp ) = ( select from triplog {max( status_timestamp ) as status_timestamp : Timestamp }
         where 
@@ -218,7 +218,7 @@ view triplogCurrent as
         indestination = triplog1.indestination and
         inscheddeptdate = triplog1.inscheddeptdate and
         surrogatenum = triplog1.surrogatenum and
-        creation_timestamp = triplog1.creation_timestamp and
+        staging_creation_timestamp = triplog1.staging_creation_timestamp and
         logtype  = triplog1.logtype );
     
 
@@ -287,7 +287,7 @@ entity passengerdetails : recordsKey, surrogatenum {
     bagweight       : Decimal(8,2);
     traint          : Decimal(3,0);
     tradom          : Decimal(3,0);
-    sent_creation_timestamp : Decimal(15,0);
+    creation_timestamp : Decimal(15,0);
     tecnum          : Integer;
     cabnum          : Integer;
     capnum          : Integer;
@@ -338,7 +338,7 @@ entity passengerdetails : recordsKey, surrogatenum {
 };
 entity passenger : passengerdetails{};
 entity passengerStaging : passengerdetails{
-    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
    // triplog : Association to many triplog  on triplog.passengerStaging = $self;
 };
 
@@ -404,7 +404,7 @@ entity cargorecorddetails : recordsKey, surrogatenum {
     actephprepack       : Decimal(8,2);
     chgepdcgo           : Decimal(8,2);
     actepdcgo           : Decimal(8,2);
-    sent_creation_timestamp  : Decimal(15,0);
+    creation_timestamp  : Decimal(15,0);
     chgimptonn          : Decimal(8,2);
     chgexptonn          : Decimal(8,2);
     chgtottranstonn     : Decimal(8,2);
@@ -412,7 +412,7 @@ entity cargorecorddetails : recordsKey, surrogatenum {
 
 entity cargorecord : cargorecorddetails{};
 entity cargorecordStaging : cargorecorddetails{
-    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
   //  triplog : Association to many triplog on triplog.cargorecordStaging = $self;
 };
 
@@ -451,7 +451,7 @@ entity routeplanDetails : recordsKey, surrogatenum {
 
 entity routeplan : routeplanDetails{};
 entity routeplanStaging : routeplanDetails{
-    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
   //  triplog : Association to many triplog  on triplog.routeplanStaging = $self;
 };
 
@@ -514,6 +514,6 @@ entity cateringdetails : recordsKey, surrogatenum {
 
 entity catering : cateringdetails{};
 entity cateringStaging : cateringdetails{
-    key creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
+    key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
    // triplog : Association to many triplog  on triplog.cateringStaging = $self;
 };
