@@ -87,6 +87,11 @@ service TripService {
                              // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
                              //              { grant: ['READ','WRITE'], to: ['API_user']} ])
                              as projection on trips.cateringStaging;
+    
+    entity aircraftTypeGroup 
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.aircraftTypeGroup;
 
     // Views
     //////////////////////////////////////////////////////////////////////
@@ -149,6 +154,20 @@ service TripService {
         }
     ])                       as projection on trips.Legstates;
 
+    entity TailRegistrations @(restrict : [
+        {
+            grant : ['*'],
+            to    : ['Admin']
+        },
+        {
+            grant : ['READ'],
+            to    : [
+                'API_user',
+                'User'
+            ]
+        }
+    ])
+    as projection on trips.TailRegistrations;
     //////////////////////////////////////////////////////////////////////
 
 
@@ -305,6 +324,62 @@ define view TripService.cockpitTrips as(
         zzschedarrapt
 );
 
+annotate TripService.TailRegistrations with {
+    ID /*@title : '{i18n>trID}'*/;
+    tailNo @title : '{i18n>tailNo}';
+    aircraftType @title : '{i18n>aircraft_type}';
+    ac_seat_config @title : '{i18n>ac_seat_config}';
+    ac_type_iata @title : '{i18n>ac_type_iata}';
+    ac_type_iatag @title : '{i18n>ac_type_iatag}';
+    ac_type_icao @title : '{i18n>ac_type_icao}';
+    mtow_kg @title : '{i18n>mtow_kg}';
+    mtow_t @title : '{i18n>mtow_t}';
+    amtow1_kg @title : '{i18n>amtow1_kg}';
+    amtow2_kg @title : '{i18n>amtow2_kg}';
+    mtw_kg @title : '{i18n>mtw_kg}';
+    amtw_kg @title : '{i18n>amtw_kg}';
+    mlw_kg @title : '{i18n>mlw_kg}';
+    full_cgo_cap @title : '{i18n>full_cgo_cap}';
+    eev_kg @title : '{i18n>eev_kg}';
+    wingspan_m @title : '{i18n>wingspan_m}';
+    length_m @title : '{i18n>length_m}';
+    icao_noise_cat_takeoff @title : '{i18n>icao_noise_cat_takeoff}';
+    icao_noise_cat_landing @title : '{i18n>icao_noise_cat_landing}';
+    icao_chap3_noise_level @title : '{i18n>icao_chap3_noise_level}';
+    icao_chap4_noise_level @title : '{i18n>icao_chap4_noise_level}';
+    icao_annex16_chp @title : '{i18n>icao_annex16_chp}';
+    nri_noise_category @title : '{i18n>nri_noise_category}';
+    aci_noise_rate_ind_mtow @title : '{i18n>aci_noise_rate_ind_mtow}';
+    aci_noise_rate_ind_amtow @title : '{i18n>aci_noise_rate_ind_amtow}';
+    engine_app_noise_level @title : '{i18n>engine_app_noise_level}';
+    engine_app_noise_limit @title : '{i18n>engine_app_noise_limit}';
+    engine_side_noise_level @title : '{i18n>engine_side_noise_level}';
+    engine_side_noise_limit @title : '{i18n>engine_side_noise_limit}';
+    noise_level_start_takeoff @title : '{i18n>noise_level_start_takeoff}';
+    noise_limit_start_takeoff @title : '{i18n>noise_limit_start_takeoff}';
+    pax_or_frt @title : '{i18n>pax_or_frt}';
+    fcl_seat_cap @title : '{i18n>fcl_seat_cap}';
+    jcl_seat_cap @title : '{i18n>jcl_seat_cap}';
+    pey_seat_cap @title : '{i18n>pey_seat_cap}';
+    ycl_seat_cap @title : '{i18n>ycl_seat_cap}';
+    tot_seat_cap @title : '{i18n>tot_seat_cap}';
+    ac_operator @title : '{i18n>ac_operator}';
+    body_type @title : '{i18n>body_type}';
+    number_engines @title : '{i18n>number_engines}';
+    engine_type @title : '{i18n>engine_type}';
+    zero_fuel_weight @title : '{i18n>zero_fuel_weight}';
+    euwgtfctr1 @title : '{i18n>euwgtfctr1}';
+    euwgtfctr2 @title : '{i18n>euwgtfctr2}';
+    acoustic_grp @title : '{i18n>acoustic_grp}';
+    bulk_ac @title : '{i18n>bulk_ac}';
+    eev_kg_arn @title : '{i18n>eev_kg_arn}';
+    ac_total_arn @title : '{i18n>ac_total_arn}';
+    lto_fuel @title : '{i18n>lto_fuel}';
+    nox_tp_maint @title : '{i18n>nox_tp_maint}';
+    amtow1_t @title : '{i18n>amtow1_t}';
+    amtow2_t @title : '{i18n>amtow2_t}';
+    engine_takeoff_noise_lvl @title : '{i18n>engine_takeoff_noise_lvl}';
+}
 
 annotate TripService.triprecord with {
     surrogatenum      @title : '{i18n>surrogatenum}';
@@ -672,3 +747,8 @@ annotate TripService.catering with {
     surcharge_perc      @title : '{i18n>surcharge_perc}';
     consumptiontax_perc @title : '{i18n>consumptiontax_perc}';
 }
+
+annotate aircraftTypeGroup with {
+    aircraft_type @title : '{i18n>aircraft_type}';
+    aircraft_group @title: '{i18n>aircraft_group}';
+};

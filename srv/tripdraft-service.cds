@@ -25,6 +25,11 @@ service TripDraft {
         { grant: ['READ'], to: ['User']}]) 
     as projection on trips.Legstates;
 
+    entity aircraftTypeGroup 
+    // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //              { grant: ['READ','WRITE'], to: ['API_user']} ])
+    as projection on trips.aircraftTypeGroup;
+
     //////////////////////////////////////////////////////////////////////
 
 
@@ -54,6 +59,8 @@ annotate trips.Carriers with @fiori.draft.enabled;
 annotate TripDraft.Carriers with @odata.draft.enabled;
 annotate trips.Airports with @fiori.draft.enabled;
 annotate TripDraft.Airports with @odata.draft.enabled;
+annotate trips.aircraftTypeGroup with @odata.draft.enabled;
+annotate TripDraft.aircraftTypeGroup with @odata.draft.enabled;
 annotate commonLanguages with @fiori.draft.enabled;
 annotate TripDraft.Languages with @odata.draft.enabled;
 annotate commonCountries with @fiori.draft.enabled;
