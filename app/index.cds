@@ -19,3 +19,7 @@ using from './airports/annotations';
 using from './triplog/annotations';
 
 using from './upload_utility/annotations';
+
+using from './aircraft_types/annotations';
+
+using from './tailregistrations/annotations';
