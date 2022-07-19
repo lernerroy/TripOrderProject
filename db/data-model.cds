@@ -111,8 +111,8 @@ entity TailRegistrations : CodeList, managed {
 
 
 @assert.unique : {
-    aircraft_type  : [aircraft_type],
-    aircraft_group : [aircraft_group]
+    aircraftType  : [aircraftType],
+    aircraftGroup : [aircraftGroup]
 }
 entity aircraftTypeGroup : managed {
     key ID            : UUID @(Core.Computed : true);
