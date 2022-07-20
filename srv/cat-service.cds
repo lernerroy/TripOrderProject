@@ -227,6 +227,7 @@ service TripService {
     action processMessage(trips : array of triplog);
     action processMessagesIn(status : String) returns array of triplog;
     action resetMessage(trips : array of triplog);
+    action manualProcessMessage(trips: array of triplog);
 };
 
 

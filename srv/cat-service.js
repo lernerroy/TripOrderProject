@@ -7,6 +7,7 @@ class TripService extends cds.ApplicationService {
             cateringLogType = '5';
         const statusBeingProcessed = 50, statusError = 51, statusWarning = 52, statusProcessed = 53,
             statusReady = 64;
+        const manualMessage = 'manualProcessMessage', resetMessage = 'resetMessage';
         const db = await cds.connect.to("db");
         this.on("CREATE", triprecord, async (req) => {
             let tripData = req.data;
@@ -22,8 +23,8 @@ class TripService extends cds.ApplicationService {
             triplogdata.status = statusReady;
             triplogdata.staging_creation_timestamp = tripData.staging_creation_timestamp;
             triplogdata.logtype = tripLogType;
-            triplogdata.statusCode = 1;
-            triplogdata.statusParam1 = "UECCC";
+            // triplogdata.statusCode = 1;
+            // triplogdata.statusParam1 = "UECCC";
             // TODO: infinite loop
             await db.run(INSERT([tripData]).into(triprecordStaging));
             await db.run(INSERT([triplogdata]).into(triplogAll));
@@ -43,8 +44,6 @@ class TripService extends cds.ApplicationService {
             paxlogdata.status = statusReady;
             paxlogdata.staging_creation_timestamp = paxData.staging_creation_timestamp;
             paxlogdata.logtype = paxLogType;
-            paxlogdata.statusCode = 1;
-            paxlogdata.statusParam1 = "UECCC";
             // TODO: infinite loop
             await db.run(INSERT([paxData]).into(paxStaging));
             await db.run(INSERT([paxlogdata]).into(triplogAll));
@@ -64,8 +63,6 @@ class TripService extends cds.ApplicationService {
             cargologdata.status = statusReady;
             cargologdata.staging_creation_timestamp = cargoData.staging_creation_timestamp;
             cargologdata.logtype = cargoLogType;
-            cargologdata.statusCode = 1;
-            cargologdata.statusParam1 = "UECCC";
             // TODO: infinite loop
             await db.run(INSERT([cargoData]).into(cargorecordStaging));
             await db.run(INSERT([cargologdata]).into(triplogAll));
@@ -133,7 +130,13 @@ class TripService extends cds.ApplicationService {
         });
         this.on("resetMessage", async (req) => {
             const isSuccess = await this.changeStatuses(
-                req.data.trips, statusReady
+                req.data.trips, statusReady, resetMessage
+            );
+            if (!isSuccess) throw req.reject(500, "Message Processing Failed");
+        });
+        this.on("manualProcessMessage", async (req) => {
+            const isSuccess = await this.changeStatuses(
+                req.data.trips, statusProcessed, manualMessage
             );
             if (!isSuccess) throw req.reject(500, "Message Processing Failed");
         });
@@ -904,18 +907,17 @@ class TripService extends cds.ApplicationService {
             return false;
         }
 
-        this.changeStatuses = async (trips, status) => {
+        this.changeStatuses = async (trips, status, caller) => {
+            let statusUpdated = false;
             for (let trip of trips) {
-                let whereTripLog = "";
-                let statusUpdated = false;
-                // whereTripLog = this.buildWhereString(trip, whereTripLog, trip.logtype, true);
-                // const tripLogRow = await SELECT.one.from(triplog).where(
-                //     cds.parse.expr(whereTripLog)
-                // );
+                if(caller === manualMessage){
+                    trip.statusCode = 2;
+                }
+                if(caller === resetMessage){
+                    trip.statusCode = null;
+                }
 
-                // if (tripLogRow && parseInt(tripLogRow.status) !== statusReady) {
-                    statusUpdated = await this.insertTriplogStatus(trip, trip.logtype, status);
-                // }
+                statusUpdated = await this.insertTriplogStatus(trip, trip.logtype, status);
 
                 // TODO: error handling if there is any to be done
             };

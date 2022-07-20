@@ -85,6 +85,7 @@ sap.ui.define(
           showFooter: false,
           processButtonEnabled: false,
           resetButtonEnabled: false,
+          manualButtonEnabled: false,
           search: "",
         });
         this.setModel(oViewModel, "worklistView");
@@ -150,6 +151,10 @@ sap.ui.define(
           "/resetButtonEnabled",
           this._hasItemsForReset(aItems)
         );
+        this.getModel("worklistView").setProperty(
+            "/manualButtonEnabled",
+            this._hasItemsForProcess(aItems)
+          );
       },
 
       /* =========================================================== */
@@ -578,6 +583,73 @@ sap.ui.define(
 
         this.oResetDialog.attachAfterClose(function () {
           this.oResetDialog = null;
+        });
+      },
+
+      onManual: function (oEvent) {
+        var oTable = this.getView().byId("tripLogTable");
+        // get all selected objects
+        var aSelectedItems = oTable
+          .getSelectedContexts()
+          .map(function (oContext) {
+            return oContext.getObject();
+          });
+        // get all items that needs to be processed
+        var aItemsToProcess = aSelectedItems.filter(function (item) {
+          return item.status !== Enums.Status.PROCESSED;
+        });
+
+        this.oManualDialog = new Dialog({
+          type: DialogType.Message,
+          title: this.getResourceBundle().getText("processMessagesTitle"),
+          content: new Text({
+            text: this.getResourceBundle().getText("processMessages"),
+          }),
+          beginButton: new Button({
+            type: ButtonType.Emphasized,
+            text: this.getResourceBundle().getText("yes"),
+            press: function () {
+              this.oManualDialog.close();
+
+              var oOperation = this.getModel().bindContext(
+                "/manualProcessMessage(...)"
+              );
+              oOperation.setParameter("trips", aItemsToProcess);
+
+              this.getView().setBusy(true);
+              var self = this;
+
+              oOperation
+                .execute()
+                .then(function (oUpdatedContext) {
+                  self.showMessage(
+                    self.getResourceBundle().getText("messageProcessSuccesful")
+                  );
+                  oTable.getBinding("items").refresh();
+                  self.getEventBus().publish(null, "messageProcessed", {
+                    items: aItemsToProcess,
+                  });
+                  self.getView().setBusy(false);
+                })
+                .catch(function (err) {
+                  console.log("Error", err);
+                  oTable.getBinding("items").refresh();
+                  self.getView().setBusy(false);
+                });
+            }.bind(this),
+          }),
+          endButton: new Button({
+            text: this.getResourceBundle().getText("cancel"),
+            press: function () {
+              this.oManualDialog.close();
+            }.bind(this),
+          }),
+        });
+
+        this.oManualDialog.open();
+
+        this.oManualDialog.attachAfterClose(function () {
+          this.oManualDialog = null;
         });
       },
 

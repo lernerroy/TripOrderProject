@@ -493,7 +493,6 @@ annotate TripDraft.Airports {
 annotate TripDraft.TailRegistrations with @(
     Common.SemanticKey : [tailNo],
     UI                 : {
-
         SelectionFields   : [
             ID,
             tailNo
@@ -526,6 +525,8 @@ annotate TripDraft.TailRegistrations with @(
         FieldGroup #Main  : {Data : [
             {Value : tailNo, },
             {Value : aircraftType_ID, },
+            // {Value : aircraftType.aircraftType, },
+            // {Value : aircraftType.aircraftGroup, },
             {Value : ac_seat_config, },
             {Value : ac_type_iata, },
             {Value : ac_type_iatag, },
@@ -616,13 +617,33 @@ annotate TripDraft.TailRegistrations.texts {
 
 // Add Value Help for aircraft Type
 annotate TripDraft.TailRegistrations {
+    // Annotation for Text
+    aircraftType @(
+        Common.Text            : aircraftType.aircraftType,
+        Common.TextArrangement : #TextOnly
+    );
     aircraftType
-    @Common.ValueListWithFixedValues : false
-    @ValueList : {
-        entity : 'trips.aircraftTypeGroup',
-        type   : #fixed,
-        title  : '{i18n>aircraft_type}'
-    }
+    @Common.ValueList : {
+        CollectionPath  : 'aircraftTypeGroup',
+        Label           : '{i18n>aircraft_type}',
+        Parameters      : [
+            {
+                $Type             : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'aircraftType'
+            },
+            {
+                $Type             : 'Common.ValueListParameterDisplayOnly',
+                ValueListProperty : 'aircraftGroup'
+            },
+            {
+                $Type             : 'Common.ValueListParameterInOut',
+                LocalDataProperty : aircraftType_ID,
+                ValueListProperty : 'ID'
+            }, // local data property is the foreign key
+
+        ],
+        SearchSupported : true
+    };
 }
 
 // aircraft Type Group

@@ -60,6 +60,10 @@ sap.ui.define([
                 {
                     code: 1,
                     bundleRef: "ErrorACExistence"
+                },
+                {
+                    code: 2,
+                    bundleRef: "ErrorManualProcess"
                 }
             ];
         },
