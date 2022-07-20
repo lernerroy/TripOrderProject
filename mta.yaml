@@ -52,8 +52,11 @@ modules:
   type: nodejs
   path: gen/srv
   parameters:
+    buildpack: nodejs_buildpack
     memory: 128M
     disk-quota: 512M
+  build-parameters:
+    builder: npm-ci
   #properties:
     #JOB_SCHED_APP_URL: '${org}-${space}-job-sched-app.${default-domain}'
     #NODE_DEBUG: 'scheduler'
@@ -425,5 +428,5 @@ build-parameters:
   before-all:
   - builder: custom
     commands:
-    - npm install --production
+    #- npm install --production
     - npx -p @sap/cds-dk cds build --production
