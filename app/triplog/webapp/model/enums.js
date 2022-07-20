@@ -64,6 +64,10 @@ sap.ui.define([
                 {
                     code: 2,
                     bundleRef: "ErrorManualProcess"
+                },
+                {
+                    code: 3,
+                    bundleRef: "ErrorMissingTailNo"
                 }
             ];
         },

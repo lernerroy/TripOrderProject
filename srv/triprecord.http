@@ -9,13 +9,13 @@ POST http://localhost:4004/browse/triprecord
 Content-Type: application/json
 
 {
-		"insupcarriercode2": "4",
-		"inflightno": "4",
-		"inorigin": "4",
-		"indestination": "4",
-		"inscheddeptdate": "1900-01-05",
+		"insupcarriercode2": "6",
+		"inflightno": "6",
+		"inorigin": "6",
+		"indestination": "6",
+		"inscheddeptdate": "1900-01-06",
 		"fosuffix": null,
-		"surrogatenum": "DanielNavTest1",
+		"surrogatenum": "DanielTailTest2",
 		"aufnr": null,
 		"supcarriercode2_code": "AV",
 		"scheddeptdate": "2021-01-10",
@@ -36,7 +36,7 @@ Content-Type: application/json
 		"legstate_code": "ARR",
 		"aircrafttype": "330",
 		"aircrafttypecpa": null,
-		"tailno": "N280AV",
+		"tailno": "NTT55V",
 		"flighttype": "J",
 		"deptparkposn": null,
 		"actgatetime": 0,

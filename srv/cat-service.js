@@ -2,7 +2,8 @@ const cds = require("@sap/cds");
 class TripService extends cds.ApplicationService {
     async init() {
         const { triprecord, triprecordStaging, pax, paxStaging, cargorecord, cargorecordStaging,
-            routeplan, routeplanStaging, catering, cateringStaging, triplog, triplogAll } = this.entities;
+            routeplan, routeplanStaging, catering, cateringStaging, triplog, triplogAll, 
+            TailRegistrations } = this.entities;
         const tripLogType = '1', paxLogType = '2', cargoLogType = '3', routeLogType = '4',
             cateringLogType = '5';
         const statusBeingProcessed = 50, statusError = 51, statusWarning = 52, statusProcessed = 53,
@@ -374,36 +375,56 @@ class TripService extends cds.ApplicationService {
                     );
                 });
 
-                if (trip.legstate_code === "ARR" && !trip.actarrdate) {
+                let tempTailNo = trip.tailno;
+                if (
+                    tempTailNo !== null &&
+                    tempTailNo !== undefined
+                ) {
+                    tempTailNo = "'" + trip.tailno + "'";
+                } 
+                let whereTailNo = `( tailNo = ${tempTailNo} )`;
+
+                const tailRegRow = await SELECT.one.from(TailRegistrations).where(
+                    cds.parse.expr(whereTailNo)
+                );
+
+                if(!tailRegRow){
                     newStatus = trips[triplogMatchingIndex].status = statusError;
-                } else {
-                    // delete trip.creation_timestamp;
-                    delete trip.modifiedAt;
-                    delete trip.modifiedBy;
-                    newStatus = trips[triplogMatchingIndex].status = statusProcessed;
-                }
-
-                switch (logType) {
-                    default:
-                    case tripLogType:
-                        rowUpdated = await this.updateTripRecord(trip);
-                        break;
-                    case paxLogType:
-                        rowUpdated = await this.updatePaxRecord(trip);
-                        break;
-                    case cargoLogType:
-                        rowUpdated = await this.updateCargoRecord(trip);
-                        break;
-                    case routeLogType:
-                        rowUpdated = await this.updateRouteRecord(trip);
-                        break;
-                    case cateringLogType:
-                        rowUpdated = await this.updateCateringRecord(trip);
-                        break;
-                }
-
-                if (rowUpdated) {
+                    trip.statusCode = 3;
+                    trip.statusParam1 = trip.tailno;
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                } else {
+                    if (trip.legstate_code === "ARR" && !trip.actarrdate) {
+                        newStatus = trips[triplogMatchingIndex].status = statusError;
+                    } else {
+                        // delete trip.creation_timestamp;
+                        delete trip.modifiedAt;
+                        delete trip.modifiedBy;
+                        newStatus = trips[triplogMatchingIndex].status = statusProcessed;
+                    }
+    
+                    switch (logType) {
+                        default:
+                        case tripLogType:
+                            rowUpdated = await this.updateTripRecord(trip);
+                            break;
+                        case paxLogType:
+                            rowUpdated = await this.updatePaxRecord(trip);
+                            break;
+                        case cargoLogType:
+                            rowUpdated = await this.updateCargoRecord(trip);
+                            break;
+                        case routeLogType:
+                            rowUpdated = await this.updateRouteRecord(trip);
+                            break;
+                        case cateringLogType:
+                            rowUpdated = await this.updateCateringRecord(trip);
+                            break;
+                    }
+    
+                    if (rowUpdated) {
+                        statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    }
                 }
             }
 
