@@ -11,7 +11,7 @@
     "dependencies": {
         "@sap/audit-logging": "^5.1.0",
         "@sap/cds": "^5.9.8",
-        "@sap/cds-mtx": "2.5",
+        "@sap/cds-mtx": "2.6",
         "@sap/hana-client": "^2.10.15",
         "@sap/hdi-deploy": "^4.2.0",
         "@sap/instance-manager": "^3.0.0",
