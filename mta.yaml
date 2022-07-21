@@ -151,6 +151,14 @@ modules:
       - UpdUtilityuploadutility.zip
       name: UpdUtilityuploadutility
       target-path: resources/ 
+    - artifacts:
+      - aircraft_types.zip
+      name: aircraft_types
+      target-path: resources/
+    - artifacts:
+      - tailregistrations.zip
+      name: tailregistrations
+      target-path: resources/
 
 - name: triporder-approuter
   type: approuter.nodejs
@@ -276,6 +284,26 @@ modules:
 - name: carriers
   type: html5
   path: app/carriers
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: tailregistrations
+  type: html5
+  path: app/tailregistrations
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: aircraft_types
+  type: html5
+  path: app/aircraft_types
   build-parameters:
     build-result: dist
     builder: custom
