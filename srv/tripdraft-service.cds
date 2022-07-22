@@ -10,83 +10,50 @@ service TripDraft {
 
     // TripRecord
     //////////////////////////////////////////////////////////////////////
-    entity Carriers @(restrict : [
-        {
-            grant : ['*'],
-            to    : ['Admin']
-        },
-        {
-            grant : ['READ'],
-            to    : ['User']
-        }
-    ])                       as projection on trips.Carriers;
+    entity Carriers
+                            // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                            //              { grant: ['READ'], to: ['API_user']} ])
+                            as projection on trips.Carriers;
 
-    entity Airports @(restrict : [
-        {
-            grant : ['*'],
-            to    : ['Admin']
-        },
-        {
-            grant : ['READ'],
-            to    : ['User']
-        }
-    ])                       as projection on trips.Airports;
+    entity Airports
+                            // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                            //              { grant: ['READ'], to: ['API_user']} ])
+                            as projection on trips.Airports;
 
-    entity Legstates @(restrict : [
-        {
-            grant : ['*'],
-            to    : ['Admin']
-        },
-        {
-            grant : ['READ'],
-            to    : ['User']
-        }
-    ])                       as projection on trips.Legstates;
+    entity Legstates
+                            // @(restrict: [ { grant: ['*'], to: ['Admin']},
+                            //              { grant: ['READ'], to: ['API_user','User']} ])
+                            as projection on trips.Legstates;
 
     entity aircraftTypeGroup
-                             // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                             //              { grant: ['READ','WRITE'], to: ['API_user']} ])
-                             as projection on trips.aircraftTypeGroup;
+                            // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                            //              { grant: ['READ'], to: ['API_user']} ])
+                            as projection on trips.aircraftTypeGroup;
 
-    entity TailRegistrations as projection on trips.TailRegistrations;
+    entity TailRegistrations
+                            // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                            //              { grant: ['READ'], to: ['API_user']} ])
+                            as projection on trips.TailRegistrations;
 
     //////////////////////////////////////////////////////////////////////
 
 
     // Common
     //////////////////////////////////////////////////////////////////////
-    entity Languages @(restrict : [
-        {
-            grant : ['*'],
-            to    : ['Admin']
-        },
-        {
-            grant : ['READ'],
-            to    : ['User']
-        }
-    ])                       as projection on commonLanguages;
+    entity Languages
+                            // @(restrict: [ { grant: ['*'], to: ['Admin']},
+                            //              { grant: ['READ'], to: ['API_user','User']} ])
+                            as projection on commonLanguages;
 
-    entity Countries @(restrict : [
-        {
-            grant : ['*'],
-            to    : ['Admin']
-        },
-        {
-            grant : ['READ'],
-            to    : ['User']
-        }
-    ])                       as projection on commonCountries;
+    entity Countries
+                            // @(restrict: [ { grant: ['*'], to: ['Admin']},
+                            //              { grant: ['READ'], to: ['API_user','User']} ])
+                            as projection on commonCountries;
 
-    entity Currencies @(restrict : [
-        {
-            grant : ['*'],
-            to    : ['Admin']
-        },
-        {
-            grant : ['READ'],
-            to    : ['User']
-        }
-    ])                       as projection on commonCurrencies;
+    entity Currencies
+                            // @(restrict: [ { grant: ['*'], to: ['Admin']},
+                            //              { grant: ['READ'], to: ['API_user','User']} ])
+                            as projection on commonCurrencies;
 //////////////////////////////////////////////////////////////////////
 
 };
@@ -623,7 +590,7 @@ annotate TripDraft.TailRegistrations {
         Common.TextArrangement : #TextOnly
     );
     aircraftType
-    @Common.ValueList : {
+                 @Common.ValueList : {
         CollectionPath  : 'aircraftTypeGroup',
         Label           : '{i18n>aircraft_type}',
         Parameters      : [
