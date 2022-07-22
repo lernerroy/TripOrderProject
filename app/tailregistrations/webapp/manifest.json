@@ -1,5 +1,9 @@
 {
     "_version": "1.40.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui" 
+    },
     "sap.app": {
         "id": "tailregistrations",
         "type": "application",
@@ -9,31 +13,21 @@
         },
         "title": "{{appTitle}}",
         "description": "{{appDescription}}",
-        "resources": "resources.json",
-        "sourceTemplate": {
-            "id": "@sap-ux/fiori-elements-writer:lrop",
-            "version": "0.3.6",
-            "toolsId": "a458f3ea-97d6-47e8-b81f-d9e0355339a0"
-        },
         "dataSources": {
             "mainService": {
                 "uri": "/draft/",
                 "type": "OData",
                 "settings": {
-                    "annotations": [
-                        "annotation"
-                    ],
                     "localUri": "localService/metadata.xml",
                     "odataVersion": "4.0"
                 }
-            },
-            "annotation": {
-                "type": "ODataAnnotation",
-                "uri": "annotations/annotation.xml",
-                "settings": {
-                    "localUri": "annotations/annotation.xml"
-                }
             }
+        },
+        "offline": false,
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "ui5template.fiorielements.v4.lrop",
+            "version": "1.0.0"
         },
         "crossNavigation": {
             "inbounds": {
@@ -68,26 +62,25 @@
         }
     },
     "sap.ui5": {
-        "flexEnabled": true,
+        "resources": {
+            "js": [],
+            "css": []
+        },
         "dependencies": {
             "minUI5Version": "1.102.1",
             "libs": {
-                "sap.m": {},
                 "sap.ui.core": {},
-                "sap.ushell": {},
                 "sap.fe.templates": {}
             }
         },
-        "contentDensities": {
-            "compact": true,
-            "cozy": true
-        },
         "models": {
+            "@i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "uri": "i18n/i18n.properties"
+            },
             "i18n": {
                 "type": "sap.ui.model.resource.ResourceModel",
-                "settings": {
-                    "bundleName": "tailregistrations.i18n.i18n"
-                }
+                "uri": "i18n/i18n.properties"
             },
             "": {
                 "dataSource": "mainService",
@@ -98,14 +91,7 @@
                     "autoExpandSelect": true,
                     "earlyRequests": true
                 }
-            },
-            "@i18n": {
-                "type": "sap.ui.model.resource.ResourceModel",
-                "uri": "i18n/i18n.properties"
             }
-        },
-        "resources": {
-            "css": []
         },
         "routing": {
             "config": {},
@@ -150,9 +136,32 @@
                             "entitySet": "TailRegistrations"
                         }
                     }
+                },
+                "TailRegistrations_textsObjectPage": {
+                    "type": "Component",
+                    "id": "TailRegistrations_textsObjectPage",
+                    "name": "sap.fe.templates.ObjectPage",
+                    "options": {
+                        "settings": {
+                            "editableHeaderContent": false,
+                            "entitySet": "TailRegistrations_texts"
+                        }
+                    }
                 }
             }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
         }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
     },
     "sap.fiori": {
         "registrationIds": [],
