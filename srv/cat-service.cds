@@ -77,6 +77,11 @@ service TripService {
                               // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
                               //              { grant: ['READ'], to: ['API_user']} ])
                               as projection on TripService.cockpitTrips;
+
+    entity LegstatesFinal
+                              // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+                              //              { grant: ['READ'], to: ['API_user']} ])
+                              as projection on TripService.finalLegstates;
     //////////////////////////////////////////////////////////////////////
 
     // TripRecord
@@ -233,4 +238,21 @@ define view TripService.cockpitTrips as(
         zzschedarrdate,
         zzschedarrtime,
         zzschedarrapt
+);
+
+define view TripService.finalLegstates as(
+    select
+        ls.code as code,
+        ls.stonr as stonr
+    from TripService.maxLegstates as lsMax
+    inner join TripService.Legstates as ls
+    on lsMax.stonr = ls.stonr
+    group by
+        ls.code,
+        ls.stonr
+);
+
+define view TripService.maxLegstates as(
+    select max(ls.stonr) as stonr : String(2)
+    from TripService.Legstates as ls
 );

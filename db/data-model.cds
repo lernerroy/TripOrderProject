@@ -333,7 +333,6 @@ view triplogCurrent as
                 and logtype                    = triplog1.logtype
         );
 
-
 @cds.autoexpose
 type Status : Decimal(2, 0) enum {
     ReadyForProcessing = 64;

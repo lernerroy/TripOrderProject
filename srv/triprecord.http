@@ -36,7 +36,7 @@ Content-Type: application/json
 		"legstate_code": "ARR",
 		"aircrafttype": "330",
 		"aircrafttypecpa": null,
-		"tailno": "NTT55V",
+		"tailno": "NTT-55V",
 		"flighttype": "J",
 		"deptparkposn": null,
 		"actgatetime": 0,
