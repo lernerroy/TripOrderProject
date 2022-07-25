@@ -1,196 +1,228 @@
 {
-  "_version": "1.12.0",
-  "sap.cloud": {
-    "public": true,
-    "service": "triporder-ui"
-  },
-  "sap.app": {
-    "id": "triplog",
-    "type": "application",
-    "i18n": "i18n/i18n.properties",
-    "applicationVersion": {
-      "version": "0.0.1"
+    "_version": "1.12.0",
+    "sap.cloud": {
+        "public": true,
+        "service": "triporder-ui"
     },
-    "title": "{{appTitle}}",
-    "description": "{{appDescription}}",
-    "resources": "resources.json",
-    "sourceTemplate": {
-      "id": "@sap-ux/fiori-freestyle-writer:worklist",
-      "version": "0.11.6"
-    },
-    "dataSources": {
-      "mainService": {
-        "uri": "/browse/",
-        "type": "OData",
-        "settings": {
-          "annotations": [],
-          "localUri": "localService/metadata.xml",
-          "odataVersion": "4.0"
+    "sap.app": {
+        "id": "triplog",
+        "type": "application",
+        "i18n": "i18n/i18n.properties",
+        "applicationVersion": {
+            "version": "0.0.1"
+        },
+        "title": "{{appTitle}}",
+        "description": "{{appDescription}}",
+        "resources": "resources.json",
+        "sourceTemplate": {
+            "id": "@sap-ux/fiori-freestyle-writer:worklist",
+            "version": "0.11.6"
+        },
+        "dataSources": {
+            "mainService": {
+                "uri": "/browse/",
+                "type": "OData",
+                "settings": {
+                    "annotations": [],
+                    "localUri": "localService/metadata.xml",
+                    "odataVersion": "4.0"
+                }
+            }
+        },
+        "crossNavigation": {
+            "inbounds": {
+                "carriers-inbound": {
+                    "signature": {
+                        "parameters": {},
+                        "additionalParameters": "allowed"
+                    },
+                    "semanticObject": "trip_log",
+                    "action": "trip_log",
+                    "title": "{{flpTitle}}",
+                    "subTitle": "{{flpSubtitle}}",
+                    "info": "{{flpInfo}}",
+                    "icon": "sap-icon://process"
+                }
+            }
         }
-      }
     },
-    "crossNavigation": {
-      "inbounds": {
-        "carriers-inbound": {
-          "signature": {
-            "parameters": {},
-            "additionalParameters": "allowed"
-          },
-          "semanticObject": "trip_log",
-          "action": "trip_log",
-          "title": "{{flpTitle}}",
-          "subTitle": "{{flpSubtitle}}",
-          "info": "{{flpInfo}}",
-          "icon": "sap-icon://process"
+    "sap.ui": {
+        "technology": "UI5",
+        "icons": {
+            "icon": "",
+            "favIcon": "",
+            "phone": "",
+            "phone@2": "",
+            "tablet": "",
+            "tablet@2": ""
+        },
+        "deviceTypes": {
+            "desktop": true,
+            "tablet": true,
+            "phone": true
         }
-      }
+    },
+    "sap.ui5": {
+        "flexEnabled": true,
+        "dependencies": {
+            "minUI5Version": "1.100.2",
+            "libs": {
+                "sap.m": {},
+                "sap.ui.core": {},
+                "sap.f": {},
+                "sap.suite.ui.generic.template": {},
+                "sap.ui.comp": {},
+                "sap.ui.generic.app": {},
+                "sap.ui.table": {},
+                "sap.ushell": {}
+            }
+        },
+        "contentDensities": {
+            "compact": true,
+            "cozy": true
+        },
+        "models": {
+            "i18n": {
+                "type": "sap.ui.model.resource.ResourceModel",
+                "settings": {
+                    "bundleName": "triplog.i18n.i18n"
+                }
+            },
+            "": {
+                "dataSource": "mainService",
+                "preload": true,
+                "settings": {
+                    "synchronizationMode": "None",
+                    "operationMode": "Server",
+                    "autoExpandSelect": true,
+                    "earlyRequests": true
+                }
+            }
+        },
+        "resources": {
+            "css": []
+        },
+        "routing": {
+            "config": {
+                "routerClass": "sap.f.routing.Router",
+                "viewType": "XML",
+                "viewPath": "triplog.view",
+                "controlId": "layout",
+                "controlAggregation": "midColumnPages",
+                "bypassed": {
+                    "target": [
+                        "notFound"
+                    ]
+                },
+                "async": true
+            },
+            "routes": [
+                {
+                    "pattern": "",
+                    "name": "worklist",
+                    "target": [
+                        "worklist"
+                    ]
+                },
+                {
+                    "pattern": "triprecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "name": "object",
+                    "target": [
+                        "worklist",
+                        "object"
+                    ]
+                },
+                {
+                    "pattern": "passengerrecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "name": "passengerRecord",
+                    "target": [
+                        "worklist",
+                        "passengerRecord"
+                    ]
+                },
+                {
+                    "pattern": "cargorecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "name": "cargoRecord",
+                    "target": [
+                        "worklist",
+                        "cargoRecord"
+                    ]
+                },
+                {
+                    "pattern": "statuses/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "name": "statuses",
+                    "target": [
+                        "worklist",
+                        "statuses"
+                    ]
+                }
+            ],
+            "targets": {
+                "worklist": {
+                    "viewName": "Worklist",
+                    "viewId": "worklist",
+                    "viewLevel": 1,
+                    "title": "{i18n>worklistViewTitle}",
+                    "controlAggregation": "beginColumnPages"
+                },
+                "object": {
+                    "viewName": "Object",
+                    "viewId": "object",
+                    "viewLevel": 2,
+                    "title": "{i18n>objectViewTitle}",
+                    "controlAggregation": "midColumnPages"
+                },
+                "passengerRecord": {
+                    "viewName": "PassengerRecord",
+                    "viewId": "passenger",
+                    "viewLevel": 2,
+                    "title": "{i18n>objectViewTitle}",
+                    "controlAggregation": "midColumnPages"
+                },
+                "cargoRecord": {
+                    "viewName": "CargoRecord",
+                    "viewId": "cargorecord",
+                    "viewLevel": 2,
+                    "title": "{i18n>objectViewTitle}",
+                    "controlAggregation": "midColumnPages"
+                },
+                "statuses": {
+                    "viewName": "Statuses",
+                    "viewId": "statuses",
+                    "viewLevel": 2,
+                    "controlAggregation": "midColumnPages"
+                },
+                "objectNotFound": {
+                    "viewName": "ObjectNotFound",
+                    "viewId": "objectNotFound"
+                },
+                "notFound": {
+                    "viewName": "NotFound",
+                    "viewId": "notFound"
+                }
+            }
+        },
+        "rootView": {
+            "viewName": "triplog.view.App",
+            "type": "XML",
+            "async": true,
+            "id": "app"
+        }
+    },
+    "sap.platform.abap": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.hcp": {
+        "_version": "1.1.0",
+        "uri": ""
+    },
+    "sap.platform.cf": {
+        "ui5VersionNumber": "1.104.0"
+     },
+    "sap.fiori": {
+        "_version": "1.1.0",
+        "registrationIds": [],
+        "archeType": "transactional"
     }
-  },
-  "sap.ui": {
-    "technology": "UI5",
-    "icons": {
-      "icon": "",
-      "favIcon": "",
-      "phone": "",
-      "phone@2": "",
-      "tablet": "",
-      "tablet@2": ""
-    },
-    "deviceTypes": {
-      "desktop": true,
-      "tablet": true,
-      "phone": true
-    }
-  },
-  "sap.ui5": {
-    "flexEnabled": true,
-    "dependencies": {
-      "minUI5Version": "1.100.2",
-      "libs": {
-        "sap.m": {},
-        "sap.ui.core": {},
-        "sap.f": {},
-        "sap.suite.ui.generic.template": {},
-        "sap.ui.comp": {},
-        "sap.ui.generic.app": {},
-        "sap.ui.table": {},
-        "sap.ushell": {}
-      }
-    },
-    "contentDensities": {
-      "compact": true,
-      "cozy": true
-    },
-    "models": {
-      "i18n": {
-        "type": "sap.ui.model.resource.ResourceModel",
-        "settings": {
-          "bundleName": "triplog.i18n.i18n"
-        }
-      },
-      "": {
-        "dataSource": "mainService",
-        "preload": true,
-        "settings": {
-          "synchronizationMode": "None",
-          "operationMode": "Server",
-          "autoExpandSelect": true,
-          "earlyRequests": true
-        }
-      }
-    },
-    "resources": {
-      "css": []
-    },
-    "routing": {
-      "config": {
-        "routerClass": "sap.f.routing.Router",
-        "viewType": "XML",
-        "viewPath": "triplog.view",
-        "controlId": "layout",
-        "controlAggregation": "midColumnPages",
-        "bypassed": {
-          "target": ["notFound"]
-        },
-        "async": true
-      },
-      "routes": [
-        {
-          "pattern": "",
-          "name": "worklist",
-          "target": ["worklist"]
-        },
-        {
-          "pattern": "triprecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
-          "name": "object",
-          "target": ["worklist", "object"]
-        },
-        {
-          "pattern": "passengerrecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
-          "name": "passengerRecord",
-          "target": ["worklist", "passengerRecord"]
-        },
-        {
-          "pattern": "cargorecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
-          "name": "cargoRecord",
-          "target": ["worklist", "cargoRecord"]
-        },
-        {
-          "pattern": "statuses/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
-          "name": "statuses",
-          "target": ["worklist", "statuses"]
-        }
-      ],
-      "targets": {
-        "worklist": {
-          "viewName": "Worklist",
-          "viewId": "worklist",
-          "viewLevel": 1,
-          "title": "{i18n>worklistViewTitle}",
-          "controlAggregation": "beginColumnPages"
-        },
-        "object": {
-          "viewName": "Object",
-          "viewId": "object",
-          "viewLevel": 2,
-          "title": "{i18n>objectViewTitle}",
-          "controlAggregation": "midColumnPages"
-        },
-        "passengerRecord": {
-          "viewName": "PassengerRecord",
-          "viewId": "passenger",
-          "viewLevel": 2,
-          "title": "{i18n>objectViewTitle}",
-          "controlAggregation": "midColumnPages"
-        },
-        "cargoRecord": {
-          "viewName": "CargoRecord",
-          "viewId": "cargorecord",
-          "viewLevel": 2,
-          "title": "{i18n>objectViewTitle}",
-          "controlAggregation": "midColumnPages"
-        },
-        "statuses": {
-          "viewName": "Statuses",
-          "viewId": "statuses",
-          "viewLevel": 2,
-          "controlAggregation": "midColumnPages"
-        },
-        "objectNotFound": {
-          "viewName": "ObjectNotFound",
-          "viewId": "objectNotFound"
-        },
-        "notFound": {
-          "viewName": "NotFound",
-          "viewId": "notFound"
-        }
-      }
-    },
-    "rootView": {
-      "viewName": "triplog.view.App",
-      "type": "XML",
-      "async": true,
-      "id": "app"
-    }
-  }
 }
