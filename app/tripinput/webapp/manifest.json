@@ -80,8 +80,9 @@
             "async": true,
             "id": "TripInput"
         },
+        "flexEnabled": true,
         "dependencies": {
-            "minUI5Version": "1.76.0",
+            "minUI5Version": "1.97.0",
             "libs": {
                 "sap.ui.core": {},
                 "sap.fe.templates": {},
