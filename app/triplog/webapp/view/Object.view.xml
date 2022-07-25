@@ -69,7 +69,7 @@
                     <Label text="{i18n>actdeptapticao}" />
 				    <Text text="{actdeptapticao}" />  
                     <Label text="{i18n>legstate}" />
-				    <Text text="{legstate}" />  
+				    <Text text="{legstate_code}" />  
                     <Label text="{i18n>aircrafttype}" />
 				    <Text text="{aircrafttype}" />  
                     <Label text="{i18n>aircrafttypecpa}" />

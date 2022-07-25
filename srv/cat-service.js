@@ -307,8 +307,8 @@ class TripService extends cds.ApplicationService {
 
             if (isLogTable) {
                 whereComponent = `(surrogatenum = ${tripWhereComps['surrogatenum']} and insupcarriercode2 = ` +
-                    `${tripWhereComps['insupcarriercode2']} and inflightno = ${tripWhereComps['inflightno']}` + 
-                    ` and inorigin = ${tripWhereComps['inorigin']} and indestination = ` + 
+                    `${tripWhereComps['insupcarriercode2']} and inflightno = ${tripWhereComps['inflightno']}` +
+                    ` and inorigin = ${tripWhereComps['inorigin']} and indestination = ` +
                     `${tripWhereComps[`indestination`]} and inscheddeptdate = ${tripWhereComps['inscheddeptdate']}` +
                     ` and staging_creation_timestamp = ${tripWhereComps['sct']} and logtype = ${logType} )`; //and status_timestamp = ${status_timestamp}
             } else {
@@ -428,13 +428,14 @@ class TripService extends cds.ApplicationService {
                 tempTailNo !== null &&
                 tempTailNo !== undefined
             ) {
-                hasTail = true;
                 for (let char of tempTailNo) {
                     if (char !== '-')
                         resTailNo = resTailNo + char + '%';
                 }
                 resTailNo = "'" + resTailNo + "'";
             }
+            if(resTailNo !== "''")
+                hasTail = true;
             let whereTailNo = `( tailNo like ${resTailNo} )`;
 
             let tailNo = await SELECT.one.from(TailRegistrations).columns('tailNo').where(
@@ -447,9 +448,9 @@ class TripService extends cds.ApplicationService {
 
             let legstateFound = false;
             for (let ls of legstates) {
-                if (trip.legstate === ls.code) {
+                if (trip.legstate_code === ls.code) {
                     legstateFound = true;
-                    break;                    
+                    break;
                 }
             }
 
@@ -462,7 +463,7 @@ class TripService extends cds.ApplicationService {
                 );
             }
 
-            if (trip.legstate === legstateCNL) {
+            if (trip.legstate_code === legstateCNL) {
                 if (hasTail) {
                     resTailNo = "'" + trip.tailno + "'";
                     whereTailNo = `( tailNo = ${resTailNo} )`;
@@ -486,7 +487,7 @@ class TripService extends cds.ApplicationService {
 
                     // Check if the triprecord tail number exists in the tailregistrations table
                     if (tailNo) {
-                        resTailNo = "'" + tailNo + "'";
+                        resTailNo = "'" + tailNo.tailno + "'";
                         whereTailNo = `( tailNo = ${resTailNo} )`;
                         tailNo = undefined;
                         tailNo = await SELECT.one.from(TailRegistrations).columns('tailNo').where(
@@ -494,15 +495,16 @@ class TripService extends cds.ApplicationService {
                         );
                     }
 
-                    if(!tailNo){
-                        tailNo = legstateDefault;
+                    if (!tailNo) {
+                        trip.tailno = tailNo = legstateDefault;
                     }
                 }
             }
 
-            if(tailNo){
-                trip.tailno = tailNo.tailNo;
-            }else{
+            if (tailNo) {
+                if (trip.tailno !== tailNo)
+                    trip.tailno = tailNo.tailNo;
+            } else {
                 trip.tailno = '';
             }
 
@@ -586,7 +588,7 @@ class TripService extends cds.ApplicationService {
                     actarrapticao: trip.actarrapticao,
                     actdeptapt: trip.actdeptapt,
                     actdeptapticao: trip.actdeptapticao,
-                    legstate: trip.legstate,
+                    legstate_code: trip.legstate_code,
                     aircrafttype: trip.aircrafttype,
                     aircrafttypecpa: trip.aircrafttypecpa,
                     tailno: trip.tailno,
