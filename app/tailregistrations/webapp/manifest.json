@@ -164,7 +164,7 @@
         "uri": ""
     },
     "sap.platform.cf": {
-        "ui5VersionNumber": "1.104.0"
+        "ui5VersionNumber": "1.103.0"
     },
     "sap.fiori": {
         "registrationIds": [],
