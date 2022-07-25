@@ -501,7 +501,7 @@ class TripService extends cds.ApplicationService {
             }
 
             if(tailNo){
-                trip.tailno = tailNo;
+                trip.tailno = tailNo.tailNo;
             }else{
                 trip.tailno = '';
             }
