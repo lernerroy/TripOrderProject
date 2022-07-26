@@ -354,7 +354,8 @@ class TripService extends cds.ApplicationService {
             );
 
             if (tripLogRow && (parseInt(tripLogRow.status) === statusError ||
-                parseInt(tripLogRow.status) === statusReady)) {
+                parseInt(tripLogRow.status) === statusReady ||
+                parseInt(tripLogRow.status) === statusWarning )) {
                 statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
 
                 const triplogMatchingIndex = trips.findIndex((triplog) => {
@@ -396,8 +397,8 @@ class TripService extends cds.ApplicationService {
                     newStatus = trips[triplogMatchingIndex].status = statusWarning;
                     trip.statusCode = 5;
                     // Repeat No
-                    trip.statusParam1 = trip.tailno;
-                    trip.statusParam2 = trip.tailno;
+                    trip.statusParam1 = stonr[0];
+                    trip.statusParam2 = stonr[1];
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
                     return trips;
                 }
@@ -477,7 +478,7 @@ class TripService extends cds.ApplicationService {
             let legstate = await SELECT.one.from(triprecord).columns('legstate_code').where(
                 cds.parse.expr(whereString)
             );
-
+            
             if (!legstate)
                 return result;
 
@@ -492,10 +493,10 @@ class TripService extends cds.ApplicationService {
             let old_ls_stonr = 0;
             let new_ls_stonr = 0;
             for (let ls of legstates) {
-                if (ls.code === tripWhereComps['old_ls_code'])
-                    old_ls_stonr = Number(ls.stonr);
-                if (ls.code === tripWhereComps['new_ls_code'])
-                    new_ls_stonr = Number(ls.stonr);
+                if (ls.code === legstate.legstate_code)
+                    old_ls_stonr = parseInt(ls.stonr);
+                if (ls.code === trip.legstate_code)
+                    new_ls_stonr = parseInt(ls.stonr);
             }
 
             // In case the new legstate stonr is smaller than the old one
