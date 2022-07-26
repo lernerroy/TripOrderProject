@@ -125,7 +125,7 @@
                     ]
                 },
                 {
-                    "pattern": "triprecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "pattern": "triprecord/:insupcarriercode2:/:inflightno:/:inorigin:/:indestination:/:inscheddeptdate:/:surrogatenum:/:staging_creation_timestamp:",
                     "name": "object",
                     "target": [
                         "worklist",
@@ -218,7 +218,7 @@
         "uri": ""
     },
     "sap.platform.cf": {
-        "ui5VersionNumber": "1.103.0"
+        "ui5VersionNumber": "1.104.0"
      },
     "sap.fiori": {
         "_version": "1.1.0",

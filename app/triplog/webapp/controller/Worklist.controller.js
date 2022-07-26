@@ -422,6 +422,7 @@ sap.ui.define(
             navTo = "cargoRecord";
             break;
         }
+        debugger;
         this.getRouter().navTo(navTo, {
           insupcarriercode2: oItem.insupcarriercode2,
           inflightno: oItem.inflightno,
