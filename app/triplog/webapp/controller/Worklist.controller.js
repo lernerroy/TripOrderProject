@@ -104,7 +104,7 @@ sap.ui.define(
       },
 
       onTripPreview: function (oEvent) {
-        var oItem = {};
+        var oItem = oEvent.getSource().getBindingContext().getObject();
 
         var params = {
           CarrierCode: oItem.insupcarriercode2 || "",
