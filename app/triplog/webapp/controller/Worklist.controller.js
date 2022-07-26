@@ -107,12 +107,12 @@ sap.ui.define(
         var oItem = {};
 
         var params = {
-          CarrierCode: oItem.insupcarriercode2,
-          FlightNo: oItem.inflightno,
-          Origin: oItem.inorigin,
-          Destination: oItem.indestination,
-          SchDate: oItem.inscheddeptdate,
-          surrogatenum: oItem.surrogatenum,
+          CarrierCode: oItem.insupcarriercode2 || "",
+          FlightNo: oItem.inflightno || "",
+          Origin: oItem.inorigin || "",
+          Destination: oItem.indestination || "",
+          SchDate: oItem.inscheddeptdate || "",
+          surrogatenum: oItem.surrogatenum || "",
         };
         var xnaservice =
           sap.ushell &&
