@@ -68,6 +68,14 @@ sap.ui.define([
                 {
                     code: 3,
                     bundleRef: "ErrorMissingTailNo"
+                },
+                {
+                    code: 4,
+                    bundleRef: "ErrorRepeatNo"
+                },
+                {
+                    code: 5,
+                    bundleRef: "ErrorFlightStatusHirarchy"
                 }
             ];
         },

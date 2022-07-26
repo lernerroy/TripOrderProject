@@ -3,7 +3,7 @@ class TripService extends cds.ApplicationService {
     async init() {
         const { triprecord, triprecordStaging, pax, paxStaging, cargorecord, cargorecordStaging,
             routeplan, routeplanStaging, catering, cateringStaging, triplog, triplogAll,
-            TailRegistrations, LegstatesFinal } = this.entities;
+            TailRegistrations, Legstates, LegstatesFinal } = this.entities;
         const tripLogType = '1', paxLogType = '2', cargoLogType = '3', routeLogType = '4',
             cateringLogType = '5';
         const statusBeingProcessed = 50, statusError = 51, statusWarning = 52, statusProcessed = 53,
@@ -371,48 +371,140 @@ class TripService extends cds.ApplicationService {
                 });
 
                 let tailNo = await this.validateTail(trip, logType);
+                let repeatno = await this.validateRepeatNo(trip, logType);
+                let stonr = await this.validateStonr(trip, logType);
 
                 if (!tailNo) {
                     newStatus = trips[triplogMatchingIndex].status = statusError;
                     trip.statusCode = 3;
                     trip.statusParam1 = trip.tailno;
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    return trips;
+                }
+
+                if(repeatno.length){
+                    newStatus = trips[triplogMatchingIndex].status = statusWarning;
+                    trip.statusCode = 4;
+                    // Repeat No
+                    trip.statusParam1 = repeatno[0];
+                    trip.statusParam2 = repeatno[1];
+                    statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    return trips;
+                }
+
+                if(stonr.length){
+                    newStatus = trips[triplogMatchingIndex].status = statusWarning;
+                    trip.statusCode = 5;
+                    // Repeat No
+                    trip.statusParam1 = trip.tailno;
+                    trip.statusParam2 = trip.tailno;
+                    statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    return trips;
+                }
+
+                if (trip.legstate_code === "ARR" && !trip.actarrdate) {
+                    newStatus = trips[triplogMatchingIndex].status = statusError;
                 } else {
-                    if (trip.legstate_code === "ARR" && !trip.actarrdate) {
-                        newStatus = trips[triplogMatchingIndex].status = statusError;
-                    } else {
-                        // delete trip.creation_timestamp;
-                        delete trip.modifiedAt;
-                        delete trip.modifiedBy;
-                        newStatus = trips[triplogMatchingIndex].status = statusProcessed;
-                    }
+                    // delete trip.creation_timestamp;
+                    delete trip.modifiedAt;
+                    delete trip.modifiedBy;
+                    newStatus = trips[triplogMatchingIndex].status = statusProcessed;
+                }
 
-                    switch (logType) {
-                        default:
-                        case tripLogType:
-                            rowUpdated = await this.updateTripRecord(trip);
-                            break;
-                        case paxLogType:
-                            rowUpdated = await this.updatePaxRecord(trip);
-                            break;
-                        case cargoLogType:
-                            rowUpdated = await this.updateCargoRecord(trip);
-                            break;
-                        case routeLogType:
-                            rowUpdated = await this.updateRouteRecord(trip);
-                            break;
-                        case cateringLogType:
-                            rowUpdated = await this.updateCateringRecord(trip);
-                            break;
-                    }
+                switch (logType) {
+                    default:
+                    case tripLogType:
+                        rowUpdated = await this.updateTripRecord(trip);
+                        break;
+                    case paxLogType:
+                        rowUpdated = await this.updatePaxRecord(trip);
+                        break;
+                    case cargoLogType:
+                        rowUpdated = await this.updateCargoRecord(trip);
+                        break;
+                    case routeLogType:
+                        rowUpdated = await this.updateRouteRecord(trip);
+                        break;
+                    case cateringLogType:
+                        rowUpdated = await this.updateCateringRecord(trip);
+                        break;
+                }
 
-                    if (rowUpdated) {
-                        statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
-                    }
+                if (rowUpdated) {
+                    statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
                 }
             }
 
             return trips;
+        };
+
+        this.validateRepeatNo = async (trip, logType) => {
+            let result = [];
+            // Only do the validation in case the row is a trip
+            if (logType !== tripLogType)
+                return result;
+
+            // Build the tripRecord selection
+            let whereString = `(surrogatenum = ${tripWhereComps['surrogatenum']} and insupcarriercode2 = ` +
+                `${tripWhereComps['insupcarriercode2']} and inflightno = ${tripWhereComps['inflightno']} and inorigin = ` +
+                `${tripWhereComps['inorigin']} and indestination = ${tripWhereComps['indestination']} and inscheddeptdate = ` +
+                `${tripWhereComps['inscheddeptdate']} )`;
+
+            let repeatno = await SELECT.one.from(triprecord).columns('repeatno').where(
+                cds.parse.expr(whereString)
+            );
+
+            if (repeatno && repeatno.repeatno > trip.repeatno){
+                result.push(repeatno.repeatno);
+                result.push(trip.repeatno);
+            }
+
+            return result;
+        };
+
+        this.validateStonr = async (trip, logType) => {
+            let result = [];
+            // Only do the validation in case the row is a trip
+            if (logType !== tripLogType)
+                return result;
+
+            // Build the tripRecord selection
+            let whereString = `(surrogatenum = ${tripWhereComps['surrogatenum']} and insupcarriercode2 = ` +
+                `${tripWhereComps['insupcarriercode2']} and inflightno = ${tripWhereComps['inflightno']} and inorigin = ` +
+                `${tripWhereComps['inorigin']} and indestination = ${tripWhereComps['indestination']} and inscheddeptdate = ` +
+                `${tripWhereComps['inscheddeptdate']} )`;
+
+            let legstate = await SELECT.one.from(triprecord).columns('legstate_code').where(
+                cds.parse.expr(whereString)
+            );
+
+            if (!legstate)
+                return result;
+
+            // Build the legstates where
+            tripWhereComps['old_ls_code'] = "'" + trip.legstate_code + "'";
+            tripWhereComps['new_ls_code'] = "'" + legstate.legstate_code + "'";
+            whereString = `(code = ${tripWhereComps['old_ls_code']} or code = ${tripWhereComps['new_ls_code']})`;
+
+            let legstates = await SELECT.from(Legstates).columns('code', 'stonr').where(cds.parse.expr(whereString));
+
+            // Get the stonr values of the legstates
+            let old_ls_stonr = 0;
+            let new_ls_stonr = 0;
+            for (let ls of legstates) {
+                if (ls.code === tripWhereComps['old_ls_code'])
+                    old_ls_stonr = Number(ls.stonr);
+                if (ls.code === tripWhereComps['new_ls_code'])
+                    new_ls_stonr = Number(ls.stonr);
+            }
+
+            // In case the new legstate stonr is smaller than the old one
+            if (old_ls_stonr && new_ls_stonr && new_ls_stonr < old_ls_stonr){
+                result.push(tripWhereComps['old_ls_code']);
+                result.push(tripWhereComps['new_ls_code']);
+            }
+
+            return result;
         };
 
         this.validateTail = async (trip, logType) => {
@@ -434,7 +526,7 @@ class TripService extends cds.ApplicationService {
                 }
                 resTailNo = "'" + resTailNo + "'";
             }
-            if(resTailNo !== "''")
+            if (resTailNo !== "''")
                 hasTail = true;
             let whereTailNo = `( tailNo like ${resTailNo} )`;
 
