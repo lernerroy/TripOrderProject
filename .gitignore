@@ -7,6 +7,7 @@ gen/
 node_modules/
 target/
 dist/
+resources/
 
 # Web IDE, App Studio
 .che/
@@ -31,3 +32,5 @@ mta_archives/
 
 # auto generated wildcard
 triprecord/.env1
+# added by cds bind
+.cdsrc-private.json
