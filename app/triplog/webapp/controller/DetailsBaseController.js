@@ -17,7 +17,7 @@ sap.ui.define(
             new Filter({
               path: key,
               operator: FilterOperator.EQ,
-              value1: value,
+              value1: value || "",
             })
           );
         });
@@ -44,6 +44,7 @@ sap.ui.define(
           .requestContexts(0, 100)
           .then(
             function (aContexts) {
+              debugger;
               if (aContexts && aContexts.length > 0) {
                 this.bindView(aContexts, oViewModel);
               }

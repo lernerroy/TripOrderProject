@@ -133,7 +133,7 @@
                     ]
                 },
                 {
-                    "pattern": "passengerrecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "pattern": "passengerrecord/:insupcarriercode2:/:inflightno:/:inorigin:/:indestination:/:inscheddeptdate:/:surrogatenum:/:staging_creation_timestamp:",
                     "name": "passengerRecord",
                     "target": [
                         "worklist",
@@ -141,7 +141,7 @@
                     ]
                 },
                 {
-                    "pattern": "cargorecord/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "pattern": "cargorecord/:insupcarriercode2:/:inflightno:/:inorigin:/:indestination:/:inscheddeptdate:/:surrogatenum:/:staging_creation_timestamp:",
                     "name": "cargoRecord",
                     "target": [
                         "worklist",
@@ -149,7 +149,7 @@
                     ]
                 },
                 {
-                    "pattern": "statuses/{insupcarriercode2}/{inflightno}/{inorigin}/{indestination}/{inscheddeptdate}/{surrogatenum}/{staging_creation_timestamp}",
+                    "pattern": "statuses/:insupcarriercode2:/:inflightno:/:inorigin:/:indestination:/:inscheddeptdate:/:surrogatenum:/:staging_creation_timestamp:",
                     "name": "statuses",
                     "target": [
                         "worklist",

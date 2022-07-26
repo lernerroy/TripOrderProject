@@ -80,7 +80,7 @@ sap.ui.define(
             new Filter({
               path: key,
               operator: FilterOperator.EQ,
-              value1: value,
+              value1: value || "",
             })
           );
         });

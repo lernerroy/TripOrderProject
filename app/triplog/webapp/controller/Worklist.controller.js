@@ -152,9 +152,9 @@ sap.ui.define(
           this._hasItemsForReset(aItems)
         );
         this.getModel("worklistView").setProperty(
-            "/manualButtonEnabled",
-            this._hasItemsForProcess(aItems)
-          );
+          "/manualButtonEnabled",
+          this._hasItemsForProcess(aItems)
+        );
       },
 
       /* =========================================================== */
@@ -422,7 +422,7 @@ sap.ui.define(
             navTo = "cargoRecord";
             break;
         }
-        debugger;
+
         this.getRouter().navTo(navTo, {
           insupcarriercode2: oItem.insupcarriercode2,
           inflightno: oItem.inflightno,
