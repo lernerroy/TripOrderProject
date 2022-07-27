@@ -76,6 +76,10 @@ sap.ui.define([
                 {
                     code: 5,
                     bundleRef: "ErrorFlightStatusHirarchy"
+                },
+                {
+                    code: 6,
+                    bundleRef: "ErrorDBExecution"
                 }
             ];
         },

@@ -633,7 +633,9 @@ entity cateringStaging : cateringdetails {
 };
 
 
-
+annotate triprecordStaging with {
+    legstate @assert.integrity: false;
+}
 
 
 annotate triprecord with {
