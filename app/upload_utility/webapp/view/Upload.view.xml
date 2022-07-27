@@ -20,7 +20,7 @@
             <VBox>
                 <u:FileUploader
                 name="csvFile"
-                fileType="csv"
+                fileType="json"
                 change="onFileChange"
                 value="{uploadView>/selectedFile}"
                 tooltip="Upload your csv file"/>

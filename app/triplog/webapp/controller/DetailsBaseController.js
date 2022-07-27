@@ -44,7 +44,6 @@ sap.ui.define(
           .requestContexts(0, 100)
           .then(
             function (aContexts) {
-              debugger;
               if (aContexts && aContexts.length > 0) {
                 this.bindView(aContexts, oViewModel);
               }
