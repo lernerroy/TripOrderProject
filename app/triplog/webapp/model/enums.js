@@ -80,6 +80,10 @@ sap.ui.define([
                 {
                     code: 6,
                     bundleRef: "ErrorDBExecution"
+                },
+                {
+                    code: 7,
+                    bundleRef: "ErrorLegstate"
                 }
             ];
         },

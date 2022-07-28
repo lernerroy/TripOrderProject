@@ -143,6 +143,9 @@ class TripService extends cds.ApplicationService {
             );
             if (!isSuccess) throw req.reject(500, "Message Processing Failed");
         });
+        /**
+         * This code section is to debug unexpected errors
+         */
         // this.on ('error', (err, req) => {
         //     if(true)
         //         throw req.reject(500, `error: ${err}`);
@@ -188,6 +191,7 @@ class TripService extends cds.ApplicationService {
                 if (tripsStaged) {
                     for (let trip of tripsStaged) {
                         trips = await this.updateTrip(trips, trip, tripLogType);
+                        if(!trips) return false;
                     };
                 }
             }
@@ -201,6 +205,7 @@ class TripService extends cds.ApplicationService {
                 if (paxStaged) {
                     for (let trip of paxStaged) {
                         trips = await this.updateTrip(trips, trip, paxLogType);
+                        if(!trips) return false;
                     };
                 }
             }
@@ -214,6 +219,7 @@ class TripService extends cds.ApplicationService {
                 if (cargoStaged) {
                     for (let trip of cargoStaged) {
                         trips = await this.updateTrip(trips, trip, cargoLogType);
+                        if(!trips) return false;
                     };
                 }
             }
@@ -227,6 +233,7 @@ class TripService extends cds.ApplicationService {
                 if (routePlanStaged) {
                     for (let trip of routePlanStaged) {
                         trips = await this.updateTrip(trips, trip, routeLogType);
+                        if(!trips) return false;
                     };
                 }
             }
@@ -240,6 +247,7 @@ class TripService extends cds.ApplicationService {
                 if (cateringStaged) {
                     for (let trip of cateringStaged) {
                         trips = await this.updateTrip(trips, trip, cateringLogType);
+                        if(!trips) return false;
                     };
                 }
             }
@@ -365,6 +373,7 @@ class TripService extends cds.ApplicationService {
                 parseInt(tripLogRow.status) === statusReady ||
                 parseInt(tripLogRow.status) === statusWarning)) {
                 statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                if(!statusUpdated) return false;
 
                 const triplogMatchingIndex = trips.findIndex((triplog) => {
                     return (
@@ -380,16 +389,28 @@ class TripService extends cds.ApplicationService {
                 });
 
                 let tailNo = await this.validateTail(trip, logType);
-                let repeatno = await this.validateRepeatNo(trip, logType);
-                let stonr = await this.validateStonr(trip, logType);
 
                 if (!tailNo) {
                     newStatus = trips[triplogMatchingIndex].status = statusError;
                     trip.statusCode = 3;
                     trip.statusParam1 = trip.tailno;
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    if(!statusUpdated) return false;
                     return trips;
                 }
+                
+                let legstate = await this.validateLegstate(trip, logType);
+
+                if (!legstate) {
+                    newStatus = trips[triplogMatchingIndex].status = statusError;
+                    trip.statusCode = 7;
+                    trip.statusParam1 = trip.legstate_code;
+                    statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    if(!statusUpdated) return false;
+                    return trips;
+                }
+                
+                let repeatno = await this.validateRepeatNo(trip, logType);
 
                 if (repeatno.length) {
                     newStatus = trips[triplogMatchingIndex].status = statusWarning;
@@ -397,8 +418,11 @@ class TripService extends cds.ApplicationService {
                     trip.statusParam1 = repeatno[0];
                     trip.statusParam2 = repeatno[1];
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    if(!statusUpdated) return false;
                     return trips;
                 }
+                
+                let stonr = await this.validateStonr(trip, logType);
 
                 if (stonr.length) {
                     newStatus = trips[triplogMatchingIndex].status = statusWarning;
@@ -406,6 +430,7 @@ class TripService extends cds.ApplicationService {
                     trip.statusParam1 = stonr[0];
                     trip.statusParam2 = stonr[1];
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                    if(!statusUpdated) return false;
                     return trips;
                 }
 
@@ -441,6 +466,7 @@ class TripService extends cds.ApplicationService {
                     newStatus = trips[triplogMatchingIndex].status = rowUpdated;
                 }
                 statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
+                if(!statusUpdated) return false;
             }
 
             return trips;
@@ -611,6 +637,29 @@ class TripService extends cds.ApplicationService {
             return tailNo;
         };
 
+        this.validateLegstate = async (trip, logType) => {
+            // Only do the tail number validations in case the row is a trip
+            if (logType !== tripLogType)
+                return true;
+
+            // Build where clause and get the tail number
+            let tempLsCode = trip.legstate_code;
+            let resLsCode = '';
+            if (
+                tempLsCode !== null &&
+                tempLsCode !== undefined
+            ) {
+                resLsCode = "'" + tempLsCode + "'";
+            }
+
+            let whereLsCode = `( code = ${resLsCode} )`;
+            let lsCode = await SELECT.one.from(Legstates).columns('code').where(
+                cds.parse.expr(whereLsCode)
+            );
+            
+            return lsCode;  
+        };
+
         /**
          * Update in Trip Log DB the trip status according to the log type 
          */
@@ -774,10 +823,9 @@ class TripService extends cds.ApplicationService {
                 if (!updFin)
                     await txUpd.rollback();
                 await txIns.rollback();
-                console.error(`Error in ${e.element}; Value - ${e.value.code}`);
+                console.error(`Error in ${e.element}`);
                 trip.statusCode = 6;
                 trip.statusParam1 = e.element;
-                trip.statusParam2 = e.value.code;
             }
 
             return res;
@@ -903,10 +951,9 @@ class TripService extends cds.ApplicationService {
                 if (!updFin)
                     await txUpd.rollback();
                 await txIns.rollback();
-                console.error(`Error in ${e.element}; Value - ${e.value.code}`);
+                console.error(`Error in ${e.element}`);
                 trip.statusCode = 6;
                 trip.statusParam1 = e.element;
-                trip.statusParam2 = e.value.code;
             }
 
             return res;
@@ -1011,10 +1058,9 @@ class TripService extends cds.ApplicationService {
                 if (!updFin)
                     await txUpd.rollback();
                 await txIns.rollback();
-                console.error(`Error in ${e.element}; Value - ${e.value.code}`);
+                console.error(`Error in ${e.element}`);
                 trip.statusCode = 6;
                 trip.statusParam1 = e.element;
-                trip.statusParam2 = e.value.code;
             }
 
             return res;
@@ -1085,10 +1131,9 @@ class TripService extends cds.ApplicationService {
                 if (!updFin)
                     await txUpd.rollback();
                 await txIns.rollback();
-                console.error(`Error in ${e.element}; Value - ${e.value.code}`);
+                console.error(`Error in ${e.element}`);
                 trip.statusCode = 6;
                 trip.statusParam1 = e.element;
-                trip.statusParam2 = e.value.code;
             }
 
             return res;
@@ -1163,10 +1208,9 @@ class TripService extends cds.ApplicationService {
                 if (!updFin)
                     await txUpd.rollback();
                 await txIns.rollback();
-                console.error(`Error in ${e.element}; Value - ${e.value.code}`);
+                console.error(`Error in ${e.element}`);
                 trip.statusCode = 6;
                 trip.statusParam1 = e.element;
-                trip.statusParam2 = e.value.code;
             }
 
             return res;
