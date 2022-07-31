@@ -5,6 +5,9 @@ GET http://localhost:4004/browse/triplog?$select=staging_creation_timestamp,fosu
 GET http://localhost:4004/browse/triplog?$select=staging_creation_timestamp&$top=3
 
 ###
+GET http://localhost:4004/browse/cockpitTripsActuals?$filter=(zzscheddeptdate gt 2021-10-12)
+
+###
 POST http://localhost:4004/browse/triprecord
 Content-Type: application/json
 
@@ -15,7 +18,7 @@ Content-Type: application/json
 		"indestination": "",
 		"inscheddeptdate": "1900-01-06",
 		"fosuffix": null,
-		"surrogatenum": "DanielTestUpsert",
+		"surrogatenum": "DanielTestLiteralTail",
 		"aufnr": null,
 		"supcarriercode2_code": "AV",
 		"scheddeptdate": "2021-01-11",
@@ -33,7 +36,7 @@ Content-Type: application/json
 		"actarrapticao": "KFRA",
 		"actdeptapt_code": "BOG",
 		"actdeptapticao": "SKBO",
-		"legstate_code": "ARR",
+		"legstate_code": "EQT",
 		"aircrafttype": "330",
 		"aircrafttypecpa": null,
 		"tailno": "NTT51S",

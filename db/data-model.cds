@@ -632,6 +632,13 @@ entity cateringStaging : cateringdetails {
 // triplog : Association to many triplog  on triplog.cateringStaging = $self;
 };
 
+view LegstatesAll as 
+    select from Legstates{
+        *
+    };
+
+// view LegstatesFinal as
+//     select from Legstates as Legstates1 { * } where stonr = ( select max(stonr) as stonr from Legstates );
 
 annotate triprecordStaging with {
     legstate @assert.integrity: false;

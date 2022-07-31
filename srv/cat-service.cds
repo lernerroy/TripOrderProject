@@ -77,11 +77,6 @@ service TripService {
                               // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
                               //              { grant: ['READ'], to: ['API_user']} ])
                               as projection on TripService.cockpitTrips;
-
-    entity LegstatesFinal
-                              // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
-                              //              { grant: ['READ'], to: ['API_user']} ])
-                              as projection on TripService.finalLegstates;
     //////////////////////////////////////////////////////////////////////
 
     // TripRecord
@@ -106,10 +101,17 @@ service TripService {
                               //              { grant: ['READ'], to: ['API_user']} ])
                               as projection on trips.TailRegistrations;
 
+    // @cds.redirection.target: true
     entity Legstates
                               // @(restrict: [ { grant: ['*'], to: ['Admin']},
                               //              { grant: ['READ'], to: ['API_user','User']} ])
-                              as projection on trips.Legstates;
+                              as projection on trips.LegstatesAll;
+    
+    // @cds.redirection.target: true
+    // entity LegstatesFinal
+    //                           // @(restrict: [ { grant: ['*'], to: ['Admin','User']},
+    //                           //              { grant: ['READ'], to: ['API_user']} ])
+    //                           as projection on trips.LegstatesFinal;
     //////////////////////////////////////////////////////////////////////
 
 
@@ -238,21 +240,4 @@ define view TripService.cockpitTrips as(
         zzschedarrdate,
         zzschedarrtime,
         zzschedarrapt
-);
-
-define view TripService.finalLegstates as(
-    select
-        ls.code as code,
-        ls.stonr as stonr
-    from TripService.maxLegstates as lsMax
-    inner join TripService.Legstates as ls
-    on lsMax.stonr = ls.stonr
-    group by
-        ls.code,
-        ls.stonr
-);
-
-define view TripService.maxLegstates as(
-    select max(ls.stonr) as stonr : String(2)
-    from TripService.Legstates as ls
 );

@@ -3,7 +3,7 @@ class TripService extends cds.ApplicationService {
     async init() {
         const { triprecord, triprecordStaging, pax, paxStaging, cargorecord, cargorecordStaging,
             routeplan, routeplanStaging, catering, cateringStaging, triplog, triplogAll,
-            TailRegistrations, Legstates, LegstatesFinal } = this.entities;
+            TailRegistrations, Legstates/*, LegstatesFinal*/ } = this.entities;
         const tripLogType = '1', paxLogType = '2', cargoLogType = '3', routeLogType = '4',
             cateringLogType = '5';
         const statusBeingProcessed = 50, statusError = 51, statusWarning = 52, statusProcessed = 53,
@@ -550,6 +550,7 @@ class TripService extends cds.ApplicationService {
             let tempTailNo = trip.tailno;
             let resTailNo = '';
             let hasTail = false;
+            let maxStonr = '';
             if (
                 tempTailNo !== null &&
                 tempTailNo !== undefined
@@ -568,12 +569,17 @@ class TripService extends cds.ApplicationService {
                 cds.parse.expr(whereTailNo)
             );
 
-            // In case the legstate doesn't exist in the final legstates, 
+            // In case the legstate doesn't exist in the latest legstates, 
             // check if the literal value of tailNo exists in TailRegistrations
-            let legstates = await SELECT.from(LegstatesFinal);
+            let legstatesL = await SELECT.from(Legstates).orderBy('stonr desc');
+            if(legstatesL){
+                maxStonr = legstatesL[0].stonr;
+            }
+
+            let filteredLS = legstatesL.filter(ls => ls.stonr === maxStonr);
 
             let legstateFound = false;
-            for (let ls of legstates) {
+            for (let ls of filteredLS) {
                 if (trip.legstate_code === ls.code) {
                     legstateFound = true;
                     break;
