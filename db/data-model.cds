@@ -263,9 +263,90 @@ aspect triprecorddetails : recordsKey, surrogatenum, aufnr {
 
 entity triprecord : triprecorddetails {};
 
-entity triprecordStaging : triprecorddetails {
+entity triprecordStaging : recordsKey, surrogatenum, aufnr {
+    supcarriercode2  : carriercode; //String(2);
+    scheddeptdate    : Date;
+    flightno         : String(4);
+    supcarriercode   : carriercode; //String(2);
+    carriercode      : carriercode; //String(2);
+    origin           : airportCode; //String(3);
+    destination      : airportCode; //String(3);
+    repeatno         : String(3);
+    idooutc          : Date;
+    idoo             : Date;
+    doo              : Date;
+    dooutc           : Date;
+    actarrapt        : airportCode; //String(3);
+    actarrapticao    : String(4);
+    actdeptapt       : airportCode; //String(3);
+    actdeptapticao   : String(4);
+    legstate_code    : String(3); //legstate; // String(3); // /
+    aircrafttype     : String(3);
+    aircrafttypecpa  : String(3);
+    tailno           : String(8);
+    flighttype       : String(1);
+    deptparkposn     : String(10);
+    actgatetime      : Integer;
+    servicetype      : String(1);
+    delayreason1     : String(3);
+    delayreason2     : String(3);
+    delayreason3     : String(3);
+    delayreason4     : String(3);
+    delayreason5     : String(3);
+    actualflyingdur  : Integer;
+    scheddepttime    : Time;
+    scheddeptts      : Decimal(15, 0);
+    actdeptts        : Decimal(15, 0);
+    takeoffdate      : Date;
+    takeofftime      : Time;
+    touchdndate      : Date;
+    touchdntime      : Time;
+    actdeptdate      : Date;
+    actdepttime      : Time;
+    actarrdate       : Date;
+    actarrtime       : Time;
+    takeoffdateutc   : Date;
+    takeofftimeutc   : Time;
+    touchdndateutc   : Date;
+    touchdntimeutc   : Time;
+    actdeptdateutc   : Date;
+    actdepttimeutc   : Time;
+    actarrdateutc    : Date;
+    actarrtimeutc    : Time;
+    scheddeptdateutc : Date;
+    scheddepttimeutc : Time;
+    schedarrdateutc  : Date;
+    schedarrtimeutc  : Time;
+    schedarrdate     : Date;
+    schedarrtime     : Time;
+    schedarrts       : Decimal(15, 0);
+    actarrts         : Decimal(15, 0);
+    estdeptdate      : Date;
+    estdepttime      : Time;
+    estdeptdateutc   : Date;
+    estdepttimeutc   : Time;
+    estarrdateutc    : Date;
+    estarrtimeutc    : Time;
+    estarrdate       : Date;
+    estarrtime       : Time;
+    planblocktime    : Integer;
+    schedarrapticao  : String(4);
+    schedarrapt      : airportCode; //String(3);String(3);
+    scheddeptapticao : String(4);
+    scheddeptapt     : airportCode; //String(3);String(3);
+    flight_tm        : Integer;
+    arr_stand        : String(10);
+    dep_terminal     : String(4);
+    arr_terminal     : String(4);
+    onblockdate      : Date;
+    onblocktime      : Time;
+    offblockdate     : Date;
+    offblocktime     : Time;
+    taxi_out_time    : Integer;
+    route            : String(10);
+    cfpno1           : String(10);
+    cfpno2           : String(10);
     key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
-//triplog : Association to many triplog on triplog.triprecordStaging = $self;
 };
 
 entity triplog : recordsKey, surrogatenum, statusCode {
@@ -640,9 +721,9 @@ view LegstatesAll as
 // view LegstatesFinal as
 //     select from Legstates as Legstates1 { * } where stonr = ( select max(stonr) as stonr from Legstates );
 
-annotate triprecordStaging with {
-    legstate @assert.integrity: false;
-}
+// annotate triprecordStaging with {
+//     legstate @assert.integrity: false;
+// }
 
 
 annotate triprecord with {
