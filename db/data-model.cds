@@ -280,7 +280,7 @@ entity triprecordStaging : recordsKey, surrogatenum, aufnr {
     actarrapticao    : String(4);
     actdeptapt       : airportCode; //String(3);
     actdeptapticao   : String(4);
-    legstate_code    : String(3); //legstate; // String(3); // /
+    legstate_code    : legstate; // String(3); // /
     aircrafttype     : String(3);
     aircrafttypecpa  : String(3);
     tailno           : String(8);
@@ -721,9 +721,18 @@ view LegstatesAll as
 // view LegstatesFinal as
 //     select from Legstates as Legstates1 { * } where stonr = ( select max(stonr) as stonr from Legstates );
 
-// annotate triprecordStaging with {
-//     legstate @assert.integrity: false;
-// }
+annotate triprecordStaging with {
+    supcarriercode2  @assert.integrity: false;
+    supcarriercode   @assert.integrity: false;
+    carriercode      @assert.integrity: false;
+    origin           @assert.integrity: false;
+    destination      @assert.integrity: false;
+    actarrapt @assert.integrity: false;
+    actdeptapt @assert.integrity: false;
+    legstate @assert.integrity: false;
+    schedarrapt @assert.integrity: false;
+    scheddeptapt @assert.integrity: false;
+}
 
 
 annotate triprecord with {
