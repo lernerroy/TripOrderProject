@@ -280,7 +280,7 @@ entity triprecordStaging : recordsKey, surrogatenum, aufnr {
     actarrapticao    : String(4);
     actdeptapt       : airportCode; //String(3);
     actdeptapticao   : String(4);
-    legstate_code    : legstate; // String(3); // /
+    legstate         : legstate; // String(3); // /
     aircrafttype     : String(3);
     aircrafttypecpa  : String(3);
     tailno           : String(8);
