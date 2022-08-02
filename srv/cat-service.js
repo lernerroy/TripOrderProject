@@ -191,7 +191,7 @@ class TripService extends cds.ApplicationService {
                 if (tripsStaged) {
                     for (let trip of tripsStaged) {
                         trips = await this.updateTrip(trips, trip, tripLogType);
-                        if(!trips) return false;
+                        if (!trips) return false;
                     };
                 }
             }
@@ -205,7 +205,7 @@ class TripService extends cds.ApplicationService {
                 if (paxStaged) {
                     for (let trip of paxStaged) {
                         trips = await this.updateTrip(trips, trip, paxLogType);
-                        if(!trips) return false;
+                        if (!trips) return false;
                     };
                 }
             }
@@ -219,7 +219,7 @@ class TripService extends cds.ApplicationService {
                 if (cargoStaged) {
                     for (let trip of cargoStaged) {
                         trips = await this.updateTrip(trips, trip, cargoLogType);
-                        if(!trips) return false;
+                        if (!trips) return false;
                     };
                 }
             }
@@ -233,7 +233,7 @@ class TripService extends cds.ApplicationService {
                 if (routePlanStaged) {
                     for (let trip of routePlanStaged) {
                         trips = await this.updateTrip(trips, trip, routeLogType);
-                        if(!trips) return false;
+                        if (!trips) return false;
                     };
                 }
             }
@@ -247,7 +247,7 @@ class TripService extends cds.ApplicationService {
                 if (cateringStaged) {
                     for (let trip of cateringStaged) {
                         trips = await this.updateTrip(trips, trip, cateringLogType);
-                        if(!trips) return false;
+                        if (!trips) return false;
                     };
                 }
             }
@@ -373,7 +373,7 @@ class TripService extends cds.ApplicationService {
                 parseInt(tripLogRow.status) === statusReady ||
                 parseInt(tripLogRow.status) === statusWarning)) {
                 statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
-                if(!statusUpdated) return false;
+                if (!statusUpdated) return false;
 
                 const triplogMatchingIndex = trips.findIndex((triplog) => {
                     return (
@@ -395,10 +395,10 @@ class TripService extends cds.ApplicationService {
                     trip.statusCode = 3;
                     trip.statusParam1 = trip.tailno;
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
-                    if(!statusUpdated) return false;
+                    if (!statusUpdated) return false;
                     return trips;
                 }
-                
+
                 let legstate = await this.validateLegstate(trip, logType);
 
                 if (!legstate) {
@@ -406,10 +406,10 @@ class TripService extends cds.ApplicationService {
                     trip.statusCode = 7;
                     trip.statusParam1 = trip.legstate_code;
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
-                    if(!statusUpdated) return false;
+                    if (!statusUpdated) return false;
                     return trips;
                 }
-                
+
                 let repeatno = await this.validateRepeatNo(trip, logType);
 
                 if (repeatno.length) {
@@ -418,10 +418,10 @@ class TripService extends cds.ApplicationService {
                     trip.statusParam1 = repeatno[0];
                     trip.statusParam2 = repeatno[1];
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
-                    if(!statusUpdated) return false;
+                    if (!statusUpdated) return false;
                     return trips;
                 }
-                
+
                 let stonr = await this.validateStonr(trip, logType);
 
                 if (stonr.length) {
@@ -430,7 +430,7 @@ class TripService extends cds.ApplicationService {
                     trip.statusParam1 = stonr[0];
                     trip.statusParam2 = stonr[1];
                     statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
-                    if(!statusUpdated) return false;
+                    if (!statusUpdated) return false;
                     return trips;
                 }
 
@@ -446,27 +446,21 @@ class TripService extends cds.ApplicationService {
                 switch (logType) {
                     default:
                     case tripLogType:
-                        rowUpdated = await this.updateTripRecord(trip, newStatus);
+                        rowUpdated = await this.updateTripRecord(trip, newStatus, trips, triplogMatchingIndex, logType);
                         break;
                     case paxLogType:
-                        rowUpdated = await this.updatePaxRecord(trip, newStatus);
+                        rowUpdated = await this.updatePaxRecord(trip, newStatus, trips, triplogMatchingIndex, logType);
                         break;
                     case cargoLogType:
-                        rowUpdated = await this.updateCargoRecord(trip, newStatus);
+                        rowUpdated = await this.updateCargoRecord(trip, newStatus, trips, triplogMatchingIndex, logType);
                         break;
                     case routeLogType:
-                        rowUpdated = await this.updateRouteRecord(trip, newStatus);
+                        rowUpdated = await this.updateRouteRecord(trip, newStatus, trips, triplogMatchingIndex, logType);
                         break;
                     case cateringLogType:
-                        rowUpdated = await this.updateCateringRecord(trip, newStatus);
+                        rowUpdated = await this.updateCateringRecord(trip, newStatus, trips, triplogMatchingIndex, logType);
                         break;
                 }
-
-                if (rowUpdated !== newStatus) {
-                    newStatus = trips[triplogMatchingIndex].status = rowUpdated;
-                }
-                statusUpdated = await this.insertTriplogStatus(trip, logType, newStatus);
-                if(!statusUpdated) return false;
             }
 
             return trips;
@@ -572,7 +566,7 @@ class TripService extends cds.ApplicationService {
             // In case the legstate doesn't exist in the latest legstates, 
             // check if the literal value of tailNo exists in TailRegistrations
             let legstatesL = await SELECT.from(Legstates).orderBy('stonr desc');
-            if(legstatesL){
+            if (legstatesL) {
                 maxStonr = legstatesL[0].stonr;
             }
 
@@ -662,8 +656,8 @@ class TripService extends cds.ApplicationService {
             let lsCode = await SELECT.one.from(Legstates).columns('code').where(
                 cds.parse.expr(whereLsCode)
             );
-            
-            return lsCode;  
+
+            return lsCode;
         };
 
         /**
@@ -679,9 +673,9 @@ class TripService extends cds.ApplicationService {
                 const updRes = await tx.run(INSERT([newTrip]).into(triplogAll));
                 await tx.commit();
                 if (updRes) return true;
-            } catch (e) {
+            } catch (error) {
                 await tx.rollback();
-                console.error("Error during insert:", e);
+                console.error("Error during insert:", error);
             }
 
             return false;
@@ -713,10 +707,10 @@ class TripService extends cds.ApplicationService {
          * returns true if a row was updated/inserted, false otherwise
          * TODO: fix upsert so it'll work with scale
          */
-        this.updateTripRecord = async (trip, newStatus) => {
+        this.updateTripRecord = async (trip, newStatus, trips, tripsIndex, logType) => {
             let txUpd = cds.tx();
             let txIns = cds.tx();
-            let res = statusError, updFin = false;
+            let res = statusError, updFin = false, dbSuccess = false, statusUpdated = false;
             trip.actdeptts = this._calcTimeStamp(trip.actdeptdate, trip.actdepttime);
             trip.scheddeptts = this._calcTimeStamp(trip.scheddeptdate, trip.scheddepttime);
             trip.actarrts = this._calcTimeStamp(trip.actarrdate, trip.actarrtime);
@@ -825,16 +819,44 @@ class TripService extends cds.ApplicationService {
 
                 if (updRes)
                     res = newStatus;
-            } catch (e) {
+                dbSuccess = true;
+
+                // In case there was an error in the DB
+            } catch (error) {
+                // Rollback the Insert/update attempts to close the connection
                 if (!updFin)
                     await txUpd.rollback();
                 await txIns.rollback();
-                console.error(`Error in ${e.element}`);
+
                 trip.statusCode = 6;
-                trip.statusParam1 = e.element;
+
+                // In case of a single error
+                if (error.element) {
+                    console.error(`Error in ${error.element}`);
+                    trip.statusParam1 = error.element;
+                    // In case of multiple errors
+                } else {
+                    // Log all the errors, add status for each one and stop further status inserting
+                    if (res !== newStatus) {
+                        trips[tripsIndex].status = res;
+                    }
+                    for (let e of error.details) {
+                        console.error(`Error in ${e.element}`);
+                        trip.statusParam1 = e.element;
+                        statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                        if (!statusUpdated) return statusUpdated;
+                    }
+
+                    return dbSuccess;
+                }
             }
 
-            return res;
+            if (res !== newStatus) {
+                trips[tripsIndex].status = res;
+            }
+            statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+            if (!statusUpdated) dbSuccess = false;
+            return dbSuccess;
         };
 
         /**
@@ -842,10 +864,10 @@ class TripService extends cds.ApplicationService {
          * returns true if a row was updated/inserted, false otherwise
          * TODO: fix upsert so it'll work with scale
          */
-        this.updatePaxRecord = async (trip, newStatus) => {
+        this.updatePaxRecord = async (trip, newStatus, trips, tripsIndex, logType) => {
             let txUpd = cds.tx();
             let txIns = cds.tx();
-            let res = statusError, updFin = false;
+            let res = statusError, updFin = false, dbSuccess = false, statusUpdated = false;
 
             try {
                 let updRes = await txUpd.run(UPDATE(pax,
@@ -953,16 +975,44 @@ class TripService extends cds.ApplicationService {
 
                 if (updRes)
                     res = newStatus;
-            } catch (e) {
+                dbSuccess = true;
+
+                // In case there was an error in the DB
+            } catch (error) {
+                // Rollback the Insert/update attempts to close the connection
                 if (!updFin)
                     await txUpd.rollback();
                 await txIns.rollback();
-                console.error(`Error in ${e.element}`);
+
                 trip.statusCode = 6;
-                trip.statusParam1 = e.element;
+
+                // In case of a single error
+                if (error.element) {
+                    console.error(`Error in ${error.element}`);
+                    trip.statusParam1 = error.element;
+                    // In case of multiple errors
+                } else {
+                    // Log all the errors, add status for each one and stop further status inserting
+                    if (res !== newStatus) {
+                        trips[tripsIndex].status = res;
+                    }
+                    for (let e of error.details) {
+                        console.error(`Error in ${e.element}`);
+                        trip.statusParam1 = e.element;
+                        statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                        if (!statusUpdated) return statusUpdated;
+                    }
+
+                    return dbSuccess;
+                }
             }
 
-            return res;
+            if (res !== newStatus) {
+                trips[tripsIndex].status = res;
+            }
+            statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+            if (!statusUpdated) dbSuccess = false;
+            return dbSuccess;
         }
 
         /**
@@ -970,10 +1020,10 @@ class TripService extends cds.ApplicationService {
          * returns true if a row was updated/inserted, false otherwise
          * TODO: fix upsert so it'll work with scale
          */
-        this.updateCargoRecord = async (trip, newStatus) => {
+        this.updateCargoRecord = async (trip, newStatus, trips, tripsIndex, logType) => {
             let txUpd = cds.tx();
             let txIns = cds.tx();
-            let res = statusError, updFin = false;
+            let res = statusError, updFin = false, dbSuccess = false, statusUpdated = false;
 
             try {
                 let updRes = await txUpd.run(UPDATE(cargorecord,
@@ -1060,16 +1110,44 @@ class TripService extends cds.ApplicationService {
 
                 if (updRes)
                     res = newStatus;
-            } catch (e) {
-                if (!updFin)
-                    await txUpd.rollback();
-                await txIns.rollback();
-                console.error(`Error in ${e.element}`);
-                trip.statusCode = 6;
-                trip.statusParam1 = e.element;
-            }
-
-            return res;
+                    dbSuccess = true;
+    
+                    // In case there was an error in the DB
+                } catch (error) {
+                    // Rollback the Insert/update attempts to close the connection
+                    if (!updFin)
+                        await txUpd.rollback();
+                    await txIns.rollback();
+    
+                    trip.statusCode = 6;
+    
+                    // In case of a single error
+                    if (error.element) {
+                        console.error(`Error in ${error.element}`);
+                        trip.statusParam1 = error.element;
+                        // In case of multiple errors
+                    } else {
+                        // Log all the errors, add status for each one and stop further status inserting
+                        if (res !== newStatus) {
+                            trips[tripsIndex].status = res;
+                        }
+                        for (let e of error.details) {
+                            console.error(`Error in ${e.element}`);
+                            trip.statusParam1 = e.element;
+                            statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                            if (!statusUpdated) return statusUpdated;
+                        }
+    
+                        return dbSuccess;
+                    }
+                }
+    
+                if (res !== newStatus) {
+                    trips[tripsIndex].status = res;
+                }
+                statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                if (!statusUpdated) dbSuccess = false;
+                return dbSuccess;
         }
 
         /**
@@ -1077,10 +1155,10 @@ class TripService extends cds.ApplicationService {
          * returns true if a row was updated/inserted, false otherwise
          * TODO: fix upsert so it'll work with scale
          */
-        this.updateRouteRecord = async (trip, newStatus) => {
+        this.updateRouteRecord = async (trip, newStatus, trips, tripsIndex, logType) => {
             let txUpd = cds.tx();
             let txIns = cds.tx();
-            let res = statusError, updFin = false;
+            let res = statusError, updFin = false, dbSuccess = false, statusUpdated = false;
 
             try {
                 let updRes = await txUpd.run(UPDATE(routeplan,
@@ -1133,16 +1211,44 @@ class TripService extends cds.ApplicationService {
 
                 if (updRes)
                     res = newStatus;
-            } catch (e) {
-                if (!updFin)
-                    await txUpd.rollback();
-                await txIns.rollback();
-                console.error(`Error in ${e.element}`);
-                trip.statusCode = 6;
-                trip.statusParam1 = e.element;
-            }
-
-            return res;
+                    dbSuccess = true;
+    
+                    // In case there was an error in the DB
+                } catch (error) {
+                    // Rollback the Insert/update attempts to close the connection
+                    if (!updFin)
+                        await txUpd.rollback();
+                    await txIns.rollback();
+    
+                    trip.statusCode = 6;
+    
+                    // In case of a single error
+                    if (error.element) {
+                        console.error(`Error in ${error.element}`);
+                        trip.statusParam1 = error.element;
+                        // In case of multiple errors
+                    } else {
+                        // Log all the errors, add status for each one and stop further status inserting
+                        if (res !== newStatus) {
+                            trips[tripsIndex].status = res;
+                        }
+                        for (let e of error.details) {
+                            console.error(`Error in ${e.element}`);
+                            trip.statusParam1 = e.element;
+                            statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                            if (!statusUpdated) return statusUpdated;
+                        }
+    
+                        return dbSuccess;
+                    }
+                }
+    
+                if (res !== newStatus) {
+                    trips[tripsIndex].status = res;
+                }
+                statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                if (!statusUpdated) dbSuccess = false;
+                return dbSuccess;
         }
 
         /**
@@ -1150,10 +1256,10 @@ class TripService extends cds.ApplicationService {
          * returns true if a row was updated/inserted, false otherwise
          * TODO: fix upsert so it'll work with scale
          */
-        this.updateCateringRecord = async (trip, newStatus) => {
+        this.updateCateringRecord = async (trip, newStatus, trips, tripsIndex, logType) => {
             let txUpd = cds.tx();
             let txIns = cds.tx();
-            let res = statusError, updFin = false;
+            let res = statusError, updFin = false, dbSuccess = false, statusUpdated = false;
 
             try {
                 let updRes = await db.run(UPDATE(catering,
@@ -1210,16 +1316,44 @@ class TripService extends cds.ApplicationService {
 
                 if (updRes)
                     res = newStatus;
-            } catch (e) {
-                if (!updFin)
-                    await txUpd.rollback();
-                await txIns.rollback();
-                console.error(`Error in ${e.element}`);
-                trip.statusCode = 6;
-                trip.statusParam1 = e.element;
-            }
-
-            return res;
+                    dbSuccess = true;
+    
+                    // In case there was an error in the DB
+                } catch (error) {
+                    // Rollback the Insert/update attempts to close the connection
+                    if (!updFin)
+                        await txUpd.rollback();
+                    await txIns.rollback();
+    
+                    trip.statusCode = 6;
+    
+                    // In case of a single error
+                    if (error.element) {
+                        console.error(`Error in ${error.element}`);
+                        trip.statusParam1 = error.element;
+                        // In case of multiple errors
+                    } else {
+                        // Log all the errors, add status for each one and stop further status inserting
+                        if (res !== newStatus) {
+                            trips[tripsIndex].status = res;
+                        }
+                        for (let e of error.details) {
+                            console.error(`Error in ${e.element}`);
+                            trip.statusParam1 = e.element;
+                            statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                            if (!statusUpdated) return statusUpdated;
+                        }
+    
+                        return dbSuccess;
+                    }
+                }
+    
+                if (res !== newStatus) {
+                    trips[tripsIndex].status = res;
+                }
+                statusUpdated = await this.insertTriplogStatus(trip, logType, res);
+                if (!statusUpdated) dbSuccess = false;
+                return dbSuccess;
         }
 
         this.changeStatuses = async (trips, status, caller) => {
