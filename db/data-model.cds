@@ -49,75 +49,77 @@ entity Airports : CodeList, managed {
         lon_coord_sign : coord_sign                   @title : '{i18n>lon_coord_sign}';
 };
 
-/**TBD, if tailNo will be switched to a domain
+/**
+ * TBD, if tailNo will be switched to a domain
  */
 @assert.unique : {tailNo : [tailNo], }
 entity TailRegistrations : CodeList, managed {
-    key ID                        : UUID @(Core.Computed : true) @title : '{i18n>trid}';
-        tailNo                    : String(8) @title : '{i18n>tailNo}';
-        aircraftType              : aircraftType @title : '{i18n>aircraft_type}';
-        ac_seat_config            : String(30) @title : '{i18n>ac_seat_config}';
-        ac_type_iata              : String(10) @title : '{i18n>ac_type_iata}';
-        ac_type_iatag             : String(10) @title : '{i18n>ac_type_iatag}';
-        ac_type_icao              : String(10) @title : '{i18n>ac_type_icao}';
-        mtow_kg                   : Decimal(6,0) @title : '{i18n>mtow_kg}';
-        mtow_t                    : String(6) @title : '{i18n>mtow_t}';
-        amtow1_kg                 : Decimal(7,0) @title : '{i18n>amtow1_kg}';
-        amtow2_kg                 : Decimal(7,0) @title : '{i18n>amtow2_kg}';
-        mtw_kg                    : Decimal(6,0) @title : '{i18n>mtw_kg}';
-        amtw_kg                   : Decimal(6,0) @title : '{i18n>amtw_kg}';
-        mlw_kg                    : Decimal(6,0) @title : '{i18n>mlw_kg}';
-        full_cgo_cap              : Decimal(6,0) @title : '{i18n>full_cgo_cap}';
-        eev_kg                    : String(7) @title : '{i18n>eev_kg}';
-        wingspan_m                : String(6) @title : '{i18n>wingspan_m}';
-        length_m                  : String(6) @title : '{i18n>length_m}';
-        icao_noise_cat_takeoff    : String(5) @title : '{i18n>icao_noise_cat_takeoff}';
-        icao_noise_cat_landing    : String(5) @title : '{i18n>icao_noise_cat_landing}';
-        icao_chap3_noise_level    : Decimal(5,2) @title : '{i18n>icao_chap3_noise_level}';
-        icao_chap4_noise_level    : Decimal(5,2) @title : '{i18n>icao_chap4_noise_level}';
-        icao_annex16_chp          : String(2) @title : '{i18n>icao_annex16_chp}';
-        nri_noise_category        : String(4) @title : '{i18n>nri_noise_category}';
-        aci_noise_rate_ind_mtow   : String(5) @title : '{i18n>aci_noise_rate_ind_mtow}';
-        aci_noise_rate_ind_amtow  : String(5) @title : '{i18n>aci_noise_rate_ind_amtow}';
-        engine_app_noise_level    : String(6) @title : '{i18n>engine_app_noise_level}';
-        engine_app_noise_limit    : String(6) @title : '{i18n>engine_app_noise_limit}';
-        engine_side_noise_level   : String(6) @title : '{i18n>engine_side_noise_level}';
-        engine_side_noise_limit   : String(6) @title : '{i18n>engine_side_noise_limit}';
-        noise_level_start_takeoff : String(6) @title : '{i18n>noise_level_start_takeoff}';
-        noise_limit_start_takeoff : String(6) @title : '{i18n>noise_limit_start_takeoff}';
-        pax_or_frt                : String(1) @title : '{i18n>pax_or_frt}';
-        fcl_seat_cap              : Decimal(2,0) @title : '{i18n>fcl_seat_cap}';
-        jcl_seat_cap              : Decimal(2,0) @title : '{i18n>jcl_seat_cap}';
-        pey_seat_cap              : Decimal(3,0) @title : '{i18n>pey_seat_cap}';
-        ycl_seat_cap              : Decimal(3,0) @title : '{i18n>ycl_seat_cap}';
-        tot_seat_cap              : Decimal(3,0) @title : '{i18n>tot_seat_cap}';
-        ac_operator               : String(25) @title : '{i18n>ac_operator}';
-        body_type                 : String(1) @title : '{i18n>body_type}';
-        number_engines            : Decimal(1,0) @title : '{i18n>number_engines}';
-        engine_type               : String(20) @title : '{i18n>engine_type}';
-        zero_fuel_weight          : Decimal(6,0) @title : '{i18n>zero_fuel_weight}';
-        euwgtfctr1                : String(5) @title : '{i18n>euwgtfctr1}';
-        euwgtfctr2                : String(5) @title : '{i18n>euwgtfctr2}';
-        acoustic_grp              : String(3) @title : '{i18n>acoustic_grp}';
-        bulk_ac                   : String(1) @title : '{i18n>bulk_ac}';
-        eev_kg_arn                : String(10) @title : '{i18n>eev_kg_arn}';
-        ac_total_arn              : String(10) @title : '{i18n>ac_total_arn}';
-        lto_fuel                  : Decimal(8,2) @title : '{i18n>lto_fuel}';
-        nox_tp_maint              : Decimal(8,2) @title : '{i18n>nox_tp_maint}';
-        amtow1_t                  : Decimal(10,0) @title : '{i18n>amtow1_t}';
-        amtow2_t                  : Decimal(10,0) @title : '{i18n>amtow2_t}';
-        engine_takeoff_noise_lvl  : Decimal(7,0) @title : '{i18n>engine_takeoff_noise_lvl}';
+    key ID                        : UUID           @(Core.Computed : true)  @title : '{i18n>trid}';
+        tailNo                    : String(8)      @title :                          '{i18n>tailNo}';
+        aircraftType              : aircraftType   @title :                          '{i18n>aircraft_type}';
+        ac_seat_config            : String(30)     @title :                          '{i18n>ac_seat_config}';
+        ac_type_iata              : String(10)     @title :                          '{i18n>ac_type_iata}';
+        ac_type_iatag             : String(10)     @title :                          '{i18n>ac_type_iatag}';
+        ac_type_icao              : String(10)     @title :                          '{i18n>ac_type_icao}';
+        mtow_kg                   : Decimal(6, 0)  @title :                          '{i18n>mtow_kg}';
+        mtow_t                    : String(6)      @title :                          '{i18n>mtow_t}';
+        amtow1_kg                 : Decimal(7, 0)  @title :                          '{i18n>amtow1_kg}';
+        amtow2_kg                 : Decimal(7, 0)  @title :                          '{i18n>amtow2_kg}';
+        mtw_kg                    : Decimal(6, 0)  @title :                          '{i18n>mtw_kg}';
+        amtw_kg                   : Decimal(6, 0)  @title :                          '{i18n>amtw_kg}';
+        mlw_kg                    : Decimal(6, 0)  @title :                          '{i18n>mlw_kg}';
+        full_cgo_cap              : Decimal(6, 0)  @title :                          '{i18n>full_cgo_cap}';
+        eev_kg                    : String(7)      @title :                          '{i18n>eev_kg}';
+        wingspan_m                : String(6)      @title :                          '{i18n>wingspan_m}';
+        length_m                  : String(6)      @title :                          '{i18n>length_m}';
+        icao_noise_cat_takeoff    : String(5)      @title :                          '{i18n>icao_noise_cat_takeoff}';
+        icao_noise_cat_landing    : String(5)      @title :                          '{i18n>icao_noise_cat_landing}';
+        icao_chap3_noise_level    : Decimal(5, 2)  @title :                          '{i18n>icao_chap3_noise_level}';
+        icao_chap4_noise_level    : Decimal(5, 2)  @title :                          '{i18n>icao_chap4_noise_level}';
+        icao_annex16_chp          : String(2)      @title :                          '{i18n>icao_annex16_chp}';
+        nri_noise_category        : String(4)      @title :                          '{i18n>nri_noise_category}';
+        aci_noise_rate_ind_mtow   : String(5)      @title :                          '{i18n>aci_noise_rate_ind_mtow}';
+        aci_noise_rate_ind_amtow  : String(5)      @title :                          '{i18n>aci_noise_rate_ind_amtow}';
+        engine_app_noise_level    : String(6)      @title :                          '{i18n>engine_app_noise_level}';
+        engine_app_noise_limit    : String(6)      @title :                          '{i18n>engine_app_noise_limit}';
+        engine_side_noise_level   : String(6)      @title :                          '{i18n>engine_side_noise_level}';
+        engine_side_noise_limit   : String(6)      @title :                          '{i18n>engine_side_noise_limit}';
+        noise_level_start_takeoff : String(6)      @title :                          '{i18n>noise_level_start_takeoff}';
+        noise_limit_start_takeoff : String(6)      @title :                          '{i18n>noise_limit_start_takeoff}';
+        pax_or_frt                : String(1)      @title :                          '{i18n>pax_or_frt}';
+        fcl_seat_cap              : Decimal(2, 0)  @title :                          '{i18n>fcl_seat_cap}';
+        jcl_seat_cap              : Decimal(2, 0)  @title :                          '{i18n>jcl_seat_cap}';
+        pey_seat_cap              : Decimal(3, 0)  @title :                          '{i18n>pey_seat_cap}';
+        ycl_seat_cap              : Decimal(3, 0)  @title :                          '{i18n>ycl_seat_cap}';
+        tot_seat_cap              : Decimal(3, 0)  @title :                          '{i18n>tot_seat_cap}';
+        ac_operator               : String(25)     @title :                          '{i18n>ac_operator}';
+        body_type                 : String(1)      @title :                          '{i18n>body_type}';
+        number_engines            : Decimal(1, 0)  @title :                          '{i18n>number_engines}';
+        engine_type               : String(20)     @title :                          '{i18n>engine_type}';
+        zero_fuel_weight          : Decimal(6, 0)  @title :                          '{i18n>zero_fuel_weight}';
+        euwgtfctr1                : String(5)      @title :                          '{i18n>euwgtfctr1}';
+        euwgtfctr2                : String(5)      @title :                          '{i18n>euwgtfctr2}';
+        acoustic_grp              : String(3)      @title :                          '{i18n>acoustic_grp}';
+        bulk_ac                   : String(1)      @title :                          '{i18n>bulk_ac}';
+        eev_kg_arn                : String(10)     @title :                          '{i18n>eev_kg_arn}';
+        ac_total_arn              : String(10)     @title :                          '{i18n>ac_total_arn}';
+        lto_fuel                  : Decimal(8, 2)  @title :                          '{i18n>lto_fuel}';
+        nox_tp_maint              : Decimal(8, 2)  @title :                          '{i18n>nox_tp_maint}';
+        amtow1_t                  : Decimal(10, 0) @title :                          '{i18n>amtow1_t}';
+        amtow2_t                  : Decimal(10, 0) @title :                          '{i18n>amtow2_t}';
+        engine_takeoff_noise_lvl  : Decimal(7, 0)  @title :                          '{i18n>engine_takeoff_noise_lvl}';
 };
 
 
- @assert.unique : {
-     aircraftType  : [ aircraftType, aircraftGroup ],
- }
+@assert.unique : {aircraftType : [
+    aircraftType,
+    aircraftGroup
+], }
 entity aircraftTypeGroup : CodeList, managed {
 
-    key ID            : UUID @(Core.Computed : true) @title : '{i18n>actgid}';
-        aircraftType  : String(3) @title : '{i18n>aircraft_type}';
-        aircraftGroup : String(3) @title: '{i18n>aircraft_group}';
+    key ID            : UUID      @(Core.Computed : true)  @title : '{i18n>actgid}';
+        aircraftType  : String(3) @title :                          '{i18n>aircraft_type}';
+        aircraftGroup : String(3) @title :                          '{i18n>aircraft_group}';
 };
 
 //////////////////////////////////////////////////////////////////////
@@ -141,7 +143,8 @@ type carriercode : Association to Carriers {
 
 type aircraftType : Association to one aircraftTypeGroup /*{
                         ID
-                    }*/;
+                    }*/
+                    ;
 //////////////////////////////////////////////////////////////////////
 
 
@@ -264,88 +267,88 @@ aspect triprecorddetails : recordsKey, surrogatenum, aufnr {
 entity triprecord : triprecorddetails {};
 
 entity triprecordStaging : recordsKey, surrogatenum, aufnr {
-    supcarriercode2  : carriercode; //String(2);
-    scheddeptdate    : Date;
-    flightno         : String(4);
-    supcarriercode   : carriercode; //String(2);
-    carriercode      : carriercode; //String(2);
-    origin           : airportCode; //String(3);
-    destination      : airportCode; //String(3);
-    repeatno         : String(3);
-    idooutc          : Date;
-    idoo             : Date;
-    doo              : Date;
-    dooutc           : Date;
-    actarrapt        : airportCode; //String(3);
-    actarrapticao    : String(4);
-    actdeptapt       : airportCode; //String(3);
-    actdeptapticao   : String(4);
-    legstate         : legstate; // String(3); // /
-    aircrafttype     : String(3);
-    aircrafttypecpa  : String(3);
-    tailno           : String(8);
-    flighttype       : String(1);
-    deptparkposn     : String(10);
-    actgatetime      : Integer;
-    servicetype      : String(1);
-    delayreason1     : String(3);
-    delayreason2     : String(3);
-    delayreason3     : String(3);
-    delayreason4     : String(3);
-    delayreason5     : String(3);
-    actualflyingdur  : Integer;
-    scheddepttime    : Time;
-    scheddeptts      : Decimal(15, 0);
-    actdeptts        : Decimal(15, 0);
-    takeoffdate      : Date;
-    takeofftime      : Time;
-    touchdndate      : Date;
-    touchdntime      : Time;
-    actdeptdate      : Date;
-    actdepttime      : Time;
-    actarrdate       : Date;
-    actarrtime       : Time;
-    takeoffdateutc   : Date;
-    takeofftimeutc   : Time;
-    touchdndateutc   : Date;
-    touchdntimeutc   : Time;
-    actdeptdateutc   : Date;
-    actdepttimeutc   : Time;
-    actarrdateutc    : Date;
-    actarrtimeutc    : Time;
-    scheddeptdateutc : Date;
-    scheddepttimeutc : Time;
-    schedarrdateutc  : Date;
-    schedarrtimeutc  : Time;
-    schedarrdate     : Date;
-    schedarrtime     : Time;
-    schedarrts       : Decimal(15, 0);
-    actarrts         : Decimal(15, 0);
-    estdeptdate      : Date;
-    estdepttime      : Time;
-    estdeptdateutc   : Date;
-    estdepttimeutc   : Time;
-    estarrdateutc    : Date;
-    estarrtimeutc    : Time;
-    estarrdate       : Date;
-    estarrtime       : Time;
-    planblocktime    : Integer;
-    schedarrapticao  : String(4);
-    schedarrapt      : airportCode; //String(3);String(3);
-    scheddeptapticao : String(4);
-    scheddeptapt     : airportCode; //String(3);String(3);
-    flight_tm        : Integer;
-    arr_stand        : String(10);
-    dep_terminal     : String(4);
-    arr_terminal     : String(4);
-    onblockdate      : Date;
-    onblocktime      : Time;
-    offblockdate     : Date;
-    offblocktime     : Time;
-    taxi_out_time    : Integer;
-    route            : String(10);
-    cfpno1           : String(10);
-    cfpno2           : String(10);
+        supcarriercode2            : carriercode; //String(2);
+        scheddeptdate              : Date;
+        flightno                   : String(4);
+        supcarriercode             : carriercode; //String(2);
+        carriercode                : carriercode; //String(2);
+        origin                     : airportCode; //String(3);
+        destination                : airportCode; //String(3);
+        repeatno                   : String(3);
+        idooutc                    : Date;
+        idoo                       : Date;
+        doo                        : Date;
+        dooutc                     : Date;
+        actarrapt                  : airportCode; //String(3);
+        actarrapticao              : String(4);
+        actdeptapt                 : airportCode; //String(3);
+        actdeptapticao             : String(4);
+        legstate                   : legstate; // String(3); // /
+        aircrafttype               : String(3);
+        aircrafttypecpa            : String(3);
+        tailno                     : String(8);
+        flighttype                 : String(1);
+        deptparkposn               : String(10);
+        actgatetime                : Integer;
+        servicetype                : String(1);
+        delayreason1               : String(3);
+        delayreason2               : String(3);
+        delayreason3               : String(3);
+        delayreason4               : String(3);
+        delayreason5               : String(3);
+        actualflyingdur            : Integer;
+        scheddepttime              : Time;
+        scheddeptts                : Decimal(15, 0);
+        actdeptts                  : Decimal(15, 0);
+        takeoffdate                : Date;
+        takeofftime                : Time;
+        touchdndate                : Date;
+        touchdntime                : Time;
+        actdeptdate                : Date;
+        actdepttime                : Time;
+        actarrdate                 : Date;
+        actarrtime                 : Time;
+        takeoffdateutc             : Date;
+        takeofftimeutc             : Time;
+        touchdndateutc             : Date;
+        touchdntimeutc             : Time;
+        actdeptdateutc             : Date;
+        actdepttimeutc             : Time;
+        actarrdateutc              : Date;
+        actarrtimeutc              : Time;
+        scheddeptdateutc           : Date;
+        scheddepttimeutc           : Time;
+        schedarrdateutc            : Date;
+        schedarrtimeutc            : Time;
+        schedarrdate               : Date;
+        schedarrtime               : Time;
+        schedarrts                 : Decimal(15, 0);
+        actarrts                   : Decimal(15, 0);
+        estdeptdate                : Date;
+        estdepttime                : Time;
+        estdeptdateutc             : Date;
+        estdepttimeutc             : Time;
+        estarrdateutc              : Date;
+        estarrtimeutc              : Time;
+        estarrdate                 : Date;
+        estarrtime                 : Time;
+        planblocktime              : Integer;
+        schedarrapticao            : String(4);
+        schedarrapt                : airportCode; //String(3);String(3);
+        scheddeptapticao           : String(4);
+        scheddeptapt               : airportCode; //String(3);String(3);
+        flight_tm                  : Integer;
+        arr_stand                  : String(10);
+        dep_terminal               : String(4);
+        arr_terminal               : String(4);
+        onblockdate                : Date;
+        onblocktime                : Time;
+        offblockdate               : Date;
+        offblocktime               : Time;
+        taxi_out_time              : Integer;
+        route                      : String(10);
+        cfpno1                     : String(10);
+        cfpno2                     : String(10);
     key staging_creation_timestamp : Timestamp @(title : '{i18n>timestamp}');
 };
 
@@ -713,8 +716,8 @@ entity cateringStaging : cateringdetails {
 // triplog : Association to many triplog  on triplog.cateringStaging = $self;
 };
 
-view LegstatesAll as 
-    select from Legstates{
+view LegstatesAll as
+    select from Legstates {
         *
     };
 
@@ -722,16 +725,35 @@ view LegstatesAll as
 //     select from Legstates as Legstates1 { * } where stonr = ( select max(stonr) as stonr from Legstates );
 
 annotate triprecordStaging with {
-    supcarriercode2  @assert.integrity: false;
-    supcarriercode   @assert.integrity: false;
-    carriercode      @assert.integrity: false;
-    origin           @assert.integrity: false;
-    destination      @assert.integrity: false;
-    actarrapt @assert.integrity: false;
-    actdeptapt @assert.integrity: false;
-    legstate @assert.integrity: false;
-    schedarrapt @assert.integrity: false;
-    scheddeptapt @assert.integrity: false;
+    supcarriercode2 @assert.integrity : false;
+    supcarriercode  @assert.integrity : false;
+    carriercode     @assert.integrity : false;
+    origin          @assert.integrity : false;
+    destination     @assert.integrity : false;
+    actarrapt       @assert.integrity : false;
+    actdeptapt      @assert.integrity : false;
+    legstate        @assert.integrity : false;
+    schedarrapt     @assert.integrity : false;
+    scheddeptapt    @assert.integrity : false;
+}
+
+annotate passengerStaging with {
+    carriercode @assert.integrity : false;
+}
+
+annotate cargorecordStaging with {
+    
+}
+
+annotate routeplanStaging with {
+    currency @assert.integrity: false;
+}
+
+annotate cateringStaging with {
+    carriercode @assert.integrity : false;
+    origin      @assert.integrity : false;
+    destination @assert.integrity : false;
+    currency    @assert.integrity : false;
 }
 
 
@@ -1101,4 +1123,3 @@ annotate catering with {
     surcharge_perc      @title : '{i18n>surcharge_perc}';
     consumptiontax_perc @title : '{i18n>consumptiontax_perc}';
 }
- 
