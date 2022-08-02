@@ -160,20 +160,20 @@ modules:
       name: tailregistrations
       target-path: resources/
 
-- name: triporder-approuter
-  type: approuter.nodejs
-  path: triporder-approuter
-  properties:
-    TENANT_HOST_PATTERN: ^(.*)-${space}-${app-name}.${default-domain}
-    SEND_XFRAMEOPTIONS: false
-  requires:
-  - name: triporder_html_repo_runtime
-  - name: uaa_triporder
-  - name: srv-api
-  - name: triporder-destination
-  parameters:
-    disk-quota: 256M
-    memory: 256M
+# - name: triporder-approuter
+#   type: approuter.nodejs
+#   path: triporder-approuter
+#   properties:
+#     TENANT_HOST_PATTERN: ^(.*)-${space}-${app-name}.${default-domain}
+#     SEND_XFRAMEOPTIONS: false
+#   requires:
+#   - name: triporder_html_repo_runtime
+#   - name: uaa_triporder
+#   - name: srv-api
+#   - name: triporder-destination
+#   parameters:
+#     disk-quota: 256M
+#     memory: 256M
 
 - name: accommodation
   type: html5
